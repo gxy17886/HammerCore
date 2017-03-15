@@ -1,0 +1,28 @@
+﻿
+itemGroup.hammercore=Hammer Core
+
+###ITEMS###
+
+item.hammercore:zapper.name=[Отладка] Заппер
+item.hammercore:ray_tracer.name=[Отладка] Трейсер
+
+item.hammercore:calculatron.name=Калькулятрон
+item.hammercore:calculatron.tooltip0=Инженерный калькулятор в Minecraft!
+item.hammercore:calculatron.tooltip1=§oНе используйте для написания домашки!§r
+
+###########
+
+###BLOCKS###
+
+tile.hammercore:infi_rf.name=Творческий источник энергии
+tile.hammercore:infi_rf.tooltip0=Генерирует 2,147,483,647 Эн/t
+tile.hammercore:infi_rf.tooltip1=Поддерживаемые типы "Эн" (Энергии):
+tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
+
+############
+
+##GUI##
+
+gui.hammercore:calculatron=Калькулятрон vVERSION
+
+#######

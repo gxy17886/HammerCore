@@ -1,0 +1,28 @@
+
+itemGroup.hammercore=Hammer Core
+
+###ITEMS###
+
+item.hammercore:zapper.name=[Debug] Zapper
+item.hammercore:ray_tracer.name=[Debug] Ray Tracer
+
+item.hammercore:calculatron.name=Calculatron
+item.hammercore:calculatron.tooltip0=Scientific calculator in Minecraft!
+item.hammercore:calculatron.tooltip1=§oDo not use to make homework!§r
+
+###########
+
+###BLOCKS###
+
+tile.hammercore:infi_rf.name=Creative Energy Source
+tile.hammercore:infi_rf.tooltip0=Generates 2,147,483,647 En/t
+tile.hammercore:infi_rf.tooltip1=Supported "En" (Energy) types:
+tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
+
+############
+
+##GUI##
+
+gui.hammercore:calculatron=Calculatron vVERSION
+
+#######
