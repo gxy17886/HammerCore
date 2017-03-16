@@ -1,6 +1,7 @@
 com.mrdimka.hammercore
 com.mrdimka.hammercore.annotations
 com.mrdimka.hammercore.api
+com.mrdimka.hammercore.api.handlers
 com.mrdimka.hammercore.api.mhb
 com.mrdimka.hammercore.api.multipart
 com.mrdimka.hammercore.asm
