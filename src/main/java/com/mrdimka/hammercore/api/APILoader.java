@@ -4,6 +4,9 @@ import com.mrdimka.hammercore.HammerCore;
 
 import net.minecraftforge.fml.common.versioning.ComparableVersion;
 
+/**
+ * Allows modder to check for external APIs
+ */
 public class APILoader
 {
 	public static boolean isApiLoaded(String api)

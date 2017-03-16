@@ -4,6 +4,9 @@ import org.apache.logging.log4j.Level;
 
 import net.minecraftforge.fml.common.FMLLog;
 
+/**
+ * Implementation for {@link ILog}. Used in {@link IHammerCoreAPI#init(ILog, String)}
+ */
 public class WrappedFMLLog implements ILog
 {
 	public final String owner;

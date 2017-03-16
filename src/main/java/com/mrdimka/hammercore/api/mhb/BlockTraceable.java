@@ -27,6 +27,9 @@ import com.mrdimka.hammercore.raytracer.RayTracer;
 import com.mrdimka.hammercore.vec.Cuboid6;
 import com.mrdimka.hammercore.vec.Vector3;
 
+/**
+ * Represents a base for blocks that have multiple hitboxes. Used for MultipartAPI
+ */
 public abstract class BlockTraceable extends Block
 {
 	public static EnumFacing current_face = EnumFacing.DOWN;

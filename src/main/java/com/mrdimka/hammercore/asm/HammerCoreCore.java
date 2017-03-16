@@ -13,6 +13,9 @@ import com.mrdimka.hammercore.common.utils.IOUtils;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
+/**
+ * FML plugin for HammerCore
+ */
 public class HammerCoreCore implements IFMLLoadingPlugin
 {
 //	public static BufferedWriter hc_classes;

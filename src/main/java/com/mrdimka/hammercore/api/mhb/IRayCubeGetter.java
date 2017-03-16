@@ -4,6 +4,9 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import com.mrdimka.hammercore.vec.Cuboid6;
 
+/**
+ * Registry class that allows modder to get hitboxes for a {@link BlockTraceable}
+ */
 public interface IRayCubeGetter
 {
 	public Cuboid6[] getBoundCubes6(BlockTraceable target);

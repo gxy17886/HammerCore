@@ -1,5 +1,8 @@
 package com.mrdimka.hammercore.api;
 
+/**
+ * Simple loging interface
+ */
 public interface ILog
 {
 	public void info(String message, Object... params);

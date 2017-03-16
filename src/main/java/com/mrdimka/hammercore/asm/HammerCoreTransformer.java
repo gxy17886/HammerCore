@@ -12,6 +12,9 @@ import org.objectweb.asm.tree.FieldNode;
 import net.minecraft.launchwrapper.IClassTransformer;
 import static com.mrdimka.hammercore.asm.HammerCoreCore.*;
 
+/**
+ * Transforms classes
+ */
 public class HammerCoreTransformer implements IClassTransformer
 {
 	@Override

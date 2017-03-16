@@ -11,6 +11,9 @@ import java.util.Set;
 
 import com.google.common.base.Throwables;
 
+/**
+ * Simple implementation of CSV file reader
+ */
 public class CSVFile
 {
 	public final Map<String, String> OBFUSCATIONS = new HashMap<>();

@@ -2,6 +2,9 @@ package com.mrdimka.hammercore.api;
 
 import java.util.List;
 
+/**
+ * Dynamic java code that loads on mod construct
+ */
 public interface IJavaCode
 {
 	public void preInit();

@@ -31,16 +31,16 @@ public class ModBlocks
 			{
 				try
 				{
-					registerBlock((Block) f.get(null));
+					registerBlock((Block) f.get(null), "hammercore");
 				}catch (Throwable err) {}
 			}
 		}
 	}
 
-	public static void registerBlock(Block b)
+	public static void registerBlock(Block b, String modid)
 	{
 		String name = b.getUnlocalizedName().substring("tile.".length());
-		b.setUnlocalizedName("hammercore:" + name);
+		b.setUnlocalizedName(modid + ":" + name);
 		b.setCreativeTab(HammerCore.tab);
 		
 		//ItemBlockDefinition
@@ -49,7 +49,7 @@ public class ModBlocks
 		if(b instanceof BlockMultipartProvider) ib = ((BlockMultipartProvider) b).createItem();
 		else ib = new ItemBlock(b);
 		
-		GameRegistry.register(b, new ResourceLocation("hammercore", name));
+		GameRegistry.register(b, new ResourceLocation(modid, name));
 		if(!(b instanceof INoItemBlock)) GameRegistry.register(ib.setRegistryName(b.getRegistryName()));
 		
 		if(b instanceof ITileEntityProvider)

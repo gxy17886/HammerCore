@@ -1,5 +1,6 @@
 package com.mrdimka.hammercore.api.multipart;
 
+import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.init.ModBlocks;
@@ -16,6 +17,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Baseline block that supports multipart. Use {@link ModBlocks#registerBlock(Block, String)} to register it.
+ * <br>Optional interfaces: {@link INoItemBlock} (why do you need that?)
+ */
 public abstract class BlockMultipartProvider extends Block implements IMultipartProvider
 {
 	public BlockMultipartProvider(Material materialIn)

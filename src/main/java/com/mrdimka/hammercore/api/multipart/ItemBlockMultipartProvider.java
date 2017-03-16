@@ -18,6 +18,9 @@ import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.init.ModBlocks;
 
+/**
+ * ItemBlock for {@link BlockMultipartProvider}.
+ */
 public class ItemBlockMultipartProvider extends ItemBlock
 {
 	public final BlockMultipartProvider provider;

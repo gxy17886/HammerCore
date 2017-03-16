@@ -1,7 +1,6 @@
 package com.mrdimka.hammercore.common.blocks.multipart;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,14 +18,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 
+import com.mrdimka.hammercore.api.handlers.IHandlerProvider;
+import com.mrdimka.hammercore.api.handlers.ITileHandler;
+import com.mrdimka.hammercore.api.multipart.IMultipartHandlerProvider;
 import com.mrdimka.hammercore.api.multipart.MultipartSignature;
+import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.tile.TileSyncableTickable;
 import com.mrdimka.hammercore.vec.Cuboid6;
 
-public class TileMultipart extends TileSyncableTickable
+public class TileMultipart extends TileSyncableTickable implements IHandlerProvider
 {
 	private final Set<MultipartSignature> signatures = new HashSet<>();
-	private final Set<ITickable> tickableSignatures = new HashSet<>();
 	private Cuboid6[] lastBaked = null;
 	
 	private boolean hasSyncedOnce = false;
@@ -36,15 +38,28 @@ public class TileMultipart extends TileSyncableTickable
 	@Override
 	public void tick()
 	{
+		MultipartSignature toRemove = null;
 		for(MultipartSignature signature : renderSignatures)
 		{
+			if(signature.getOwner() != this)
+			{
+				toRemove = signature;
+				continue;
+			}
+			
 			signature.setWorld(world);
 			signature.setPos(pos);
+			
+			if(signature instanceof ITickable)
+				((ITickable) signature).update();
 		}
-		for(ITickable t : tickableSignatures)
-			t.update();
+		
+		//Force-remove is we don't own this signature.
+		removeMultipart(toRemove, false);
+		
 		if(signatures.isEmpty() && !world.isRemote)
 			world.setBlockToAir(pos);
+		
 		if(!hasSyncedOnce) sync();
 	}
 	
@@ -55,7 +70,7 @@ public class TileMultipart extends TileSyncableTickable
 	
 	public boolean onBoxActivated(int boxID, Cuboid6 box, World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		for(MultipartSignature s : signatures)
+		for(MultipartSignature s : renderSignatures)
 			if(s != null && box != null && s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(box.aabb()))
 				return s.onSignatureActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		return false;
@@ -64,7 +79,7 @@ public class TileMultipart extends TileSyncableTickable
 	public int getLightLevel()
 	{
 		int max = 0;
-		for(MultipartSignature s : signatures) max = Math.max(max, s.getLightLevel());
+		for(MultipartSignature s : renderSignatures) max = Math.max(max, s.getLightLevel());
 		return max;
 	}
 	
@@ -83,7 +98,7 @@ public class TileMultipart extends TileSyncableTickable
 	public void writeNBT(NBTTagCompound nbt)
 	{
 		NBTTagList list = new NBTTagList();
-		for(MultipartSignature s : signatures)
+		for(MultipartSignature s : renderSignatures)
 		{
 			NBTTagCompound tag = new NBTTagCompound();
 			s.writeSignature(tag);
@@ -94,16 +109,21 @@ public class TileMultipart extends TileSyncableTickable
 	
 	public int getNextSignatureIndex()
 	{
-		return signatures.size();
+		return renderSignatures.size();
+	}
+	
+	public boolean canPlace_def(MultipartSignature signature)
+	{
+		AxisAlignedBB aabb = signature.getBoundingBox();
+		for(MultipartSignature s : renderSignatures)
+			if(s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(aabb))
+				return false;
+		return true;
 	}
 	
 	public boolean canPlace(MultipartSignature signature)
 	{
-		AxisAlignedBB aabb = signature.getBoundingBox();
-		for(MultipartSignature s : signatures)
-			if(s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(aabb))
-				return false;
-		return true;
+		return signature.canPlaceInto(this);
 	}
 	
 	public boolean addMultipart(MultipartSignature signature)
@@ -111,10 +131,11 @@ public class TileMultipart extends TileSyncableTickable
 		if(!canPlace(signature)) return false;
 		signature.setPos(pos);
 		signature.setWorld(world);
+		signature.setOwner(this);
 		signatures.add(signature);
 		renderSignatures = new HashSet<>(signatures);
-		if(signature instanceof ITickable) tickableSignatures.add((ITickable) signature);
 		lastBaked = null;
+		if(world != null && !world.isRemote) sync();
 		return true;
 	}
 	
@@ -124,13 +145,14 @@ public class TileMultipart extends TileSyncableTickable
 		signature.onRemoved(spawnDrop);
 		signatures.remove(signature);
 		renderSignatures = new HashSet<>(signatures);
-		tickableSignatures.remove(signature);
+		signature.setOwner(null);
 		lastBaked = null;
+		if(world != null && !world.isRemote) sync();
 	}
 	
 	public MultipartSignature getSignature(Vec3d pos)
 	{
-		for(MultipartSignature s : signatures)
+		for(MultipartSignature s : renderSignatures)
 			if(s.getBoundingBox() != null && s.getBoundingBox().intersects(pos.addVector(-.0001, -.0001, -.0001), pos.addVector(.0001, .0001, .0001)))
 				return s;
 		return null;
@@ -145,8 +167,36 @@ public class TileMultipart extends TileSyncableTickable
 	public Cuboid6[] bakeCuboids()
 	{
 		List<Cuboid6> cubs = new ArrayList<>();
-		for(MultipartSignature signature : signatures)
+		for(MultipartSignature signature : renderSignatures)
 			cubs.add(new Cuboid6(signature.getBoundingBox()));
 		return cubs.toArray(new Cuboid6[0]);
+	}
+	
+	@Override
+	public <T extends ITileHandler> T getHandler(EnumFacing facing, Class<T> handler, Object... params)
+	{
+		for(MultipartSignature signature : renderSignatures)
+		{
+			IHandlerProvider provider = WorldUtil.cast(signature, IHandlerProvider.class);
+			if(provider != null)
+			{
+				T h = provider.getHandler(facing, handler, params);
+				if(handler != null) return h;
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public <T extends ITileHandler> boolean hasHandler(EnumFacing facing, Class<T> handler, Object... params)
+	{
+		for(MultipartSignature signature : renderSignatures)
+		{
+			IHandlerProvider provider = WorldUtil.cast(signature, IHandlerProvider.class);
+			if(provider != null && provider.hasHandler(facing, handler, params)) return true;
+		}
+		
+		return false;
 	}
 }

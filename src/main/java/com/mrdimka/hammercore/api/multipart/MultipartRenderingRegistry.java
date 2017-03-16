@@ -3,6 +3,9 @@ package com.mrdimka.hammercore.api.multipart;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Resolves all custom-rendered multipart signatures by their class.
+ */
 public class MultipartRenderingRegistry
 {
 	private static final IMultipartRender DEFAULT_RENDER = new BlockStateMultipartRender();

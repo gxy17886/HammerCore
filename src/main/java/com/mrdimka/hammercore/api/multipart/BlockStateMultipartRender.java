@@ -7,6 +7,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
+
+/**
+ * Renders a block state in the place of {@link TileMultipart}
+ */
 public class BlockStateMultipartRender implements IMultipartRender<MultipartSignature>
 {
 	@Override

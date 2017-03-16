@@ -5,6 +5,9 @@ import java.util.Map;
 
 import com.mrdimka.hammercore.event.GetAllRequiredApisEvent;
 
+/**
+ * Gather all required {@link IHammerCoreAPI}s
+ */
 public class RequiredDeps
 {
 	private static final Map<String, String> REQUESTED_DEPS = new HashMap<>();
