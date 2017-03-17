@@ -10,9 +10,11 @@ import com.mrdimka.hammercore.init.ModBlocks;
 /**
  * Some useful utilities for Mutlipart API
  */
-public class MultipartAPI
+public final class MultipartAPI
 {
-	public TileMultipart getOrPlaceMultipart(World world, BlockPos pos)
+	private MultipartAPI() {}
+	
+	public static TileMultipart getOrPlaceMultipart(World world, BlockPos pos)
 	{
 		if(world != null && pos != null && world.isBlockLoaded(pos))
 		{

@@ -10,7 +10,9 @@ import net.minecraft.util.ResourceLocation;
  */
 public interface IMultipartRender<MP extends MultipartSignature>
 {
-	void renderMultipartAt(MP signature, double x, double y, double z, float partialTicks, int destroyStage);
+	@Deprecated
+	default void renderMultipartAt(MP signature, double x, double y, double z, float partialTicks, int destroyStage) {};
+	void renderMultipartAt(MP signature, double x, double y, double z, float partialTicks, ResourceLocation destroyStage);
 	
 	default void bindTexture(ResourceLocation location)
 	{

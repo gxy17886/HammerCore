@@ -44,7 +44,7 @@ public class ModBlocks
 		b.setCreativeTab(HammerCore.tab);
 		
 		//ItemBlockDefinition
-		ItemBlock ib = null;
+		Item ib = null;
 		
 		if(b instanceof BlockMultipartProvider) ib = ((BlockMultipartProvider) b).createItem();
 		else ib = new ItemBlock(b);

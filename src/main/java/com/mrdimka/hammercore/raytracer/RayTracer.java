@@ -134,7 +134,7 @@ public class RayTracer
 	
 	public ExtendedRayTraceResult rayTraceCuboid(Vector3 start, Vector3 end, Cuboid6 cuboid, BlockPos pos, Object data)
 	{
-		return rayTraceCuboid(start, end, cuboid) ? new ExtendedRayTraceResult(s_vec, s_side, pos, data, s_dist) : null;
+		return rayTraceCuboid(start, end, cuboid) && s_side != -1 ? new ExtendedRayTraceResult(s_vec, s_side, pos, data, s_dist) : null;
 	}
 	
 	public ExtendedRayTraceResult rayTraceCuboid(Vector3 start, Vector3 end, Cuboid6 cuboid, Entity entity, Object data)
@@ -145,7 +145,7 @@ public class RayTracer
 	public ExtendedRayTraceResult rayTraceCuboids(Vector3 start, Vector3 end, List<IndexedCuboid6> cuboids, BlockPos pos)
 	{
 		IndexedCuboid6 hit = rayTraceCuboids(start, end, cuboids);
-		return hit != null ? new ExtendedRayTraceResult(s_vec, s_side, pos, hit.data, s_dist) : null;
+		return hit != null && s_side != -1 ? new ExtendedRayTraceResult(s_vec, s_side, pos, hit.data, s_dist) : null;
 	}
 	
 	public ExtendedRayTraceResult rayTraceCuboids(Vector3 start, Vector3 end, List<IndexedCuboid6> cuboids, Entity entity)

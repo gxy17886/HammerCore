@@ -1,10 +1,17 @@
 package com.mrdimka.hammercore.common.blocks.multipart;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving.SpawnPlacementType;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -15,10 +22,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.mrdimka.hammercore.api.INoItemBlock;
@@ -38,6 +48,21 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		super(Material.IRON);
 		MinecraftForge.EVENT_BUS.register(this);
 		setUnlocalizedName("multipart");
+	}
+	
+	@Override
+	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player)
+	{
+		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
+		Cuboid6 cbd = getCuboidFromPlayer(player, pos);
+		
+		if(tmp != null && cbd != null)
+		{
+			MultipartSignature signature = tmp.getSignature(cbd.center().toVec3d());
+			if(signature != null) return signature.getPickBlock(player);
+		}
+		
+		return super.getPickBlock(state, target, world, pos, player);
 	}
 	
 	@Override
@@ -70,7 +95,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 			if(tmp != null && cbd != null)
 			{
 				MultipartSignature s = tmp.getSignature(cbd.center().toVec3d());
-				if(s.getState() != null) return s.getState().getBlock().getSoundType(s.getState(), world, pos, player);
+				if(s.getState() != null) return s.getSoundType(player);
 			}
 		}
 		return super.getSoundType(state, world, pos, entity);
@@ -104,6 +129,12 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public boolean causesSuffocation(IBlockState state)
 	{
 		return false;
+	}
+	
+	@Override
+	public int getLightOpacity(IBlockState state, IBlockAccess world, BlockPos pos)
+	{
+		return 0;
 	}
 	
 	@Override
@@ -165,12 +196,96 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		if(tmp != null && cbd != null)
 		{
 			MultipartSignature signature = tmp.getSignature(cbd.center().toVec3d());
-			return signature.getState() != null ? signature.getState().getPlayerRelativeBlockHardness(player, worldIn, pos) : 0F;
+			return signature.getHardness(player);
 		}
 		return 0F;
 	}
 	
-	@SubscribeEvent
+	@Override
+	public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+	{
+		TileMultipart tmp = WorldUtil.cast(blockAccess.getTileEntity(pos), TileMultipart.class);
+		return tmp != null ? tmp.getWeakPower(side) : 0;
+	}
+	
+	@Override
+	public int getStrongPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+	{
+		TileMultipart tmp = WorldUtil.cast(blockAccess.getTileEntity(pos), TileMultipart.class);
+		return tmp != null ? tmp.getStrongPower(side) : 0;
+	}
+	
+	@Override
+	public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager manager)
+	{
+		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(target.getBlockPos()), TileMultipart.class);
+		Cuboid6 cbd = getCuboidFromRTR(world, target);
+		if(tmp != null && cbd != null)
+		{
+			MultipartSignature signature = tmp.getSignature(cbd.aabb().getCenter());
+			if(signature != null) signature.addHitEffects(world, target, manager);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager)
+	{
+		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
+		if(tmp != null) for(MultipartSignature s : tmp.signatures()) s.addDestroyEffects(world, pos, manager);
+		return true;
+	}
+	
+	/**
+	 * We shall disable vanilla missing textures landing animation
+	 */
+	@Override
+	public boolean addLandingEffects(IBlockState state, WorldServer worldObj, BlockPos blockPosition, IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles)
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
+	{
+		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
+		for(MultipartSignature s : tmp.signatures()) if(s != null && s.canConnectRedstone(side)) return true;
+		return false;
+	}
+	
+	@Override
+	public boolean canCreatureSpawn(IBlockState state, IBlockAccess world, BlockPos pos, SpawnPlacementType type)
+	{
+		return false;
+	}
+	
+	@Override
+	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
+	{
+		return new ArrayList<>();
+	}
+	
+	@Override
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
+	{
+		TileMultipart tmp = WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class);
+		if(tmp != null) for(MultipartSignature s : tmp.signatures()) tmp.removeMultipart(s, true); //Drop everything!
+	}
+	
+	@Override
+	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
+	{
+		TileMultipart tmp = WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class);
+		if(tmp != null) tmp.randomDisplayTick(rand);
+	}
+	
+	@Override
+	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
+	{
+		return false;
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void tryBreakBlock(BlockEvent.BreakEvent evt)
 	{
 		if(evt.getState().getBlock() == this)

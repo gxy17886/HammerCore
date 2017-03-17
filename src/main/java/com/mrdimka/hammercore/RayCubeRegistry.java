@@ -13,7 +13,7 @@ import com.mrdimka.hammercore.api.mhb.IRayCubeRegistry;
 import com.mrdimka.hammercore.api.mhb.IRayCubeGetter.Instance;
 import com.mrdimka.hammercore.vec.Cuboid6;
 
-class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
+final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
 {
 	static final RayCubeRegistry instance = new RayCubeRegistry();
 	final Map<Block, Cuboid6[]> cubes = new HashMap<Block, Cuboid6[]>();

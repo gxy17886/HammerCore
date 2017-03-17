@@ -4,6 +4,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -15,7 +16,7 @@ import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 public class BlockStateMultipartRender implements IMultipartRender<MultipartSignature>
 {
 	@Override
-	public void renderMultipartAt(MultipartSignature signature, double x, double y, double z, float partialTicks, int destroyStage)
+	public void renderMultipartAt(MultipartSignature signature, double x, double y, double z, float partialTicks, ResourceLocation destroyStage)
 	{
 		IBlockState state = signature.getState();
 		if(state != null)

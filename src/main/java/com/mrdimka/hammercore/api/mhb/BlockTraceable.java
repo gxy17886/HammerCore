@@ -189,4 +189,24 @@ public abstract class BlockTraceable extends Block
 		
 		return null;
 	}
+	
+	public Cuboid6 getCuboidFromRTR(World world, RayTraceResult hit)
+	{
+		BlockPos pos = hit.getBlockPos();
+		if(pos == null) return null;
+		
+		if(hit != null && registry.getBoundCubes6(this) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubes6(this).length)
+		{
+			Cuboid6[] cubes = registry.getBoundCubes6(this);
+			return cubes[hit.subHit];
+		}else
+		
+		if(hit != null && registry.getBoundCubes6(this) == null && registry.getBoundCubeManager(this) != null && registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos)) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos)).length)
+		{
+			Cuboid6[] cubes = registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos));
+			return cubes[hit.subHit];
+		}
+		
+		return null;
+	}
 }

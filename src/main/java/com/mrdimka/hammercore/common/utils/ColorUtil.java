@@ -31,6 +31,7 @@ public class ColorUtil
 	
 	/**
 	 * Gets this stack's dye color, or null if it is not a dye
+	 * @param stack The stack that we should get color from
 	 */
 	public static EnumDyeColor getDyeColor(ItemStack stack)
 	{
@@ -48,6 +49,7 @@ public class ColorUtil
 	
 	/**
 	 * Gets a Hex integer containing a color for passed stack
+	 * @param stack The stack that we should get color from
 	 */
 	public static int getDyeColorInt(ItemStack stack)
 	{

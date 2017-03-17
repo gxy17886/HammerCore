@@ -6,8 +6,10 @@ import java.util.Map;
 /**
  * Resolves all custom-rendered multipart signatures by their class.
  */
-public class MultipartRenderingRegistry
+public final class MultipartRenderingRegistry
 {
+	private MultipartRenderingRegistry() {}
+	
 	private static final IMultipartRender DEFAULT_RENDER = new BlockStateMultipartRender();
 	private static final Map<Class, IMultipartRender> renders = new HashMap<>();
 	
