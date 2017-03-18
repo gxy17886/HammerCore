@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,29 +36,25 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private boolean hasSyncedOnce = false;
 	
 	private Set<MultipartSignature> renderSignatures = new HashSet<>();
+	private Stream<MultipartSignature> signatureStream;
 	private Set<IRandomDisplayTick> displayTickable = new HashSet<>();
 	
 	@Override
 	public void tick()
 	{
-		MultipartSignature toRemove = null;
-		for(MultipartSignature signature : signatures())
+		if(signatureStream != null) signatureStream.forEach(signature ->
 		{
 			if(signature.getOwner() != this)
 			{
-				toRemove = signature;
-				continue;
+				removeMultipart(signature, false);
+				return;
 			}
 			
 			signature.setWorld(world);
 			signature.setPos(pos);
 			
-			if(signature instanceof ITickable)
-				((ITickable) signature).update();
-		}
-		
-		//Force-remove is we don't own this signature.
-		removeMultipart(toRemove, false);
+			if(signature instanceof ITickable) ((ITickable) signature).update();
+		});
 		
 		if(signatures.isEmpty() && !world.isRemote)
 			world.setBlockToAir(pos);
@@ -91,6 +88,11 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		return renderSignatures;
 	}
 	
+	public Stream<MultipartSignature> signatureStream()
+	{
+		return signatureStream;
+	}
+	
 	public boolean onBoxActivated(int boxID, Cuboid6 box, World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		for(MultipartSignature s : signatures())
@@ -108,7 +110,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public void randomDisplayTick(Random rand)
 	{
-		for(IRandomDisplayTick rdt : displayTickable) rdt.randomDisplayTick(rand);
+		displayTickable.stream().forEach(rdt -> rdt.randomDisplayTick(rand));
 	}
 	
 	@Override
@@ -169,6 +171,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			displayTickable = ticks;
 		}
 		renderSignatures = new HashSet<>(signatures);
+		signatureStream = renderSignatures.stream();
 		lastBaked = null;
 		if(world != null && !world.isRemote) sync();
 		return true;
@@ -180,6 +183,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		signature.onRemoved(spawnDrop);
 		signatures.remove(signature);
 		renderSignatures = new HashSet<>(signatures);
+		signatureStream = renderSignatures.stream();
 		signature.setOwner(null);
 		if(signature instanceof IRandomDisplayTick)
 		{
@@ -240,5 +244,11 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		}
 		
 		return false;
+	}
+	
+	@Override
+	public boolean hasFastRenderer()
+	{
+		return true;
 	}
 }

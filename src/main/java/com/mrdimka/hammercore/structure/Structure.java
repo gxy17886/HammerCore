@@ -42,9 +42,11 @@ public class Structure
 		{
 			if(l == null) continue;
 			BlockPos pos = BlockPos.fromLong(l);
+			BlockPos tpos = at.add(pos);
+			if(!world.isBlockLoaded(tpos)) continue;
 			NBTTagCompound nbt = tileMap.get(l);
 			IBlockState state = getStateAt(pos);
-			world.setBlockState(at.add(pos), state);
+			world.setBlockState(tpos, state);
 			if(nbt != null)
 			{
 				TileEntity tile = TileEntity.create(world, nbt);

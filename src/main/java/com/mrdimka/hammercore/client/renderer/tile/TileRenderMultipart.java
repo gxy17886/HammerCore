@@ -1,11 +1,15 @@
 package com.mrdimka.hammercore.client.renderer.tile;
 
 import java.lang.reflect.Field;
+import java.util.stream.Stream;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 
@@ -14,13 +18,19 @@ import org.lwjgl.opengl.GL11;
 import com.mrdimka.hammercore.api.multipart.IMultipartRender;
 import com.mrdimka.hammercore.api.multipart.MultipartRenderingRegistry;
 import com.mrdimka.hammercore.api.multipart.MultipartSignature;
+import com.mrdimka.hammercore.common.blocks.multipart.BlockMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
+import com.mrdimka.hammercore.init.ModBlocks;
+import com.mrdimka.hammercore.vec.Cuboid6;
 
 public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart>
 {
 	@Override
 	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
+		Stream<MultipartSignature> mps = te.signatureStream();
+		if(mps == null) return;
+		
 		ResourceLocation destroy = null;
 		RayTraceResult over = Minecraft.getMinecraft().objectMouseOver;
 		if(over != null && over.typeOfHit == Type.BLOCK && over.getBlockPos().equals(te.getPos()))
@@ -34,13 +44,34 @@ public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart
 			}catch(Throwable err) {}
 		}
 		
-		for(MultipartSignature s : te.signatures())
+		Cuboid6 cbd = ((BlockMultipart) ModBlocks.MULTIPART).getCuboidFromRTR(te.getWorld(), over);
+		AxisAlignedBB aabb = cbd != null ? cbd.aabb() : null;
+		
+		ResourceLocation _destroy = destroy;
+		
+		/* Move to stream.forEach(Lambda) function as it is almost twice (or more) the speed */
+		mps.forEach(s ->
 		{
 			IMultipartRender render = MultipartRenderingRegistry.getRender(s);
 			GL11.glPushMatrix();
-			if(render != null) render.renderMultipartAt(s, x, y, z, partialTicks, destroy);
+			if(render != null) render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? _destroy : null);
 			GL11.glPopMatrix();
-		}
+		});
+	}
+	
+	@Override
+	public void renderTileEntityFast(TileMultipart te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer)
+	{
+		Stream<MultipartSignature> mps = te.signatureStream();
+		if(mps == null) return;
+		
+		mps.forEach(s ->
+		{
+			IMultipartRender render = MultipartRenderingRegistry.getRender(s);
+			GL11.glPushMatrix();
+			if(render != null) render.renderMultipartAt(s, x, y, z, partialTicks, null);
+			GL11.glPopMatrix();
+		});
 	}
 	
 	public static class DestroyStage

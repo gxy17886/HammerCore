@@ -136,7 +136,7 @@ public abstract class MultipartSignature
     {
     	IBlockState state = getState();
     	
-        if(state.getRenderType() != EnumBlockRenderType.INVISIBLE)
+        if(state != null && state.getRenderType() != EnumBlockRenderType.INVISIBLE)
         {
             int i = pos.getX();
             int j = pos.getY();
@@ -206,7 +206,7 @@ public abstract class MultipartSignature
     {
         int i = 4;
         
-        for (int j = 0; j < i; ++j)
+        if(state != null) for (int j = 0; j < i; ++j)
         {
             for (int k = 0; k < i; ++k)
             {

@@ -29,10 +29,19 @@ public class ItemBlockMultipartProvider extends Item
 		this.provider = provider;
 	}
 	
+	/**
+	 * Parameter-less version that casts this item into a provider
+	 */
+	public ItemBlockMultipartProvider()
+	{
+		this.provider = (IMultipartProvider) this;
+	}
+	
 	@Override
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
 		pos = pos.offset(facing);
+		if(!worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) return EnumActionResult.FAIL;
         TileMultipart tmp = MultipartAPI.getOrPlaceMultipart(worldIn, pos);
         
         ItemStack itemstack = player.getHeldItem(hand);

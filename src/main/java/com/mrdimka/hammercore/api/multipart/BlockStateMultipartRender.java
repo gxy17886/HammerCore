@@ -3,6 +3,7 @@ package com.mrdimka.hammercore.api.multipart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,10 +22,10 @@ public class BlockStateMultipartRender implements IMultipartRender<MultipartSign
 		IBlockState state = signature.getState();
 		if(state != null)
 		{
-			Tessellator tes = Tessellator.getInstance();
-			tes.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-			Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(state, signature.pos, signature.world, tes.getBuffer());
-			tes.draw();
+			VertexBuffer buf = Tessellator.getInstance().getBuffer();
+			buf.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
+			Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlock(state, signature.pos, signature.world, buf);
+			Tessellator.getInstance().draw();
 		}
 	}
 }

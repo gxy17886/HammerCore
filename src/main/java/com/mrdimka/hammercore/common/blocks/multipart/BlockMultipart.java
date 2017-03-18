@@ -30,6 +30,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.api.mhb.BlockTraceable;
@@ -215,7 +217,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		return tmp != null ? tmp.getStrongPower(side) : 0;
 	}
 	
-	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager manager)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(target.getBlockPos()), TileMultipart.class);
@@ -228,7 +230,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		return true;
 	}
 	
-	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
@@ -239,7 +241,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	/**
 	 * We shall disable vanilla missing textures landing animation
 	 */
-	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean addLandingEffects(IBlockState state, WorldServer worldObj, BlockPos blockPosition, IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles)
 	{
 		return true;
