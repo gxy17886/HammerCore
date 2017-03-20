@@ -44,6 +44,12 @@ com.mrdimka.hammercore.net.packetAPI
 com.mrdimka.hammercore.net.pkt
 com.mrdimka.hammercore.proxy
 com.mrdimka.hammercore.raytracer
+com.mrdimka.hammercore.recipeAPI
+com.mrdimka.hammercore.recipeAPI.registry
+com.mrdimka.hammercore.recipeAPI.types
+com.mrdimka.hammercore.recipeAPI.vanilla
+com.mrdimka.hammercore.recipeAPI.vanilla.crafting
+com.mrdimka.hammercore.recipeAPI.vanilla.furnace
 com.mrdimka.hammercore.structure
 com.mrdimka.hammercore.tile
 com.mrdimka.hammercore.vec
