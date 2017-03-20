@@ -37,6 +37,8 @@ public abstract class MultipartSignature
 {
 	protected static final SecureRandom RANDOM = new SecureRandom();
 	
+	/** Set this to true to force multipart re-render every multipart signature onto a buffer */
+	protected boolean reRenderRequired = false;
 	protected TileMultipart owner;
 	protected World world;
 	protected BlockPos pos;

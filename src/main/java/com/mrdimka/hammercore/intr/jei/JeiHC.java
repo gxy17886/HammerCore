@@ -7,16 +7,24 @@ import net.minecraft.client.gui.inventory.GuiFurnace;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
+import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 
 @JEIPlugin
-public class JeiHC implements IModPlugin
+public class JeiHC implements IModPlugin, IJeiRecipeModifier
 {
-	@Override
-	public void onRuntimeAvailable(IJeiRuntime arg0)
+	IRecipeRegistry registry;
+	
 	{
+		Instance.JEIModifier = this;
+	}
+	
+	@Override
+	public void onRuntimeAvailable(IJeiRuntime runtime)
+	{
+		registry = runtime.getRecipeRegistry();
 	}
 	
 	@Override
@@ -35,5 +43,17 @@ public class JeiHC implements IModPlugin
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistry arg0)
 	{
+	}
+
+	@Override
+	public void addJEI(Object recipe)
+	{
+		registry.addRecipe(recipe);
+	}
+	
+	@Override
+	public void removeJEI(Object recipe)
+	{
+		registry.removeRecipe(recipe);
 	}
 }

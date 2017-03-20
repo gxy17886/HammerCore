@@ -1,5 +1,8 @@
 package com.mrdimka.hammercore;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
@@ -22,6 +26,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -42,6 +47,7 @@ import com.mrdimka.hammercore.command.CommandTPX;
 import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
 import com.mrdimka.hammercore.common.utils.AnnotatedInstanceUtil;
 import com.mrdimka.hammercore.common.utils.HammerCoreUtils;
+import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.mrdimka.hammercore.common.utils.WrappedLog;
 import com.mrdimka.hammercore.event.AddCalculatronRecipeEvent;
 import com.mrdimka.hammercore.event.GetAllRequiredApisEvent;
@@ -53,6 +59,12 @@ import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.proxy.AudioProxy_Common;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Common;
 import com.mrdimka.hammercore.proxy.RenderProxy_Common;
+import com.mrdimka.hammercore.recipeAPI.IRecipePlugin;
+import com.mrdimka.hammercore.recipeAPI.RecipePlugin;
+import com.mrdimka.hammercore.recipeAPI.registry.GlobalRecipeScript;
+import com.mrdimka.hammercore.recipeAPI.registry.IRecipeScript;
+import com.mrdimka.hammercore.recipeAPI.registry.IRecipeTypeRegistry;
+import com.mrdimka.hammercore.recipeAPI.registry.RecipeTypeRegistry;
 
 /**
  * The core of Hammer Core.
@@ -103,7 +115,8 @@ public class HammerCore
 	
 	public static final CSVFile FIELD_CSV, METHODS_CSV;
 	
-	private List<IRayRegistry> raytracePlugins = new ArrayList<IRayRegistry>();
+	private List<IRayRegistry> raytracePlugins;
+	private List<IRecipePlugin> recipePlugins;
 	
 	static
 	{
@@ -165,6 +178,7 @@ public class HammerCore
 		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);
 		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
+		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, IRecipePlugin.class);
 		
 		for(IJavaCode code : COMPILED_CODES) //Add compiled codes
 			code.addMCFObjects(toRegister);
@@ -222,11 +236,14 @@ public class HammerCore
 		if(!MinecraftForge.EVENT_BUS.post(evt)) GameRegistry.addRecipe(evt.getRecipe());
 	}
 	
+	private final RecipeTypeRegistry registry = new RecipeTypeRegistry();
+	private GlobalRecipeScript recipeScript;
+	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		for(IJavaCode code : COMPILED_CODES)
-			code.postInit();
+		for(IJavaCode code : COMPILED_CODES) code.postInit();
+		for(IRecipePlugin plugin : recipePlugins) plugin.registerTypes(registry);
 	}
 	
 	@EventHandler
@@ -234,6 +251,35 @@ public class HammerCore
 	{
 		e.registerServerCommand(new CommandPosToLong());
 		e.registerServerCommand(new CommandTPX());
+		
+		MinecraftServer server = e.getServer();
+		File worldFolder = new File((server.isDedicatedServer() ? "" : "saves" + File.separator) + server.getFolderName(), "hc-recipes");
+		worldFolder.mkdirs();
+		
+		List<IRecipeScript> jsons = new ArrayList<>();
+		if(worldFolder.isDirectory()) for(File json : worldFolder.listFiles(new FileFilter()
+		{
+			@Override
+			public boolean accept(File pathname)
+			{
+				return pathname.isFile() && pathname.getName().endsWith(".json");
+			}
+		}))
+		{
+			try
+			{
+				jsons.add(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(json)))));
+			}
+			catch(Throwable err)
+			{
+				LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
+				err.printStackTrace();
+			}
+		}
+		
+		if(recipeScript != null) recipeScript.remove();
+		recipeScript = new GlobalRecipeScript(jsons.toArray(new IRecipeScript[jsons.size()]));
+		recipeScript.add();
 		
 		RayCubeRegistry.instance.cubes.clear();
 		RayCubeRegistry.instance.mgrs.clear();
@@ -244,5 +290,12 @@ public class HammerCore
 			reg.registerCubes(RayCubeRegistry.instance);
 			LOG.info("Registered raytrace  plugin: " + reg.getClass().getName() + " in " + (System.currentTimeMillis() - start) + " ms");
 		}
+	}
+	
+	@EventHandler
+	public void serverStop(FMLServerStoppingEvent evt)
+	{
+		if(recipeScript != null) recipeScript.remove();
+		recipeScript = null;
 	}
 }

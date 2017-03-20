@@ -61,6 +61,16 @@ public class RenderGui
 		if(gui instanceof GuiContainer)
 		{
 			GuiContainer gc = (GuiContainer) gui;
+			
+			//Sources are done, but this wans't compiled in 1.4.0; Wait it in 1.4.1
+			int guiLeft = 0, guiTop = 0;
+			try
+			{
+				guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiLeft", "field_147003_i");
+				guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiTop", "field_147009_r");
+			}
+			catch(Throwable err) {}
+			
 			Container c = gc.inventorySlots;
 			for(int i = 0; i < c.inventorySlots.size(); ++i)
 			{
@@ -68,14 +78,6 @@ public class RenderGui
 				if(stack != null)
 				{
 					Slot sl = c.getSlot(i);
-					
-					int guiLeft = 0, guiTop = 0;
-					try
-					{
-						guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiLeft", "field_147003_i");
-						guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiTop", "field_147009_r");
-					}
-					catch(Throwable err) {}
 					
 					IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
 					if(renderer != null)
@@ -90,7 +92,8 @@ public class RenderGui
 			ItemStack stack = gc.mc.player.inventory.getItemStack();
 			if(stack != null)
 			{
-				int guiLeft = e.getMouseX(), guiTop = e.getMouseY();
+				guiLeft = e.getMouseX();
+				guiTop = e.getMouseY();
 				IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
 				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
 			}

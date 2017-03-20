@@ -12,6 +12,9 @@ public interface IMultipartRender<MP extends MultipartSignature>
 {
 	void renderMultipartAt(MP signature, double x, double y, double z, float partialTicks, ResourceLocation destroyStage);
 	
+	@Deprecated
+	default void renderMultipartAt(MP signature, double x, double y, double z, float partialTicks, ResourceLocation destroyStage, VertexBuffer buffer) {}
+	
 	default void bindTexture(ResourceLocation location)
 	{
 		HammerCore.renderProxy.bindTexture(location);

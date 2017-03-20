@@ -33,16 +33,17 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private final Set<MultipartSignature> signatures = new HashSet<>();
 	private Cuboid6[] lastBaked = null;
 	
+	public Object VertexBuffer = null;
+	
 	private boolean hasSyncedOnce = false;
 	
 	private Set<MultipartSignature> renderSignatures = new HashSet<>();
-	private Stream<MultipartSignature> signatureStream;
 	private Set<IRandomDisplayTick> displayTickable = new HashSet<>();
 	
 	@Override
 	public void tick()
 	{
-		if(signatureStream != null) signatureStream.forEach(signature ->
+		signatures().stream().forEach(signature ->
 		{
 			if(signature.getOwner() != this)
 			{
@@ -86,11 +87,6 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	public Set<MultipartSignature> signatures()
 	{
 		return renderSignatures;
-	}
-	
-	public Stream<MultipartSignature> signatureStream()
-	{
-		return signatureStream;
 	}
 	
 	public boolean onBoxActivated(int boxID, Cuboid6 box, World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -171,7 +167,6 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			displayTickable = ticks;
 		}
 		renderSignatures = new HashSet<>(signatures);
-		signatureStream = renderSignatures.stream();
 		lastBaked = null;
 		if(world != null && !world.isRemote) sync();
 		return true;
@@ -183,7 +178,6 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		signature.onRemoved(spawnDrop);
 		signatures.remove(signature);
 		renderSignatures = new HashSet<>(signatures);
-		signatureStream = renderSignatures.stream();
 		signature.setOwner(null);
 		if(signature instanceof IRandomDisplayTick)
 		{

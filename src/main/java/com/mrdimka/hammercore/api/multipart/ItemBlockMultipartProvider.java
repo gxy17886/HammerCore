@@ -41,7 +41,7 @@ public class ItemBlockMultipartProvider extends Item
     public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
 		pos = pos.offset(facing);
-		if(!worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) return EnumActionResult.FAIL;
+		if(WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class) == null && !worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) return EnumActionResult.FAIL;
         TileMultipart tmp = MultipartAPI.getOrPlaceMultipart(worldIn, pos);
         
         ItemStack itemstack = player.getHeldItem(hand);
