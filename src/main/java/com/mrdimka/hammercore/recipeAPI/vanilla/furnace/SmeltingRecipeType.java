@@ -1,7 +1,9 @@
 package com.mrdimka.hammercore.recipeAPI.vanilla.furnace;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
+import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.plugins.vanilla.furnace.SmeltingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -21,7 +23,7 @@ public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 	}
 	
 	@Override
-	public Object getJeiRecipeFor(SmeltingRecipeHC recipe)
+	public Object getJeiRecipeFor(SmeltingRecipeHC recipe, boolean remove)
 	{
 		return new SmeltingRecipe(recipe.input, recipe.output);
 	}
@@ -58,6 +60,19 @@ public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 	
 	@Override
 	public void removeRecipe(SmeltingRecipeHC recipe)
+	{
+		for(ItemStack in : recipe.input) FurnaceRecipes.instance().getSmeltingList().remove(in);
+	}
+	
+	@Override
+	public void addOnUnload(SmeltingRecipeHC recipe)
+	{
+		for(ItemStack in : recipe.input)
+			FurnaceRecipes.instance().addSmeltingRecipe(in, recipe.output, 0);
+	}
+	
+	@Override
+	public void removeOnLoad(SmeltingRecipeHC recipe)
 	{
 		for(ItemStack in : recipe.input) FurnaceRecipes.instance().getSmeltingList().remove(in);
 	}

@@ -25,6 +25,11 @@ import com.mrdimka.hammercore.net.pkt.PacketSyncSyncableTile;
 
 public abstract class TileSyncable extends TileEntity
 {
+	private NBTTagCompound lastSyncTag;
+	
+	/** Turn this to false to force this tile to sync even if it's old and new tags are equal */
+	public boolean escapeSyncIfIdentical = false;
+	
 	@Override
 	public void markDirty()
 	{
@@ -34,6 +39,14 @@ public abstract class TileSyncable extends TileEntity
 	
 	public void sync()
 	{
+		if(escapeSyncIfIdentical)
+		{
+			NBTTagCompound nbt = new NBTTagCompound();
+			writeNBT(nbt);
+			if(lastSyncTag != null && lastSyncTag.equals(nbt)) return; //Escape unnecessary sync if it is the same
+			lastSyncTag = nbt;
+		}
+		
 		if(world != null && !world.isRemote) //Apply sync only if server
 		{
 			PacketSyncSyncableTile tile = new PacketSyncSyncableTile(this);

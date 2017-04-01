@@ -49,8 +49,15 @@ public abstract class BlockTraceable extends Block
 		super(material, mapColor);
 	}
 	
-	public abstract AxisAlignedBB getFullBoundingBox(IBlockAccess world, BlockPos pos, IBlockState state);
-	public boolean includeAllHitboxes(World world, BlockPos pos, IBlockState state) { return true; }
+	public AxisAlignedBB getFullBoundingBox(IBlockAccess world, BlockPos pos, IBlockState state)
+	{
+		return FULL_BLOCK_AABB;
+	}
+	
+	public boolean includeAllHitboxes(World world, BlockPos pos, IBlockState state)
+	{
+		return true;
+	}
 	
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess world, BlockPos pos)
 	{
@@ -118,9 +125,10 @@ public abstract class BlockTraceable extends Block
 		registry = IRayCubeGetter.Instance.getter;
 		if(!includeAllHitboxes(w, p, s)) { super.addCollisionBoxToList(s, w, p, aabb, l, ent, wut); return; }
 		Cuboid6[] cbs = null;
+		if(registry == null) return;
 		if(registry.getBoundCubeManager(this) != null) cbs = registry.getBoundCubeManager(this).getCuboids(w, p, s);
 		else if(registry.getBoundCubes6(this) != null) cbs = registry.getBoundCubes6(this);
-		for(Cuboid6 c : cbs) addCollisionBoxToList(p, aabb, l, c.aabb());
+		if(cbs != null) for(Cuboid6 c : cbs) addCollisionBoxToList(p, aabb, l, c.aabb());
 	}
 	
 	private void setBlockBounds(float x, float y, float z, float x2, float y2, float z2)
@@ -136,12 +144,17 @@ public abstract class BlockTraceable extends Block
 	public final RayTraceResult collisionRayTrace(IBlockState s, World world, BlockPos p, Vec3d start, Vec3d end)
 	{
 		registry = IRayCubeGetter.Instance.getter;
+		
+		if(registry == null) return super.collisionRayTrace(s, world, p, start, end);
+		
 		exited = false;
 		List<IndexedCuboid6> cuboids = new LinkedList();
 		
 		Cuboid6[] cbs = null;
 		if(registry.getBoundCubeManager(this) != null) cbs = registry.getBoundCubeManager(this).getCuboids(world, p, world.getBlockState(p));
 		else if(registry.getBoundCubes6(this) != null) cbs = registry.getBoundCubes6(this);
+		
+		if(cbs == null) return super.collisionRayTrace(s, world, p, start, end);
 		
 		if(cbs != null) for(int i = 0; i < cbs.length; ++i)
 		{
@@ -162,6 +175,21 @@ public abstract class BlockTraceable extends Block
 				cuboids.clear();
 				cuboids.add(cbd);
 			}
+			
+//			double crr0 = cbd.min.toVec3d().squareDistanceTo(start);
+//			double crr1 = cbd.max.toVec3d().squareDistanceTo(start);
+//			if(crr0 < min)
+//			{
+//				min = crr0;
+//				cuboids.clear();
+//				cuboids.add(cbd);
+//			}
+//			if(crr1 < min)
+//			{
+//				min = crr1;
+//				cuboids.clear();
+//				cuboids.add(cbd);
+//			}
 		}
 		
 		ExtendedRayTraceResult rtl = RayTracer.rayTraceCuboids(new Vector3(start), new Vector3(end), cuboids, p);
@@ -174,6 +202,8 @@ public abstract class BlockTraceable extends Block
 	public Cuboid6 getCuboidFromPlayer(EntityPlayer player, BlockPos pos)
 	{
 		RayTraceResult hit = RayTracer.retraceBlock(player.world, player, pos);
+		
+		if(registry == null) return null;
 		
 		if(hit != null && registry.getBoundCubes6(this) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubes6(this).length)
 		{
@@ -192,8 +222,8 @@ public abstract class BlockTraceable extends Block
 	
 	public Cuboid6 getCuboidFromRTR(World world, RayTraceResult hit)
 	{
-		BlockPos pos = hit.getBlockPos();
-		if(pos == null) return null;
+		BlockPos pos = hit == null ? null : hit.getBlockPos();
+		if(pos == null || registry == null) return null;
 		
 		if(hit != null && registry.getBoundCubes6(this) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubes6(this).length)
 		{

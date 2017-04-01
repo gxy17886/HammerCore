@@ -1,5 +1,7 @@
 package com.mrdimka.hammercore.intr.jei;
 
+import java.util.function.Consumer;
+
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
 
@@ -30,6 +32,7 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	@Override
 	public void register(IModRegistry reg)
 	{
+		
 		//Add click areas to our smotth guis
 		reg.addRecipeClickArea(GuiBrewingStandSmooth.class, 97, 16, 14, 30, "minecraft.brewing");
 		reg.addRecipeClickArea(GuiFurnaceSmooth.class, 78, 32, 28, 23, "minecraft.smelting");
@@ -48,12 +51,14 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	@Override
 	public void addJEI(Object recipe)
 	{
-		registry.addRecipe(recipe);
+		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
+		else registry.addRecipe(recipe);
 	}
 	
 	@Override
 	public void removeJEI(Object recipe)
 	{
-		registry.removeRecipe(recipe);
+		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
+		else registry.removeRecipe(recipe);
 	}
 }

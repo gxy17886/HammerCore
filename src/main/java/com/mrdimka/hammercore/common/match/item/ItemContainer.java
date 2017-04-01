@@ -3,12 +3,14 @@ package com.mrdimka.hammercore.common.match.item;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.base.Predicate;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
-public final class ItemContainer
+public class ItemContainer implements Predicate<ItemStack>
 {
 	private final String item;
 	private final int count, damage;
@@ -102,5 +104,13 @@ public final class ItemContainer
 	public byte getType()
 	{
 		return type;
+	}
+	
+	ItemMatchParams defParams = new ItemMatchParams().setUseOredict(true);
+	
+	@Override
+	public boolean apply(ItemStack input)
+	{
+		return matches(input, defParams);
 	}
 }

@@ -1,10 +1,17 @@
 package com.mrdimka.hammercore.recipeAPI.registry;
 
-public class GlobalRecipeScript implements IRecipeScript
+import com.mrdimka.hammercore.HammerCore;
+import com.mrdimka.hammercore.recipeAPI.RecipePlugin;
+
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.common.util.Constants.NBT;
+
+public class GlobalRecipeScript extends SimpleRecipeScript
 {
-	public final IRecipeScript[] scripts;
+	public SimpleRecipeScript[] scripts;
 	
-	public GlobalRecipeScript(IRecipeScript... sub)
+	public GlobalRecipeScript(SimpleRecipeScript... sub)
 	{
 		scripts = sub;
 	}
@@ -12,13 +19,33 @@ public class GlobalRecipeScript implements IRecipeScript
 	@Override
 	public void add()
 	{
-		for(IRecipeScript s : scripts)
-			s.add();
+		for(SimpleRecipeScript s : scripts)
+			if(s != null)
+				s.add();
 	}
 	
 	public void remove()
 	{
-		for(IRecipeScript s : scripts)
-			s.remove();
+		for(SimpleRecipeScript s : scripts)
+			if(s != null)
+				s.remove();
+	}
+
+	@Override
+	public NBTTagCompound writeToNbt()
+	{
+		NBTTagList l = new NBTTagList();
+		for(SimpleRecipeScript s : scripts) l.appendTag(s.makeTag.copy());
+		NBTTagCompound n = new NBTTagCompound();
+		n.setTag("l", l);
+		return n;
+	}
+	
+	@Override
+	public void readFromNbt(NBTTagCompound nbt)
+	{
+		NBTTagList list = nbt.getTagList("l", NBT.TAG_LIST);
+		scripts = new SimpleRecipeScript[list.tagCount()];
+		for(int i = 0; i < scripts.length; ++i) scripts[i] = HammerCore.registry.parse((NBTTagList) list.get(i));
 	}
 }

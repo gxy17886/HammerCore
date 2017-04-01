@@ -62,7 +62,6 @@ public class RenderGui
 		{
 			GuiContainer gc = (GuiContainer) gui;
 			
-			//Sources are done, but this wans't compiled in 1.4.0; Wait it in 1.4.1
 			int guiLeft = 0, guiTop = 0;
 			try
 			{

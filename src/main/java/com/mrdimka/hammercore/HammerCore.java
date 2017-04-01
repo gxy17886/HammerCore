@@ -12,8 +12,10 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.common.Mod;
@@ -51,6 +53,7 @@ import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.mrdimka.hammercore.common.utils.WrappedLog;
 import com.mrdimka.hammercore.event.AddCalculatronRecipeEvent;
 import com.mrdimka.hammercore.event.GetAllRequiredApisEvent;
+import com.mrdimka.hammercore.ext.TeslaAPI;
 import com.mrdimka.hammercore.fluiddict.FluidDictionary;
 import com.mrdimka.hammercore.gui.GuiManager;
 import com.mrdimka.hammercore.init.ModBlocks;
@@ -59,12 +62,14 @@ import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.proxy.AudioProxy_Common;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Common;
 import com.mrdimka.hammercore.proxy.RenderProxy_Common;
+import com.mrdimka.hammercore.recipeAPI.BrewingRecipe;
 import com.mrdimka.hammercore.recipeAPI.IRecipePlugin;
 import com.mrdimka.hammercore.recipeAPI.RecipePlugin;
 import com.mrdimka.hammercore.recipeAPI.registry.GlobalRecipeScript;
 import com.mrdimka.hammercore.recipeAPI.registry.IRecipeScript;
 import com.mrdimka.hammercore.recipeAPI.registry.IRecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.RecipeTypeRegistry;
+import com.mrdimka.hammercore.recipeAPI.registry.SimpleRecipeScript;
 
 /**
  * The core of Hammer Core.
@@ -234,16 +239,24 @@ public class HammerCore
 		AddCalculatronRecipeEvent evt = new AddCalculatronRecipeEvent();
 		evt.setRecipe(new ShapedOreRecipe(ModItems.calculatron, "igi", "rlr", "idi", 'g', "blockGlass", 'i', "ingotIron", 'r', "dustRedstone", 'd', "ingotGold", 'l', "dyeLime"));
 		if(!MinecraftForge.EVENT_BUS.post(evt)) GameRegistry.addRecipe(evt.getRecipe());
+		
+		BrewingRecipeRegistry.addRecipe(BrewingRecipe.INSTANCE);
 	}
 	
-	private final RecipeTypeRegistry registry = new RecipeTypeRegistry();
+	public static final RecipeTypeRegistry registry = new RecipeTypeRegistry();
 	private GlobalRecipeScript recipeScript;
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
 		for(IJavaCode code : COMPILED_CODES) code.postInit();
-		for(IRecipePlugin plugin : recipePlugins) plugin.registerTypes(registry);
+		for(IRecipePlugin plugin : recipePlugins)
+		{
+			LOG.info("Registering recipe plugin: " + plugin.getClass().getName() + " ...");
+			long start = System.currentTimeMillis();
+			plugin.registerTypes(registry);
+			LOG.info("Registered recipe  plugin: " + plugin.getClass().getName() + " in " + (System.currentTimeMillis() - start) + " ms");
+		}
 	}
 	
 	@EventHandler
@@ -252,34 +265,25 @@ public class HammerCore
 		e.registerServerCommand(new CommandPosToLong());
 		e.registerServerCommand(new CommandTPX());
 		
+		File hc_recipes_global = new File("hc-recipes");
 		MinecraftServer server = e.getServer();
 		File worldFolder = new File((server.isDedicatedServer() ? "" : "saves" + File.separator) + server.getFolderName(), "hc-recipes");
 		worldFolder.mkdirs();
-		
-		List<IRecipeScript> jsons = new ArrayList<>();
-		if(worldFolder.isDirectory()) for(File json : worldFolder.listFiles(new FileFilter()
-		{
-			@Override
-			public boolean accept(File pathname)
-			{
-				return pathname.isFile() && pathname.getName().endsWith(".json");
-			}
-		}))
-		{
-			try
-			{
-				jsons.add(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(json)))));
-			}
-			catch(Throwable err)
-			{
-				LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
-				err.printStackTrace();
-			}
-		}
+		hc_recipes_global.mkdirs();
 		
 		if(recipeScript != null) recipeScript.remove();
-		recipeScript = new GlobalRecipeScript(jsons.toArray(new IRecipeScript[jsons.size()]));
-		recipeScript.add();
+		List<SimpleRecipeScript> scripts = new ArrayList<>();
+		scripts.addAll(Arrays.asList(parse(worldFolder).scripts));
+		scripts.addAll(Arrays.asList(parse(hc_recipes_global).scripts));
+		recipeScript = new GlobalRecipeScript(scripts.toArray(new SimpleRecipeScript[scripts.size()]));
+		GRCProvider.reloadScript();
+		
+		reloadRaytracePlugins();
+	}
+	
+	public void reloadRaytracePlugins()
+	{
+		TeslaAPI.refreshTeslaClassData();
 		
 		RayCubeRegistry.instance.cubes.clear();
 		RayCubeRegistry.instance.mgrs.clear();
@@ -297,5 +301,89 @@ public class HammerCore
 	{
 		if(recipeScript != null) recipeScript.remove();
 		recipeScript = null;
+	}
+	
+	private GlobalRecipeScript parse(File path)
+	{
+		if(path.isDirectory())
+		{
+			List<SimpleRecipeScript> jsons = new ArrayList<>();
+			for(File json : path.listFiles(new FileFilter()
+			{
+				@Override
+				public boolean accept(File pathname)
+				{
+					return pathname.isFile() && pathname.getName().endsWith(".json");
+				}
+			}))
+			{
+				try
+				{
+					jsons.add(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(json)))));
+				}
+				catch(Throwable err)
+				{
+					LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
+					err.printStackTrace();
+				}
+			}
+			
+			return new GlobalRecipeScript(jsons.toArray(new SimpleRecipeScript[jsons.size()]));
+		}else if(path.isFile())
+		{
+			try
+			{
+				return new GlobalRecipeScript(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(path)))));
+			}
+			catch(Throwable err)
+			{
+				LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
+				err.printStackTrace();
+			}
+		}
+		return new GlobalRecipeScript();
+	}
+	
+	public static class GRCProvider
+	{
+		public static int getScriptCount()
+		{
+			return instance.recipeScript.scripts.length;
+		}
+		
+		public static void setScriptCount(int amt)
+		{
+			if(amt == 0) if(instance.recipeScript != null) { instance.recipeScript.remove(); instance.recipeScript = null; return; }
+			
+			if(instance.recipeScript == null) instance.recipeScript = new GlobalRecipeScript();
+			instance.recipeScript.remove();
+			SimpleRecipeScript[] old = instance.recipeScript.scripts;
+			if(old.length == amt) return;
+			instance.recipeScript.scripts = new SimpleRecipeScript[amt];
+			for(int i = 0; i < Math.min(old.length, amt); ++i) instance.recipeScript.scripts[i] = old[i];
+		}
+		
+		public static NBTTagList getScript(int id)
+		{
+			if(instance.recipeScript == null) return new NBTTagList();
+			return id >= instance.recipeScript.scripts.length && instance.recipeScript.scripts[id].makeTag != null ? null : instance.recipeScript.scripts[id].makeTag.copy();
+		}
+		
+		public static void setScript(int id, NBTTagList list)
+		{
+			if(instance.recipeScript == null) instance.recipeScript = new GlobalRecipeScript();
+			instance.recipeScript.remove();
+			setScriptCount(Math.max(instance.recipeScript.scripts.length, id + 1));
+			instance.recipeScript.scripts[id] = registry.parse(list);
+		}
+		
+		public static void reloadScript()
+		{
+			if(instance.recipeScript != null)
+			{
+				instance.recipeScript.remove();
+				instance.recipeScript.add();
+			}
+		}
 	}
 }

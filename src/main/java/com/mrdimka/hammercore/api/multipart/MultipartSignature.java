@@ -18,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -303,5 +304,10 @@ public abstract class MultipartSignature
 		if(spawnDrop && !world.isRemote && state != null)
 			for(ItemStack stack : state.getBlock().getDrops(world, pos, state, 0))
 				WorldUtil.spawnItemStack(world, pos, stack);
+	}
+	
+	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
+	{
+		
 	}
 }

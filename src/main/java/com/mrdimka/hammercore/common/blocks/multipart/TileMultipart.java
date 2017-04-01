@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,20 +29,20 @@ import com.mrdimka.hammercore.vec.Cuboid6;
 
 public class TileMultipart extends TileSyncableTickable implements IHandlerProvider
 {
-	private final Set<MultipartSignature> signatures = new HashSet<>();
+	private Set<MultipartSignature> signatures = new HashSet<>();
 	private Cuboid6[] lastBaked = null;
 	
 	public Object VertexBuffer = null;
 	
 	private boolean hasSyncedOnce = false;
 	
-	private Set<MultipartSignature> renderSignatures = new HashSet<>();
+	private List<MultipartSignature> renderSignatures = new ArrayList<>();
 	private Set<IRandomDisplayTick> displayTickable = new HashSet<>();
 	
 	@Override
 	public void tick()
 	{
-		signatures().stream().forEach(signature ->
+		for(MultipartSignature signature : signatures())
 		{
 			if(signature.getOwner() != this)
 			{
@@ -55,19 +54,24 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			signature.setPos(pos);
 			
 			if(signature instanceof ITickable) ((ITickable) signature).update();
-		});
+		}
 		
-		if(signatures.isEmpty() && !world.isRemote)
-			world.setBlockToAir(pos);
-		
-		if(!hasSyncedOnce) sync();
+		if(signatures().isEmpty() && !world.isRemote) world.setBlockToAir(pos);
+		if(!hasSyncedOnce)
+		{
+			sync();
+			hasSyncedOnce = true;
+		}
 	}
 	
 	@Override
 	public void sync()
 	{
+		NBTTagCompound nbt = new NBTTagCompound();
+		writeNBT(nbt);
+		
 		super.sync();
-		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), world.getBlockState(pos), world.getBlockState(pos), 3);
+		lastBaked = bakeCuboids();
 	}
 	
 	public int getWeakPower(EnumFacing side)
@@ -84,7 +88,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		return power;
 	}
 	
-	public Set<MultipartSignature> signatures()
+	public List<MultipartSignature> signatures()
 	{
 		return renderSignatures;
 	}
@@ -112,12 +116,12 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void readNBT(NBTTagCompound nbt)
 	{
+		signatures = new HashSet<>();
+		renderSignatures = new ArrayList<>();
+		displayTickable = new HashSet<>();
+		
 		NBTTagList list = nbt.getTagList("signature", NBT.TAG_COMPOUND);
-		for(int i = 0; i < list.tagCount(); ++i)
-		{
-			NBTTagCompound tag = list.getCompoundTagAt(i);
-			addMultipart(MultipartSignature.createAndLoadSignature(tag));
-		}
+		for(int i = 0; i < list.tagCount(); ++i) internal_addMultipart(MultipartSignature.createAndLoadSignature(list.getCompoundTagAt(i)));
 	}
 	
 	@Override
@@ -155,34 +159,45 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	public boolean addMultipart(MultipartSignature signature)
 	{
 		if(!canPlace(signature)) return false;
+		internal_addMultipart(signature);
+		return true;
+	}
+	
+	private void internal_addMultipart(MultipartSignature signature)
+	{
 		signature.setPos(pos);
 		signature.setWorld(world);
 		signature.setOwner(this);
-		signatures.add(signature);
+		
+		Set<MultipartSignature> signs_new = new HashSet<>(signatures);
+		signs_new.add(signature);
+		signatures = signs_new;
+		
 		if(signature instanceof IRandomDisplayTick)
 		{
-			Set<IRandomDisplayTick> ticks = new HashSet<>();
-			ticks.addAll(displayTickable);
+			Set<IRandomDisplayTick> ticks = new HashSet<>(displayTickable);
 			ticks.add((IRandomDisplayTick) signature);
 			displayTickable = ticks;
 		}
-		renderSignatures = new HashSet<>(signatures);
+		renderSignatures = new ArrayList<>(signs_new);
 		lastBaked = null;
 		if(world != null && !world.isRemote) sync();
-		return true;
 	}
 	
 	public void removeMultipart(MultipartSignature signature, boolean spawnDrop)
 	{
 		if(!signatures.contains(signature)) return;
 		signature.onRemoved(spawnDrop);
-		signatures.remove(signature);
-		renderSignatures = new HashSet<>(signatures);
+		
+		Set<MultipartSignature> signs_new = new HashSet<>(signatures);
+		signs_new.remove(signature);
+		signatures = signs_new;
+		
+		renderSignatures = new ArrayList<>(signatures);
 		signature.setOwner(null);
 		if(signature instanceof IRandomDisplayTick)
 		{
-			Set<IRandomDisplayTick> ticks = new HashSet<>();
-			ticks.addAll(displayTickable);
+			Set<IRandomDisplayTick> ticks = new HashSet<>(displayTickable);
 			ticks.remove(signature);
 			displayTickable = ticks;
 		}
@@ -192,6 +207,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public MultipartSignature getSignature(Vec3d pos)
 	{
+		if(signatures().size() > 100) world.destroyBlock(getPos(), false);
 		for(MultipartSignature s : signatures())
 			if(s.getBoundingBox() != null && s.getBoundingBox().intersects(pos.addVector(-.0001, -.0001, -.0001), pos.addVector(.0001, .0001, .0001)))
 				return s;
@@ -238,11 +254,5 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		}
 		
 		return false;
-	}
-	
-	@Override
-	public boolean hasFastRenderer()
-	{
-		return true;
 	}
 }

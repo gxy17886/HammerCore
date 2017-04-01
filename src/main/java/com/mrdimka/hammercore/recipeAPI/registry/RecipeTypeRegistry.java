@@ -33,17 +33,20 @@ public class RecipeTypeRegistry implements IRecipeTypeRegistry
 	
 	public IRecipeScript parseAll(String[] jsons) throws JSONException
 	{
-		List<IRecipeScript> scripts = new ArrayList<>();
+		List<SimpleRecipeScript> scripts = new ArrayList<>();
 		for(String json : jsons) scripts.add(parse(json));
-		return new GlobalRecipeScript(scripts.toArray(new IRecipeScript[scripts.size()]));
+		return new GlobalRecipeScript(scripts.toArray(new SimpleRecipeScript[scripts.size()]));
 	}
 	
-	public IRecipeScript parse(String json) throws JSONException
+	public SimpleRecipeScript parse(String json) throws JSONException
+	{
+		return parse(JSONObjectToNBT.convert((JSONArray) new JSONTokener(json).nextValue()));
+	}
+	
+	public SimpleRecipeScript parse(NBTTagList list)
 	{
 		final SimpleRecipeScript script = new SimpleRecipeScript();
-		
-		JSONArray arr = (JSONArray) new JSONTokener(json).nextValue();
-		NBTTagList list = JSONObjectToNBT.convert(arr);
+		script.makeTag = list.copy();
 		
 		for(int i = 0; i < list.tagCount(); ++i)
 		{
@@ -61,6 +64,7 @@ public class RecipeTypeRegistry implements IRecipeTypeRegistry
 					parsed[0] = true;
 					Object o = t.createRecipe(r);
 					script.types.put(o, t);
+					if(nbt.getBoolean("remove")) script.swaps.add(o);
 				}
 			});
 			

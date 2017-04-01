@@ -287,6 +287,13 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		return false;
 	}
 	
+	@Override
+	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
+	{
+		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
+		if(tmp != null) for(MultipartSignature sign : tmp.signatures()) sign.onNeighborChange(world, pos, neighbor);
+	}
+	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void tryBreakBlock(BlockEvent.BreakEvent evt)
 	{
