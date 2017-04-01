@@ -1,10 +1,13 @@
 package com.mrdimka.hammercore.common.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.AchievementPage;
 
 /**
@@ -23,9 +26,9 @@ public class HammerCoreUtils
 			}
 			
 			@Override
-			public ItemStack getTabIconItem()
+			public Item getTabIconItem()
 			{
-				return iconStack;
+				return iconStack.getItem();
 			}
 		};
 	}
@@ -39,7 +42,7 @@ public class HammerCoreUtils
 			
 			public ItemStack getIconItemStack()
 			{
-				NonNullList<ItemStack> items = NonNullList.create();
+				List<ItemStack> items = new ArrayList<>();
 				displayAllRelevantItems(items);
 				if(items.size() == 0) return new ItemStack(Blocks.BARRIER);
 				if(tick++ > delayTicks)
@@ -52,9 +55,9 @@ public class HammerCoreUtils
 			}
 
 			@Override
-			public ItemStack getTabIconItem()
+			public Item getTabIconItem()
 			{
-				return getIconItemStack();
+				return getIconItemStack().getItem();
 			}
 		};
 	}

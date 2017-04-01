@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.api.handlers.IHandlerProvider;
+import com.mrdimka.hammercore.common.InterItemStack;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 
@@ -82,7 +83,7 @@ public abstract class MultipartSignature
 	
 	public ItemStack getPickBlock(EntityPlayer player)
 	{
-		return ItemStack.EMPTY;
+		return InterItemStack.NULL_STACK;
 	}
 	
 	public SoundType getSoundType(EntityPlayer player)

@@ -58,7 +58,7 @@ public class IOUtils
 		try
 		{
 			URL u = new URL(url);
-			InputStream input = u.openStream();
+			InputStream input = u.openConnection().getInputStream();
 			pipeData(input, o);
 			input.close();
 		}

@@ -18,7 +18,7 @@ public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, 
 	{
 		for(EnumFacing f : EnumFacing.VALUES)
 		{
-			TileEntity t = world.getTileEntity(pos.offset(f));
+			TileEntity t = worldObj.getTileEntity(pos.offset(f));
 			
 			if(t == null) continue;
 			

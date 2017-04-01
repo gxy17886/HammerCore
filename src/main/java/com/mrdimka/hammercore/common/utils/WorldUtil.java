@@ -48,7 +48,7 @@ public class WorldUtil
 		for(int i = 0; i < list.tagCount(); ++i)
 		{
 			NBTTagCompound nbt = list.getCompoundTagAt(i);
-			inv.setInventorySlotContents(nbt.getInteger("Slot"), new ItemStack(nbt));
+			inv.setInventorySlotContents(nbt.getInteger("Slot"), ItemStack.loadItemStackFromNBT(nbt));
 		}
 	}
 	
@@ -59,7 +59,7 @@ public class WorldUtil
         EntityItem entityItem = new EntityItem(worldIn, x, y, z, stackIn);
         entityItem.motionX = 0;
         entityItem.motionZ = 0;
-        worldIn.spawnEntity(entityItem);
+        worldIn.spawnEntityInWorld(entityItem);
     }
 	
 	public static void spawnItemStack(World worldIn, BlockPos pos, ItemStack stackIn)
@@ -69,9 +69,9 @@ public class WorldUtil
     
     public static void teleportPlayer(EntityPlayerMP mp, int dim, double x, double y, double z)
     {
-    	if(!mp.world.isRemote)
+    	if(!mp.worldObj.isRemote)
     	{
-    		if(mp.world.provider.getDimension() != dim)
+    		if(mp.worldObj.provider.getDimension() != dim)
     		{
     			MinecraftServer server = mp.mcServer;
     			WorldServer nev = server.worldServerForDimension(dim);
@@ -84,16 +84,16 @@ public class WorldUtil
     
     public static void teleportEntity(Entity ent, int dim, double x, double y, double z)
     {
-    	if(!ent.world.isRemote)
+    	if(!ent.worldObj.isRemote)
     	{
-    		if(ent.world.provider.getDimension() != dim)
+    		if(ent.worldObj.provider.getDimension() != dim)
     		{
     			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
     			
-    			WorldServer old = server.worldServerForDimension(ent.world.provider.getDimension());
+    			WorldServer old = server.worldServerForDimension(ent.worldObj.provider.getDimension());
     			WorldServer nev = server.worldServerForDimension(dim);
     			
-        		server.getPlayerList().transferEntityToWorld(ent, ent.world.provider.getDimension(), old, nev, new BlankTeleporter(nev));
+        		server.getPlayerList().transferEntityToWorld(ent, ent.worldObj.provider.getDimension(), old, nev, new BlankTeleporter(nev));
     		}
     		
     		ent.setPositionAndUpdate(x, y, z);
@@ -102,7 +102,7 @@ public class WorldUtil
     
     public static void teleportEntity(Entity ent, double x, double y, double z)
     {
-    	teleportEntity(ent, ent.world.provider.getDimension(), x, y, z);
+    	teleportEntity(ent, ent.worldObj.provider.getDimension(), x, y, z);
     }
     
     public static void teleportEntity(Entity ent, int dim)

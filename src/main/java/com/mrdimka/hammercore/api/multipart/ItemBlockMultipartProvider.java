@@ -42,7 +42,7 @@ public class ItemBlockMultipartProvider extends Item
 	}
 	
 	@Override
-    public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
 		if(WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class) == null && !worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) 
 			pos = pos.offset(facing);
@@ -50,42 +50,40 @@ public class ItemBlockMultipartProvider extends Item
 		if(WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class) == null && !worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) return EnumActionResult.FAIL;
         TileMultipart tmp = MultipartAPI.getOrPlaceMultipart(worldIn, pos);
         
-        ItemStack itemstack = player.getHeldItem(hand);
-        
-        if(tmp != null && (!itemstack.hasTagCompound() || !itemstack.getTagCompound().hasKey("LastPlaced")))
+        if(tmp != null && (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("LastPlaced")))
         {
-        	MultipartSignature s = provider.createSignature(tmp.getNextSignatureIndex(), itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ);
+        	MultipartSignature s = provider.createSignature(tmp.getNextSignatureIndex(), stack, player, worldIn, pos, facing, hitX, hitY, hitZ);
         	
-        	if(!tmp.canPlace(s) || !provider.canPlaceInto(tmp, itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ))
+        	if(!tmp.canPlace(s) || !provider.canPlaceInto(tmp, stack, player, worldIn, pos, facing, hitX, hitY, hitZ))
         	{
         		pos = pos.offset(facing);
         		if(WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class) == null && !worldIn.getBlockState(pos).getBlock().isReplaceable(worldIn, pos)) return EnumActionResult.FAIL;
                 tmp = MultipartAPI.getOrPlaceMultipart(worldIn, pos);
         	}
         	
-            if(provider.canPlaceInto(tmp, itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ) && tmp.addMultipart(s))
+            if(provider.canPlaceInto(tmp, stack, player, worldIn, pos, facing, hitX, hitY, hitZ) && tmp.addMultipart(s))
             {
                 SoundType soundtype = s.getSoundType(player);
                
                 try
 				{
 					float br = (soundtype.getVolume() + 1.0F * soundtype.getVolume() + 1.0F) * 512F;
-					List<EntityPlayerMP> ps = worldIn.getMinecraftServer().getPlayerList().getPlayers();
+					List<EntityPlayerMP> ps = worldIn.getMinecraftServer().getPlayerList().getPlayerList();
 					for(EntityPlayerMP p : ps)
 					{
-						if(p.world.provider.getDimension() != worldIn.provider.getDimension()) continue;
+						if(p.worldObj.provider.getDimension() != worldIn.provider.getDimension()) continue;
 						if(p.getDistanceSq(pos) > br) continue;
 						p.connection.sendPacket(new SPacketSoundEffect(soundtype.getPlaceSound(), SoundCategory.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), (soundtype.getVolume() + 1F) / 2F, soundtype.getPitch()));
 					}
 				}
 				catch(Throwable err) { }
                 
-                NBTTagCompound nbt = itemstack.getTagCompound();
-                if(nbt == null) itemstack.setTagCompound(nbt = new NBTTagCompound());
+                NBTTagCompound nbt = stack.getTagCompound();
+                if(nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
                 
                 nbt.setInteger("LastPlaced", 1);
                 
-                if(!worldIn.isRemote && !player.capabilities.isCreativeMode) itemstack.shrink(1);
+                if(!worldIn.isRemote && !player.capabilities.isCreativeMode) stack.stackSize--;
                 return EnumActionResult.SUCCESS;
             }
         }

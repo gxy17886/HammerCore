@@ -32,7 +32,7 @@ public class ItemContainer implements Predicate<ItemStack>
 	private ItemContainer(ItemStack stack)
 	{
 		item = stack.getItem().getRegistryName().toString();
-		count = stack.getCount();
+		count = stack.stackSize;
 		nbt = stack.getTagCompound() + "";
 		int[] oredicts = OreDictionary.getOreIDs(stack);
 		String ods = "";

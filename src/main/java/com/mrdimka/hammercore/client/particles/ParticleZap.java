@@ -219,7 +219,7 @@ public class ParticleZap extends Particle implements IParticle
 	@Override
 	public void spawnAt(double x, double y, double z)
 	{
-		if(Minecraft.getMinecraft().world == world)
+		if(Minecraft.getMinecraft().theWorld == worldObj)
 		{
 			setPosition(x, y, z);
 			Minecraft.getMinecraft().effectRenderer.addEffect(this);

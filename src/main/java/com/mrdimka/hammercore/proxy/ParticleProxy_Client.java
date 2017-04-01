@@ -24,9 +24,9 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	public IParticle spawnZap(int w, Vec3d start, Vec3d end, Color rgb)
 	{
 		ParticleZap zap = null;
-		if(Minecraft.getMinecraft().world.provider.getDimension() == w)
+		if(Minecraft.getMinecraft().theWorld.provider.getDimension() == w)
 		{
-			zap = new ParticleZap(Minecraft.getMinecraft().world, start.xCoord, start.yCoord, start.zCoord, end.xCoord, end.yCoord, end.zCoord, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
+			zap = new ParticleZap(Minecraft.getMinecraft().theWorld, start.xCoord, start.yCoord, start.zCoord, end.xCoord, end.yCoord, end.zCoord, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
 			zap.spawn();
 		}
 		return zap;

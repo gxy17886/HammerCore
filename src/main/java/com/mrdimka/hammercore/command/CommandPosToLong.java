@@ -13,13 +13,13 @@ import net.minecraft.util.text.TextComponentString;
 public class CommandPosToLong extends CommandBase
 {
 	@Override
-	public String getName()
+	public String getCommandName()
 	{
 		return "hc_postolong";
 	}
 	
 	@Override
-	public String getUsage(ICommandSender sender)
+	public String getCommandUsage(ICommandSender sender)
 	{
 		return "";
 	}
@@ -33,12 +33,12 @@ public class CommandPosToLong extends CommandBase
 			int y = parseInt(args[1], 0, 256);
 			int z = parseInt(args[2], -30_000_0000, 30_000_0000);
 			
-			sender.sendMessage(new TextComponentString("Position: " + new BlockPos(x, y, z).toLong()));
-		}else sender.sendMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 3."));
+			sender.addChatMessage(new TextComponentString("Position: " + new BlockPos(x, y, z).toLong()));
+		}else sender.addChatMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 3."));
 	}
 	
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos)
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos targetPos)
 	{
 		return Arrays.asList(args.length == 1 ? targetPos.getX() + "" : args.length == 2 ? targetPos.getY() + "" : args.length == 3 ? targetPos.getZ() + "" : "");
 	}

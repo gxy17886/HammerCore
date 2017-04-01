@@ -66,7 +66,7 @@ public class ItemStackUtil
 		i.ticksExisted = -data.despawnTime;
 		if(data.pickupDelayMode == 0) i.setInfinitePickupDelay();
 		else if(data.pickupDelayMode == 2) i.setNoPickupDelay();
-		w.spawnEntity(i);
+		w.spawnEntityInWorld(i);
 	}
 	
 	public static ItemStack splitItemAround(ItemStack stack, World w, BlockPos from, EnumFacing... blackist)

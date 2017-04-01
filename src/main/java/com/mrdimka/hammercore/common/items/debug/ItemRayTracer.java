@@ -23,10 +23,10 @@ public final class ItemRayTracer extends Item
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
 	{
 		RayTraceResult result = RayTracer.retrace(playerIn, 128, true);
-		if(playerIn.isSneaking() || !worldIn.isRemote) playerIn.sendMessage(new TextComponentString("[" + (worldIn.isRemote ? "CLIENT" : "SERVER") + "] " + result));
-		return super.onItemRightClick(worldIn, playerIn, hand);
+		if(playerIn.isSneaking() || !worldIn.isRemote) playerIn.addChatMessage(new TextComponentString("[" + (worldIn.isRemote ? "CLIENT" : "SERVER") + "] " + result));
+		return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
 	}
 }

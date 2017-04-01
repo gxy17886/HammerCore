@@ -32,7 +32,7 @@ public class GuiBrewingStandSmooth extends GuiBrewingStand
         int j = (height - ySize) / 2;
         drawTexturedModalRect(i, j, 0, 0, xSize, ySize);
         double k = bs.getField(1);
-        double l = MathHelper.clamp((18D * k + 20D - 1D) / 20D, 0, 18);
+        double l = MathHelper.clamp_double((18D * k + 20D - 1D) / 20D, 0, 18);
         
         //Draw catalyst bar
         if(l >= 1) RenderUtil.drawTexturedModalRect(i + 60, j + 44, 176, 29, l, 4);

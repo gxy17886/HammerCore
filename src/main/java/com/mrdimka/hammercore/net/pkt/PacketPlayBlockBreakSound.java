@@ -44,7 +44,7 @@ public class PacketPlayBlockBreakSound implements IPacket, IPacketListener<Packe
 	public IPacket onArrived(PacketPlayBlockBreakSound p, MessageContext c)
 	{
 		if(c.side == Side.CLIENT)
-			HammerCore.renderProxy.playSoundAt(HammerCore.audioProxy.getClientPlayer().world, p.s.getBlock().getSoundType().getBreakSound().getRegistryName().toString(), p.x, p.y, p.z, volume, pitch, SoundCategory.BLOCKS);
+			HammerCore.renderProxy.playSoundAt(HammerCore.audioProxy.getClientPlayer().worldObj, p.s.getBlock().getSoundType().getBreakSound().getRegistryName().toString(), p.x, p.y, p.z, volume, pitch, SoundCategory.BLOCKS);
 		return null;
 	}
 

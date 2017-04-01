@@ -21,7 +21,7 @@ public class AudioProxy_Client extends AudioProxy_Common
 	@Override
 	public EntityPlayer getClientPlayer()
 	{
-		return Minecraft.getMinecraft().player;
+		return Minecraft.getMinecraft().thePlayer;
 	}
 	
 	@Override
@@ -30,8 +30,8 @@ public class AudioProxy_Client extends AudioProxy_Common
 		try
 		{
 			float br = volume * volume * 512F;
-			EntityPlayerSP p = Minecraft.getMinecraft().player;
-			if(p.world.provider.getDimension() != world.provider.getDimension()) return;
+			EntityPlayerSP p = Minecraft.getMinecraft().thePlayer;
+			if(p.worldObj.provider.getDimension() != world.provider.getDimension()) return;
 			if(p.getDistance(x, y, z) > br) return;
 			p.connection.handleCustomSound(new SPacketCustomSound(sound, category, x, y, z, volume, pitch));
 		}catch(Throwable err) {}
@@ -40,6 +40,6 @@ public class AudioProxy_Client extends AudioProxy_Common
 	@Override
 	public void playBlockStateBreak(World world, IBlockState type, double x, double y, double z, float volume, float pitch, SoundCategory category)
 	{
-		playSoundAt(Minecraft.getMinecraft().world, type.getBlock().getSoundType().getBreakSound().getRegistryName().toString(), x, y, z, volume, pitch, SoundCategory.BLOCKS);
+		playSoundAt(Minecraft.getMinecraft().theWorld, type.getBlock().getSoundType().getBreakSound().getRegistryName().toString(), x, y, z, volume, pitch, SoundCategory.BLOCKS);
 	}
 }

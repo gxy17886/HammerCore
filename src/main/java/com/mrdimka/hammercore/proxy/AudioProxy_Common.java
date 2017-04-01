@@ -35,10 +35,10 @@ public class AudioProxy_Common
 		try
 		{
 			float br = volume * volume * 512F;
-			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayers();
+			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayerList();
 			for(EntityPlayerMP p : ps)
 			{
-				if(p.world.provider.getDimension() != world.provider.getDimension()) continue;
+				if(p.worldObj.provider.getDimension() != world.provider.getDimension()) continue;
 				if(p.getDistance(x, y, z) > br) continue;
 				p.connection.sendPacket(new SPacketCustomSound(sound, SoundCategory.BLOCKS, x, y, z, volume, pitch));
 			}
@@ -51,10 +51,10 @@ public class AudioProxy_Common
 		try
 		{
 			float br = volume * volume * 512F;
-			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayers();
+			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayerList();
 			for(EntityPlayerMP p : ps)
 			{
-				if(p.world.provider.getDimension() != world.provider.getDimension()) continue;
+				if(p.worldObj.provider.getDimension() != world.provider.getDimension()) continue;
 				if(p.getDistance(z, y, z) > br) continue;
 				HCNetwork.manager.sendTo(new PacketPlayBlockBreakSound(type, x, y, z, volume, pitch), p);
 			}

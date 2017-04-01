@@ -15,14 +15,13 @@ public final class ItemCalculatron extends Item
 	public ItemCalculatron()
 	{
 		setUnlocalizedName("calculatron");
-		setMaxStackSize(0);
+		setMaxStackSize(1);
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand handIn)
 	{
-		if(!worldIn.isRemote)
-			FMLNetworkHandler.openGui(playerIn, HammerCore.instance, 1, worldIn, 0, 0, 0);
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+		if(!worldIn.isRemote) FMLNetworkHandler.openGui(playerIn, HammerCore.instance, 1, worldIn, 0, 0, 0);
+		return super.onItemRightClick(itemStackIn, worldIn, playerIn, handIn);
 	}
 }

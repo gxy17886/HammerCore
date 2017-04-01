@@ -69,7 +69,7 @@ public class RenderProxy_Common
 	public World getWorld(MessageContext context)
 	{
 		if(context == null) return FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
-		if(context.side == Side.SERVER) return context.getServerHandler().playerEntity.world;
+		if(context.side == Side.SERVER) return context.getServerHandler().playerEntity.worldObj;
 		return null;
 	}
 	

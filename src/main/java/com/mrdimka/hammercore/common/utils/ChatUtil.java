@@ -89,7 +89,7 @@ public class ChatUtil
 	 */
 	public static void sendChat(EntityPlayer player, ITextComponent... lines)
 	{
-		for(ITextComponent c : lines) player.sendMessage(c);
+		for(ITextComponent c : lines) player.addChatMessage(c);
 	}
 	
 	/**

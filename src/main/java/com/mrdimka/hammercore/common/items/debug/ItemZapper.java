@@ -30,7 +30,7 @@ public final class ItemZapper extends Item
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand)
 	{
 		RayTraceResult result = RayTracer.retrace(playerIn, 128, true);
 		
@@ -63,6 +63,6 @@ public final class ItemZapper extends Item
 			playerIn.swingArm(hand);
 		}
 		
-		return super.onItemRightClick(worldIn, playerIn, hand);
+		return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
 	}
 }

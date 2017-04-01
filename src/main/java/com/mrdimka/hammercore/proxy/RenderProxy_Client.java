@@ -75,7 +75,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public EntityPlayer getClientPlayer()
 	{
-		return Minecraft.getMinecraft().player;
+		return Minecraft.getMinecraft().thePlayer;
 	}
 	
 	private static final int DELETION_ID = 0x16F7F6;
@@ -110,15 +110,15 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public World getWorld(MessageContext context)
 	{
-		if(context == null) return Minecraft.getMinecraft().world;
-		if(context.side == Side.CLIENT) return Minecraft.getMinecraft().world;
+		if(context == null) return Minecraft.getMinecraft().theWorld;
+		if(context.side == Side.CLIENT) return Minecraft.getMinecraft().theWorld;
 		return super.getWorld(context);
 	}
 	
 	@Override
 	public World getWorld(MessageContext context, int dim)
 	{
-		if(context == null) return Minecraft.getMinecraft().world;
+		if(context == null) return Minecraft.getMinecraft().theWorld;
 		if(context.side == Side.CLIENT)
 		{
 			World w = getWorld(context);

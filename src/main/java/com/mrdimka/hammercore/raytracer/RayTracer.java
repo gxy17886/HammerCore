@@ -208,7 +208,7 @@ public class RayTracer
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
 		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
-		return player.world.rayTraceBlocks(headVec, endVec, false, true, true);
+		return player.worldObj.rayTraceBlocks(headVec, endVec, false, true, true);
 	}
 	
 	public static RayTraceResult retrace(EntityPlayer player, double reach, boolean entities)
@@ -221,7 +221,7 @@ public class RayTracer
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
 		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
-		return player.world.rayTraceBlocks(headVec, endVec, false, true, true);
+		return player.worldObj.rayTraceBlocks(headVec, endVec, false, true, true);
 	}
 	
 	public static RayTraceResult retrace_stopOnLiquid(EntityPlayer player, double reach)
@@ -229,7 +229,7 @@ public class RayTracer
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
 		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
-		return player.world.rayTraceBlocks(headVec, endVec, true, true, true);
+		return player.worldObj.rayTraceBlocks(headVec, endVec, true, true, true);
 	}
 	
 	public static Entity retraceEntity(EntityPlayer player, double reach)
@@ -241,7 +241,7 @@ public class RayTracer
 		Vec3d vec3d3 = null;
 		
 		float f = 1.0F;
-		List<Entity> list = player.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(vec3d1.xCoord * reach, vec3d1.yCoord * reach, vec3d1.zCoord * reach).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
+		List<Entity> list = player.worldObj.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(vec3d1.xCoord * reach, vec3d1.yCoord * reach, vec3d1.zCoord * reach).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
 				{
 					public boolean apply(Entity entity)
 					{
@@ -307,7 +307,7 @@ public class RayTracer
 	
 	public static double getBlockReachDistance(EntityPlayer player)
 	{
-		return player.world.isRemote ? getBlockReachDistance_client() : player instanceof EntityPlayerMP ? getBlockReachDistance_server((EntityPlayerMP) player) : 5D;
+		return player.worldObj.isRemote ? getBlockReachDistance_client() : player instanceof EntityPlayerMP ? getBlockReachDistance_server((EntityPlayerMP) player) : 5D;
 	}
 	
 	public static Vec3d getEndVec(EntityPlayer player)

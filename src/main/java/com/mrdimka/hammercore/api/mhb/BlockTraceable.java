@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -75,11 +76,11 @@ public abstract class BlockTraceable extends Block
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		registry = IRayCubeGetter.Instance.getter;
 		RayTraceResult hit = RayTracer.retraceBlock(worldIn, playerIn, pos);
-		return onBoxActivated(hit != null ? Math.max(0, hit.subHit) : 0, registry.getBoundCubes6(this) != null && registry.getBoundCubes6(this).length > 0  ? registry.getBoundCubes6(this)[hit != null ? Math.max(0, hit.subHit) : 0] : null, worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		return onBoxActivated(hit != null ? Math.max(0, hit.subHit) : 0, registry.getBoundCubes6(this) != null && registry.getBoundCubes6(this).length > 0  ? registry.getBoundCubes6(this)[hit != null ? Math.max(0, hit.subHit) : 0] : null, worldIn, pos, state, playerIn, hand, side, hitX, hitY, hitZ);
 	}
 	
 	@Override
@@ -120,10 +121,10 @@ public abstract class BlockTraceable extends Block
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState s, World w, BlockPos p, AxisAlignedBB aabb, List<AxisAlignedBB> l, Entity ent, boolean wut)
+	public void addCollisionBoxToList(IBlockState s, World w, BlockPos p, AxisAlignedBB aabb, List<AxisAlignedBB> l, Entity ent)
 	{
 		registry = IRayCubeGetter.Instance.getter;
-		if(!includeAllHitboxes(w, p, s)) { super.addCollisionBoxToList(s, w, p, aabb, l, ent, wut); return; }
+		if(!includeAllHitboxes(w, p, s)) { super.addCollisionBoxToList(s, w, p, aabb, l, ent); return; }
 		Cuboid6[] cbs = null;
 		if(registry == null) return;
 		if(registry.getBoundCubeManager(this) != null) cbs = registry.getBoundCubeManager(this).getCuboids(w, p, s);
@@ -201,9 +202,7 @@ public abstract class BlockTraceable extends Block
 	
 	public Cuboid6 getCuboidFromPlayer(EntityPlayer player, BlockPos pos)
 	{
-		RayTraceResult hit = RayTracer.retraceBlock(player.world, player, pos);
-		
-		if(registry == null) return null;
+		RayTraceResult hit = RayTracer.retraceBlock(player.worldObj, player, pos);
 		
 		if(hit != null && registry.getBoundCubes6(this) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubes6(this).length)
 		{
@@ -211,9 +210,9 @@ public abstract class BlockTraceable extends Block
 			return cubes[hit.subHit];
 		}else
 		
-		if(hit != null && registry.getBoundCubes6(this) == null && registry.getBoundCubeManager(this) != null && registry.getBoundCubeManager(this).getCuboids(player.world, pos, player.world.getBlockState(pos)) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubeManager(this).getCuboids(player.world, pos, player.world.getBlockState(pos)).length)
+		if(hit != null && registry.getBoundCubes6(this) == null && registry.getBoundCubeManager(this) != null && registry.getBoundCubeManager(this).getCuboids(player.worldObj, pos, player.worldObj.getBlockState(pos)) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubeManager(this).getCuboids(player.worldObj, pos, player.worldObj.getBlockState(pos)).length)
 		{
-			Cuboid6[] cubes = registry.getBoundCubeManager(this).getCuboids(player.world, pos, player.world.getBlockState(pos));
+			Cuboid6[] cubes = registry.getBoundCubeManager(this).getCuboids(player.worldObj, pos, player.worldObj.getBlockState(pos));
 			return cubes[hit.subHit];
 		}
 		
@@ -222,8 +221,8 @@ public abstract class BlockTraceable extends Block
 	
 	public Cuboid6 getCuboidFromRTR(World world, RayTraceResult hit)
 	{
-		BlockPos pos = hit == null ? null : hit.getBlockPos();
-		if(pos == null || registry == null) return null;
+		BlockPos pos = hit.getBlockPos();
+		if(pos == null) return null;
 		
 		if(hit != null && registry.getBoundCubes6(this) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubes6(this).length)
 		{

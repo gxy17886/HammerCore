@@ -15,18 +15,11 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
 
 @JEIPlugin
-public class JeiHC implements IModPlugin, IJeiRecipeModifier
+public class JeiHC implements IModPlugin
 {
-	IRecipeRegistry registry;
-	
-	{
-		Instance.JEIModifier = this;
-	}
-	
 	@Override
 	public void onRuntimeAvailable(IJeiRuntime runtime)
 	{
-		registry = runtime.getRecipeRegistry();
 	}
 	
 	@Override
@@ -46,19 +39,5 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	@Override
 	public void registerItemSubtypes(ISubtypeRegistry arg0)
 	{
-	}
-
-	@Override
-	public void addJEI(Object recipe)
-	{
-		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
-		else registry.addRecipe(recipe);
-	}
-	
-	@Override
-	public void removeJEI(Object recipe)
-	{
-		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
-		else registry.removeRecipe(recipe);
 	}
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -24,7 +23,7 @@ public class FluidDictionary
 	
 	private static final Map<String, List<String>> idToFn = Maps.newHashMapWithExpectedSize(96);
 	private static final Map<String, String> fnToId = Maps.newHashMapWithExpectedSize(96);
-	private static final Map<String, NonNullList<FluidStack>> fnToStack = Maps.newHashMapWithExpectedSize(96);
+	private static final Map<String, List<FluidStack>> fnToStack = Maps.newHashMapWithExpectedSize(96);
 	
 	static { initVanillaEntries(); }
 	
@@ -65,10 +64,10 @@ public class FluidDictionary
 		return l;
 	}
 	
-	public static NonNullList<FluidStack> getFluidsByName(String fname)
+	public static List<FluidStack> getFluidsByName(String fname)
 	{
-		NonNullList<FluidStack> l = fnToStack.get(fname);
-		if(l == null) fnToStack.put(fname, l = NonNullList.create());
+		List<FluidStack> l = fnToStack.get(fname);
+		if(l == null) fnToStack.put(fname, l = new ArrayList<>());
 		return l;
 	}
 	

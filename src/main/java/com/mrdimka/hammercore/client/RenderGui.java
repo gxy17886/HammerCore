@@ -19,6 +19,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -35,6 +36,7 @@ import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
 import com.mrdimka.hammercore.client.utils.GLImageManager;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
+import com.mrdimka.hammercore.config.HCConfigs;
 import com.mrdimka.hammercore.gui.GuiMissingApis;
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
@@ -82,13 +84,13 @@ public class RenderGui
 					if(renderer != null)
 					{
 						GlStateManager.disableDepth();
-						renderer.render(EnumItemRender.GUI, stack, guiLeft + sl.xPos, guiTop + sl.yPos, 0);
+						renderer.render(EnumItemRender.GUI, stack, guiLeft + sl.xDisplayPosition, guiTop + sl.yDisplayPosition, 0);
 						GlStateManager.enableDepth();
 					}
 				}
 			}
 			
-			ItemStack stack = gc.mc.player.inventory.getItemStack();
+			ItemStack stack = gc.mc.thePlayer.inventory.getItemStack();
 			if(stack != null)
 			{
 				guiLeft = e.getMouseX();
@@ -97,6 +99,32 @@ public class RenderGui
 				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
 			}
 		}
+		
+		//Apparently Minceraft is a thing 0_0
+//		
+//		if(gui instanceof GuiMainMenu)
+//		{
+//			int j = gui.width / 2 - 137;
+//			
+//			GL11.glPushMatrix();
+//			GL11.glTranslated(0, 100, 0);
+//			gui.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/title/minecraft.png"));
+//			boolean tr = true;
+//			if(tr)
+//	        {
+//	            gui.drawTexturedModalRect(j + 0, 30, 0, 0, 99, 44);
+//	            gui.drawTexturedModalRect(j + 99, 30, 129, 0, 27, 44);
+//	            gui.drawTexturedModalRect(j + 99 + 26, 30, 126, 0, 3, 44);
+//	            gui.drawTexturedModalRect(j + 99 + 26 + 3, 30, 99, 0, 26, 44);
+//	            gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
+//	        }
+//	        else
+//	        {
+//	        	gui.drawTexturedModalRect(j + 0, 30, 0, 0, 155, 44);
+//	            gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
+//	        }
+//			GL11.glPopMatrix();
+//		}
 	}
 	
 	@SubscribeEvent
@@ -118,6 +146,8 @@ public class RenderGui
 		
 		smooth:
 		{
+			if(!HCConfigs.vanilla_useSmoothGui) break smooth; //Added config
+			
 			if(gui instanceof GuiFurnace)
 			{
 				try
@@ -179,7 +209,8 @@ public class RenderGui
 		{
 			try
 			{
-				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("http://pastebin.com/raw/JKDpcHL1"))).nextValue();
+				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("https://pastebin.com/raw/JKDpcHL1"))).nextValue();
+				final JSONArray ar0 = arr;
 				
 				for(int i = 0; i < arr.length(); ++i)
 				{
@@ -193,7 +224,7 @@ public class RenderGui
 				
 				images.clear();
 				
-				for(int i = 0; i < arr.length(); ++i)
+				if(arr != ar0) for(int i = 0; i < arr.length(); ++i)
 				{
 					JSONObject o = arr.getJSONObject(i);
 					IMG img = new IMG();

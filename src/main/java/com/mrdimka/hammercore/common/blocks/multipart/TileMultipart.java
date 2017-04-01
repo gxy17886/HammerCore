@@ -50,13 +50,13 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 				return;
 			}
 			
-			signature.setWorld(world);
+			signature.setWorld(worldObj);
 			signature.setPos(pos);
 			
 			if(signature instanceof ITickable) ((ITickable) signature).update();
 		}
 		
-		if(signatures().isEmpty() && !world.isRemote) world.setBlockToAir(pos);
+		if(signatures().isEmpty() && !worldObj.isRemote) worldObj.setBlockToAir(pos);
 		if(!hasSyncedOnce)
 		{
 			sync();
@@ -166,7 +166,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private void internal_addMultipart(MultipartSignature signature)
 	{
 		signature.setPos(pos);
-		signature.setWorld(world);
+		signature.setWorld(worldObj);
 		signature.setOwner(this);
 		
 		Set<MultipartSignature> signs_new = new HashSet<>(signatures);
@@ -181,7 +181,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		}
 		renderSignatures = new ArrayList<>(signs_new);
 		lastBaked = null;
-		if(world != null && !world.isRemote) sync();
+		if(worldObj != null && !worldObj.isRemote) sync();
 	}
 	
 	public void removeMultipart(MultipartSignature signature, boolean spawnDrop)
@@ -202,12 +202,12 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			displayTickable = ticks;
 		}
 		lastBaked = null;
-		if(world != null && !world.isRemote) sync();
+		if(worldObj != null && !worldObj.isRemote) sync();
 	}
 	
 	public MultipartSignature getSignature(Vec3d pos)
 	{
-		if(signatures().size() > 100) world.destroyBlock(getPos(), false);
+		if(signatures().size() > 100) worldObj.destroyBlock(getPos(), false);
 		for(MultipartSignature s : signatures())
 			if(s.getBoundingBox() != null && s.getBoundingBox().intersects(pos.addVector(-.0001, -.0001, -.0001), pos.addVector(.0001, .0001, .0001)))
 				return s;

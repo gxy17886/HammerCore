@@ -28,7 +28,7 @@ public abstract class TileSyncable extends TileEntity
 	private NBTTagCompound lastSyncTag;
 	
 	/** Turn this to false to force this tile to sync even if it's old and new tags are equal */
-	public boolean escapeSyncIfIdentical = false;
+	public boolean escapeSyncIfIdentical = true;
 	
 	@Override
 	public void markDirty()
@@ -47,7 +47,7 @@ public abstract class TileSyncable extends TileEntity
 			lastSyncTag = nbt;
 		}
 		
-		if(world != null && !world.isRemote) //Apply sync only if server
+		if(worldObj != null && !worldObj.isRemote) //Apply sync only if server
 		{
 			PacketSyncSyncableTile tile = new PacketSyncSyncableTile(this);
 			HCNetwork.manager.sendToAllAround(tile, getSyncPoint(512));
@@ -85,7 +85,7 @@ public abstract class TileSyncable extends TileEntity
 	
 	public TargetPoint getSyncPoint(int range)
 	{
-		return new TargetPoint(world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range);
+		return new TargetPoint(worldObj.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range);
 	}
 	
 	public abstract void writeNBT(NBTTagCompound nbt);
@@ -137,7 +137,7 @@ public abstract class TileSyncable extends TileEntity
     
     public boolean atTickRate(int rate)
 	{
-		return (world.getTotalWorldTime() + pos.toLong()) % rate == 0;
+		return (worldObj.getTotalWorldTime() + pos.toLong()) % rate == 0;
 	}
     
     public final void tryOpenGui(EntityPlayer player, World world)
