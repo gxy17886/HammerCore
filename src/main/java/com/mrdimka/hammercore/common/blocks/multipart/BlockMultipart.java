@@ -34,6 +34,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mrdimka.hammercore.api.INoItemBlock;
+import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.api.mhb.BlockTraceable;
 import com.mrdimka.hammercore.api.mhb.ICubeManager;
 import com.mrdimka.hammercore.api.multipart.ItemBlockMultipartProvider;
@@ -41,7 +42,7 @@ import com.mrdimka.hammercore.api.multipart.MultipartSignature;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.vec.Cuboid6;
 
-public class BlockMultipart extends BlockTraceable implements ITileEntityProvider, ICubeManager, INoItemBlock
+public class BlockMultipart extends BlockTraceable implements ITileEntityProvider, ICubeManager, INoItemBlock, ITileBlock<TileMultipart>
 {
 	private static final Cuboid6[] EMPTY_CUBOID_ARRAY = new Cuboid6[0];
 	
@@ -50,6 +51,12 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		super(Material.IRON);
 		MinecraftForge.EVENT_BUS.register(this);
 		setUnlocalizedName("multipart");
+	}
+	
+	@Override
+	public Class<TileMultipart> getTileClass()
+	{
+		return TileMultipart.class;
 	}
 	
 	@Override
@@ -301,7 +308,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		{
 			TileMultipart tmp = WorldUtil.cast(evt.getWorld().getTileEntity(evt.getPos()), TileMultipart.class);
 			
-			if(tmp != null && !evt.getWorld().isRemote)
+			if(tmp != null)
 			{
 				Cuboid6 cbd = getCuboidFromPlayer(evt.getPlayer(), evt.getPos());
 				if(cbd != null)

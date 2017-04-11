@@ -2,15 +2,24 @@ package com.mrdimka.hammercore.proxy;
 
 import java.awt.Color;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
+import com.mrdimka.hammercore.api.dynlight.DynamicLightGetter;
 import com.mrdimka.hammercore.client.particles.IParticle;
 import com.mrdimka.hammercore.client.particles.ParticleZap;
 
 public class ParticleProxy_Client extends ParticleProxy_Common
 {
+	{
+		MinecraftForge.EVENT_BUS.register(new DynamicLightGetter());
+	}
+	
 	@Override
 	public IParticle spawnZap(World w, Vec3d start, Vec3d end, Color rgb)
 	{
@@ -30,5 +39,11 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 			zap.spawn();
 		}
 		return zap;
+	}
+	
+	@Override
+	public int getLightValue(IBlockState blockState, IBlockAccess world, BlockPos pos)
+	{
+		return DynamicLightGetter.getLightValue(blockState, world, pos);
 	}
 }

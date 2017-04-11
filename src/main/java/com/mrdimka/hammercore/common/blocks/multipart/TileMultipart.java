@@ -32,8 +32,6 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private Set<MultipartSignature> signatures = new HashSet<>();
 	private Cuboid6[] lastBaked = null;
 	
-	public Object VertexBuffer = null;
-	
 	private boolean hasSyncedOnce = false;
 	
 	private List<MultipartSignature> renderSignatures = new ArrayList<>();
@@ -67,9 +65,6 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void sync()
 	{
-		NBTTagCompound nbt = new NBTTagCompound();
-		writeNBT(nbt);
-		
 		super.sync();
 		lastBaked = bakeCuboids();
 	}
@@ -110,7 +105,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public void randomDisplayTick(Random rand)
 	{
-		displayTickable.stream().forEach(rdt -> rdt.randomDisplayTick(rand));
+		for(IRandomDisplayTick rdt : displayTickable)
+			rdt.randomDisplayTick(rand);
 	}
 	
 	@Override
@@ -146,7 +142,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	{
 		AxisAlignedBB aabb = signature.getBoundingBox();
 		for(MultipartSignature s : signatures())
-			if(s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(aabb))
+			if(s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(aabb) && !s.isReplaceable() && s.doesMindCollision(signature.getBoundingBox(), aabb.union(signature.getBoundingBox())))
 				return false;
 		return true;
 	}

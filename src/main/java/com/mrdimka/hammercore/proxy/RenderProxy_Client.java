@@ -26,7 +26,9 @@ import com.mrdimka.hammercore.client.renderer.IRenderHelper;
 import com.mrdimka.hammercore.client.renderer.RenderHelperImpl;
 import com.mrdimka.hammercore.client.renderer.item.ItemTorchRender;
 import com.mrdimka.hammercore.client.renderer.tile.TileRenderMultipart;
+import com.mrdimka.hammercore.client.renderer.tile.TileRenderTesseract;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
+import com.mrdimka.hammercore.common.blocks.tesseract.TileTesseract;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.init.ModItems;
 
@@ -64,6 +66,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 		}
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileMultipart.class, new TileRenderMultipart());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileTesseract.class, new TileRenderTesseract());
 	}
 	
 	@Override

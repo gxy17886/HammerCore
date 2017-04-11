@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.api.RequiredDeps;
+import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
 import com.mrdimka.hammercore.client.renderer.RenderHelperImpl;
 import com.mrdimka.hammercore.client.renderer.item.EnumItemRender;
 import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
@@ -118,6 +119,9 @@ public class RenderGui
 		
 		smooth:
 		{
+			//@since 1.5.1
+			if(!HammerCoreConfigs.client_smoothVanillaGuis) break smooth;
+			
 			if(gui instanceof GuiFurnace)
 			{
 				try

@@ -44,6 +44,7 @@ import com.mrdimka.hammercore.api.WrappedFMLLog;
 import com.mrdimka.hammercore.api.mhb.IRayRegistry;
 import com.mrdimka.hammercore.api.mhb.RaytracePlugin;
 import com.mrdimka.hammercore.asm.CSVFile;
+import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
 import com.mrdimka.hammercore.command.CommandPosToLong;
 import com.mrdimka.hammercore.command.CommandTPX;
 import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
@@ -60,6 +61,7 @@ import com.mrdimka.hammercore.init.ModBlocks;
 import com.mrdimka.hammercore.init.ModItems;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.proxy.AudioProxy_Common;
+import com.mrdimka.hammercore.proxy.LightProxy_Common;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Common;
 import com.mrdimka.hammercore.proxy.RenderProxy_Common;
 import com.mrdimka.hammercore.recipeAPI.BrewingRecipe;
@@ -70,6 +72,7 @@ import com.mrdimka.hammercore.recipeAPI.registry.IRecipeScript;
 import com.mrdimka.hammercore.recipeAPI.registry.IRecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.RecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.SimpleRecipeScript;
+import com.mrdimka.hammercore.world.WorldGenHammerCore;
 
 /**
  * The core of Hammer Core.
@@ -102,6 +105,9 @@ public class HammerCore
 	 */
 	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.ParticleProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.ParticleProxy_Common")
 	public static ParticleProxy_Common particleProxy;
+	
+	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.LightProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.LightProxy_Common")
+	public static LightProxy_Common lightProxy;
 	
 	/**
 	 * An instance of {@link HammerCore} class
@@ -180,6 +186,8 @@ public class HammerCore
 	{
 		CapabilityEJ.register();
 		
+		HammerCoreConfigs.init(e.getSuggestedConfigurationFile());
+		
 		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);
 		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
@@ -191,10 +199,10 @@ public class HammerCore
 		for(Object o : toRegister)
 		{
 			MinecraftForge.EVENT_BUS.register(o);
-			FMLLog.log("Hammer Core", Level.INFO, "Added \"" + o + "\" to MCF Event Bus.");
+			LOG.info("Added \"" + o + "\" to MCF Event Bus.");
 		}
 		
-		FMLLog.log("Hammer Core", Level.INFO, "Added " + toRegister.size() + " object to MCF Event Bus.");
+		LOG.info("Added " + toRegister.size() + " object to MCF Event Bus.");
 		
 		{
 			GetAllRequiredApisEvent evt = new GetAllRequiredApisEvent();
@@ -241,6 +249,8 @@ public class HammerCore
 		if(!MinecraftForge.EVENT_BUS.post(evt)) GameRegistry.addRecipe(evt.getRecipe());
 		
 		BrewingRecipeRegistry.addRecipe(BrewingRecipe.INSTANCE);
+		
+		GameRegistry.registerWorldGenerator(new WorldGenHammerCore(), 0);
 	}
 	
 	public static final RecipeTypeRegistry registry = new RecipeTypeRegistry();

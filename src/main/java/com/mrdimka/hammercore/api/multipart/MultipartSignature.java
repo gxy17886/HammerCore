@@ -107,10 +107,7 @@ public abstract class MultipartSignature
 	public IHandlerProvider getProvider(EnumFacing toFace)
 	{
 		IHandlerProvider provider = owner;
-		if(world != null && world.isBlockLoaded(pos.offset(toFace)))
-		{
-			provider = WorldUtil.cast(world, IHandlerProvider.class);
-		}
+		if(world != null && world.isBlockLoaded(pos.offset(toFace))) provider = WorldUtil.cast(world, IHandlerProvider.class);
 		return provider != null ? provider : owner;
 	}
 	
@@ -232,6 +229,14 @@ public abstract class MultipartSignature
         }
     }
 	
+    /**
+     * Is this multipart replaceable with other multipart? Return true if this multipart is temporal or you don't care about it.
+     */
+    public boolean isReplaceable()
+    {
+    	return false;
+    }
+    
 	/**
 	 * Determines if multi-part signature can be placed onto a tile.
 	 */
@@ -267,6 +272,15 @@ public abstract class MultipartSignature
 	
 	public abstract AxisAlignedBB getBoundingBox();
 	
+	/**
+	 * Does this multipart mind other multipart if it collides with this in collisionAABB?
+	 * Default: true.
+	 */
+	public boolean doesMindCollision(AxisAlignedBB otherAABB, AxisAlignedBB collisionAABB)
+	{
+		return true;
+	}
+	
 	public static MultipartSignature createAndLoadSignature(NBTTagCompound nbt)
 	{
 		try
@@ -276,26 +290,6 @@ public abstract class MultipartSignature
 			return signature;
 		} catch(Throwable err) { HammerCore.LOG.error("Failed to load signature for " + nbt.getString("class") + "! This is a bug!"); err.printStackTrace(); }
 		return null;
-	}
-	
-	public final void writeSignature(NBTTagCompound nbt)
-	{
-		nbt.setString("class", getClass().getName());
-		if(state != null)
-		{
-			nbt.setString("block", state.getBlock().getRegistryName().toString());
-			nbt.setInteger("meta", state.getBlock().getMetaFromState(state));
-		}
-		NBTTagCompound tag = new NBTTagCompound();
-		writeToNBT(tag);
-		nbt.setTag("nbt", tag);
-	}
-	
-	public final void readSignature(NBTTagCompound nbt)
-	{
-		if(nbt.hasKey("block", NBT.TAG_STRING) && nbt.hasKey("meta", NBT.TAG_INT)) state = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(nbt.getString("block"))).getStateFromMeta(nbt.getInteger("meta"));
-		pos = new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
-		readFromNBT(nbt.getCompoundTag("nbt"));
 	}
 	
 	/** Drop all things in here! */
@@ -310,4 +304,25 @@ public abstract class MultipartSignature
 	{
 		
 	}
+	
+	public final NBTTagCompound writeSignature(NBTTagCompound nbt)
+	{
+		nbt.setString("class", getClass().getName());
+		if(state != null)
+		{
+			nbt.setString("block", state.getBlock().getRegistryName().toString());
+			nbt.setInteger("meta", state.getBlock().getMetaFromState(state));
+		}
+		NBTTagCompound tag = new NBTTagCompound();
+		writeToNBT(tag);
+		nbt.setTag("nbt", tag);
+		return nbt;
+	}
+	
+	public final void readSignature(NBTTagCompound nbt)
+	{
+		if(nbt.hasKey("block", NBT.TAG_STRING) && nbt.hasKey("meta", NBT.TAG_INT)) state = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(nbt.getString("block"))).getStateFromMeta(nbt.getInteger("meta"));
+		pos = new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
+		readFromNBT(nbt.getCompoundTag("nbt"));
+	}	
 }

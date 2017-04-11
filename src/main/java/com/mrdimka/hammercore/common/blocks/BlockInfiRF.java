@@ -1,5 +1,6 @@
 package com.mrdimka.hammercore.common.blocks;
 
+import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.tile.TileInfiRF;
 
 import net.minecraft.block.Block;
@@ -8,7 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-public class BlockInfiRF extends Block implements ITileEntityProvider
+public class BlockInfiRF extends Block implements ITileEntityProvider, ITileBlock<TileInfiRF>
 {
 	public BlockInfiRF()
 	{
@@ -16,6 +17,12 @@ public class BlockInfiRF extends Block implements ITileEntityProvider
 		setUnlocalizedName("infi_rf");
 		setHardness(-1);
 		setResistance(Float.MAX_VALUE);
+	}
+	
+	@Override
+	public Class<TileInfiRF> getTileClass()
+	{
+		return TileInfiRF.class;
 	}
 	
 	@Override

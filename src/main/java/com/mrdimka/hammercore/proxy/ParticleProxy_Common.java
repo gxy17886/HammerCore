@@ -6,7 +6,10 @@ import com.mrdimka.hammercore.client.particles.IParticle;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSpawnZap;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class ParticleProxy_Common
@@ -32,4 +35,9 @@ public class ParticleProxy_Common
 		HCNetwork.manager.sendToAll(zap);
 		return null;
 	};
+	
+	public int getLightValue(IBlockState blockState, IBlockAccess world, BlockPos pos)
+	{
+		return 0;
+	}
 }
