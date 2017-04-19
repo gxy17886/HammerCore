@@ -1,0 +1,22 @@
+{
+	"Black Hole Storage": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
+		"versiontypes": ["alpha", "beta", "release"],
+		"versions": {
+			"1.11.2": {
+				"alpha": {
+					"version": "3a",
+					"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2385875/download"
+				},
+				"beta": {
+					"version": "6b",
+					"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2390299/download"
+				},
+				"release": {
+					"version": "11r",
+					"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2407992/download"
+				}
+			}
+		}
+	}
+}
