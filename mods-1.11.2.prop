@@ -1,7 +1,6 @@
 {
 	"Black Hole Storage": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
-		"versiontypes": [ "alpha", "beta", "release" ],
 		"versions": {
 			"alpha": {
 				"version": "3a",
@@ -14,6 +13,15 @@
 			"release": {
 				"version": "11r",
 				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2407992/download"
+			}
+		}
+	},
+	"Solar Flux Reborn": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
+		"versions": {
+			"release": {
+				"version": "2.15r",
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download"
 			}
 		}
 	}
