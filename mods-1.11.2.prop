@@ -1,6 +1,7 @@
 {
 	"Black Hole Storage": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
+		"modid": "blackholestorage",
 		"versions": {
 			"alpha": {
 				"version": "3a",
@@ -18,10 +19,21 @@
 	},
 	"Solar Flux Reborn": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
+		"modid": "solarfluxreborn",
 		"versions": {
 			"release": {
 				"version": "2.15r",
 				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download"
+			}
+		}
+	},
+	"Machine Power Craft": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/189/282/190/130/7df9fc5572d9c16fa6d5ca9d723370d7.png",
+		"modid": "machinepowercraft",
+		"versions": {
+			"alpha": {
+				"version": "5a",
+				"download": "https://minecraft.curseforge.com/projects/machine-power-craft/files/2404913/download"
 			}
 		}
 	}
