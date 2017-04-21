@@ -86,5 +86,31 @@
 				"size": 68006
 			}
 		}
+	},
+	"Terraria Craft": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/206/927/190/130/7fe8d3eeef720941c8c028423400d208.png",
+		"modid": "terraria",
+		"tooltip": "Adding Terraria Content to Minecraft",
+		"authors": [ "MrDimkas_Studio" ],
+		"versions": {
+			"preview": {
+				"version": "38a",
+				"download": "https://minecraft.curseforge.com/projects/terraria-craft/files/2396248/download",
+				"size": 1345798
+			}
+		}
+	},
+	"Biome Paint Tools": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/214/512/190/130/8ffe50cf8fca85aea25fadd5e818d309.png",
+		"modid": "biomepainttools",
+		"tooltip": "Paint world with biomes",
+		"authors": [ "MrDimkas_Studio ],
+		"versions": {
+			"release": {
+				"version": "1.0.4",
+				"download": "https://minecraft.curseforge.com/projects/biome-paint-tools/files/2396518/download",
+				"size": 53206
+			}
+		}
 	}
 }
