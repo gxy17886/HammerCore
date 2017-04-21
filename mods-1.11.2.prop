@@ -2,6 +2,7 @@
 	"Black Hole Storage": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
 		"modid": "blackholestorage",
+		"tooltip": "Store infinite amounts of something inside of a stabilized black holes",
 		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"alpha": {
@@ -24,6 +25,7 @@
 	"Solar Flux Reborn": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
 		"modid": "solarfluxreborn",
+		"tooltip": "A reborn of Solar Flux mod",
 		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"release": {
@@ -36,6 +38,7 @@
 	"Machine Power Craft": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/189/282/190/130/7df9fc5572d9c16fa6d5ca9d723370d7.png",
 		"modid": "machinepowercraft",
+		"tooltip": "Machine Power Craft adds machines, with them you can triple+ ores, teleport around, and more!",
 		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"alpha": {
