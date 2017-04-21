@@ -2,38 +2,46 @@
 	"Black Hole Storage": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
 		"modid": "blackholestorage",
+		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"alpha": {
 				"version": "3a",
-				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2385875/download"
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2385875/download",
+				"size": 636111
 			},
 			"beta": {
 				"version": "6b",
-				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2390299/download"
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2390299/download",
+				"size": 692175
 			},
 			"release": {
 				"version": "11r",
-				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2407992/download"
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2407992/download",
+				"size": 702479
 			}
 		}
 	},
 	"Solar Flux Reborn": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
 		"modid": "solarfluxreborn",
+		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"release": {
 				"version": "2.15r",
-				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download"
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download",
+				"size": 211090
 			}
 		}
 	},
 	"Machine Power Craft": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/189/282/190/130/7df9fc5572d9c16fa6d5ca9d723370d7.png",
 		"modid": "machinepowercraft",
+		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"alpha": {
 				"version": "5a",
-				"download": "https://minecraft.curseforge.com/projects/machine-power-craft/files/2404913/download"
+				"download": "https://minecraft.curseforge.com/projects/machine-power-craft/files/2404913/download",
+				"size": 1290414
 			}
 		}
 	}
