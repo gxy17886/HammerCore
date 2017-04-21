@@ -104,7 +104,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/214/512/190/130/8ffe50cf8fca85aea25fadd5e818d309.png",
 		"modid": "biomepainttools",
 		"tooltip": "Paint world with biomes",
-		"authors": [ "MrDimkas_Studio ],
+		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
 			"release": {
 				"version": "1.0.4",
