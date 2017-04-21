@@ -41,10 +41,36 @@
 		"tooltip": "Machine Power Craft adds machines, with them you can triple+ ores, teleport around, and more!",
 		"authors": [ "MrDimkas_Studio" ],
 		"versions": {
-			"alpha": {
+			"preview": {
 				"version": "5a",
 				"download": "https://minecraft.curseforge.com/projects/machine-power-craft/files/2404913/download",
 				"size": 1290414
+			}
+		}
+	},
+	"Programmable Command Blocks (PCB)": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/240/505/190/130/4fa2ba4f4facf7776d29ab68df59a16c.gif",
+		"modid": "pcb",
+		"tooltip": "Now making one-command block creations is easier!",
+		"authors": [ "MrDimkas_Studio" ],
+		"versions": {
+			"release": {
+				"version": "1.3r",
+				"download": "https://minecraft.curseforge.com/projects/programmable-command-blocks-pcb/files/2402904/download",
+				"size": 340240
+			}
+		}
+	},
+	"Player Stats 2": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/236/939/190/130/57c65c54a4c354b60fd5d7448b50e0bc.png",
+		"modid": "playerstats2",
+		"tooltip": "PlayerStats gets a reboot!",
+		"authors": [ "MrDimkas_Studio" ],
+		"versions": {
+			"release": {
+				"version": "14r",
+				"download": "https://minecraft.curseforge.com/projects/player-stats-2/files/2397070/download",
+				"size": 360652
 			}
 		}
 	}
