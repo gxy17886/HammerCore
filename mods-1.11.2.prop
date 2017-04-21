@@ -73,5 +73,18 @@
 				"size": 360652
 			}
 		}
+	},
+	"Solar Energy Craft III": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/244/795/190/130/74047f505b81651a5415819be0d52910.png",
+		"modid": "secraft",
+		"tooltip": "This addon for mod \"Machine Power Craft\"",
+		"authors": [ "TheOrriver" ],
+		"versions": {
+			"alpha": {
+				"version": "1a",
+				"download": "https://minecraft.curseforge.com/projects/solar-energy-craft-iii/files/2404799/download",
+				"size": 68006
+			}
+		}
 	}
 }
