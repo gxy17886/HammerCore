@@ -12,12 +12,14 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.FMLLog;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -29,22 +31,27 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import org.apache.logging.log4j.Level;
 
 import com.mrdimka.hammercore.annotations.MCFBus;
 import com.mrdimka.hammercore.api.HammerCoreAPI;
 import com.mrdimka.hammercore.api.IHammerCoreAPI;
 import com.mrdimka.hammercore.api.IJavaCode;
+import com.mrdimka.hammercore.api.IUpdatable;
 import com.mrdimka.hammercore.api.RequiredDeps;
 import com.mrdimka.hammercore.api.WrappedFMLLog;
 import com.mrdimka.hammercore.api.mhb.IRayRegistry;
 import com.mrdimka.hammercore.api.mhb.RaytracePlugin;
 import com.mrdimka.hammercore.asm.CSVFile;
+import com.mrdimka.hammercore.cfg.ConfigHolder;
+import com.mrdimka.hammercore.cfg.HCModConfigurations;
 import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
+import com.mrdimka.hammercore.cfg.IConfigReloadListener;
 import com.mrdimka.hammercore.command.CommandPosToLong;
 import com.mrdimka.hammercore.command.CommandTPX;
 import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
@@ -59,8 +66,10 @@ import com.mrdimka.hammercore.fluiddict.FluidDictionary;
 import com.mrdimka.hammercore.gui.GuiManager;
 import com.mrdimka.hammercore.init.ModBlocks;
 import com.mrdimka.hammercore.init.ModItems;
+import com.mrdimka.hammercore.init.SimpleRegistration;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.proxy.AudioProxy_Common;
+import com.mrdimka.hammercore.proxy.BookProxy_Common;
 import com.mrdimka.hammercore.proxy.LightProxy_Common;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Common;
 import com.mrdimka.hammercore.proxy.RenderProxy_Common;
@@ -68,8 +77,6 @@ import com.mrdimka.hammercore.recipeAPI.BrewingRecipe;
 import com.mrdimka.hammercore.recipeAPI.IRecipePlugin;
 import com.mrdimka.hammercore.recipeAPI.RecipePlugin;
 import com.mrdimka.hammercore.recipeAPI.registry.GlobalRecipeScript;
-import com.mrdimka.hammercore.recipeAPI.registry.IRecipeScript;
-import com.mrdimka.hammercore.recipeAPI.registry.IRecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.RecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.SimpleRecipeScript;
 import com.mrdimka.hammercore.world.WorldGenHammerCore;
@@ -109,6 +116,9 @@ public class HammerCore
 	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.LightProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.LightProxy_Common")
 	public static LightProxy_Common lightProxy;
 	
+	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.BookProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.BookProxy_Common")
+	public static BookProxy_Common bookProxy;
+	
 	/**
 	 * An instance of {@link HammerCore} class
 	 **/
@@ -116,7 +126,7 @@ public class HammerCore
 	public static HammerCore instance;
 	
 	/** Creative tab of HammerCore */
-	public static final CreativeTabs tab = HammerCoreUtils.createDynamicCreativeTab("hammercore", 150);
+	public static final CreativeTabs tab = HammerCoreUtils.createDynamicCreativeTab("hammercore", 60);
 	
 	public static final Map<IHammerCoreAPI, HammerCoreAPI> APIS = new HashMap<>();
 	
@@ -128,6 +138,7 @@ public class HammerCore
 	
 	private List<IRayRegistry> raytracePlugins;
 	private List<IRecipePlugin> recipePlugins;
+	private List<ConfigHolder> configListeners;
 	
 	static
 	{
@@ -186,15 +197,26 @@ public class HammerCore
 	{
 		CapabilityEJ.register();
 		
-		HammerCoreConfigs.init(e.getSuggestedConfigurationFile());
-		
 		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);
+		
+		configListeners = new ArrayList<>();
+		
+		for(IConfigReloadListener listener : AnnotatedInstanceUtil.getInstances(e.getAsmData(), HCModConfigurations.class, IConfigReloadListener.class))
+		{
+			ConfigHolder h = new ConfigHolder(listener, new Configuration(listener.getSuggestedConfigurationFile()));
+			h.reload();
+			configListeners.add(h);
+			LOG.info("Added \"" + h.getClass().getName() + "\" to Hammer Core Simple Configs.");
+		}
+		
 		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
 		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, IRecipePlugin.class);
 		
 		for(IJavaCode code : COMPILED_CODES) //Add compiled codes
 			code.addMCFObjects(toRegister);
+		
+		toRegister.add(this);
 		
 		for(Object o : toRegister)
 		{
@@ -222,7 +244,7 @@ public class HammerCore
 		}
 		
 		new ModBlocks();
-		new ModItems();
+		SimpleRegistration.registerFieldItemsFrom(ModItems.class, "hammercore", HammerCore.tab);
 		
 		ModMetadata meta = e.getModMetadata();
 		meta.autogenerated = false;
@@ -237,6 +259,7 @@ public class HammerCore
 	public void init(FMLInitializationEvent e)
 	{
 		renderProxy.init();
+		bookProxy.init();
 		HCNetwork.clinit();
 		
 		for(IJavaCode code : COMPILED_CODES)
@@ -269,6 +292,8 @@ public class HammerCore
 		}
 	}
 	
+	public static final List<IUpdatable> updatables = new ArrayList<>(4);
+	
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent e)
 	{
@@ -289,6 +314,30 @@ public class HammerCore
 		GRCProvider.reloadScript();
 		
 		reloadRaytracePlugins();
+	}
+	
+	@SubscribeEvent
+	public void serverTick(ServerTickEvent evt)
+	{
+		if(evt.side == Side.SERVER) for(int i = 0; i < updatables.size(); ++i)
+		{
+			try
+			{
+				IUpdatable upd = updatables.get(i);
+				upd.update();
+				if(!upd.isAlive()) updatables.remove(i);
+			}
+			catch(Throwable err) {}
+		}
+	}
+	
+	@SubscribeEvent
+	public void configReloaded(ConfigChangedEvent evt)
+	{
+		String mid = evt.getModID();
+		for(ConfigHolder holder : configListeners)
+			if(holder.listener.getModid().equals(mid))
+				holder.reload();
 	}
 	
 	public void reloadRaytracePlugins()

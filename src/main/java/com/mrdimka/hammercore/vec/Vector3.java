@@ -245,7 +245,7 @@ public class Vector3 implements Copyable<Vector3>
 	
 	public double mag()
 	{
-		return Math.sqrt(x * x + y * y + z * z);
+		return Math.sqrt(magSquared());
 	}
 	
 	public double magSquared()

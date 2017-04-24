@@ -17,12 +17,15 @@ public class PacketSyncSyncableTile implements IPacket, IPacketListener<PacketSy
 	private int world;
 	private NBTTagCompound nbt;
 	
+	private String clazz;
+	
 	public PacketSyncSyncableTile() {}
 	public PacketSyncSyncableTile(TileSyncable tile)
 	{
 		nbt = tile.getUpdateTag();
 		pos = StrPos.toStr(tile.getPos());
 		world = tile.getWorld().provider.getDimension();
+		clazz = tile.getClass().getName();
 	}
 	
 	@Override
@@ -49,6 +52,11 @@ public class PacketSyncSyncableTile implements IPacket, IPacketListener<PacketSy
 		if(world != null && world.isAreaLoaded(pos, pos) /*prevent crashing...*/)
 		{
 			TileSyncable sync = WorldUtil.cast(world.getTileEntity(pos), TileSyncable.class);
+			
+			//try to recreate tile if we can
+			//@since 1.5.3
+			if(sync == null) try { sync = (TileSyncable) Class.forName(packet.clazz).newInstance(); } catch(Throwable err) {}
+			
 			if(sync != null) sync.handleUpdateTag(packet.nbt);
 		}
 		

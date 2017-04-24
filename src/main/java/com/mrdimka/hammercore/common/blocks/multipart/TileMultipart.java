@@ -8,6 +8,7 @@ import java.util.Set;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
@@ -37,6 +38,9 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private List<MultipartSignature> renderSignatures = new ArrayList<>();
 	private Set<IRandomDisplayTick> displayTickable = new HashSet<>();
 	
+	private int lastPlayerCount = 0;
+	private int ticksEmpty = 0;
+	
 	@Override
 	public void tick()
 	{
@@ -54,8 +58,21 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			if(signature instanceof ITickable) ((ITickable) signature).update();
 		}
 		
-		if(signatures().isEmpty() && !world.isRemote) world.setBlockToAir(pos);
-		if(!hasSyncedOnce)
+		//Attempted to wait 4 seconds before actually removing multipart. Maybe we will sync?
+		if(!world.isRemote && hasSyncedOnce && signatures().isEmpty())
+		{
+			if(ticksEmpty++ >= 80) world.setBlockToAir(pos);
+		} else ticksEmpty = 0;
+		
+		//Attempted sync
+		if(atTickRate(80) && !world.isRemote)
+		{
+			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expandXyz(32));
+			if(lastPlayerCount != players.size()) sync();
+			lastPlayerCount = players.size();
+		}
+		
+		if(!hasSyncedOnce && !world.isRemote)
 		{
 			sync();
 			hasSyncedOnce = true;
@@ -112,6 +129,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void readNBT(NBTTagCompound nbt)
 	{
+		if(world != null && world.isRemote) hasSyncedOnce = true;
+		
 		signatures = new HashSet<>();
 		renderSignatures = new ArrayList<>();
 		displayTickable = new HashSet<>();

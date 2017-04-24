@@ -50,7 +50,7 @@ public abstract class TileSyncable extends TileEntity
 		if(world != null && !world.isRemote) //Apply sync only if server
 		{
 			PacketSyncSyncableTile tile = new PacketSyncSyncableTile(this);
-			HCNetwork.manager.sendToAllAround(tile, getSyncPoint(512));
+			HCNetwork.manager.sendToAllAround(tile, getSyncPoint(260));
 		}
 	}
 	

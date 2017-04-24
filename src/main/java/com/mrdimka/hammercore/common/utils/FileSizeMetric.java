@@ -16,7 +16,7 @@ public class FileSizeMetric
 	{
 		if(bytes < KiB) return formati.format(bytes) + "B";
 		else if(bytes < MeB) return format.format(bytes / KiB) + "KiB";
-		else if(bytes < GiB) return format.format(bytes / MeB) + "MeB";
+		else if(bytes < GiB) return format.format(bytes / MeB) + "MiB";
 		else if(bytes < TeB) return format.format(bytes / GiB) + "GiB";
 		else return (bytes / GiB) + "TeB";
 	}

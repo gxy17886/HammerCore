@@ -10,6 +10,10 @@ item.hammercore:calculatron.name=Калькулятрон
 item.hammercore:calculatron.tooltip0=Инженерный калькулятор в Minecraft!
 item.hammercore:calculatron.tooltip1=§oНе используйте для написания домашки!§r
 
+item.hammercore:manual.name=Инструкция по Hammer Core
+item.hammercore:manual.tooltip0=Содержит необходимую
+item.hammercore:manual.tooltip1=информацию для выживания
+
 ###########
 
 ###BLOCKS###
@@ -26,3 +30,14 @@ tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
 gui.hammercore:calculatron=Калькулятрон vVERSION
 
 #######
+
+##MANUAL##
+
+bookapi.hammercore:manual:items=Предметы
+bookapi.hammercore:manual:blocks=Блоки
+
+gui.hammercore:manual/items/calculatron.title=Калькулятрон
+
+gui.hammercore:manual/items/calculatron.desc=Этот мощный предмет умеет решить очень тяжелые уравнения. Попробуйте!
+
+##########

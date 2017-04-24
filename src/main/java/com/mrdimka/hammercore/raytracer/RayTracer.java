@@ -1,19 +1,14 @@
 package com.mrdimka.hammercore.raytracer;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.math.MathHelper;
-import com.mrdimka.hammercore.vec.Cuboid6;
-import com.mrdimka.hammercore.vec.Vector3;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -21,6 +16,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.mrdimka.hammercore.HammerCore;
+import com.mrdimka.hammercore.math.MathHelper;
+import com.mrdimka.hammercore.vec.Cuboid6;
+import com.mrdimka.hammercore.vec.Vector3;
 
 public class RayTracer
 {
@@ -153,6 +155,49 @@ public class RayTracer
 		IndexedCuboid6 hit = rayTraceCuboids(start, end, cuboids);
 		return hit != null ? new ExtendedRayTraceResult(entity, s_vec, hit.data, s_dist) : null;
 	}
+	
+	public static CuboidRayTraceResult rayTraceCuboidsClosest(Vector3 start, Vector3 end, BlockPos pos, List<IndexedCuboid6> cuboids)
+	{
+        List<CuboidRayTraceResult> results = new ArrayList<>();
+        for(IndexedCuboid6 cuboid6 : cuboids)
+        {
+        	CuboidRayTraceResult hit = rayTrace(pos, start, end, cuboid6);
+        	if(hit != null) hit.setData(cuboid6.data);
+            results.add(hit);
+        }
+        CuboidRayTraceResult closestHit = null;
+        double curClosest = Double.MAX_VALUE;
+        for(CuboidRayTraceResult hit : results)
+        {
+            if(hit != null)
+            {
+                if(curClosest > hit.dist)
+                {
+                    closestHit = hit;
+                    curClosest = hit.dist;
+                }
+            }
+        }
+        return closestHit;
+    }
+	
+	public static CuboidRayTraceResult rayTrace(BlockPos pos, Vector3 start, Vector3 end, IndexedCuboid6 cuboid)
+	{
+		Vector3 posvec = new Vector3(pos);
+        Vector3 startRay = start.copy().subtract(posvec);
+        Vector3 endRay = end.copy().subtract(posvec);
+        RayTraceResult bbResult = cuboid.aabb().calculateIntercept(startRay.vec3(), endRay.vec3());
+        
+        if(bbResult != null)
+        {
+            Vector3 hitVec = new Vector3(bbResult.hitVec).add(posvec);
+            EnumFacing sideHit = bbResult.sideHit;
+            double dist = hitVec.copy().subtract(start).magSquared();
+            return new CuboidRayTraceResult(hitVec, pos, sideHit, cuboid, dist);
+        }
+        
+        return null;
+    }
 	
 	public static RayTraceResult retraceBlock(World world, EntityPlayer player, BlockPos pos)
 	{

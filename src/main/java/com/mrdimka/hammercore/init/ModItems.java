@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
 import com.mrdimka.hammercore.common.items.ItemCalculatron;
+import com.mrdimka.hammercore.common.items.ItemHammerCoreManual;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.common.items.debug.ItemRayTracer;
 import com.mrdimka.hammercore.common.items.debug.ItemZapper;
@@ -21,7 +22,8 @@ public class ModItems
 	public static final Item
 							ray_tracer,
 							zapper,
-							calculatron = new ItemCalculatron();
+							calculatron = new ItemCalculatron(),
+							manual = new ItemHammerCoreManual();
 	
 	static
 	{
@@ -30,8 +32,6 @@ public class ModItems
 		
 		if(HammerCoreConfigs.debug_addZapper) zapper = new ItemZapper();
 		else zapper = null;
-		
-		SimpleRegistration.registerFieldItemsFrom(ModItems.class, "hammercore", HammerCore.tab);
 	}
 	
 	@Deprecated

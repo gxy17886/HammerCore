@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -15,17 +16,21 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.api.RequiredDeps;
@@ -37,17 +42,22 @@ import com.mrdimka.hammercore.client.utils.GLImageManager;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.mrdimka.hammercore.gui.GuiMissingApis;
+import com.mrdimka.hammercore.gui.modbrowser.GuiModBrowserLoading;
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
 import com.mrdimka.hammercore.json.JSONArray;
 import com.mrdimka.hammercore.json.JSONObject;
 import com.mrdimka.hammercore.json.JSONTokener;
 import com.mrdimka.hammercore.math.ExpressionEvaluator;
+import com.mrdimka.hammercore.math.MathHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderGui
 {
+	private static final UV hammer = new UV(new ResourceLocation("hammercore", "textures/hammer.png"), 0, 0, 256, 256);
+	private static final ResourceLocation main_menu_widgets = new ResourceLocation("hammercore", "textures/gui/main_menu_widgets.png");
 	private static final SpecialUser user = new SpecialUser();
+	private double modListHoverTip = 0;
 	
 	@SubscribeEvent
 	public void guiRender(DrawScreenEvent.Post e)
@@ -56,6 +66,54 @@ public class RenderGui
 		
 		if(gui instanceof GuiMainMenu)
 		{
+			if(HammerCoreConfigs.client_modBrowser)
+			{
+				int mouseX = e.getMouseX();
+				int mouseY = e.getMouseY();
+				
+				int xOff = gui.width / 2 - 15;
+				
+				boolean isHovered = mouseX >= xOff && mouseY >= 0 && mouseX < xOff + 30 && mouseY < 3;
+				isHovered |= mouseX >= xOff + 3 && mouseY >= 0 && mouseX < xOff + 27 && mouseY < modListHoverTip + 9;
+				
+				if(isHovered) modListHoverTip = MathHelper.clip(modListHoverTip + .8D, 0, 12);
+				else modListHoverTip = MathHelper.clip(modListHoverTip - .8D, 0, 12);
+				
+				gui.mc.getTextureManager().bindTexture(main_menu_widgets);
+				
+				GL11.glPushMatrix();
+				GL11.glTranslated(xOff, 0, 0);
+				GLRenderState.BLEND.captureState();
+				GLRenderState.BLEND.on();
+				
+				GL11.glColor4d(1, 1, 1, 1);
+				
+				RenderUtil.drawTexturedModalRect(0, 0, 0, 0, 30, 4);
+				RenderUtil.drawTexturedModalRect(0, 4, 0, 4, 30, modListHoverTip);
+				RenderUtil.drawTexturedModalRect(0, 4 + modListHoverTip, 0, 16, 30, 5);
+				
+				GL11.glColor4d(1, 1, 1, modListHoverTip / 12D);
+				
+				RenderUtil.drawTexturedModalRect(0, 0, 30, 0, 30, 4);
+				RenderUtil.drawTexturedModalRect(0, 4, 30, 4, 30, modListHoverTip);
+				RenderUtil.drawTexturedModalRect(0, 4 + modListHoverTip, 30, 16, 30, 5);
+				
+				GL11.glColor4d(1, 1, 1, 1);
+				
+				float f = 1F - net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin((float)((Minecraft.getSystemTime() + 47647L) % 10000L) / 10000.0F * ((float)Math.PI * 2F)) * 0.1F);
+				
+				GL11.glPushMatrix();
+				GL11.glTranslated(14 - (f * 8) + 8, modListHoverTip - 3 - (f * 8) + 8, 0);
+				GL11.glRotated((12 - modListHoverTip) / 12 * -90, 0, 0, 1);
+				GL11.glTranslated(-8, -8, 0);
+				
+				hammer.render(0, 0, 16 * f, 16 * f);
+				GL11.glPopMatrix();
+				
+				GLRenderState.BLEND.reset();
+				GL11.glPopMatrix();
+			}
+			
 			user.draw();
 		}
 		
@@ -98,6 +156,43 @@ public class RenderGui
 				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void mouseClick(MouseInputEvent.Pre evt)
+	{
+		int mouseX = Mouse.getEventX() * evt.getGui().width / evt.getGui().mc.displayWidth;
+        int mouseY = evt.getGui().height - Mouse.getEventY() * evt.getGui().height / evt.getGui().mc.displayHeight - 1;
+        int eventButton = Mouse.getEventButton();
+
+        if(Mouse.getEventButtonState())
+        {
+        	GuiScreen gui = evt.getGui();
+        	
+        	if(gui instanceof GuiMainMenu)
+        	{
+        		int xOff = evt.getGui().width / 2 - 15;
+    			
+    			boolean isHovered = mouseX >= xOff && mouseY >= 0 && mouseX < xOff + 30 && mouseY < 3;
+    			isHovered |= mouseX >= xOff + 3 && mouseY >= 0 && mouseX < xOff + 27 && mouseY < modListHoverTip + 9;
+    			
+    			if(isHovered && eventButton == 0 && HammerCoreConfigs.client_modBrowser)
+    			{
+    				modListHoverTip = 0;
+    				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+    				GuiModBrowserLoading gui0;
+    				gui.mc.displayGuiScreen(gui0 = new GuiModBrowserLoading());
+    				try
+    				{
+    					Field f0 = GuiMainMenu.class.getDeclaredFields()[5];
+    					f0.setAccessible(true);
+    					Field f1 = GuiModBrowserLoading.class.getDeclaredFields()[3];
+    					f1.setAccessible(true);
+    					f1.setInt(gui0, f0.getInt(gui));
+    				}catch(Throwable err) {}
+    			}
+        	}
+        }
 	}
 	
 	@SubscribeEvent

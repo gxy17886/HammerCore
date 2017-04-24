@@ -1,5 +1,6 @@
 package com.mrdimka.hammercore.common.utils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -34,21 +35,14 @@ public class HammerCoreUtils
 	{
 		return new CreativeTabs(name)
 		{
-			private int tick = 0;
-			private int index = 0;
-			
 			public ItemStack getIconItemStack()
 			{
 				NonNullList<ItemStack> items = NonNullList.create();
 				displayAllRelevantItems(items);
 				if(items.size() == 0) return new ItemStack(Blocks.BARRIER);
-				if(tick++ > delayTicks)
-				{
-					tick = 0;
-					index++;
-				}
-				if(index >= items.size()) index = 0;
-				return items.get(index);
+				
+				//move to more-efficient + convenient methods.
+				return items.get((int) ((Minecraft.getSystemTime() / (50L * delayTicks)) % items.size()));
 			}
 
 			@Override

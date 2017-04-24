@@ -118,6 +118,11 @@ public class JSONArray
 		return value == null || value == JSONObject.NULL;
 	}
 	
+	public Object[] values()
+	{
+		return values.toArray();
+	}
+	
 	public Object get(int index) throws JSONException
 	{
 		try

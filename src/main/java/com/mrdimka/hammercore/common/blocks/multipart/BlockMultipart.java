@@ -33,6 +33,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.api.mhb.BlockTraceable;
@@ -228,7 +229,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public boolean addHitEffects(IBlockState state, World world, RayTraceResult target, ParticleManager manager)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(target.getBlockPos()), TileMultipart.class);
-		Cuboid6 cbd = getCuboidFromRTR(world, target);
+		Cuboid6 cbd = getCuboidFromRTR(world, RayTracer.retrace(HammerCore.renderProxy.getClientPlayer()));
 		if(tmp != null && cbd != null)
 		{
 			MultipartSignature signature = tmp.getSignature(cbd.aabb().getCenter());
@@ -301,7 +302,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		if(tmp != null) for(MultipartSignature sign : tmp.signatures()) sign.onNeighborChange(world, pos, neighbor);
 	}
 	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void tryBreakBlock(BlockEvent.BreakEvent evt)
 	{
 		if(evt.getState().getBlock() == this)

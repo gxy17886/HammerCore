@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.api.multipart.BlockMultipartProvider;
+import com.mrdimka.hammercore.common.items.MultiVariantItem;
 
 public class SimpleRegistration
 {
@@ -50,6 +51,7 @@ public class SimpleRegistration
 		if(tab != null) item.setCreativeTab(tab);
 		GameRegistry.register(item);
 		ModItems.items.add(item);
+		if(item instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) item);
 	}
 	
 	public static void registerBlock(Block block, String modid, CreativeTabs tab)
@@ -71,7 +73,9 @@ public class SimpleRegistration
 		if(block instanceof ITileBlock)
 		{
 			Class c = ((ITileBlock) block).getTileClass();
-			GameRegistry.registerTileEntity(c, c.getName());
+			
+			//Better registration of tiles. Maybe this will fix tile disappearing?
+			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1));
 		}else if(block instanceof ITileEntityProvider)
 		{
 			ITileEntityProvider te = (ITileEntityProvider) block;
@@ -83,6 +87,7 @@ public class SimpleRegistration
 		{
 			Item i = Item.getItemFromBlock(block);
 			if(i != null) ModItems.items.add(i);
+			if(i instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) i);
 		}
 	}
 }

@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.mrdimka.hammercore.raytracer.ExtendedRayTraceResult;
+import com.mrdimka.hammercore.raytracer.CuboidRayTraceResult;
 import com.mrdimka.hammercore.raytracer.IndexedCuboid6;
 import com.mrdimka.hammercore.raytracer.RayTracer;
 import com.mrdimka.hammercore.vec.Cuboid6;
@@ -161,42 +161,13 @@ public abstract class BlockTraceable extends Block
 			Cuboid6 c = cbs[i];
 			Cuboid6 cc = new Cuboid6(c.aabb().minX + p.getX(), c.aabb().minY + p.getY(), c.aabb().minZ + p.getZ(), c.aabb().maxX + p.getX(), c.aabb().maxY + p.getY(), c.aabb().maxZ + p.getZ());
 			if(!canSeeCouboid(world, p, i, cc, new Vector3(start), new Vector3(end))) continue;
-			cuboids.add(new IndexedCuboid6(i, cc));
+			cuboids.add(new IndexedCuboid6(i, c));
 		}
-		
-		//Locate nearest
-		double min = Double.MAX_VALUE;
-		for(IndexedCuboid6 cbd : new ArrayList<IndexedCuboid6>(cuboids))
-		{
-			double crr = cbd.center().toVec3d().squareDistanceTo(start);
-			if(crr < min)
-			{
-				min = crr;
-				cuboids.clear();
-				cuboids.add(cbd);
-			}
-			
-//			double crr0 = cbd.min.toVec3d().squareDistanceTo(start);
-//			double crr1 = cbd.max.toVec3d().squareDistanceTo(start);
-//			if(crr0 < min)
-//			{
-//				min = crr0;
-//				cuboids.clear();
-//				cuboids.add(cbd);
-//			}
-//			if(crr1 < min)
-//			{
-//				min = crr1;
-//				cuboids.clear();
-//				cuboids.add(cbd);
-//			}
-		}
-		
-		ExtendedRayTraceResult rtl = RayTracer.rayTraceCuboids(new Vector3(start), new Vector3(end), cuboids, p);
 		
 		exited = true;
 		
-		return rtl;
+		//@since 1.5.5
+		return RayTracer.rayTraceCuboidsClosest(new Vector3(start), new Vector3(end), p, cuboids);
 	}
 	
 	public Cuboid6 getCuboidFromPlayer(EntityPlayer player, BlockPos pos)
@@ -234,7 +205,7 @@ public abstract class BlockTraceable extends Block
 		if(hit != null && registry.getBoundCubes6(this) == null && registry.getBoundCubeManager(this) != null && registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos)) != null && hit.subHit >= 0 && hit.subHit < registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos)).length)
 		{
 			Cuboid6[] cubes = registry.getBoundCubeManager(this).getCuboids(world, pos, world.getBlockState(pos));
-			return cubes[hit.subHit];
+			return cubes[Math.abs(hit.subHit) % cubes.length]; //@since 1.5.2
 		}
 		
 		return null;

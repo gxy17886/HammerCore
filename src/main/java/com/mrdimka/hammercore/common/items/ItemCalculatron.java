@@ -15,7 +15,7 @@ public final class ItemCalculatron extends Item
 	public ItemCalculatron()
 	{
 		setUnlocalizedName("calculatron");
-		setMaxStackSize(0);
+		setMaxStackSize(1);
 	}
 	
 	@Override

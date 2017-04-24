@@ -1,8 +1,10 @@
 package com.mrdimka.hammercore.common.blocks.tesseract;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,12 +16,11 @@ import net.minecraftforge.common.capabilities.Capability;
 
 import com.mrdimka.hammercore.init.ModBlocks;
 import com.mrdimka.hammercore.tile.ITileDroppable;
-import com.mrdimka.hammercore.tile.TileSyncable;
 import com.mrdimka.hammercore.tile.TileSyncableTickable;
 
 public class TileTesseract extends TileSyncableTickable implements ITileDroppable
 {
-	public static final Map<String, TileTesseract> TESSERACTS = new HashMap<>();
+	public static final Map<String, Set<TileTesseract>> TESSERACTS = new HashMap<>();
 	
 	public String frequency;
 	
@@ -33,8 +34,7 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	public void tick()
 	{
 		//Put all tesseracts
-		if(frequency != null && !frequency.isEmpty()) TESSERACTS.put(frequency, this);
-		else TESSERACTS.values().remove(this);
+		if(frequency != null && !frequency.isEmpty()) addTesseract(this);
 		
 		if(atTickRate(20))
 		{
@@ -89,8 +89,8 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	public void setFrequency(String freq)
 	{
 		frequency = freq;
-		if(freq != null && !freq.isEmpty()) TESSERACTS.put(freq, this);
-		else TESSERACTS.values().remove(this);
+		if(freq != null && !freq.isEmpty()) addTesseract(this);
+		else removeTesseract(this);
 	}
 	
 	public boolean isValid()
@@ -100,12 +100,45 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	
 	public static void revalidateTesseracts()
 	{
-		Iterator<TileTesseract> tiles = TESSERACTS.values().iterator();
+		Iterator<Set<TileTesseract>> tiles = TESSERACTS.values().iterator();
 		
 		while(tiles.hasNext())
 		{
-			TileTesseract tess = tiles.next();
-			if(tess == null || !tess.isValid()) tiles.remove();
+			Set<TileTesseract> tess = tiles.next();
+			if(tess == null || tess.isEmpty()) { tiles.remove(); continue; }
+			Iterator<TileTesseract> tiles2 = tess.iterator();
+			while(tiles2.hasNext())
+			{
+				TileTesseract tess2 = tiles2.next();
+				if(tess2 == null || !tess2.isValid()) tiles2.remove();
+			}
+			if(tess.isEmpty()) tiles.remove();
+		}
+	}
+	
+	public static void addTesseract(TileTesseract tesseract)
+	{
+		if(tesseract == null || tesseract.frequency == null || tesseract.frequency.isEmpty()) return;
+		Set<TileTesseract> tiles = TESSERACTS.get(tesseract.frequency);
+		if(tiles == null) TESSERACTS.put(tesseract.frequency, tiles = new HashSet<>());
+		tiles.add(tesseract);
+	}
+	
+	public static void removeTesseract(TileTesseract tesseract)
+	{
+		Iterator<Set<TileTesseract>> tiles = TESSERACTS.values().iterator();
+		
+		while(tiles.hasNext())
+		{
+			Set<TileTesseract> tess = tiles.next();
+			if(tess == null || tess.isEmpty()) { tiles.remove(); continue; }
+			Iterator<TileTesseract> tiles2 = tess.iterator();
+			while(tiles2.hasNext())
+			{
+				TileTesseract tess2 = tiles2.next();
+				if(tess2 == tesseract) tiles2.remove();
+			}
+			if(tess.isEmpty()) tiles.remove();
 		}
 	}
 	

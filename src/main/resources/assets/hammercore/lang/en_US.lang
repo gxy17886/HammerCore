@@ -10,6 +10,10 @@ item.hammercore:calculatron.name=Calculatron
 item.hammercore:calculatron.tooltip0=Scientific calculator in Minecraft!
 item.hammercore:calculatron.tooltip1=§oDo not use to make homework!§r
 
+item.hammercore:manual.name=Hammer Core Manual
+item.hammercore:manual.tooltip0=Contains all needed info
+item.hammercore:manual.tooltip1=for survival
+
 ###########
 
 ###BLOCKS###
@@ -26,3 +30,14 @@ tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
 gui.hammercore:calculatron=Calculatron vVERSION
 
 #######
+
+##MANUAL##
+
+bookapi.hammercore:manual:items=Items
+bookapi.hammercore:manual:blocks=Blocks
+
+gui.hammercore:manual/items/calculatron.title=Calculatron
+
+gui.hammercore:manual/items/calculatron.desc=This powerful item is capable of calculating very complicated expressions. Try it!
+
+##########
