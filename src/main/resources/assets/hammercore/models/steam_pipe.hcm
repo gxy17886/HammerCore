@@ -1,0 +1,76 @@
+# This model was created by HammerCore 1.5.6 (author: Pengu).
+
+# This part sets texture size for renderer.
+TextureWidth 64
+TextureHeight 64
+
+# New Model Part Definition, Part Name: Core>Right
+start
+name core>right
+conditions west
+rotationPoint -8.0 12.0 -4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 4 8 8
+end
+
+# New Model Part Definition, Part Name: Core>Back
+start
+name core>back
+conditions south
+rotationPoint -4.0 12.0 4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 8 8 4
+end
+
+# New Model Part Definition, Part Name: Core>Up
+start
+name core>up
+conditions up
+rotationPoint -4.0 8.0 -4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 8 4 8
+end
+
+# New Model Part Definition, Part Name: Core>Front
+start
+name core>front
+conditions north
+rotationPoint -4.0 12.0 -8.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 8 8 4
+end
+
+# New Model Part Definition, Part Name: Core>Down
+start
+name core>down
+conditions down
+rotationPoint -4.0 20.0 -4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 8 4 8
+end
+
+# New Model Part Definition, Part Name: Core>Left
+start
+name core>left
+conditions east
+rotationPoint 4.0 12.0 -4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 4 8 8
+end
+
+# New Model Part Definition, Part Name: Core
+start
+name core
+conditions !up and !down and !east and !west and !south and !north
+rotationPoint -4.0 12.0 -4.0
+textureSize 0.0 0.0
+mirror true
+addBox 0.0 0.0 0.0 8 8 8
+end
+

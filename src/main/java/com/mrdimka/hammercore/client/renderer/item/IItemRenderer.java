@@ -4,6 +4,6 @@ import net.minecraft.item.ItemStack;
 
 public interface IItemRenderer
 {
-	public boolean handleRenderFor(EnumItemRender render, ItemStack stack);
-	public void render(EnumItemRender render, ItemStack stack, double x, double y, double z);
+	boolean handleRenderFor(EnumItemRender render, ItemStack stack);
+	void render(EnumItemRender render, ItemStack stack, double x, double y, double z);
 }

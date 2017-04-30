@@ -14,6 +14,10 @@ item.hammercore:manual.name=Инструкция по Hammer Core
 item.hammercore:manual.tooltip0=Содержит необходимую
 item.hammercore:manual.tooltip1=информацию для выживания
 
+item.hammercore:battery.name=Аккумулятор
+item.hammercore:battery.tooltip0=Используйте сидя чтобы
+item.hammercore:battery.tooltip1=изменить режим раздачи.
+
 ###########
 
 ###BLOCKS###
@@ -28,6 +32,14 @@ tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
 ##GUI##
 
 gui.hammercore:calculatron=Калькулятрон vVERSION
+info.hammercore:energy_stored=RF Накоплено
+info.hammercore:changed_mode=Зарядка
+
+battery.hammercore:mode.noshare=Выключено
+battery.hammercore:mode.hotbar=панель быстрого доступа
+battery.hammercore:mode.armor=броня
+battery.hammercore:mode.armor_hotbar=броня и панель быстрого доступа
+battery.hammercore:mode.inventory=инвентарь
 
 #######
 

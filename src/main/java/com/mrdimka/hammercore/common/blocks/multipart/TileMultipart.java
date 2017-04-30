@@ -44,6 +44,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void tick()
 	{
+//		if(world.isRemote) System.out.println(hasSyncedOnce);
+		
 		for(MultipartSignature signature : signatures())
 		{
 			if(signature.getOwner() != this)
@@ -58,24 +60,22 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			if(signature instanceof ITickable) ((ITickable) signature).update();
 		}
 		
-		//Attempted to wait 4 seconds before actually removing multipart. Maybe we will sync?
-		if(!world.isRemote && hasSyncedOnce && signatures().isEmpty())
-		{
-			if(ticksEmpty++ >= 80) world.setBlockToAir(pos);
-		} else ticksEmpty = 0;
+		//Attempted to wait 4 seconds before actually removing multipart.
+		if(!world.isRemote && signatures().isEmpty()) world.setBlockToAir(pos);
 		
 		//Attempted sync
-		if(atTickRate(80) && !world.isRemote)
+		if(!world.isRemote && ticksExisted > 40 && hasSyncedOnce)
 		{
-			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expandXyz(32));
-			if(lastPlayerCount != players.size()) sync();
+			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expandXyz(4));
+			if(lastPlayerCount == -1 || lastPlayerCount != players.size()) sync();
 			lastPlayerCount = players.size();
 		}
 		
 		if(!hasSyncedOnce && !world.isRemote)
 		{
-			sync();
+			ticksExisted = 0;
 			hasSyncedOnce = true;
+			lastPlayerCount = -1;
 		}
 	}
 	

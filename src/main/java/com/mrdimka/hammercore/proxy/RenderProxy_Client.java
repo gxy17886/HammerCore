@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -31,6 +32,11 @@ import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.blocks.tesseract.TileTesseract;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.init.ModItems;
+import com.pengu.hammercore.client.texture.SpriteSheetManager;
+import com.pengu.hammercore.client.texture.TextureFXManager;
+import com.pengu.hammercore.client.texture.SpriteSheetManager.SpriteSheet;
+import com.pengu.hammercore.client.texture.TextureSpriteCustom;
+import com.pengu.hammercore.client.texture.def.TextureSpriteAnimationFX;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common
@@ -39,6 +45,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 	public void construct()
 	{
 		MinecraftForge.EVENT_BUS.register(new RenderGui());
+		TextureFXManager.INSTANCE.preInit();
 		
 		boolean RenderProxy_Client_construct_addCustomItemRenderers = false;
 		
@@ -52,6 +59,9 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public void init()
 	{
+		//This is an example of how to make custom textures!
+//		TextureSpriteCustom.createSprite(new ResourceLocation("hammercore", "builtin/animation_fx")).addTextureFX(new TextureSpriteAnimationFX(16));
+		
 		registerRenders(ModItems.items);
 		for(MultiVariantItem multi : ModItems.multiitems)
 		{

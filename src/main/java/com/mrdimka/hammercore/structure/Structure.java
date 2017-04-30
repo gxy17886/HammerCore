@@ -28,12 +28,12 @@ public class Structure
 	
 	public IBlockState getStateAt(BlockPos pos)
 	{
-		return stateMap.get(pos);
+		return stateMap.get(pos.toLong());
 	}
 	
 	public NBTTagCompound getTileNBTAt(BlockPos pos)
 	{
-		return tileMap.get(pos);
+		return tileMap.get(pos.toLong()) != null ? tileMap.get(pos.toLong()).copy() : tileMap.get(pos.toLong());
 	}
 	
 	protected void build(World world, BlockPos at)
@@ -47,10 +47,14 @@ public class Structure
 			NBTTagCompound nbt = tileMap.get(l);
 			IBlockState state = getStateAt(pos);
 			world.setBlockState(tpos, state);
+			if(!world.isBlockLoaded(tpos)) world.getChunkFromBlockCoords(tpos);
 			if(nbt != null)
 			{
+				nbt = nbt.copy();
+				nbt.setInteger("x", tpos.getX());
+				nbt.setInteger("y", tpos.getY());
+				nbt.setInteger("z", tpos.getZ());
 				TileEntity tile = TileEntity.create(world, nbt);
-				tile.setPos(at.add(pos));
 				world.setTileEntity(at.add(pos), tile);
 			}
 		}

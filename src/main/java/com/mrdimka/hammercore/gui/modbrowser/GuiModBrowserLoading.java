@@ -25,7 +25,7 @@ public class GuiModBrowserLoading extends GuiScreen
 	private DynamicTexture viewportTexture;
 	private static final ResourceLocation[] TITLE_PANORAMA_PATHS = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
 	private ResourceLocation backgroundTexture;
-	private int panoramaTimer;
+	public int panoramaTimer;
 	
 	public final DynamicObject<String> status = new DynamicObject<String>("Starting...");
 	
@@ -118,14 +118,7 @@ public class GuiModBrowserLoading extends GuiScreen
 		            {
 		            	GuiMainMenu gui;
 		            	Minecraft.getMinecraft().displayGuiScreen(gui = new GuiMainMenu());
-		            	try
-						{
-		            		Field f0 = GuiMainMenu.class.getDeclaredFields()[5];
-							f0.setAccessible(true);
-							Field f1 = GuiModBrowserLoading.class.getDeclaredFields()[3];
-							f1.setAccessible(true);
-							f0.setInt(gui, f1.getInt(GuiModBrowserLoading.this));
-						}catch(Throwable err) {}
+		            	gui.panoramaTimer = panoramaTimer;
 		            });
 				}
 			}).start();
@@ -139,15 +132,7 @@ public class GuiModBrowserLoading extends GuiScreen
         {
 			GuiMainMenu gui;
             mc.displayGuiScreen(gui = new GuiMainMenu());
-            
-            try
-			{
-				Field f0 = GuiMainMenu.class.getDeclaredFields()[5];
-				f0.setAccessible(true);
-				Field f1 = GuiModBrowserLoading.class.getDeclaredFields()[3];
-				f1.setAccessible(true);
-				f0.setInt(gui, f1.getInt(this));
-			}catch(Throwable err) {}
+            gui.panoramaTimer = panoramaTimer;
         }
 	}
 	

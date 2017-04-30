@@ -1,7 +1,6 @@
 package com.mrdimka.hammercore.client;
 
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +14,14 @@ import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -121,14 +117,6 @@ public class RenderGui
 		{
 			GuiContainer gc = (GuiContainer) gui;
 			
-			int guiLeft = 0, guiTop = 0;
-			try
-			{
-				guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiLeft", "field_147003_i");
-				guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiTop", "field_147009_r");
-			}
-			catch(Throwable err) {}
-			
 			Container c = gc.inventorySlots;
 			for(int i = 0; i < c.inventorySlots.size(); ++i)
 			{
@@ -138,20 +126,15 @@ public class RenderGui
 					Slot sl = c.getSlot(i);
 					
 					IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-					if(renderer != null)
-					{
-						GlStateManager.disableDepth();
-						renderer.render(EnumItemRender.GUI, stack, guiLeft + sl.xPos, guiTop + sl.yPos, 0);
-						GlStateManager.enableDepth();
-					}
+					if(renderer != null) renderer.render(EnumItemRender.GUI, stack, gc.guiLeft + sl.xPos, gc.guiTop + sl.yPos, 0);
 				}
 			}
 			
 			ItemStack stack = gc.mc.player.inventory.getItemStack();
 			if(stack != null)
 			{
-				guiLeft = e.getMouseX();
-				guiTop = e.getMouseY();
+				int guiLeft = e.getMouseX();
+				int guiTop = e.getMouseY();
 				IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
 				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
 			}
@@ -182,14 +165,7 @@ public class RenderGui
     				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
     				GuiModBrowserLoading gui0;
     				gui.mc.displayGuiScreen(gui0 = new GuiModBrowserLoading());
-    				try
-    				{
-    					Field f0 = GuiMainMenu.class.getDeclaredFields()[5];
-    					f0.setAccessible(true);
-    					Field f1 = GuiModBrowserLoading.class.getDeclaredFields()[3];
-    					f1.setAccessible(true);
-    					f1.setInt(gui0, f0.getInt(gui));
-    				}catch(Throwable err) {}
+    				gui0.panoramaTimer = ((GuiMainMenu) gui).panoramaTimer;
     			}
         	}
         }
@@ -219,42 +195,14 @@ public class RenderGui
 			
 			if(gui instanceof GuiFurnace)
 			{
-				try
-				{
-					Field[] fs = GuiFurnace.class.getDeclaredFields();
-					
-					Field pinv = fs[1];
-					pinv.setAccessible(true);
-					
-					Field furn = fs[2];
-					furn.setAccessible(true);
-					
-					InventoryPlayer playerInv = (InventoryPlayer) pinv.get(gui);
-					IInventory furnaceInv = (IInventory) furn.get(gui);
-					
-					gui = new GuiFurnaceSmooth(playerInv, furnaceInv);
-				}
-				catch(Throwable err) { err.printStackTrace(); }
+				GuiFurnace g = (GuiFurnace) gui;
+				gui = new GuiFurnaceSmooth(g.playerInventory, g.tileFurnace);
 			}
 			
 			if(gui instanceof GuiBrewingStand)
 			{
-				try
-				{
-					Field[] fs = GuiBrewingStand.class.getDeclaredFields();
-					
-					Field pinv = fs[2];
-					pinv.setAccessible(true);
-					
-					Field bs = fs[3];
-					bs.setAccessible(true);
-					
-					InventoryPlayer playerInv = (InventoryPlayer) pinv.get(gui);
-					IInventory tbsInv = (IInventory) bs.get(gui);
-					
-					gui = new GuiBrewingStandSmooth(playerInv, tbsInv);
-				}
-				catch(Throwable err) {}
+				GuiBrewingStand g = (GuiBrewingStand) gui;
+				gui = new GuiBrewingStandSmooth(g.playerInventory, g.tileBrewingStand);
 			}
 			
 			break smooth;

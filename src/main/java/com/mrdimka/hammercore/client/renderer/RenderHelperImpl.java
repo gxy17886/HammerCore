@@ -25,7 +25,6 @@ public enum RenderHelperImpl implements IRenderHelper
 	
 	private static final Map<Item, IItemRenderer> ITEM_RENDERERS = new HashMap<Item, IItemRenderer>();
 	private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
-	private static final ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
 	private static final Random ENDFX_RANDOM = new Random(31100L);
 	private static final FloatBuffer ENDFX_MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
 	private static final FloatBuffer ENDFX_PROJECTION = GLAllocation.createDirectFloatBuffer(16);
@@ -52,8 +51,16 @@ public enum RenderHelperImpl implements IRenderHelper
 		return ITEM_RENDERERS.get(item);
 	}
 	
+	private FloatBuffer getEndFXBuffer(float f0, float f1, float f2, float f3)
+	{
+		ENDFX_buffer.clear();
+		ENDFX_buffer.put(f0).put(f1).put(f2).put(f3);
+		ENDFX_buffer.flip();
+		return ENDFX_buffer;
+	}
+
 	@Override
-	public void renderEndPortalEffect(double x, double y, double z, EnumFacing... renderSides)
+	public void renderEndPortalEffect(double x, double y, double z, ResourceLocation end_portal_texture, EnumFacing... renderSides)
 	{
 		GlStateManager.disableFog();
 		
@@ -96,7 +103,7 @@ public enum RenderHelperImpl implements IRenderHelper
 				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			}
 			
-			if(i >= 1) Minecraft.getMinecraft().renderEngine.bindTexture(END_PORTAL_TEXTURE);
+			if(i >= 1) Minecraft.getMinecraft().renderEngine.bindTexture(end_portal_texture);
 			
 			if(i == 1)
 			{
@@ -196,13 +203,5 @@ public enum RenderHelperImpl implements IRenderHelper
 		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
 		GlStateManager.enableLighting();
 		GlStateManager.enableFog();
-	}
-	
-	private FloatBuffer getEndFXBuffer(float f0, float f1, float f2, float f3)
-	{
-		ENDFX_buffer.clear();
-		ENDFX_buffer.put(f0).put(f1).put(f2).put(f3);
-		ENDFX_buffer.flip();
-		return ENDFX_buffer;
 	}
 }

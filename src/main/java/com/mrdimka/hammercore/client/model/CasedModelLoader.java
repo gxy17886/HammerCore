@@ -32,7 +32,7 @@ public class CasedModelLoader
 		int ln = 0;
 		for(String line : lines)
 		{
-			String l = line.toLowerCase().replaceAll("\n", "");
+			String l = line.toLowerCase().replaceAll("\n", "").replaceAll("\r", "");
 			
 			ln++;
 			try
@@ -49,6 +49,12 @@ public class CasedModelLoader
 				}
 				
 				if(l.startsWith("conditions ")) condition = l.substring("conditions ".length());
+				
+				if(l.startsWith("name "))
+				{
+					if(current == null) throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set name of nothing!");
+					current.name = l.substring("name ".length());
+				}
 				
 				if(l.startsWith("addbox "))
 				{
@@ -117,7 +123,7 @@ public class CasedModelLoader
 	{
 		String parsed = "";
 		
-		parsed += ln("# This model was created by HammerCore @VERSION@ (author: MrDimka's Studio).");
+		parsed += ln("# This model was created by HammerCore @VERSION@ (author: Pengu).");
 		parsed += ln();
 		parsed += ln("# This part sets texture size for renderer.");
 		parsed += ln("TextureWidth " + model.textureWidth);
@@ -130,6 +136,7 @@ public class CasedModelLoader
 			parsed += ln();
 			parsed += ln("# New Model Part Definition" + (part.name != null && !part.name.isEmpty() ? ", Part Name: " + part.name : "."));
 			parsed += ln("start");
+			parsed += ln("name " + part.name);
 			parsed += ln("conditions " + model.PREDICATES.get(part));
 			parsed += ln("rotationPoint " + part.rotationPointX + " " + part.rotationPointY + " " + part.rotationPointZ);
 			parsed += ln("textureSize " + part.textureWidth + " " + part.textureHeight);

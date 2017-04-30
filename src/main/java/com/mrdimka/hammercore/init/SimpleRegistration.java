@@ -50,8 +50,8 @@ public class SimpleRegistration
 		item.setUnlocalizedName(modid + ":" + name);
 		if(tab != null) item.setCreativeTab(tab);
 		GameRegistry.register(item);
-		ModItems.items.add(item);
 		if(item instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) item);
+		else ModItems.items.add(item);
 	}
 	
 	public static void registerBlock(Block block, String modid, CreativeTabs tab)
@@ -86,8 +86,8 @@ public class SimpleRegistration
 		if(!(block instanceof INoItemBlock))
 		{
 			Item i = Item.getItemFromBlock(block);
-			if(i != null) ModItems.items.add(i);
 			if(i instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) i);
+			else if(i != null) ModItems.items.add(i);
 		}
 	}
 }

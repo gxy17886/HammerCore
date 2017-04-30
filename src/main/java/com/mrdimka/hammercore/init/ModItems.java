@@ -13,6 +13,7 @@ import com.mrdimka.hammercore.common.items.ItemHammerCoreManual;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.common.items.debug.ItemRayTracer;
 import com.mrdimka.hammercore.common.items.debug.ItemZapper;
+import com.pengu.hammercore.common.items.ItemBattery;
 
 public class ModItems
 {
@@ -23,7 +24,8 @@ public class ModItems
 							ray_tracer,
 							zapper,
 							calculatron = new ItemCalculatron(),
-							manual = new ItemHammerCoreManual();
+							manual = new ItemHammerCoreManual(),
+							battery = new ItemBattery(2_000_000, 25_000).setUnlocalizedName("battery");
 	
 	static
 	{

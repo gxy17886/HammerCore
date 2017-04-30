@@ -14,6 +14,10 @@ item.hammercore:manual.name=Hammer Core Manual
 item.hammercore:manual.tooltip0=Contains all needed info
 item.hammercore:manual.tooltip1=for survival
 
+item.hammercore:battery.name=Battery
+item.hammercore:battery.tooltip0=Sneak-Click This Battery to
+item.hammercore:battery.tooltip1=Change Sharing Mode.
+
 ###########
 
 ###BLOCKS###
@@ -28,6 +32,14 @@ tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
 ##GUI##
 
 gui.hammercore:calculatron=Calculatron vVERSION
+info.hammercore:energy_stored=RF Stored
+info.hammercore:changed_mode=Charging
+
+battery.hammercore:mode.noshare=Off
+battery.hammercore:mode.hotbar=Hotbar
+battery.hammercore:mode.armor=Armor
+battery.hammercore:mode.armor_hotbar=Armor & Hotbar
+battery.hammercore:mode.inventory=Inventory
 
 #######
 

@@ -10,9 +10,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import com.mrdimka.hammercore.net.HCNetwork;
-import com.mrdimka.hammercore.net.pkt.PacketPlayBlockBreakSound;
-
 public class AudioProxy_Common
 {
 	public void construct()
@@ -48,17 +45,7 @@ public class AudioProxy_Common
 	
 	public void playBlockStateBreak(World world, IBlockState type, double x, double y, double z, float volume, float pitch, SoundCategory category)
 	{
-		try
-		{
-			float br = volume * volume * 512F;
-			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayers();
-			for(EntityPlayerMP p : ps)
-			{
-				if(p.world.provider.getDimension() != world.provider.getDimension()) continue;
-				if(p.getDistance(z, y, z) > br) continue;
-				HCNetwork.manager.sendTo(new PacketPlayBlockBreakSound(type, x, y, z, volume, pitch), p);
-			}
-		}
-		catch(Throwable err) { }
+		//Since we use _at.cfg file, makesoundName a public field for ease of use ;)
+		playSoundAt(world, type.getBlock().getSoundType().getBreakSound().soundName.toString(), x, y, z, volume, pitch, SoundCategory.BLOCKS);
 	}
 }
