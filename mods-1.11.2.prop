@@ -3,7 +3,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
 		"modid": "blackholestorage",
 		"tooltip": "Store infinite amounts of something inside of a stabilized black holes",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"alpha": {
 				"version": "3a",
@@ -26,7 +26,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
 		"modid": "solarfluxreborn",
 		"tooltip": "A reborn of Solar Flux mod",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
 				"version": "2.15r",
@@ -39,7 +39,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/189/282/190/130/7df9fc5572d9c16fa6d5ca9d723370d7.png",
 		"modid": "machinepowercraft",
 		"tooltip": "Machine Power Craft adds machines, with them you can triple+ ores, teleport around, and more!",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"preview": {
 				"version": "7a",
@@ -52,7 +52,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/240/505/190/130/4fa2ba4f4facf7776d29ab68df59a16c.gif",
 		"modid": "pcb",
 		"tooltip": "Now making one-command block creations is easier!",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
 				"version": "1.3r",
@@ -65,7 +65,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/236/939/190/130/57c65c54a4c354b60fd5d7448b50e0bc.png",
 		"modid": "playerstats2",
 		"tooltip": "PlayerStats gets a reboot!",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
 				"version": "14r",
@@ -91,7 +91,7 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/206/927/190/130/7fe8d3eeef720941c8c028423400d208.png",
 		"modid": "terraria",
 		"tooltip": "Adding Terraria Content to Minecraft",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"preview": {
 				"version": "38a",
@@ -104,12 +104,25 @@
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/214/512/190/130/8ffe50cf8fca85aea25fadd5e818d309.png",
 		"modid": "biomepainttools",
 		"tooltip": "Paint world with biomes",
-		"authors": [ "MrDimkas_Studio" ],
+		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
 				"version": "1.0.4",
 				"download": "https://minecraft.curseforge.com/projects/biome-paint-tools/files/2396518/download",
 				"size": 53206
+			}
+		}
+	},
+	"Lost Thaumaturgy": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/175/173/190/130/f5dce94f6ce90c14cd046f50584566f1.jpeg",
+		"modid": "lostthaumaturgy",
+		"tooltip": "Adding plenty of useful utilities from Thaumcraft 2",
+		"authors": [ "APengu" ],
+		"versions": {
+			"beta": {
+				"version": "1a",
+				"download": "https://minecraft.curseforge.com/projects/lost-thaumaturgy/files/2417457/download",
+				"size": 1178244
 			}
 		}
 	}
