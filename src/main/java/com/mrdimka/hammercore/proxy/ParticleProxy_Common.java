@@ -2,9 +2,9 @@ package com.mrdimka.hammercore.proxy;
 
 import java.awt.Color;
 
-import com.mrdimka.hammercore.client.particles.IParticle;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSpawnZap;
+import com.pengu.hammercore.client.particle.old.IOldParticle;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class ParticleProxy_Common
 {
-	public IParticle spawnZap(World w, Vec3d start, Vec3d end, Color rgb)
+	public IOldParticle spawnZap(World w, Vec3d start, Vec3d end, Color rgb)
 	{
 		PacketSpawnZap zap = new PacketSpawnZap();
 		zap.color = rgb;
@@ -25,7 +25,7 @@ public class ParticleProxy_Common
 		return null;
 	};
 	
-	public IParticle spawnZap(int w, Vec3d start, Vec3d end, Color rgb)
+	public IOldParticle spawnZap(int w, Vec3d start, Vec3d end, Color rgb)
 	{
 		PacketSpawnZap zap = new PacketSpawnZap();
 		zap.color = rgb;

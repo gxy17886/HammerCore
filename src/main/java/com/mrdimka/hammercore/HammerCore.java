@@ -72,6 +72,7 @@ import com.mrdimka.hammercore.proxy.AudioProxy_Common;
 import com.mrdimka.hammercore.proxy.BookProxy_Common;
 import com.mrdimka.hammercore.proxy.LightProxy_Common;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Common;
+import com.mrdimka.hammercore.proxy.PipelineProxy_Common;
 import com.mrdimka.hammercore.proxy.RenderProxy_Common;
 import com.mrdimka.hammercore.recipeAPI.BrewingRecipe;
 import com.mrdimka.hammercore.recipeAPI.IRecipePlugin;
@@ -119,6 +120,9 @@ public class HammerCore
 	
 	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.BookProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.BookProxy_Common")
 	public static BookProxy_Common bookProxy;
+	
+	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.PipelineProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.PipelineProxy_Common")
+	public static PipelineProxy_Common pipelineProxy;
 	
 	/**
 	 * An instance of {@link HammerCore} class

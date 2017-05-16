@@ -24,7 +24,14 @@ public class RenderBlocks
 {
 	private static RenderBlocks instance;
 	
+	/**
+	 * Replaced with instance alpha. This field is useless from now on.
+	 * moved to field {@link #renderAlpha}
+	 */
+	@Deprecated
 	public static float alpha = 1F;
+	
+	public float renderAlpha = 1F;
 	public IBlockAccess blockAccess;
 	public boolean flipTexture;
 	public boolean field_152631_f;
@@ -245,10 +252,10 @@ public class RenderBlocks
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	public void renderFaceYPos(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
@@ -329,10 +336,10 @@ public class RenderBlocks
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 		
-		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	public void renderFaceZNeg(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
@@ -427,10 +434,10 @@ public class RenderBlocks
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 		
-		tessellator.getBuffer().pos(d11, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d14, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d11, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d14, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	public void renderFaceZPos(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
@@ -518,10 +525,10 @@ public class RenderBlocks
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 		
-		tessellator.getBuffer().pos(d11, d14, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d12, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d11, d14, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d13, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d12, d14, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	public void renderFaceXNeg(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
@@ -609,10 +616,10 @@ public class RenderBlocks
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
 		
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d12, d14).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d12, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d12, d14).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d12, d15).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	public void renderFaceXPos(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
@@ -706,10 +713,10 @@ public class RenderBlocks
 		int i = bright;
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
-		tessellator.getBuffer().pos(d11, d12, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d12, d14).tex(d4, d6).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
-		tessellator.getBuffer().pos(d11, d13, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
+		tessellator.getBuffer().pos(d11, d12, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d12, d14).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+		tessellator.getBuffer().pos(d11, d13, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 	}
 	
 	private static final Map<String, RenderBlocks> INSTANCES = new HashMap<>();
