@@ -11,13 +11,9 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
@@ -31,9 +27,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.api.RequiredDeps;
 import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
-import com.mrdimka.hammercore.client.renderer.RenderHelperImpl;
-import com.mrdimka.hammercore.client.renderer.item.EnumItemRender;
-import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
 import com.mrdimka.hammercore.client.utils.GLImageManager;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
@@ -111,33 +104,6 @@ public class RenderGui
 			}
 			
 			user.draw();
-		}
-		
-		if(gui instanceof GuiContainer)
-		{
-			GuiContainer gc = (GuiContainer) gui;
-			
-			Container c = gc.inventorySlots;
-			for(int i = 0; i < c.inventorySlots.size(); ++i)
-			{
-				ItemStack stack = c.inventorySlots.get(i).getStack();
-				if(stack != null)
-				{
-					Slot sl = c.getSlot(i);
-					
-					IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-					if(renderer != null) renderer.render(EnumItemRender.GUI, stack, gc.guiLeft + sl.xPos, gc.guiTop + sl.yPos, 0);
-				}
-			}
-			
-			ItemStack stack = gc.mc.player.inventory.getItemStack();
-			if(stack != null)
-			{
-				int guiLeft = e.getMouseX();
-				int guiTop = e.getMouseY();
-				IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
-			}
 		}
 	}
 	

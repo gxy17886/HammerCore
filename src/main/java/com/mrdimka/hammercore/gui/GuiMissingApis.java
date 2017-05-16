@@ -43,7 +43,7 @@ public class GuiMissingApis extends GuiScreen
         
         {
         	String str = "Hammer Core Found Missing Dependencies!";
-            fontRendererObj.drawString(str, (width - fontRendererObj.getStringWidth(str)) / 2, 24, 0, false);
+            fontRenderer.drawString(str, (width - fontRenderer.getStringWidth(str)) / 2, 24, 0, false);
         }
         
         Map<String, String> allRequired = RequiredDeps.getAllMissingDeps();
@@ -55,7 +55,7 @@ public class GuiMissingApis extends GuiScreen
         	String currentVersion = APILoader.getApiVersion(api);
         	String version = allRequired.get(api);
         	String str = TextFormatting.WHITE + api + TextFormatting.RESET + "; " + (version != null ? ("Minimal version: " + version + ".") : ("Any version.")) + (currentVersion != null ? (" Current version: " + currentVersion + ".") : "");
-            fontRendererObj.drawString(str, (width - fontRendererObj.getStringWidth(str)) / 2, currY, 0, false);
+            fontRenderer.drawString(str, (width - fontRenderer.getStringWidth(str)) / 2, currY, 0, false);
         }
         
         super.drawScreen(mouseX, mouseY, partialTicks);

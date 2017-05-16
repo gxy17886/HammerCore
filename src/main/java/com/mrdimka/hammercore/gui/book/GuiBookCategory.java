@@ -35,12 +35,12 @@ public class GuiBookCategory extends GuiCentered
 		mc.getTextureManager().bindTexture(category.book.customBackground);
 		RenderUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 		
-		int FONT_HEIGHT = fontRendererObj.FONT_HEIGHT;
+		int FONT_HEIGHT = fontRenderer.FONT_HEIGHT;
 		
 		int y = 0;
 		for(BookEntry ent : category.entries)
 		{
-			fontRendererObj.drawString(ent.getTitle(), (int) guiLeft + 12 + (!ent.getIcon().isEmpty() ? FONT_HEIGHT : 0), (int) guiTop + 14 + y, 0, false);
+			fontRenderer.drawString(ent.getTitle(), (int) guiLeft + 12 + (!ent.getIcon().isEmpty() ? FONT_HEIGHT : 0), (int) guiTop + 14 + y, 0, false);
 			if(!ent.getIcon().isEmpty())
 			{
 				GL11.glPushMatrix();
@@ -52,20 +52,20 @@ public class GuiBookCategory extends GuiCentered
 				GlStateManager.disableLighting();
 				GL11.glPopMatrix();
 			}
-			y += fontRendererObj.FONT_HEIGHT + 4;
+			y += fontRenderer.FONT_HEIGHT + 4;
 		}
 		
 		y = 0;
 		for(BookEntry ent : category.entries)
 		{
-			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRendererObj.FONT_HEIGHT)
+			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				GL11.glColor4f(1, 1, 1, 1);
 				mc.getTextureManager().bindTexture(category.book.customBackground);
 				RenderUtil.drawTexturedModalRect(guiLeft + 10, guiTop + 12 + y, 146, 0, 110, 11);
 			}
 			
-			y += fontRendererObj.FONT_HEIGHT + 4;
+			y += fontRenderer.FONT_HEIGHT + 4;
 		}
 		GLRenderState.BLEND.off();
 		
@@ -91,14 +91,14 @@ public class GuiBookCategory extends GuiCentered
 		int y = 0;
 		if(mouseButton == 0) for(BookEntry ent : category.entries)
 		{
-			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRendererObj.FONT_HEIGHT)
+			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				mc.displayGuiScreen(new GuiBookEntry(this, ent));
 				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
 				break;
 			}
 			
-			y += fontRendererObj.FONT_HEIGHT + 4;
+			y += fontRenderer.FONT_HEIGHT + 4;
 		}
 	}
 	

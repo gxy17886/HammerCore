@@ -125,12 +125,6 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	}
 	
 	@Override
-	public boolean isFullyOpaque(IBlockState p_isFullyOpaque_1_)
-	{
-		return false;
-	}
-	
-	@Override
 	public boolean isFullCube(IBlockState p_isFullCube_1_)
 	{
 		return false;

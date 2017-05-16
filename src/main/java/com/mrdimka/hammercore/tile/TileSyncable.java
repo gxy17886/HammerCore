@@ -27,7 +27,10 @@ public abstract class TileSyncable extends TileEntity
 {
 	private NBTTagCompound lastSyncTag;
 	
-	/** Turn this to false to force this tile to sync even if it's old and new tags are equal */
+	/**
+	 * Turn this to false to force this tile to sync even if it's old and new
+	 * tags are equal
+	 */
 	public boolean escapeSyncIfIdentical = false;
 	
 	@Override
@@ -43,11 +46,12 @@ public abstract class TileSyncable extends TileEntity
 		{
 			NBTTagCompound nbt = new NBTTagCompound();
 			writeNBT(nbt);
-			if(lastSyncTag != null && lastSyncTag.equals(nbt)) return; //Escape unnecessary sync if it is the same
+			if(lastSyncTag != null && lastSyncTag.equals(nbt))
+				return; // Escape unnecessary sync if it is the same
 			lastSyncTag = nbt;
 		}
 		
-		if(world != null && !world.isRemote) //Apply sync only if server
+		if(world != null && !world.isRemote) // Apply sync only if server
 		{
 			PacketSyncSyncableTile tile = new PacketSyncSyncableTile(this);
 			HCNetwork.manager.sendToAllAround(tile, getSyncPoint(260));
@@ -57,10 +61,7 @@ public abstract class TileSyncable extends TileEntity
 	@Override
 	public NBTTagCompound getUpdateTag()
 	{
-		NBTTagCompound nbt = new NBTTagCompound();
-		writeNBT(nbt);
-		if(this instanceof TileSyncableTickable) nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
-		return nbt;
+		return writeToNBT(new NBTTagCompound());
 	}
 	
 	@Override
@@ -72,15 +73,7 @@ public abstract class TileSyncable extends TileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{
-		readNBT(pkt.getNbtCompound());
-		if(this instanceof TileSyncableTickable) ((TileSyncableTickable) this).ticksExisted = pkt.getNbtCompound().getInteger("ticksExisted");
-	}
-	
-	@Override
-	public void handleUpdateTag(NBTTagCompound tag)
-	{
-		readNBT(tag);
-		if(this instanceof TileSyncableTickable) ((TileSyncableTickable) this).ticksExisted = tag.getInteger("ticksExisted");
+		readFromNBT(pkt.getNbtCompound());
 	}
 	
 	public TargetPoint getSyncPoint(int range)
@@ -89,6 +82,7 @@ public abstract class TileSyncable extends TileEntity
 	}
 	
 	public abstract void writeNBT(NBTTagCompound nbt);
+	
 	public abstract void readNBT(NBTTagCompound nbt);
 	
 	@Override
@@ -98,60 +92,75 @@ public abstract class TileSyncable extends TileEntity
 		NBTTagCompound tag = new NBTTagCompound();
 		writeNBT(tag);
 		nbt.setTag("tags", tag);
-		if(this instanceof TileSyncableTickable) nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
+		if(this instanceof TileSyncableTickable)
+			nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
 		return nbt;
 	}
 	
 	@Override
 	public final void readFromNBT(NBTTagCompound nbt)
 	{
+		if(readNBT_world == null && world != null) readNBT_world = world;
 		super.readFromNBT(nbt);
 		readNBT(nbt.getCompoundTag("tags"));
-		if(this instanceof TileSyncableTickable) ((TileSyncableTickable) this).ticksExisted = nbt.getInteger("ticksExisted");
+		if(this instanceof TileSyncableTickable)
+			((TileSyncableTickable) this).ticksExisted = nbt.getInteger("ticksExisted");
+		readNBT_world = null;
+	}
+	
+	private World readNBT_world;
+	
+	@Override
+	protected void setWorldCreate(World worldIn)
+	{
+		readNBT_world = worldIn;
 	}
 	
 	private IItemHandler[] itemHandlers = new SidedInvWrapper[6];
 	
-    protected IItemHandler createSidedHandler(EnumFacing side)
-    {
-    	if(this instanceof ISidedInventory) return itemHandlers[side.ordinal()] = new SidedInvWrapper((ISidedInventory) this, side);
-    	if(this instanceof IInventory) return itemHandlers[side.ordinal()] = new InvWrapper((IInventory) this);
-        return null;
-    }
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    @Nullable
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
-    {
-        if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this instanceof IInventory)
-            return (T) (itemHandlers[facing.ordinal()] == null ? createSidedHandler(facing) : itemHandlers[facing.ordinal()]);
-        return super.getCapability(capability, facing);
-    }
-    
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
-    {
-        return (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this instanceof IInventory) || super.hasCapability(capability, facing);
-    }
-    
-    public boolean atTickRate(int rate)
+	protected IItemHandler createSidedHandler(EnumFacing side)
+	{
+		if(this instanceof ISidedInventory)
+			return itemHandlers[side.ordinal()] = new SidedInvWrapper((ISidedInventory) this, side);
+		if(this instanceof IInventory)
+			return itemHandlers[side.ordinal()] = new InvWrapper((IInventory) this);
+		return null;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Nullable
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+	{
+		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this instanceof IInventory)
+			return (T) (itemHandlers[facing.ordinal()] == null ? createSidedHandler(facing) : itemHandlers[facing.ordinal()]);
+		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
+	{
+		return (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this instanceof IInventory) || super.hasCapability(capability, facing);
+	}
+	
+	public boolean atTickRate(int rate)
 	{
 		return (world.getTotalWorldTime() + pos.toLong()) % rate == 0;
 	}
-    
-    public final void tryOpenGui(EntityPlayer player, World world)
-    {
-    	if(!world.isRemote) FMLNetworkHandler.openGui(player, HammerCore.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
-    }
-    
-    /** NEW GUI API */
-    
-    public boolean hasGui()
-    {
-    	return false;
-    }
-    
+	
+	public final void tryOpenGui(EntityPlayer player, World world)
+	{
+		if(!world.isRemote)
+			FMLNetworkHandler.openGui(player, HammerCore.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+	}
+	
+	/** NEW GUI API */
+	
+	public boolean hasGui()
+	{
+		return false;
+	}
+	
 	public Object getServerGuiElement(EntityPlayer player)
 	{
 		return null;

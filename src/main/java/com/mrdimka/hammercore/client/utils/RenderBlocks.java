@@ -1,6 +1,10 @@
 package com.mrdimka.hammercore.client.utils;
 
-import net.minecraft.block.Block;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -11,6 +15,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -706,10 +711,21 @@ public class RenderBlocks
 		tessellator.getBuffer().pos(d11, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, alpha).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, alpha).endVertex();
 	}
-
+	
+	private static final Map<String, RenderBlocks> INSTANCES = new HashMap<>();
+	
+	@Nonnull
 	public static RenderBlocks getInstance()
 	{
 		if(instance == null) instance = new RenderBlocks();
 		return instance;
+	}
+	
+	@Nonnull
+	public static RenderBlocks forMod(String modid)
+	{
+		RenderBlocks i = INSTANCES.get(modid);
+		if(i == null) INSTANCES.put(modid, i = new RenderBlocks());
+		return i;
 	}
 }

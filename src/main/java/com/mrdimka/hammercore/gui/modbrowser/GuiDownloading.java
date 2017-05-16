@@ -70,17 +70,17 @@ public class GuiDownloading extends GuiScreen
 		drawGradientRect(0, 0, width, height, 0x44999999, 0x44999999);
 		
 		String str = "Downloaded: " + FileSizeMetric.toMaxSize(downloaded) + " / " + FileSizeMetric.toMaxSize(expected_size);
-		drawCenteredString(fontRendererObj, str, width / 2, height / 2 + fontRendererObj.FONT_HEIGHT, 0xFFFFFF);
+		drawCenteredString(fontRenderer, str, width / 2, height / 2 + fontRenderer.FONT_HEIGHT, 0xFFFFFF);
 		str = "                         ";
 		
-		RenderUtil.drawGradientRect(width / 2 - fontRendererObj.getStringWidth(str), height / 2 - fontRendererObj.FONT_HEIGHT, fontRendererObj.getStringWidth(str) * 2, fontRendererObj.FONT_HEIGHT * 2, 0xFF000000, 0xFF000000);
+		RenderUtil.drawGradientRect(width / 2 - fontRenderer.getStringWidth(str), height / 2 - fontRenderer.FONT_HEIGHT, fontRenderer.getStringWidth(str) * 2, fontRenderer.FONT_HEIGHT * 2, 0xFF000000, 0xFF000000);
 		
 		double progress = ((double) downloaded) / (double) expected_size;
 		
 		GL11.glPushMatrix();
-		GL11.glTranslated(width / 2 - fontRendererObj.getStringWidth(str), 0, 0);
-		GL11.glScaled(fontRendererObj.getStringWidth(str) * 2 * progress, 1, 1);
-		RenderUtil.drawGradientRect(0, height / 2 - fontRendererObj.FONT_HEIGHT, 1, fontRendererObj.FONT_HEIGHT * 2, 0xFF00FF00, 0xFF008800);
+		GL11.glTranslated(width / 2 - fontRenderer.getStringWidth(str), 0, 0);
+		GL11.glScaled(fontRenderer.getStringWidth(str) * 2 * progress, 1, 1);
+		RenderUtil.drawGradientRect(0, height / 2 - fontRenderer.FONT_HEIGHT, 1, fontRenderer.FONT_HEIGHT * 2, 0xFF00FF00, 0xFF008800);
 		GL11.glPopMatrix();
 		
 		Mouse.getDWheel();

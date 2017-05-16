@@ -1,0 +1,113 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.0.8'
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+ext.configFile = file "build.txt"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = "${config.mod_version}"
+group = "com.mrdimka.hammercore"
+archivesBaseName = "HammerCore_${config.minecraft_version}"
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+    version = "${config.forge_version}"
+    runDir = "run"
+    mappings = "snapshot_20170516"
+    makeObfSourceJar = false
+	replace '@VERSION@', "${config.mod_version}"
+	replace 'IS_OBFUSCATED_MC = false', 'IS_OBFUSCATED_MC = true'
+}
+
+dependencies {
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+	rename '(.+_at.cfg)', 'META-INF/$1'
+}
+
+jar {
+	manifest {
+		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePluginContainsFMLMod': 'false'
+		attributes 'FMLAT': 'hc_at.cfg'
+	}
+}
+
+task srcJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+	manifest {
+		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePluginContainsFMLMod': 'false'
+		attributes 'FMLAT': 'hc_at.cfg'
+	}
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+    manifest {
+		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePluginContainsFMLMod': 'false'
+		attributes 'FMLAT': 'hc_at.cfg'
+	}
+}
+
+artifacts {
+    archives deobfJar
+	archives srcJar
+}
+
+curseforge {
+	apiKey = System.env.CURSEFORGE_API_KEY
+	project {
+		id = "${config.project_id}"
+		changelogType = 'html'
+		changelog = ""
+		releaseType = "${config.release_type}"
+		addGameVersion "${config.minecraft_version}"
+		mainArtifact(jar) {
+		  displayName = "[${config.minecraft_version}] Hammer Core - ${config.mod_version}"
+		}
+		addArtifact(deobfJar) {
+		  displayName = "[${config.minecraft_version}] Hammer Core (Deobfuscated) - ${config.mod_version}"
+		}
+		addArtifact(srcJar) {
+		  displayName = "[${config.minecraft_version}] Hammer Core (Sources) - ${config.mod_version}"
+		}
+	}
+}

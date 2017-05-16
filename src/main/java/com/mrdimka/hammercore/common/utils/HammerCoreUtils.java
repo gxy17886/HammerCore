@@ -20,13 +20,13 @@ public class HammerCoreUtils
 			@Override
 			public ItemStack getIconItemStack()
 			{
-				return iconStack;
+				return iconStack.copy();
 			}
 			
 			@Override
 			public ItemStack getTabIconItem()
 			{
-				return iconStack;
+				return iconStack.copy();
 			}
 		};
 	}

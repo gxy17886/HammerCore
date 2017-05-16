@@ -208,18 +208,18 @@ public class GuiCalculator extends GuiCentered
 		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glDisable(GL11.GL_BLEND);
 		
-		for(Btn b : btns) b.draw(fontRendererObj, guiLeft + b.x, guiTop + b.y);
+		for(Btn b : btns) b.draw(fontRenderer, guiLeft + b.x, guiTop + b.y);
 		
-		fontRendererObj.drawString(I18n.translateToLocal("gui.hammercore:calculatron").replaceAll("vVERSION", "v@VERSION@"), (int) guiLeft + 14, (int) guiTop + 4, 0xFFFFFF, false);
+		fontRenderer.drawString(I18n.translateToLocal("gui.hammercore:calculatron").replaceAll("vVERSION", "v@VERSION@"), (int) guiLeft + 14, (int) guiTop + 4, 0xFFFFFF, false);
 		
 		String expression = this.expression;
 		if(expression.endsWith(";")) expression = expression.substring(0, expression.length() - 1);
 		GL11.glPushMatrix();
 		double maxLen = 132;
-		int w = fontRendererObj.getStringWidth(expression);
+		int w = fontRenderer.getStringWidth(expression);
 		GL11.glTranslated(guiLeft + 7.5, guiTop + 31 + ((31 - 14) / 2D) + (w > maxLen ? 1D - maxLen / w : 0), 0);
 		if(w > 133) GL11.glScaled(133D / w, 133D / w, 1);
-		fontRendererObj.drawString(expression, 0, 0, 0, false);
+		fontRenderer.drawString(expression, 0, 0, 0, false);
 		GL11.glPopMatrix();
 	}
 	

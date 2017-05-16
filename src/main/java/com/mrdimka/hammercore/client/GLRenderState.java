@@ -7,7 +7,8 @@ import org.lwjgl.opengl.GL11;
 public class GLRenderState
 {
 	public static final GLRenderState
-									BLEND = new GLRenderState(GL11.GL_BLEND);
+									BLEND = new GLRenderState(GL11.GL_BLEND),
+									NORMALIZE = new GLRenderState(GL11.GL_NORMALIZE);
 	
 	private final int opcode;
 	public boolean isEnabled = false;

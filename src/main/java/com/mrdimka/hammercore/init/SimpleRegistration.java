@@ -75,12 +75,16 @@ public class SimpleRegistration
 			Class c = ((ITileBlock) block).getTileClass();
 			
 			//Better registration of tiles. Maybe this will fix tile disappearing?
-			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1));
+			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1).toLowerCase());
 		}else if(block instanceof ITileEntityProvider)
 		{
 			ITileEntityProvider te = (ITileEntityProvider) block;
 			TileEntity t = te.createNewTileEntity(null, 0);
-			if(t != null) GameRegistry.registerTileEntity(t.getClass(), t.getClass().getName());
+			if(t != null)
+			{
+				Class c = t.getClass();
+				GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1).toLowerCase());
+			}
 		}
 		
 		if(!(block instanceof INoItemBlock))

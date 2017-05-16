@@ -1,4 +1,4 @@
-package com.mrdimka.hammercore.annotations;
+package com.pengu.hammercore.client.model;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -7,8 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Targets class to be registered to MinecraftForge EVENT_BUS on PreInit
+ * Targets item/block not to be registered into model mesher
  **/
 @Retention(RUNTIME)
 @Target(ElementType.TYPE)
-public @interface MCFBus {}
+public @interface HasNoModel {}

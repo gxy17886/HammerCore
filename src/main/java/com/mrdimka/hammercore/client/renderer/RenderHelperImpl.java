@@ -1,8 +1,6 @@
 package com.mrdimka.hammercore.client.renderer;
 
 import java.nio.FloatBuffer;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
@@ -11,45 +9,18 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-
-import com.mrdimka.hammercore.client.renderer.item.EnumItemRender;
-import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
 
 public enum RenderHelperImpl implements IRenderHelper
 {
 	INSTANCE;
 	
-	private static final Map<Item, IItemRenderer> ITEM_RENDERERS = new HashMap<Item, IItemRenderer>();
 	private static final ResourceLocation END_SKY_TEXTURE = new ResourceLocation("textures/environment/end_sky.png");
 	private static final Random ENDFX_RANDOM = new Random(31100L);
 	private static final FloatBuffer ENDFX_MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
 	private static final FloatBuffer ENDFX_PROJECTION = GLAllocation.createDirectFloatBuffer(16);
 	private static final FloatBuffer ENDFX_buffer = GLAllocation.createDirectFloatBuffer(16);
-	
-	@Override
-	public void registerItemRender(Item item, IItemRenderer renderer)
-	{
-		ITEM_RENDERERS.put(item, renderer);
-	}
-	
-	@Override
-	public IItemRenderer getRenderFor(ItemStack stack, EnumItemRender type)
-	{
-		if(stack == null || stack.getItem() == null) return null;
-		IItemRenderer r = ITEM_RENDERERS.get(stack.getItem());
-		return r != null && r.handleRenderFor(type, stack) ? r : null;
-	}
-	
-	@Override
-	public IItemRenderer getRenderFor(Item item)
-	{
-		if(item == null) return null;
-		return ITEM_RENDERERS.get(item);
-	}
 	
 	private FloatBuffer getEndFXBuffer(float f0, float f1, float f2, float f3)
 	{

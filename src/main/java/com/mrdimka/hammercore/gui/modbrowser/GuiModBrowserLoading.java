@@ -52,9 +52,9 @@ public class GuiModBrowserLoading extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 70.0F, 0.0F);
         float f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = status.get();
@@ -62,9 +62,9 @@ public class GuiModBrowserLoading extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 90.0F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = "press ESC to exit this menu";
@@ -72,9 +72,9 @@ public class GuiModBrowserLoading extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 110.0F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = HolidayTrigger.isAprilFools() ? "U mad bro?" : HolidayTrigger.isChristmas() ? "Mery Christmas!" : HolidayTrigger.isHalloween() ? "Ooo! Spooky!" : HolidayTrigger.isNewYear() ? "Happy New Year!" : "Loading? Not really.";
@@ -82,9 +82,9 @@ public class GuiModBrowserLoading extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 130.0F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
 		super.drawScreen(mouseX, mouseY, partialTicks);

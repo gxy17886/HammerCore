@@ -54,9 +54,9 @@ public class GuiModBrowserRebootGame extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 40.0F, 0.0F);
         float f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = "In order to play with this mods";
@@ -64,9 +64,9 @@ public class GuiModBrowserRebootGame extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 60.0F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = "you must restart your minecraft!";
@@ -74,9 +74,9 @@ public class GuiModBrowserRebootGame extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 80.0F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
         splashText = "Do you want to do it now?";
@@ -84,9 +84,9 @@ public class GuiModBrowserRebootGame extends GuiScreen
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2), 120F, 0.0F);
         f = 1.8F - MathHelper.abs(MathHelper.sin((float)((Minecraft.getSystemTime() + splashText.hashCode()) % 1000L) / 1000.0F * ((float)Math.PI * 2F)) * 0.1F);
-        f = f * 100.0F / (float)(this.fontRendererObj.getStringWidth(splashText) + 32);
+        f = f * 100.0F / (float)(this.fontRenderer.getStringWidth(splashText) + 32);
         GlStateManager.scale(f, f, f);
-        this.drawCenteredString(this.fontRendererObj, splashText, 0, -8, splashText.hashCode());
+        this.drawCenteredString(this.fontRenderer, splashText, 0, -8, splashText.hashCode());
         GlStateManager.popMatrix();
         
 		super.drawScreen(mouseX, mouseY, partialTicks);

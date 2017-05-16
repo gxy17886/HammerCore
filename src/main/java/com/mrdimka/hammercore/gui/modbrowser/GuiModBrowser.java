@@ -88,7 +88,7 @@ public class GuiModBrowser extends GuiScreen
 			Mod mod = browser.mods.get(i);
 			int y = (i - beginIndex) * 64 + offset + 4;
 			
-			fontRendererObj.drawString(mod.modName, 68, y, browser.loadedMods.get(mod.modid) == null ? 0xFFFFFF : 0x66FF66, true);
+			fontRenderer.drawString(mod.modName, 68, y, browser.loadedMods.get(mod.modid) == null ? 0xFFFFFF : 0x66FF66, true);
 			
 			if(mouseX >= 0 && mouseY >= y && mouseX < 64 && mouseY < y + 64)
 			{
