@@ -199,6 +199,7 @@ public class ComplicatedRendering
 	public static void makeLines(Collection<VertexPoint> points, Collection<VertexLine> lns_)
 	{
 		List<VertexLine> lns = new ArrayList<>(lns_);
+		List<VertexLine> lnsDup = new ArrayList<>();
 		for(VertexPoint p1 : points)
 			for(VertexPoint p2 : points)
 				if(p1 != p2)
@@ -207,55 +208,19 @@ public class ComplicatedRendering
 					if(ax != null && shouldMakeLine(p1, p2, points))
 					{
 						VertexLine ln = new VertexLine(p1, p2);
-						if(ln.length() > 0)
+						int loc = indexOf(ln, lns, 0);
+						if(loc > -1)
+						{
+							lns.remove(loc);
+							lnsDup.add(ln);
+						}
+						else if(ln.length() > 0 && indexOf(ln, lnsDup, 0) == -1)
 							lns.add(ln);
 					}
 				}
-		handleSimilars(lns);
 		lns_.clear();
 		lns_.addAll(lns);
 	}
-	
-	private static void handleSimilars(List<VertexLine> lines)
-	{
-		LinkedHashSet<VertexLine> ls = new LinkedHashSet<VertexLine>(lines);
-		LinkedHashSet<VertexLine> delta = new LinkedHashSet<VertexLine>();
-		
-		for(VertexLine l : lines)
-			if(!ls.contains(l))
-				delta.add(l);
-		
-		ls.removeAll(delta);
-		
-		lines.clear();
-		lines.addAll(ls);
-		
-		// boolean s = false;
-		//
-		// do
-		// {
-		// s = false;
-		//
-		// for(int i = 0; i < lines.size(); ++i)
-		// {
-		// int in = indexOf(lines.get(i), lines, i + 1);
-		// if(in != -1)
-		// {
-		// lines.remove(in);
-		// s = true;
-		// break;
-		// }
-		// }
-		// } while(s);
-	}
-	
-	// private static <T> boolean contains(T t, List<T> list)
-	// {
-	// for(int i = 0; i < list.size(); ++i)
-	// if(list.get(i).hashCode() == t.hashCode())
-	// return true;
-	// return false;
-	// }
 	
 	private static <T> int indexOf(T obj, List<T> list, int startPos)
 	{
