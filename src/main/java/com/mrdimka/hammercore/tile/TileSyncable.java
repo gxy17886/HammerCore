@@ -1,17 +1,22 @@
 package com.mrdimka.hammercore.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -22,9 +27,13 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSyncSyncableTile;
+import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
+import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 
-public abstract class TileSyncable extends TileEntity
+public abstract class TileSyncable extends TileEntity implements IPropertyChangeHandler
 {
+	protected World readNBT_world;
+	private final List<NetPropertyAbstract> properties = new ArrayList<>();
 	private NBTTagCompound lastSyncTag;
 	
 	/**
@@ -89,26 +98,69 @@ public abstract class TileSyncable extends TileEntity
 	public final NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
 		nbt = super.writeToNBT(nbt);
-		NBTTagCompound tag = new NBTTagCompound();
-		writeNBT(tag);
-		nbt.setTag("tags", tag);
+		
+		{
+			NBTTagCompound tag = new NBTTagCompound();
+			writeNBT(tag);
+			nbt.setTag("Tags", tag);
+		}
+		
 		if(this instanceof TileSyncableTickable)
-			nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
+			nbt.setInteger("TicksExisted", ((TileSyncableTickable) this).ticksExisted);
+		
+		NBTTagList props = new NBTTagList();
+		
+		for(NetPropertyAbstract prop : properties)
+		{
+			NBTTagCompound tag = new NBTTagCompound();
+			prop.writeToNBT(tag);
+			tag.setString("Class", prop.getClass().getName());
+			tag.setInteger("Id", properties.indexOf(prop));
+			props.appendTag(tag);
+		}
+		
+		nbt.setTag("Properties", props);
+		
 		return nbt;
 	}
 	
 	@Override
 	public final void readFromNBT(NBTTagCompound nbt)
 	{
-		if(readNBT_world == null && world != null) readNBT_world = world;
+		if(readNBT_world == null && world != null)
+			readNBT_world = world;
+		
 		super.readFromNBT(nbt);
-		readNBT(nbt.getCompoundTag("tags"));
+		
+		if(!nbt.hasKey("Tags", NBT.TAG_COMPOUND))
+			HammerCore.LOG.warn("TileEntity " + this + " tried to load old NBT Key: \"tags\". It is going to be renamed to \"Tags\"!");
+		readNBT(!nbt.hasKey("Tags", NBT.TAG_COMPOUND) ? nbt.getCompoundTag("tags") : nbt.getCompoundTag("Tags"));
+		
 		if(this instanceof TileSyncableTickable)
-			((TileSyncableTickable) this).ticksExisted = nbt.getInteger("ticksExisted");
+			((TileSyncableTickable) this).ticksExisted = nbt.getInteger("TicksExisted");
+		
+		NBTTagList props = nbt.getTagList("Properties", NBT.TAG_COMPOUND);
+		
+		for(int i = 0; i < props.tagCount(); ++i)
+		{
+			try
+			{
+				NBTTagCompound tag = props.getCompoundTagAt(i);
+				int id = tag.getInteger("Id");
+				NetPropertyAbstract prop;
+				
+				if(properties.size() > id)
+				{
+					prop = properties.get(id);
+					prop.readFromNBT(tag);
+				}
+			} catch(Throwable err)
+			{
+			}
+		}
+		
 		readNBT_world = null;
 	}
-	
-	private World readNBT_world;
 	
 	@Override
 	protected void setWorldCreate(World worldIn)
@@ -169,5 +221,31 @@ public abstract class TileSyncable extends TileEntity
 	public Object getClientGuiElement(EntityPlayer player)
 	{
 		return null;
+	}
+	
+	/** NEW PROPERTY API */
+	
+	@Override
+	public int registerProperty(NetPropertyAbstract prop)
+	{
+		if(properties.contains(prop))
+			return properties.indexOf(prop);
+		properties.add(prop);
+		return properties.size();
+	}
+	
+	@Override
+	public void load(int id, NBTTagCompound nbt)
+	{
+		if(id >= 0 && id < properties.size())
+			properties.get(id).readFromNBT(nbt);
+	}
+	
+	public void notifyOfChange(NetPropertyAbstract prop) {}
+	
+	@Override
+	public void sendChangesToNearby()
+	{
+		sync();
 	}
 }

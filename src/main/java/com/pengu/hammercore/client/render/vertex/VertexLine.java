@@ -6,14 +6,14 @@ public class VertexLine
 	
 	public VertexLine(VertexPoint src, VertexPoint dest)
 	{
-		this.src = src.hashCode() > dest.hashCode() ? src : dest;
-		this.dest = src.hashCode() > dest.hashCode() ? dest : src;
+		this.src = src;
+		this.dest = dest;
 	}
 	
 	@Override
 	public int hashCode()
 	{
-		return src.hashCode() + dest.hashCode();
+		return src.hashCode() * dest.hashCode() & dest.hashCode() * 3;
 	}
 	
 	@Override
@@ -26,7 +26,7 @@ public class VertexLine
 	public boolean equals(Object obj)
 	{
 		if(!(obj instanceof VertexLine)) return false;
-		return src.equals(((VertexLine) obj).src) && dest.equals(((VertexLine) obj).dest);
+		return (src.equals(((VertexLine) obj).src) && dest.equals(((VertexLine) obj).dest)) || (dest.equals(((VertexLine) obj).src) && src.equals(((VertexLine) obj).dest));
 	}
 	
 	public double length()

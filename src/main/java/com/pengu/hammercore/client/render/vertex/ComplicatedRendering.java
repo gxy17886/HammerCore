@@ -15,7 +15,10 @@ import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.vec.Cuboid6;
 
-public class ComplicatedRendering
+/**
+ * WIP - no use for now
+ */
+class ComplicatedRendering
 {
 	public enum EnumEdge
 	{
@@ -200,6 +203,7 @@ public class ComplicatedRendering
 	{
 		List<VertexLine> lns = new ArrayList<>(lns_);
 		List<VertexLine> lnsDup = new ArrayList<>();
+		
 		for(VertexPoint p1 : points)
 			for(VertexPoint p2 : points)
 				if(p1 != p2)
@@ -208,14 +212,18 @@ public class ComplicatedRendering
 					if(ax != null && shouldMakeLine(p1, p2, points))
 					{
 						VertexLine ln = new VertexLine(p1, p2);
-						int loc = indexOf(ln, lns, 0);
+						
+						int loc = lns.indexOf(ln);
 						if(loc > -1)
 						{
 							lns.remove(loc);
 							lnsDup.add(ln);
 						}
-						else if(ln.length() > 0 && indexOf(ln, lnsDup, 0) == -1)
+						
+						if(ln.length() > 0 && !lnsDup.contains(ln))
 							lns.add(ln);
+//						else
+//							System.out.println(lnsDup + " " + ln + " " + lnsDup.contains(ln));
 					}
 				}
 		lns_.clear();
@@ -227,7 +235,7 @@ public class ComplicatedRendering
 		if(obj == null)
 			return -1;
 		for(int i = startPos; i < list.size(); ++i)
-			if(obj.hashCode() == list.get(i).hashCode())
+			if(obj.equals(list.get(i)))
 				return i;
 		return -1;
 	}
@@ -264,8 +272,8 @@ public class ComplicatedRendering
 //			if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) == p1.vec.distanceTo(p2.vec))
 //				return true;
 			
-			if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) == p1.vec.distanceTo(p2.vec))
-				return true;
+//			if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) == p1.vec.distanceTo(p2.vec))
+//				return true;
 		}
 		
 		return false;

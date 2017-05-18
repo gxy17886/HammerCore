@@ -90,6 +90,7 @@ import com.mrdimka.hammercore.world.WorldGenHammerCore;
 @Mod(modid = "hammercore", version = "@VERSION@", name = "Hammer Core")
 public class HammerCore
 {
+	public static final List<String> initHCChannels = new ArrayList<>();
 	public static final boolean IS_OBFUSCATED_MC = false;
 	
 	/**
@@ -170,6 +171,7 @@ public class HammerCore
 		
 		new FluidDictionary();
 		
+		initHCChannels.add("particles");
 		
 //		File javacode = new File(".", "javacode");
 //		if(!javacode.isDirectory()) javacode.mkdir();
