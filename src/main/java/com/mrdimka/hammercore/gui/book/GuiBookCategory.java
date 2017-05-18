@@ -79,7 +79,11 @@ public class GuiBookCategory extends GuiCentered
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if(mouseButton == 1) { mc.displayGuiScreen(bookGui); return; }
+		if(mouseButton == 1)
+		{
+			mc.displayGuiScreen(bookGui);
+			return;
+		}
 		if(mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5)
 		{
 			mc.displayGuiScreen(bookGui);
@@ -89,22 +93,24 @@ public class GuiBookCategory extends GuiCentered
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		
 		int y = 0;
-		if(mouseButton == 0) for(BookEntry ent : category.entries)
-		{
-			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
+		if(mouseButton == 0)
+			for(BookEntry ent : category.entries)
 			{
-				mc.displayGuiScreen(new GuiBookEntry(this, ent));
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
-				break;
+				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
+				{
+					mc.displayGuiScreen(new GuiBookEntry(this, ent));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					break;
+				}
+				
+				y += fontRenderer.FONT_HEIGHT + 4;
 			}
-			
-			y += fontRenderer.FONT_HEIGHT + 4;
-		}
 	}
 	
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
-		if(keyCode == 1) mc.displayGuiScreen(bookGui);
+		if(keyCode == 1)
+			mc.displayGuiScreen(bookGui);
 	}
 }

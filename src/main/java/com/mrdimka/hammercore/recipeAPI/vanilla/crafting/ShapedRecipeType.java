@@ -39,14 +39,18 @@ public class ShapedRecipeType implements IRecipeType<ShapedOreRecipe>
 		ItemStack out = loadStack(json.getCompoundTag("output"));
 		List<Object> data = new ArrayList<>();
 		NBTTagList pattern = json.getTagList("pattern", NBT.TAG_STRING);
-		for(int i = 0; i < pattern.tagCount(); ++i) data.add(pattern.getStringTagAt(i));
+		for(int i = 0; i < pattern.tagCount(); ++i)
+			data.add(pattern.getStringTagAt(i));
 		NBTTagCompound ingredients = json.getCompoundTag("ingredients");
 		for(String item : ingredients.getKeySet())
 		{
 			data.add(item.charAt(0));
-			if(ingredients.hasKey(item, NBT.TAG_STRING)) data.add(ingredients.getString(item));
-			else if(ingredients.hasKey(item, NBT.TAG_COMPOUND)) data.add(loadStack(ingredients.getCompoundTag(item)));
-			else throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + ingredients.getTagId(item) + ", Content: " + ingredients.getTag(item));
+			if(ingredients.hasKey(item, NBT.TAG_STRING))
+				data.add(ingredients.getString(item));
+			else if(ingredients.hasKey(item, NBT.TAG_COMPOUND))
+				data.add(loadStack(ingredients.getCompoundTag(item)));
+			else
+				throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + ingredients.getTagId(item) + ", Content: " + ingredients.getTag(item));
 		}
 		return new ShapedOreRecipe(out, data.toArray());
 	}

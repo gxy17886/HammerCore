@@ -19,10 +19,10 @@ public class RenderUtil
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer vb = tess.getBuffer();
 		vb.begin(7, DefaultVertexFormats.POSITION_TEX);
-		vb.pos(x,  y + height,  zLevel).tex(texX * n,  (texY + height) * n).endVertex();
-		vb.pos(x + width, y + height,  zLevel).tex((texX + width) * n,  (texY + height) * n).endVertex();
-		vb.pos(x + width, y, zLevel).tex((texX + width) * n,  texY * n).endVertex();
-		vb.pos(x, y, zLevel).tex(texX * n,  texY * n).endVertex();
+		vb.pos(x, y + height, zLevel).tex(texX * n, (texY + height) * n).endVertex();
+		vb.pos(x + width, y + height, zLevel).tex((texX + width) * n, (texY + height) * n).endVertex();
+		vb.pos(x + width, y, zLevel).tex((texX + width) * n, texY * n).endVertex();
+		vb.pos(x, y, zLevel).tex(texX * n, texY * n).endVertex();
 		tess.draw();
 	}
 	
@@ -32,80 +32,80 @@ public class RenderUtil
 		Tessellator tess = Tessellator.getInstance();
 		VertexBuffer vb = tess.getBuffer();
 		vb.begin(7, DefaultVertexFormats.POSITION_TEX);
-		vb.pos(x,  y + height,  zLevel).tex(texX * n,  (texY + height) * n).endVertex();
-		vb.pos(x + width, y + height,  zLevel).tex((texX + width) * n,  (texY + height) * n).endVertex();
-		vb.pos(x + width, y, zLevel).tex((texX + width) * n,  texY * n).endVertex();
-		vb.pos(x, y, zLevel).tex(texX * n,  texY * n).endVertex();
+		vb.pos(x, y + height, zLevel).tex(texX * n, (texY + height) * n).endVertex();
+		vb.pos(x + width, y + height, zLevel).tex((texX + width) * n, (texY + height) * n).endVertex();
+		vb.pos(x + width, y, zLevel).tex((texX + width) * n, texY * n).endVertex();
+		vb.pos(x, y, zLevel).tex(texX * n, texY * n).endVertex();
 		tess.draw();
 	}
 	
 	public static void drawTexturedModalRect(double xCoord, double yCoord, TextureAtlasSprite textureSprite, double widthIn, double heightIn)
-    {
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        vertexbuffer.pos(xCoord, yCoord + heightIn, 0).tex((double) textureSprite.getMinU(), (double) textureSprite.getMaxV()).endVertex();
-        vertexbuffer.pos(xCoord + widthIn, yCoord + heightIn, 0).tex((double)textureSprite.getMaxU(), (double)textureSprite.getMaxV()).endVertex();
-        vertexbuffer.pos(xCoord + widthIn, yCoord, 0).tex((double)textureSprite.getMaxU(), (double)textureSprite.getMinV()).endVertex();
-        vertexbuffer.pos(xCoord, yCoord, 0).tex((double)textureSprite.getMinU(), (double)textureSprite.getMinV()).endVertex();
-        tessellator.draw();
-    }
+	{
+		Tessellator tessellator = Tessellator.getInstance();
+		VertexBuffer vertexbuffer = tessellator.getBuffer();
+		vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		vertexbuffer.pos(xCoord, yCoord + heightIn, 0).tex((double) textureSprite.getMinU(), (double) textureSprite.getMaxV()).endVertex();
+		vertexbuffer.pos(xCoord + widthIn, yCoord + heightIn, 0).tex((double) textureSprite.getMaxU(), (double) textureSprite.getMaxV()).endVertex();
+		vertexbuffer.pos(xCoord + widthIn, yCoord, 0).tex((double) textureSprite.getMaxU(), (double) textureSprite.getMinV()).endVertex();
+		vertexbuffer.pos(xCoord, yCoord, 0).tex((double) textureSprite.getMinU(), (double) textureSprite.getMinV()).endVertex();
+		tessellator.draw();
+	}
 	
 	public static void drawGradientRect(double left, double top, double width, double height, int startColor, int endColor)
-    {
-		float f = (float)(startColor >> 24 & 255) / 255F;
-        float f1 = (float)(startColor >> 16 & 255) / 255F;
-        float f2 = (float)(startColor >> 8 & 255) / 255F;
-        float f3 = (float)(startColor & 255) / 255F;
-        float f4 = (float)(endColor >> 24 & 255) / 255F;
-        float f5 = (float)(endColor >> 16 & 255) / 255F;
-        float f6 = (float)(endColor >> 8 & 255) / 255F;
-        float f7 = (float)(endColor & 255) / 255F;
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.disableAlpha();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.shadeModel(7425);
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        vertexbuffer.pos(left + width, top, zLevel).color(f1, f2, f3, f).endVertex();
-        vertexbuffer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
-        vertexbuffer.pos(left, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
-        vertexbuffer.pos(left + width, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
-        tessellator.draw();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
-    }
+	{
+		float f = (float) (startColor >> 24 & 255) / 255F;
+		float f1 = (float) (startColor >> 16 & 255) / 255F;
+		float f2 = (float) (startColor >> 8 & 255) / 255F;
+		float f3 = (float) (startColor & 255) / 255F;
+		float f4 = (float) (endColor >> 24 & 255) / 255F;
+		float f5 = (float) (endColor >> 16 & 255) / 255F;
+		float f6 = (float) (endColor >> 8 & 255) / 255F;
+		float f7 = (float) (endColor & 255) / 255F;
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.shadeModel(7425);
+		Tessellator tessellator = Tessellator.getInstance();
+		VertexBuffer vertexbuffer = tessellator.getBuffer();
+		vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+		vertexbuffer.pos(left + width, top, zLevel).color(f1, f2, f3, f).endVertex();
+		vertexbuffer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
+		vertexbuffer.pos(left, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
+		vertexbuffer.pos(left + width, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
+		tessellator.draw();
+		GlStateManager.shadeModel(7424);
+		GlStateManager.disableBlend();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableTexture2D();
+	}
 	
 	public static void drawGradientRect(double left, double top, double width, double height, int startColor, int endColor, double zLevel)
-    {
-        float f = (float)(startColor >> 24 & 255) / 255F;
-        float f1 = (float)(startColor >> 16 & 255) / 255F;
-        float f2 = (float)(startColor >> 8 & 255) / 255F;
-        float f3 = (float)(startColor & 255) / 255F;
-        float f4 = (float)(endColor >> 24 & 255) / 255F;
-        float f5 = (float)(endColor >> 16 & 255) / 255F;
-        float f6 = (float)(endColor >> 8 & 255) / 255F;
-        float f7 = (float)(endColor & 255) / 255F;
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableBlend();
-        GlStateManager.disableAlpha();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-        GlStateManager.shadeModel(7425);
-        Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
-        vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
-        vertexbuffer.pos(left + width, top, zLevel).color(f1, f2, f3, f).endVertex();
-        vertexbuffer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
-        vertexbuffer.pos(left, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
-        vertexbuffer.pos(left + width, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
-        tessellator.draw();
-        GlStateManager.shadeModel(7424);
-        GlStateManager.disableBlend();
-        GlStateManager.enableAlpha();
-        GlStateManager.enableTexture2D();
-    }
+	{
+		float f = (float) (startColor >> 24 & 255) / 255F;
+		float f1 = (float) (startColor >> 16 & 255) / 255F;
+		float f2 = (float) (startColor >> 8 & 255) / 255F;
+		float f3 = (float) (startColor & 255) / 255F;
+		float f4 = (float) (endColor >> 24 & 255) / 255F;
+		float f5 = (float) (endColor >> 16 & 255) / 255F;
+		float f6 = (float) (endColor >> 8 & 255) / 255F;
+		float f7 = (float) (endColor & 255) / 255F;
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.shadeModel(7425);
+		Tessellator tessellator = Tessellator.getInstance();
+		VertexBuffer vertexbuffer = tessellator.getBuffer();
+		vertexbuffer.begin(7, DefaultVertexFormats.POSITION_COLOR);
+		vertexbuffer.pos(left + width, top, zLevel).color(f1, f2, f3, f).endVertex();
+		vertexbuffer.pos(left, top, zLevel).color(f1, f2, f3, f).endVertex();
+		vertexbuffer.pos(left, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
+		vertexbuffer.pos(left + width, top + height, zLevel).color(f5, f6, f7, f4).endVertex();
+		tessellator.draw();
+		GlStateManager.shadeModel(7424);
+		GlStateManager.disableBlend();
+		GlStateManager.enableAlpha();
+		GlStateManager.enableTexture2D();
+	}
 }

@@ -18,7 +18,7 @@ public class ItemContainer implements Predicate<ItemStack>
 	private final String oredictNames;
 	private final String mod;
 	private final byte type;
-
+	
 	public static ItemContainer create(ItemStack stack)
 	{
 		return new ItemContainer(stack);
@@ -36,8 +36,10 @@ public class ItemContainer implements Predicate<ItemStack>
 		nbt = stack.getTagCompound() + "";
 		int[] oredicts = OreDictionary.getOreIDs(stack);
 		String ods = "";
-		for(int i : oredicts) ods += OreDictionary.getOreName(i) + ";";
-		if(ods.endsWith(";")) ods = ods.substring(0, ods.length() - 1);
+		for(int i : oredicts)
+			ods += OreDictionary.getOreName(i) + ";";
+		if(ods.endsWith(";"))
+			ods = ods.substring(0, ods.length() - 1);
 		oredictNames = ods;
 		mod = stack.getItem().getRegistryName().getResourceDomain();
 		damage = stack.getItemDamage();
@@ -88,19 +90,25 @@ public class ItemContainer implements Predicate<ItemStack>
 	
 	private static boolean itemsMatch(String a, String b)
 	{
-		if(a == b) return true;
-		if(a == null || b == null) return false;
+		if(a == b)
+			return true;
+		if(a == null || b == null)
+			return false;
 		return a.equals(b);
 	}
 	
 	private static boolean oredictMatches(String a, String b)
 	{
-		if(a == b) return true;
-		if(a == null || b == null) return false;
-		for(String as : a.split(";")) if(b.contains(as)) return true;
+		if(a == b)
+			return true;
+		if(a == null || b == null)
+			return false;
+		for(String as : a.split(";"))
+			if(b.contains(as))
+				return true;
 		return false;
 	}
-
+	
 	public byte getType()
 	{
 		return type;

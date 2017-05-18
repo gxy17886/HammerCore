@@ -46,7 +46,8 @@ public class CommandBuildStructure extends CommandBase
 		}
 		
 		BlockPos startPos = null;
-		if(args.length == 1) startPos = sender.getPosition();
+		if(args.length == 1)
+			startPos = sender.getPosition();
 		if(args.length == 4)
 		{
 			startPos = parseBlockPos(sender, args, 1, false);
@@ -64,7 +65,7 @@ public class CommandBuildStructure extends CommandBase
 		{
 			StructureAPI.Import(sender.getEntityWorld(), startPos, StructureAPI.ParseBuiltin(new ResourceLocation(args[0])));
 			sender.sendMessage(new TextComponentString(TextFormatting.GREEN + args[0] + " built in " + (System.currentTimeMillis() - start) + " ms."));
-		} catch (IOException e)
+		} catch(IOException e)
 		{
 			e.printStackTrace();
 			sender.sendMessage(new TextComponentString(TextFormatting.RED + args[0] + " wasn't built: " + e.getMessage()));

@@ -16,7 +16,17 @@ public enum EnumRotation implements IStringSerializable
 	public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumRotation.class);
 	public static final PropertyEnum ROTATION = PropertyEnum.create("rotation", EnumRotation.class);
 	
-	private EnumRotation() {}
-	public String getName(){return name().toLowerCase();}
-	public String toString() {return getName();}
+	private EnumRotation()
+	{
+	}
+	
+	public String getName()
+	{
+		return name().toLowerCase();
+	}
+	
+	public String toString()
+	{
+		return getName();
+	}
 }

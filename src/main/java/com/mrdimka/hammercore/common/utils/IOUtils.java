@@ -35,8 +35,9 @@ public class IOUtils
 		try
 		{
 			return ImageIO.read(new URL(url));
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		
 		return null;
 	}
@@ -49,8 +50,9 @@ public class IOUtils
 			downloadAndWriteData(url, baos);
 			byte[] buf = baos.toByteArray();
 			return buf;
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		
 		return ZERO_ARRAY;
 	}
@@ -63,8 +65,9 @@ public class IOUtils
 			InputStream input = u.openStream();
 			pipeData(input, o);
 			input.close();
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 	}
 	
 	public static void pipeData(InputStream from, OutputStream to)
@@ -73,9 +76,11 @@ public class IOUtils
 		{
 			byte[] buf = IOUtils.buf.get();
 			int read = 0;
-			while((read = from.read(buf)) > 0) to.write(buf, 0, read);
+			while((read = from.read(buf)) > 0)
+				to.write(buf, 0, read);
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 	}
 	
 	public static byte[] pipeOut(InputStream from)
@@ -92,8 +97,9 @@ public class IOUtils
 			byte[] buf = new byte[from.available()];
 			from.read(buf);
 			return buf;
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		
 		return ZERO_ARRAY;
 	}
@@ -107,8 +113,9 @@ public class IOUtils
 			o.write(data);
 			o.close();
 			return baos.toByteArray();
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return ZERO_ARRAY;
 	}
 	
@@ -120,13 +127,15 @@ public class IOUtils
 			data = pipeOut(i);
 			i.close();
 			return data;
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return ZERO_ARRAY;
 	}
 	
 	/**
 	 * Follows redirect links (may be useful when downloading a file)
+	 * 
 	 * @since 1.5.2
 	 */
 	public static String followRedirects(String url) throws IOException
@@ -142,11 +151,10 @@ public class IOUtils
 		
 		// normally, 3xx is redirect
 		int status = conn.getResponseCode();
-		if (status != HttpURLConnection.HTTP_OK) {
-			if (status == HttpURLConnection.HTTP_MOVED_TEMP
-				|| status == HttpURLConnection.HTTP_MOVED_PERM
-					|| status == HttpURLConnection.HTTP_SEE_OTHER)
-			redirect = true;
+		if(status != HttpURLConnection.HTTP_OK)
+		{
+			if(status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER)
+				redirect = true;
 		}
 		
 		if(redirect)

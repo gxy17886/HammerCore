@@ -14,9 +14,9 @@ public class BlankTeleporter extends Teleporter
 	@Override
 	public void placeInPortal(Entity entityIn, float rotationYaw)
 	{
-        entityIn.motionX = 0;
-        entityIn.motionY = 0;
-        entityIn.motionZ = 0;
+		entityIn.motionX = 0;
+		entityIn.motionY = 0;
+		entityIn.motionZ = 0;
 	}
 	
 	@Override

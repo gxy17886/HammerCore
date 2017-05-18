@@ -15,7 +15,10 @@ public class PacketSendGlobalRecipeScriptsWithRemoval implements IPacket, IPacke
 	public int countRecipe, id;
 	public NBTTagList data;
 	
-	public PacketSendGlobalRecipeScriptsWithRemoval() {}
+	public PacketSendGlobalRecipeScriptsWithRemoval()
+	{
+	}
+	
 	public PacketSendGlobalRecipeScriptsWithRemoval(int id, NBTTagList data)
 	{
 		countRecipe = GRCProvider.getScriptCount();
@@ -32,7 +35,8 @@ public class PacketSendGlobalRecipeScriptsWithRemoval implements IPacket, IPacke
 			GRCProvider.setScriptCount(packet.countRecipe);
 			GRCProvider.setScript(packet.id, packet.data);
 			GRCProvider.reloadScript();
-			if(packet.id < GRCProvider.getScriptCount()) return new PacketRequestRecipeScript(packet.id + 1);
+			if(packet.id < GRCProvider.getScriptCount())
+				return new PacketRequestRecipeScript(packet.id + 1);
 		}
 		return null;
 	}

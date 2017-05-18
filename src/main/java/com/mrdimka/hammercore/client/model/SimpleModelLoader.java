@@ -26,7 +26,8 @@ public class SimpleModelLoader
 	 **/
 	public static ModelBase convert(String raw, boolean ignoreIssues) throws ModelLoadingException
 	{
-		if(!raw.contains("\n")) raw = raw.replaceAll(";", "\n");
+		if(!raw.contains("\n"))
+			raw = raw.replaceAll(";", "\n");
 		String lines[] = raw.split("\n");
 		SimpleModel model = new SimpleModel();
 		List<ModelRenderer> ended = new ArrayList<ModelRenderer>();
@@ -37,9 +38,12 @@ public class SimpleModelLoader
 			ln++;
 			try
 			{
-				if(line.isEmpty() || line.startsWith("//")) continue;
-				if(line.startsWith("textureWidth ")) model.textureWidth = Integer.parseInt(line.substring("textureWidth ".length()));
-				if(line.startsWith("textureHeight ")) model.textureHeight = Integer.parseInt(line.substring("textureHeight ".length()));
+				if(line.isEmpty() || line.startsWith("//"))
+					continue;
+				if(line.startsWith("textureWidth "))
+					model.textureWidth = Integer.parseInt(line.substring("textureWidth ".length()));
+				if(line.startsWith("textureHeight "))
+					model.textureHeight = Integer.parseInt(line.substring("textureHeight ".length()));
 				
 				if(line.toLowerCase().startsWith("start "))
 				{
@@ -58,7 +62,8 @@ public class SimpleModelLoader
 					String name = l.substring(0, l.indexOf("("));
 					String[] args = l.substring(l.indexOf("(") + 1, l.lastIndexOf(")")).replaceAll(" ", "").split(",");
 					ModelRenderer renderer = renderers.get(name);
-					if(renderer == null) throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
+					if(renderer == null)
+						throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
 					float[] xyz = parseFloats(3, args);
 					int[] size = parseInts(4, Arrays.copyOfRange(args, 3, args.length));
 					renderer.addBox(xyz[0], xyz[1], xyz[2], size[0], size[1], size[2]);
@@ -70,7 +75,8 @@ public class SimpleModelLoader
 					String name = l.substring(0, l.indexOf("("));
 					String[] args = l.substring(l.indexOf("(") + 1, l.lastIndexOf(")")).replaceAll(" ", "").split(",");
 					ModelRenderer renderer = renderers.get(name);
-					if(renderer == null) throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
+					if(renderer == null)
+						throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
 					float[] xyz = parseFloats(3, args);
 					renderer.setRotationPoint(xyz[0], xyz[1], xyz[2]);
 				}
@@ -81,7 +87,8 @@ public class SimpleModelLoader
 					String name = l.substring(0, l.indexOf("("));
 					String[] args = l.substring(l.indexOf("(") + 1, l.lastIndexOf(")")).replaceAll(" ", "").split(",");
 					ModelRenderer renderer = renderers.get(name);
-					if(renderer == null) throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
+					if(renderer == null)
+						throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
 					float[] xy = parseFloats(2, args);
 					renderer.textureWidth = xy[0];
 					renderer.textureHeight = xy[1];
@@ -93,7 +100,8 @@ public class SimpleModelLoader
 					String name = l.substring(0, l.indexOf("("));
 					String[] args = l.substring(l.indexOf("(") + 1, l.lastIndexOf(")")).replaceAll(" ", "").split(",");
 					ModelRenderer renderer = renderers.get(name);
-					if(renderer == null) throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
+					if(renderer == null)
+						throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + name + "\"!");
 					boolean[] mirror = parseBooleans(1, args);
 					renderer.mirror = mirror[0];
 				}
@@ -102,23 +110,26 @@ public class SimpleModelLoader
 				{
 					String shape = line.substring("end ".length());
 					ModelRenderer renderer = renderers.remove(shape);
-					if(renderer == null) throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + shape + "\"!");
+					if(renderer == null)
+						throw new ModelLoadingExceptionMessage("There is no such model renderer named \"" + shape + "\"!");
 					ended.add(renderer);
 				}
-			}
-			catch(ModelLoadingExceptionMessage err)
+			} catch(ModelLoadingExceptionMessage err)
 			{
 				String msg = "Can't parse model line #" + ln + ": " + err.getMessage();
 				
-				if(ignoreIssues) System.err.println(msg);
-				else throw new ModelLoadingException(msg);
-			}
-			catch(Throwable err)
+				if(ignoreIssues)
+					System.err.println(msg);
+				else
+					throw new ModelLoadingException(msg);
+			} catch(Throwable err)
 			{
 				String msg = "Can't parse model line #" + ln + ": " + err.getClass().getName() + " > " + err.getMessage();
 				
-				if(ignoreIssues) System.err.println(msg);
-				else throw new ModelLoadingException(msg);
+				if(ignoreIssues)
+					System.err.println(msg);
+				else
+					throw new ModelLoadingException(msg);
 			}
 		}
 		
@@ -141,7 +152,8 @@ public class SimpleModelLoader
 		SimpleModel model = new SimpleModel();
 		model.textureWidth = file.textureWidth;
 		model.textureHeight = file.textureHeight;
-		for(ModelPart part : file.parts) model.boxList.add(toRenderer(model, part));
+		for(ModelPart part : file.parts)
+			model.boxList.add(toRenderer(model, part));
 		return model;
 	}
 	
@@ -155,8 +167,10 @@ public class SimpleModelLoader
 		r.rotateAngleY = part.rotateAngleY;
 		r.rotateAngleZ = part.rotateAngleZ;
 		r.mirror = part.mirror;
-		for(ModelCube cube : part.boxes) r.addBox(cube.boxName, cube.posX1, cube.posY1, cube.posZ1, (int) (cube.posX2 - cube.posX1), (int) (cube.posY2 - cube.posY1), (int) (cube.posZ2 - cube.posZ1));
-		for(ModelPart child : part.childs) r.childModels.add(toRenderer(parent, child));
+		for(ModelCube cube : part.boxes)
+			r.addBox(cube.boxName, cube.posX1, cube.posY1, cube.posZ1, (int) (cube.posX2 - cube.posX1), (int) (cube.posY2 - cube.posY1), (int) (cube.posZ2 - cube.posZ1));
+		for(ModelPart child : part.childs)
+			r.childModels.add(toRenderer(parent, child));
 		return r;
 	}
 	
@@ -187,8 +201,9 @@ public class SimpleModelLoader
 			f = ModelRenderer.class.getDeclaredFields()[3];
 			f.setAccessible(true);
 			r.textureOffsetY = f.getInt(part);
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		
 		for(ModelBox box : part.cubeList)
 		{
@@ -203,7 +218,9 @@ public class SimpleModelLoader
 			r.boxes.add(cube);
 		}
 		
-		if(part.childModels != null && !part.childModels.isEmpty()) for(ModelRenderer child : part.childModels) r.childs.add(toPart(child));
+		if(part.childModels != null && !part.childModels.isEmpty())
+			for(ModelRenderer child : part.childModels)
+				r.childs.add(toPart(child));
 		return r;
 	}
 	
@@ -211,7 +228,12 @@ public class SimpleModelLoader
 	{
 		boolean[] booleans = new boolean[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { booleans[i] = Boolean.parseBoolean(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				booleans[i] = Boolean.parseBoolean(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return booleans;
 	}
 	
@@ -219,7 +241,12 @@ public class SimpleModelLoader
 	{
 		float[] floats = new float[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { floats[i] = Float.parseFloat(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				floats[i] = Float.parseFloat(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return floats;
 	}
 	
@@ -227,7 +254,12 @@ public class SimpleModelLoader
 	{
 		int[] ints = new int[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { ints[i] = Integer.parseInt(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				ints[i] = Integer.parseInt(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return ints;
 	}
 	
@@ -287,7 +319,8 @@ public class SimpleModelLoader
 		file.parts = new HashSet<ModelPart>();
 		file.textureWidth = model.textureWidth;
 		file.textureHeight = model.textureHeight;
-		for(int i = 0; i < model.boxList.size(); ++i) file.parts.add(toPart(model.boxList.get(i)));
+		for(int i = 0; i < model.boxList.size(); ++i)
+			file.parts.add(toPart(model.boxList.get(i)));
 		return file;
 	}
 	

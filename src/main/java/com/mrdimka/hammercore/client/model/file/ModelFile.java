@@ -39,8 +39,9 @@ public class ModelFile implements Serializable
 			out.writeObject(this);
 			out.close();
 			stream.write(IOUtils.deflaterCompress(baos.toByteArray()));
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 	}
 	
 	public static ModelFile read(File file)
@@ -51,14 +52,20 @@ public class ModelFile implements Serializable
 			ModelFile f = read(i);
 			i.close();
 			return f;
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return null;
 	}
 	
 	public static ModelFile read(URL url)
 	{
-		try { return read(url.openStream()); } catch(Throwable err) {}
+		try
+		{
+			return read(url.openStream());
+		} catch(Throwable err)
+		{
+		}
 		return null;
 	}
 	
@@ -71,8 +78,9 @@ public class ModelFile implements Serializable
 			ModelFile f = (ModelFile) ois.readObject();
 			ois.close();
 			return f;
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return null;
 	}
 	

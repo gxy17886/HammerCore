@@ -6,5 +6,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public interface IPacket
 {
 	public void writeToNBT(NBTTagCompound nbt);
+	
 	public void readFromNBT(NBTTagCompound nbt);
 }

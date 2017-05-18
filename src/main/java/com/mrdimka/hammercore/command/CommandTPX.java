@@ -42,7 +42,7 @@ public class CommandTPX extends CommandBase
 			int dim = target.world.provider.getDimension();
 			WorldUtil.teleportPlayer(mp, dim, target.posX, target.posY, target.posZ);
 			mp.sendMessage(new TextComponentString("Teleported to " + args[0] + " in dimension " + dim));
-		}else if(args.length == 3)
+		} else if(args.length == 3)
 		{
 			double x = args[0].startsWith("~") ? mp.posX + (args[0].length() > 1 ? parseDouble(args[0].substring(1)) : 0) : parseDouble(args[0]);
 			double y = args[1].startsWith("~") ? mp.posY + (args[1].length() > 1 ? parseDouble(args[1].substring(1)) : 0) : parseDouble(args[1]);
@@ -50,7 +50,7 @@ public class CommandTPX extends CommandBase
 			
 			WorldUtil.teleportPlayer(mp, mp.world.provider.getDimension(), x, y, z);
 			mp.sendMessage(new TextComponentString("Teleported to " + x + " " + y + " " + z));
-		}else if(args.length == 4)
+		} else if(args.length == 4)
 		{
 			try
 			{
@@ -62,7 +62,7 @@ public class CommandTPX extends CommandBase
 				
 				WorldUtil.teleportPlayer(mp, mp.world.provider.getDimension(), x, y, z);
 				mp.sendMessage(new TextComponentString("Teleported " + args[0] + " to " + x + " " + y + " " + z));
-			}catch(PlayerNotFoundException nfe)
+			} catch(PlayerNotFoundException nfe)
 			{
 				double x = args[0].startsWith("~") ? mp.posX + (args[0].length() > 1 ? parseDouble(args[0].substring(1)) : 0) : parseDouble(args[0]);
 				double y = args[1].startsWith("~") ? mp.posY + (args[1].length() > 1 ? parseDouble(args[1].substring(1)) : 0) : parseDouble(args[1]);
@@ -72,7 +72,7 @@ public class CommandTPX extends CommandBase
 				WorldUtil.teleportPlayer(mp, dim, x, y, z);
 				mp.sendMessage(new TextComponentString("Teleported to " + x + " " + y + " " + z + " in dimension " + dim));
 			}
-		}else if(args.length == 5)
+		} else if(args.length == 5)
 		{
 			mp = getPlayer(server, sender, args[0]);
 			
@@ -83,7 +83,8 @@ public class CommandTPX extends CommandBase
 			
 			WorldUtil.teleportPlayer(mp, dim, x, y, z);
 			mp.sendMessage(new TextComponentString("Teleported " + args[0] + " to " + x + " " + y + " " + z + " in dimension " + dim));
-		}else sender.sendMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 1, 3, 4 or 5."));
+		} else
+			sender.sendMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 1, 3, 4 or 5."));
 	}
 	
 	@Override

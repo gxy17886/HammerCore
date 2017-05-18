@@ -93,7 +93,8 @@ public class ParticleZap extends Particle implements IOldParticle
 		prevPosX = posX;
 		prevPosY = posY;
 		prevPosZ = posZ;
-		if(particleAge++ >= particleMaxAge) setExpired();
+		if(particleAge++ >= particleMaxAge)
+			setExpired();
 		
 		points.clear();
 		pointsWidth.clear();
@@ -207,7 +208,7 @@ public class ParticleZap extends Particle implements IOldParticle
 	}
 	
 	public float length = 1.0F;
-
+	
 	@Override
 	public void setVel(double x, double y, double z)
 	{

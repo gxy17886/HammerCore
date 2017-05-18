@@ -24,17 +24,14 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	
 	public String frequency;
 	
-	public TransferMode 
-						sendItems = TransferMode.DISABLED,
-						sendFluids = TransferMode.DISABLED,
-						sendRF = TransferMode.DISABLED,
-						sendEJ = TransferMode.DISABLED;
+	public TransferMode sendItems = TransferMode.DISABLED, sendFluids = TransferMode.DISABLED, sendRF = TransferMode.DISABLED, sendEJ = TransferMode.DISABLED;
 	
 	@Override
 	public void tick()
 	{
-		//Put all tesseracts
-		if(frequency != null && !frequency.isEmpty()) addTesseract(this);
+		// Put all tesseracts
+		if(frequency != null && !frequency.isEmpty())
+			addTesseract(this);
 		
 		if(atTickRate(20))
 		{
@@ -89,8 +86,10 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	public void setFrequency(String freq)
 	{
 		frequency = freq;
-		if(freq != null && !freq.isEmpty()) addTesseract(this);
-		else removeTesseract(this);
+		if(freq != null && !freq.isEmpty())
+			addTesseract(this);
+		else
+			removeTesseract(this);
 	}
 	
 	public boolean isValid()
@@ -105,22 +104,30 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 		while(tiles.hasNext())
 		{
 			Set<TileTesseract> tess = tiles.next();
-			if(tess == null || tess.isEmpty()) { tiles.remove(); continue; }
+			if(tess == null || tess.isEmpty())
+			{
+				tiles.remove();
+				continue;
+			}
 			Iterator<TileTesseract> tiles2 = tess.iterator();
 			while(tiles2.hasNext())
 			{
 				TileTesseract tess2 = tiles2.next();
-				if(tess2 == null || !tess2.isValid()) tiles2.remove();
+				if(tess2 == null || !tess2.isValid())
+					tiles2.remove();
 			}
-			if(tess.isEmpty()) tiles.remove();
+			if(tess.isEmpty())
+				tiles.remove();
 		}
 	}
 	
 	public static void addTesseract(TileTesseract tesseract)
 	{
-		if(tesseract == null || tesseract.frequency == null || tesseract.frequency.isEmpty()) return;
+		if(tesseract == null || tesseract.frequency == null || tesseract.frequency.isEmpty())
+			return;
 		Set<TileTesseract> tiles = TESSERACTS.get(tesseract.frequency);
-		if(tiles == null) TESSERACTS.put(tesseract.frequency, tiles = new HashSet<>());
+		if(tiles == null)
+			TESSERACTS.put(tesseract.frequency, tiles = new HashSet<>());
 		tiles.add(tesseract);
 	}
 	
@@ -131,14 +138,20 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 		while(tiles.hasNext())
 		{
 			Set<TileTesseract> tess = tiles.next();
-			if(tess == null || tess.isEmpty()) { tiles.remove(); continue; }
+			if(tess == null || tess.isEmpty())
+			{
+				tiles.remove();
+				continue;
+			}
 			Iterator<TileTesseract> tiles2 = tess.iterator();
 			while(tiles2.hasNext())
 			{
 				TileTesseract tess2 = tiles2.next();
-				if(tess2 == tesseract) tiles2.remove();
+				if(tess2 == tesseract)
+					tiles2.remove();
 			}
-			if(tess.isEmpty()) tiles.remove();
+			if(tess.isEmpty())
+				tiles.remove();
 		}
 	}
 	
@@ -157,11 +170,13 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	
 	public <T> T getSidedCapability(Capability<T> cap, EnumFacing facing)
 	{
-		if(facing == null) for(EnumFacing face : EnumFacing.VALUES)
-		{
-			T cap0 = getSidedCapability(cap, face);
-			if(cap0 != null) return cap0;
-		}
+		if(facing == null)
+			for(EnumFacing face : EnumFacing.VALUES)
+			{
+				T cap0 = getSidedCapability(cap, face);
+				if(cap0 != null)
+					return cap0;
+			}
 		
 		if(isValid())
 		{
@@ -175,11 +190,13 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	
 	public <T> boolean hasSidedCapability(Capability<T> cap, EnumFacing facing)
 	{
-		if(facing == null) for(EnumFacing face : EnumFacing.VALUES)
-		{
-			boolean cap0 = hasSidedCapability(cap, face);
-			if(cap0) return true;
-		}
+		if(facing == null)
+			for(EnumFacing face : EnumFacing.VALUES)
+			{
+				boolean cap0 = hasSidedCapability(cap, face);
+				if(cap0)
+					return true;
+			}
 		
 		if(isValid())
 		{

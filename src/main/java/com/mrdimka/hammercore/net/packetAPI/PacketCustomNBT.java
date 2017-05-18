@@ -25,7 +25,9 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 		this.nbt.setString("Channel", channel);
 	}
 	
-	public PacketCustomNBT() {}
+	public PacketCustomNBT()
+	{
+	}
 	
 	@Override
 	public IMessage onMessage(PacketCustomNBT message, MessageContext ctx)
@@ -38,14 +40,29 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 			IPacket packet = packetClass.newInstance();
 			IPacketListener listener = null;
 			
-			if(packet instanceof IPacketListener) listener = (IPacketListener) packet; //New: handle packets if they are their own listeners. No packet registration will be required.
-			else mgr.stringClassRegistry.get(packetClass.getName()); //Otherwise lookup for listener in the registry. Packet registration will be required.
-			
+			if(packet instanceof IPacketListener)
+				listener = (IPacketListener) packet; // New: handle packets if
+													 // they are their own
+													 // listeners. No packet
+													 // registration will be
+													 // required.
+			else
+				mgr.stringClassRegistry.get(packetClass.getName()); // Otherwise
+																	// lookup
+																	// for
+																	// listener
+																	// in the
+																	// registry.
+																	// Packet
+																	// registration
+																	// will be
+																	// required.
+				
 			packet.readFromNBT(nbt.getCompoundTag("PacketData"));
 			IPacket pkt = listener.onArrived(packet, ctx);
-			if(pkt != null) return new PacketCustomNBT(pkt, nbt.getString("Channel"));
-		}
-		catch(Throwable err)
+			if(pkt != null)
+				return new PacketCustomNBT(pkt, nbt.getString("Channel"));
+		} catch(Throwable err)
 		{
 			System.out.println("Can't handle packet for class " + message.nbt.getString("PacketClass"));
 			err.printStackTrace();

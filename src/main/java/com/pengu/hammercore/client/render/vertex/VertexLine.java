@@ -25,7 +25,8 @@ public class VertexLine
 	@Override
 	public boolean equals(Object obj)
 	{
-		if(!(obj instanceof VertexLine)) return false;
+		if(!(obj instanceof VertexLine))
+			return false;
 		return (src.equals(((VertexLine) obj).src) && dest.equals(((VertexLine) obj).dest)) || (dest.equals(((VertexLine) obj).src) && src.equals(((VertexLine) obj).dest));
 	}
 	

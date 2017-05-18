@@ -12,9 +12,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
-import com.google.common.eventbus.Subscribe;
 import com.mrdimka.hammercore.api.dynlight.DynamicLightGetter;
 import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
@@ -64,7 +64,6 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 		return DynamicLightGetter.getLightValue(blockState, world, pos);
 	}
 	
-	@Subscribe
 	public void clientTick(ClientTickEvent evt)
 	{
 		while(!particleQueue.isEmpty())

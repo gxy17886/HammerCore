@@ -74,16 +74,17 @@ public class GuiBook extends GuiCentered
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		
 		int y = 0;
-		if(mouseButton == 0) for(BookCategory cat : book.categories)
-		{
-			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
+		if(mouseButton == 0)
+			for(BookCategory cat : book.categories)
 			{
-				mc.displayGuiScreen(new GuiBookCategory(this, cat));
-				mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
-				break;
+				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
+				{
+					mc.displayGuiScreen(new GuiBookCategory(this, cat));
+					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					break;
+				}
+				
+				y += fontRenderer.FONT_HEIGHT + 4;
 			}
-			
-			y += fontRenderer.FONT_HEIGHT + 4;
-		}
 	}
 }

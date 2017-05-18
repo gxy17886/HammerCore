@@ -35,9 +35,10 @@ public class SimpleRecipeScript implements IRecipeScript
 					JEIRecipesRemoved.add(recipe);
 					IJeiRecipeModifier.Instance.JEIModifier.removeJEI(recipe);
 				}
-			}else
+			} else
 			{
-				if(swaps.contains(o)) HammerCore.LOG.warn("Found recipe to remove but it doesn't support remove reverse operation!");
+				if(swaps.contains(o))
+					HammerCore.LOG.warn("Found recipe to remove but it doesn't support remove reverse operation!");
 				
 				type.addRecipe(o);
 				if(type.isJeiSupported(o) && IJeiRecipeModifier.Instance.JEIModifier != null)
@@ -63,11 +64,13 @@ public class SimpleRecipeScript implements IRecipeScript
 		for(Object o : types.keySet())
 		{
 			IRecipeType type = types.get(o);
-			if(type.swapAddRemoveSupported(o)) type.addOnUnload(o);
-			else type.removeRecipe(o);
+			if(type.swapAddRemoveSupported(o))
+				type.addOnUnload(o);
+			else
+				type.removeRecipe(o);
 		}
 	}
-
+	
 	@Override
 	public NBTTagCompound writeToNbt()
 	{

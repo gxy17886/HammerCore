@@ -46,8 +46,10 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public void init()
 	{
-		//This is an example of how to make custom textures!
-//		TextureSpriteCustom.createSprite(new ResourceLocation("hammercore", "builtin/animation_fx")).addTextureFX(new TextureSpriteAnimationFX(16));
+		// This is an example of how to make custom textures!
+		// TextureSpriteCustom.createSprite(new ResourceLocation("hammercore",
+		// "builtin/animation_fx")).addTextureFX(new
+		// TextureSpriteAnimationFX(16));
 		
 		new TileEntityItemStackRendererHC();
 		
@@ -86,20 +88,24 @@ public class RenderProxy_Client extends RenderProxy_Common
 	public void sendNoSpamMessages(ITextComponent[] messages)
 	{
 		GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
-		for(int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++) chat.deleteChatLine(i);
-		for(int i = 0; i < messages.length; i++) chat.printChatMessageWithOptionalDeletion(messages[i], DELETION_ID + i);
+		for(int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++)
+			chat.deleteChatLine(i);
+		for(int i = 0; i < messages.length; i++)
+			chat.printChatMessageWithOptionalDeletion(messages[i], DELETION_ID + i);
 		lastAdded = DELETION_ID + messages.length - 1;
 	}
 	
 	public static void registerRenders(Iterable<Item> items)
 	{
 		Iterator<Item> iter = items.iterator();
-		while(iter.hasNext()) registerRender(iter.next());
+		while(iter.hasNext())
+			registerRender(iter.next());
 	}
 	
 	public static void registerRender(Item item)
 	{
-		if(item.getClass().getAnnotation(HasNoModel.class) != null || (item instanceof ItemBlock && ((ItemBlock) item).getBlock().getClass().getAnnotation(HasNoModel.class) != null)) return;
+		if(item.getClass().getAnnotation(HasNoModel.class) != null || (item instanceof ItemBlock && ((ItemBlock) item).getBlock().getClass().getAnnotation(HasNoModel.class) != null))
+			return;
 		HammerCore.LOG.info("Model definition for location " + item.getUnlocalizedName().substring(5));
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(new ResourceLocation(item.getUnlocalizedName().substring(5)), "inventory"));
 	}
@@ -113,20 +119,25 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public World getWorld(MessageContext context)
 	{
-		if(context == null) return Minecraft.getMinecraft().world;
-		if(context.side == Side.CLIENT) return Minecraft.getMinecraft().world;
+		if(context == null)
+			return Minecraft.getMinecraft().world;
+		if(context.side == Side.CLIENT)
+			return Minecraft.getMinecraft().world;
 		return super.getWorld(context);
 	}
 	
 	@Override
 	public World getWorld(MessageContext context, int dim)
 	{
-		if(context == null) return Minecraft.getMinecraft().world;
+		if(context == null)
+			return Minecraft.getMinecraft().world;
 		if(context.side == Side.CLIENT)
 		{
 			World w = getWorld(context);
-			if(w == null) return null;
-			if(w.provider.getDimension() == dim) return w;
+			if(w == null)
+				return null;
+			if(w.provider.getDimension() == dim)
+				return w;
 		}
 		return super.getWorld(context, dim);
 	}

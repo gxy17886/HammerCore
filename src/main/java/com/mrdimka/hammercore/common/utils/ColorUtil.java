@@ -24,24 +24,31 @@ public class ColorUtil
 	{
 		int[] oreIDs = OreDictionary.getOreIDs(stack);
 		List<String> ores = new ArrayList<String>();
-		for(int id : oreIDs) ores.add(OreDictionary.getOreName(id));
-		for(String dye : defDyeNames) if(ores.contains("dye" + dye)) return true;
+		for(int id : oreIDs)
+			ores.add(OreDictionary.getOreName(id));
+		for(String dye : defDyeNames)
+			if(ores.contains("dye" + dye))
+				return true;
 		return false;
 	}
 	
 	/**
 	 * Gets this stack's dye color, or null if it is not a dye
-	 * @param stack The stack that we should get color from
+	 * 
+	 * @param stack
+	 *            The stack that we should get color from
 	 */
 	public static EnumDyeColor getDyeColor(ItemStack stack)
 	{
 		int[] oreIDs = OreDictionary.getOreIDs(stack);
 		List<String> ores = new ArrayList<String>();
-		for(int id : oreIDs) ores.add(OreDictionary.getOreName(id));
+		for(int id : oreIDs)
+			ores.add(OreDictionary.getOreName(id));
 		int meta = 0;
 		for(String dye : defDyeNames)
 		{
-			if(ores.contains("dye" + dye)) return EnumDyeColor.byMetadata(15 - meta);
+			if(ores.contains("dye" + dye))
+				return EnumDyeColor.byMetadata(15 - meta);
 			meta++;
 		}
 		return null;
@@ -49,17 +56,21 @@ public class ColorUtil
 	
 	/**
 	 * Gets a Hex integer containing a color for passed stack
-	 * @param stack The stack that we should get color from
+	 * 
+	 * @param stack
+	 *            The stack that we should get color from
 	 */
 	public static int getDyeColorInt(ItemStack stack)
 	{
 		int[] oreIDs = OreDictionary.getOreIDs(stack);
 		List<String> ores = new ArrayList<String>();
-		for(int id : oreIDs) ores.add(OreDictionary.getOreName(id));
+		for(int id : oreIDs)
+			ores.add(OreDictionary.getOreName(id));
 		int meta = 0;
 		for(String dye : defDyeNames)
 		{
-			if(ores.contains("dye" + dye)) return ItemDye.DYE_COLORS[meta];
+			if(ores.contains("dye" + dye))
+				return ItemDye.DYE_COLORS[meta];
 			meta++;
 		}
 		return 0;
@@ -83,12 +94,14 @@ public class ColorUtil
 	 */
 	public static float[] reverse(float... rgb)
 	{
-		for(int i = 0; i < rgb.length; ++i) rgb[i] = 1F - rgb[i];
+		for(int i = 0; i < rgb.length; ++i)
+			rgb[i] = 1F - rgb[i];
 		return rgb;
 	}
 	
 	/**
-	 * Used to reverse color for multi-hand render, that means, if passed hand is main, leave all like it was before, otherwise, reverse
+	 * Used to reverse color for multi-hand render, that means, if passed hand
+	 * is main, leave all like it was before, otherwise, reverse
 	 */
 	public static float[] checkHandReverse(EnumHand hand, float... rgb)
 	{

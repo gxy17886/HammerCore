@@ -9,6 +9,7 @@ import com.mrdimka.hammercore.HammerCore;
 
 /**
  * In the MC-forge v1.11 this class will be removed
+ * 
  * @deprecated Use {@link HammerCore#audioProxy} instead.
  **/
 @Deprecated

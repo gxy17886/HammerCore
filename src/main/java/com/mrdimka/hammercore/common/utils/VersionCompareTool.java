@@ -19,8 +19,6 @@ public class VersionCompareTool
 	
 	public enum EnumVersionLevel
 	{
-		SAME,
-		NEWER,
-		OLDER;
+		SAME, NEWER, OLDER;
 	}
 }

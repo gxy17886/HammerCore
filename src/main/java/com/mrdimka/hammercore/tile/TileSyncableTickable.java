@@ -13,5 +13,7 @@ public abstract class TileSyncableTickable extends TileSyncable implements ITick
 		tick();
 	}
 	
-	public void tick() {}
+	public void tick()
+	{
+	}
 }

@@ -28,7 +28,7 @@ public class ExpressionEvaluator
 	private final List<ExpressionFunction> functions = new ArrayList<>();
 	
 	{
-		//ADD FUNCTIONS. rand(num) is very good, if you try :P
+		// ADD FUNCTIONS. rand(num) is very good, if you try :P
 		addFunction(FunctionSqrt.inst);
 		addFunction(FunctionAbs.inst);
 		addFunction(FunctionSin.inst);
@@ -48,8 +48,10 @@ public class ExpressionEvaluator
 	public ExpressionEvaluator(String str)
 	{
 		str = str.replaceAll(Chars.PI + "", "PI");
-		str = str.replaceAll("PI", Math.PI + ""); //Include Math.PI into this expression
-		str = str.replaceAll("E", Math.E + ""); //Include Math.E (Euler's number) into this expression
+		str = str.replaceAll("PI", Math.PI + ""); // Include Math.PI into this
+												  // expression
+		str = str.replaceAll("E", Math.E + ""); // Include Math.E (Euler's
+												// number) into this expression
 		this.str = str;
 	}
 	
@@ -60,7 +62,8 @@ public class ExpressionEvaluator
 	
 	private boolean eat(int charToEat)
 	{
-		while(ch == ' ') nextChar();
+		while(ch == ' ')
+			nextChar();
 		if(ch == charToEat)
 		{
 			nextChar();
@@ -70,7 +73,8 @@ public class ExpressionEvaluator
 	}
 	
 	/**
-	 * Parses expression. Uses + - * / ^ % and all functions defined by {@link #addFunction(ExpressionFunction)}
+	 * Parses expression. Uses + - * / ^ % and all functions defined by
+	 * {@link #addFunction(ExpressionFunction)}
 	 */
 	public final double parse()
 	{
@@ -78,7 +82,8 @@ public class ExpressionEvaluator
 		
 		nextChar();
 		double x = parseExpression();
-		if(pos < str.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+		if(pos < str.length())
+			throw new RuntimeException("Unexpected: " + (char) ch);
 		return x;
 	}
 	
@@ -92,9 +97,12 @@ public class ExpressionEvaluator
 		double x = parseTerm();
 		for(;;)
 		{
-			if(eat('+')) x += parseTerm(); // addition
-			else if(eat('-')) x -= parseTerm(); // subtraction
-			else return x;
+			if(eat('+'))
+				x += parseTerm(); // addition
+			else if(eat('-'))
+				x -= parseTerm(); // subtraction
+			else
+				return x;
 		}
 	}
 	
@@ -103,32 +111,41 @@ public class ExpressionEvaluator
 		double x = parseFactor();
 		for(;;)
 		{
-			if(eat('*')) x *= parseFactor(); // multiplication
-			else if(eat('/') || eat(':')) x /= parseFactor(); // division
-			else if(eat('%')) x %= parseFactor(); // mod
-			else if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
-			else return x;
+			if(eat('*'))
+				x *= parseFactor(); // multiplication
+			else if(eat('/') || eat(':'))
+				x /= parseFactor(); // division
+			else if(eat('%'))
+				x %= parseFactor(); // mod
+			else if(eat('^'))
+				x = Math.pow(x, parseFactor()); // exponentiation
+			else
+				return x;
 		}
 	}
 	
 	private double parseFactor()
 	{
-		if(eat('+')) return parseFactor(); // unary plus
-		if(eat('-')) return -parseFactor(); // unary minus
-		
+		if(eat('+'))
+			return parseFactor(); // unary plus
+		if(eat('-'))
+			return -parseFactor(); // unary minus
+			
 		double x;
 		int startPos = this.pos;
 		if(eat('(')) // parentheses
 		{
 			x = parseExpression();
 			eat(')');
-		}else if((ch >= '0' && ch <= '9') || ch == '.') // numbers
+		} else if((ch >= '0' && ch <= '9') || ch == '.') // numbers
 		{
-			while((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+			while((ch >= '0' && ch <= '9') || ch == '.')
+				nextChar();
 			x = Double.parseDouble(str.substring(startPos, this.pos));
-		}else if(ch >= 'a' && ch <= 'z') // functions
+		} else if(ch >= 'a' && ch <= 'z') // functions
 		{
-			while (ch >= 'a' && ch <= 'z') nextChar();
+			while(ch >= 'a' && ch <= 'z')
+				nextChar();
 			String func = str.substring(startPos, this.pos).toLowerCase();
 			x = parseFactor();
 			
@@ -141,8 +158,10 @@ public class ExpressionEvaluator
 					break;
 				}
 			
-			if(!funcFound) throw new RuntimeException("Unknown function: " + func);
-		}else throw new RuntimeException("Unexpected: " + (char) ch);
+			if(!funcFound)
+				throw new RuntimeException("Unknown function: " + func);
+		} else
+			throw new RuntimeException("Unexpected: " + (char) ch);
 		return x;
 	}
 	
@@ -151,27 +170,32 @@ public class ExpressionEvaluator
 	 */
 	public void addFunction(ExpressionFunction func)
 	{
-		if(functions.contains(func)) return; //Don't add duplicates - Bad!
+		if(functions.contains(func))
+			return; // Don't add duplicates - Bad!
 		functions.add(func);
 	}
 	
 	/**
-	 * Evaluates expression with optional functions passed. If result is equal to floor() function, an int will be returned
+	 * Evaluates expression with optional functions passed. If result is equal
+	 * to floor() function, an int will be returned
 	 */
 	public static String evaluate(String expression, ExpressionFunction... functions)
 	{
 		double result = evaluateDouble(expression, functions);
-		if(result == Math.floor(result)) return ((int) result) + "";
+		if(result == Math.floor(result))
+			return ((int) result) + "";
 		return result + "";
 	}
 	
 	/**
-	 * Evaluates expression with optional functions passed. Returns exact number, in double
+	 * Evaluates expression with optional functions passed. Returns exact
+	 * number, in double
 	 */
 	public static double evaluateDouble(String expression, ExpressionFunction... functions)
 	{
 		ExpressionEvaluator eval = new ExpressionEvaluator(expression);
-		for(ExpressionFunction func : functions) eval.addFunction(func);
+		for(ExpressionFunction func : functions)
+			eval.addFunction(func);
 		return eval.parse();
 	}
 }

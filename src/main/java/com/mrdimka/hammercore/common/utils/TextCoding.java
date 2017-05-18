@@ -6,7 +6,9 @@ import java.net.URLEncoder;
 
 public final class TextCoding
 {
-	private TextCoding() {}
+	private TextCoding()
+	{
+	}
 	
 	public static String urlEncode(String text)
 	{
@@ -15,7 +17,9 @@ public final class TextCoding
 		try
 		{
 			str = URLEncoder.encode(text, "UTF-8");
-		} catch(UnsupportedEncodingException e) { /* The system should always have the UTF-8 support */ }
+		} catch(UnsupportedEncodingException e)
+		{ /* The system should always have the UTF-8 support */
+		}
 		
 		return str;
 	}
@@ -27,7 +31,9 @@ public final class TextCoding
 		try
 		{
 			str = URLDecoder.decode(text, "UTF-8");
-		} catch(UnsupportedEncodingException e) { /* The system should always have the UTF-8 support */ }
+		} catch(UnsupportedEncodingException e)
+		{ /* The system should always have the UTF-8 support */
+		}
 		
 		return str;
 	}

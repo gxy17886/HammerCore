@@ -22,10 +22,14 @@ public interface IRecipeType<T>
 	
 	/**
 	 * Returns the recipe that should be added to JEIRecipeRegistry
+	 * 
 	 * @deprecated Use {@link #getJeiRecipeFor(Object, boolean)} instead.
 	 */
 	@Deprecated
-	default Object getJeiRecipeFor(T recipe) { return null; };
+	default Object getJeiRecipeFor(T recipe)
+	{
+		return null;
+	};
 	
 	/**
 	 * Returns the recipe that should be added to/removed from JEIRecipeRegistry
@@ -40,22 +44,33 @@ public interface IRecipeType<T>
 	T createRecipe(NBTTagCompound json) throws RecipeParseException;
 	
 	void addRecipe(T recipe);
+	
 	void removeRecipe(T recipe);
 	
 	/**
-	 * Checks to see if this recipe's add and remove methods could be swapped. Used to remove recipes.
+	 * Checks to see if this recipe's add and remove methods could be swapped.
+	 * Used to remove recipes.
 	 */
-	default boolean swapAddRemoveSupported(T recipe) { return false; };
+	default boolean swapAddRemoveSupported(T recipe)
+	{
+		return false;
+	};
 	
 	/**
-	 * Called instead of {@link IRecipeType#addRecipe(T)} if {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
+	 * Called instead of {@link IRecipeType#addRecipe(T)} if
+	 * {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
 	 */
-	default void removeOnLoad(T recipe) {};
+	default void removeOnLoad(T recipe)
+	{
+	};
 	
 	/**
-	 * Called instead of {@link IRecipeType#addRecipe(T)} if {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
+	 * Called instead of {@link IRecipeType#addRecipe(T)} if
+	 * {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
 	 */
-	default void addOnUnload(T recipe) {};
+	default void addOnUnload(T recipe)
+	{
+	};
 	
 	default ItemStack parseStack(String stack, String nbt)
 	{
@@ -67,35 +82,49 @@ public interface IRecipeType<T>
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("id", nbt.getString("id"));
 		
-		if(nbt.hasKey("count")) compound.setByte("Count", (byte) nbt.getInteger("count"));
-		else compound.setByte("Count", (byte) 1);
+		if(nbt.hasKey("count"))
+			compound.setByte("Count", (byte) nbt.getInteger("count"));
+		else
+			compound.setByte("Count", (byte) 1);
 		
 		if(nbt.hasKey("damage"))
 		{
-			if(nbt.getInteger("damage") < 0) compound.setShort("Damage", (short) OreDictionary.WILDCARD_VALUE);
-			else compound.setShort("Damage", (short) nbt.getInteger("damage"));
+			if(nbt.getInteger("damage") < 0)
+				compound.setShort("Damage", (short) OreDictionary.WILDCARD_VALUE);
+			else
+				compound.setShort("Damage", (short) nbt.getInteger("damage"));
 		}
 		
-		if(nbt.hasKey("tag")) compound.setTag("tag", nbt.getCompoundTag("tag"));
-		if(nbt.hasKey("ForgeCaps")) compound.setTag("ForgeCaps", nbt.getCompoundTag("ForgeCaps"));
+		if(nbt.hasKey("tag"))
+			compound.setTag("tag", nbt.getCompoundTag("tag"));
+		if(nbt.hasKey("ForgeCaps"))
+			compound.setTag("ForgeCaps", nbt.getCompoundTag("ForgeCaps"));
 		return new ItemStack(compound);
 	}
 	
 	default List<ItemStack> loadStacks(NBTBase base, String item)
 	{
 		List<ItemStack> stacks = new ArrayList<>();
-		if(base == null) return stacks;
-		if(base instanceof NBTTagCompound) stacks.add(loadStack((NBTTagCompound) base));
-		else if(base instanceof NBTTagString) stacks.addAll(OreDictionary.getOres(((NBTTagString) base).getString()));
-		else if(base instanceof NBTTagList && ((NBTTagList) base).getTagType() == NBT.TAG_COMPOUND) for(int i = 0; i < ((NBTTagList) base).tagCount(); ++i)
-		{
-			NBTTagCompound nbt = ((NBTTagList) base).getCompoundTagAt(i);
-			stacks.add(loadStack(nbt));
-		}else if(base instanceof NBTTagList && ((NBTTagList) base).getTagType() == NBT.TAG_STRING) for(int i = 0; i < ((NBTTagList) base).tagCount(); ++i)
-		{
-			String od = ((NBTTagList) base).getStringTagAt(i);
-			stacks.addAll(OreDictionary.getOres(od));
-		}else throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + base.getId() + ", Content: " + base);
+		if(base == null)
+			return stacks;
+		if(base instanceof NBTTagCompound)
+			stacks.add(loadStack((NBTTagCompound) base));
+		else if(base instanceof NBTTagString)
+			stacks.addAll(OreDictionary.getOres(((NBTTagString) base).getString()));
+		else if(base instanceof NBTTagList && ((NBTTagList) base).getTagType() == NBT.TAG_COMPOUND)
+			for(int i = 0; i < ((NBTTagList) base).tagCount(); ++i)
+			{
+				NBTTagCompound nbt = ((NBTTagList) base).getCompoundTagAt(i);
+				stacks.add(loadStack(nbt));
+			}
+		else if(base instanceof NBTTagList && ((NBTTagList) base).getTagType() == NBT.TAG_STRING)
+			for(int i = 0; i < ((NBTTagList) base).tagCount(); ++i)
+			{
+				String od = ((NBTTagList) base).getStringTagAt(i);
+				stacks.addAll(OreDictionary.getOres(od));
+			}
+		else
+			throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + base.getId() + ", Content: " + base);
 		return stacks;
 	}
 	

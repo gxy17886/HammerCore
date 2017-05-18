@@ -26,8 +26,10 @@ public class JSONArray
 	public JSONArray(JSONTokener readFrom) throws JSONException
 	{
 		Object object = readFrom.nextValue();
-		if(object instanceof JSONArray) values = ((JSONArray) object).values;
-		else throw JSON.typeMismatch(object, "JSONArray");
+		if(object instanceof JSONArray)
+			values = ((JSONArray) object).values;
+		else
+			throw JSON.typeMismatch(object, "JSONArray");
 	}
 	
 	public JSONArray(String json) throws JSONException
@@ -37,10 +39,12 @@ public class JSONArray
 	
 	public JSONArray(Object array) throws JSONException
 	{
-		if(!array.getClass().isArray()) throw new JSONException("Not a primitive array: " + array.getClass());
+		if(!array.getClass().isArray())
+			throw new JSONException("Not a primitive array: " + array.getClass());
 		final int length = Array.getLength(array);
 		values = new ArrayList<Object>(length);
-		for(int i = 0; i < length; ++i) put(JSONObject.wrap(Array.get(array, i)));
+		for(int i = 0; i < length; ++i)
+			put(JSONObject.wrap(Array.get(array, i)));
 	}
 	
 	public int length()
@@ -80,7 +84,8 @@ public class JSONArray
 	
 	void checkedPut(Object value) throws JSONException
 	{
-		if (value instanceof Number) JSON.checkDouble(((Number) value).doubleValue());
+		if(value instanceof Number)
+			JSON.checkDouble(((Number) value).doubleValue());
 		put(value);
 	}
 	
@@ -106,8 +111,10 @@ public class JSONArray
 	
 	public JSONArray put(int index, Object value) throws JSONException
 	{
-		if(value instanceof Number) JSON.checkDouble(((Number) value).doubleValue());
-		while(values.size() <= index) values.add(null);
+		if(value instanceof Number)
+			JSON.checkDouble(((Number) value).doubleValue());
+		while(values.size() <= index)
+			values.add(null);
 		values.set(index, value);
 		return this;
 	}
@@ -128,20 +135,26 @@ public class JSONArray
 		try
 		{
 			Object value = values.get(index);
-			if (value == null) throw new JSONException("Value at " + index + " is null.");
+			if(value == null)
+				throw new JSONException("Value at " + index + " is null.");
 			return value;
-		}catch(IndexOutOfBoundsException e) { throw new JSONException("Index " + index + " out of range [0.." + values.size() + ")"); }
+		} catch(IndexOutOfBoundsException e)
+		{
+			throw new JSONException("Index " + index + " out of range [0.." + values.size() + ")");
+		}
 	}
 	
 	public Object opt(int index)
 	{
-		if(index < 0 || index >= values.size()) return null;
+		if(index < 0 || index >= values.size())
+			return null;
 		return values.get(index);
 	}
 	
 	public Object remove(int index)
 	{
-		if(index < 0 || index >= values.size()) return null;
+		if(index < 0 || index >= values.size())
+			return null;
 		return values.remove(index);
 	}
 	
@@ -149,7 +162,8 @@ public class JSONArray
 	{
 		Object object = get(index);
 		Boolean result = JSON.toBoolean(object);
-		if(result == null) throw JSON.typeMismatch(index, object, "boolean");
+		if(result == null)
+			throw JSON.typeMismatch(index, object, "boolean");
 		return result;
 	}
 	
@@ -169,7 +183,8 @@ public class JSONArray
 	{
 		Object object = get(index);
 		Double result = JSON.toDouble(object);
-		if(result == null) throw JSON.typeMismatch(index, object, "double");
+		if(result == null)
+			throw JSON.typeMismatch(index, object, "double");
 		return result;
 	}
 	
@@ -189,7 +204,8 @@ public class JSONArray
 	{
 		Object object = get(index);
 		Integer result = JSON.toInteger(object);
-		if(result == null) throw JSON.typeMismatch(index, object, "int");
+		if(result == null)
+			throw JSON.typeMismatch(index, object, "int");
 		return result;
 	}
 	
@@ -209,7 +225,8 @@ public class JSONArray
 	{
 		Object object = get(index);
 		Long result = JSON.toLong(object);
-		if(result == null) throw JSON.typeMismatch(index, object, "long");
+		if(result == null)
+			throw JSON.typeMismatch(index, object, "long");
 		return result;
 	}
 	
@@ -229,7 +246,8 @@ public class JSONArray
 	{
 		Object object = get(index);
 		String result = JSON.toString(object);
-		if(result == null) throw JSON.typeMismatch(index, object, "String");
+		if(result == null)
+			throw JSON.typeMismatch(index, object, "String");
 		return result;
 	}
 	
@@ -248,8 +266,10 @@ public class JSONArray
 	public JSONArray getJSONArray(int index) throws JSONException
 	{
 		Object object = get(index);
-		if(object instanceof JSONArray) return (JSONArray) object;
-		else throw JSON.typeMismatch(index, object, "JSONArray");
+		if(object instanceof JSONArray)
+			return (JSONArray) object;
+		else
+			throw JSON.typeMismatch(index, object, "JSONArray");
 	}
 	
 	public JSONArray optJSONArray(int index)
@@ -261,8 +281,10 @@ public class JSONArray
 	public JSONObject getJSONObject(int index) throws JSONException
 	{
 		Object object = get(index);
-		if(object instanceof JSONObject) return (JSONObject) object;
-		else throw JSON.typeMismatch(index, object, "JSONObject");
+		if(object instanceof JSONObject)
+			return (JSONObject) object;
+		else
+			throw JSON.typeMismatch(index, object, "JSONObject");
 	}
 	
 	public JSONObject optJSONObject(int index)
@@ -275,7 +297,8 @@ public class JSONArray
 	{
 		JSONObject result = new JSONObject();
 		int length = Math.min(names.length(), values.size());
-		if(length == 0) return null;
+		if(length == 0)
+			return null;
 		for(int i = 0; i < length; i++)
 		{
 			String name = JSON.toString(names.opt(i));
@@ -290,7 +313,8 @@ public class JSONArray
 		stringer.open(JSONStringer.Scope.NULL, "");
 		for(int i = 0, size = values.size(); i < size; i++)
 		{
-			if(i > 0) stringer.out.append(separator);
+			if(i > 0)
+				stringer.out.append(separator);
 			stringer.value(values.get(i));
 		}
 		stringer.close(JSONStringer.Scope.NULL, JSONStringer.Scope.NULL, "");
@@ -305,7 +329,10 @@ public class JSONArray
 			JSONStringer stringer = new JSONStringer();
 			writeTo(stringer);
 			return stringer.toString();
-		}catch(JSONException e) { return null; }
+		} catch(JSONException e)
+		{
+			return null;
+		}
 	}
 	
 	public String toString(int indentSpaces) throws JSONException
@@ -318,7 +345,8 @@ public class JSONArray
 	void writeTo(JSONStringer stringer) throws JSONException
 	{
 		stringer.array();
-		for(Object value : values) stringer.value(value);
+		for(Object value : values)
+			stringer.value(value);
 		stringer.endArray();
 	}
 	

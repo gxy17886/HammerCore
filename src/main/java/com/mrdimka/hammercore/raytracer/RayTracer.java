@@ -39,7 +39,8 @@ public class RayTracer
 	public static RayTracer instance()
 	{
 		RayTracer inst = t_inst.get();
-		if(inst == null) t_inst.set(inst = new RayTracer());
+		if(inst == null)
+			t_inst.set(inst = new RayTracer());
 		return inst;
 	}
 	
@@ -51,24 +52,25 @@ public class RayTracer
 		{
 		case 0:
 			hit = vec.XZintercept(end, cuboid.min.y);
-			break;
+		break;
 		case 1:
 			hit = vec.XZintercept(end, cuboid.max.y);
-			break;
+		break;
 		case 2:
 			hit = vec.XYintercept(end, cuboid.min.z);
-			break;
+		break;
 		case 3:
 			hit = vec.XYintercept(end, cuboid.max.z);
-			break;
+		break;
 		case 4:
 			hit = vec.YZintercept(end, cuboid.min.x);
-			break;
+		break;
 		case 5:
 			hit = vec.YZintercept(end, cuboid.max.x);
-			break;
+		break;
 		}
-		if(hit == null) return;
+		if(hit == null)
+			return;
 		
 		switch(side)
 		{
@@ -76,17 +78,17 @@ public class RayTracer
 		case 1:
 			if(!MathHelper.between(cuboid.min.x, hit.x, cuboid.max.x) || !MathHelper.between(cuboid.min.z, hit.z, cuboid.max.z))
 				return;
-			break;
+		break;
 		case 2:
 		case 3:
 			if(!MathHelper.between(cuboid.min.x, hit.x, cuboid.max.x) || !MathHelper.between(cuboid.min.y, hit.y, cuboid.max.y))
 				return;
-			break;
+		break;
 		case 4:
 		case 5:
 			if(!MathHelper.between(cuboid.min.y, hit.y, cuboid.max.y) || !MathHelper.between(cuboid.min.z, hit.z, cuboid.max.z))
 				return;
-			break;
+		break;
 		}
 		
 		double dist = vec2.set(hit).subtract(start).magSquared();
@@ -102,7 +104,8 @@ public class RayTracer
 	{
 		s_dist = Double.MAX_VALUE;
 		s_side = -1;
-		for(int i = 0; i < 6; i++) traceSide(i, start, end, cuboid);
+		for(int i = 0; i < 6; i++)
+			traceSide(i, start, end, cuboid);
 		return s_side >= 0;
 	}
 	
@@ -158,46 +161,47 @@ public class RayTracer
 	
 	public static CuboidRayTraceResult rayTraceCuboidsClosest(Vector3 start, Vector3 end, BlockPos pos, List<IndexedCuboid6> cuboids)
 	{
-        List<CuboidRayTraceResult> results = new ArrayList<>();
-        for(IndexedCuboid6 cuboid6 : cuboids)
-        {
-        	CuboidRayTraceResult hit = rayTrace(pos, start, end, cuboid6);
-        	if(hit != null) hit.setData(cuboid6.data);
-            results.add(hit);
-        }
-        CuboidRayTraceResult closestHit = null;
-        double curClosest = Double.MAX_VALUE;
-        for(CuboidRayTraceResult hit : results)
-        {
-            if(hit != null)
-            {
-                if(curClosest > hit.dist)
-                {
-                    closestHit = hit;
-                    curClosest = hit.dist;
-                }
-            }
-        }
-        return closestHit;
-    }
+		List<CuboidRayTraceResult> results = new ArrayList<>();
+		for(IndexedCuboid6 cuboid6 : cuboids)
+		{
+			CuboidRayTraceResult hit = rayTrace(pos, start, end, cuboid6);
+			if(hit != null)
+				hit.setData(cuboid6.data);
+			results.add(hit);
+		}
+		CuboidRayTraceResult closestHit = null;
+		double curClosest = Double.MAX_VALUE;
+		for(CuboidRayTraceResult hit : results)
+		{
+			if(hit != null)
+			{
+				if(curClosest > hit.dist)
+				{
+					closestHit = hit;
+					curClosest = hit.dist;
+				}
+			}
+		}
+		return closestHit;
+	}
 	
 	public static CuboidRayTraceResult rayTrace(BlockPos pos, Vector3 start, Vector3 end, IndexedCuboid6 cuboid)
 	{
 		Vector3 posvec = new Vector3(pos);
-        Vector3 startRay = start.copy().subtract(posvec);
-        Vector3 endRay = end.copy().subtract(posvec);
-        RayTraceResult bbResult = cuboid.aabb().calculateIntercept(startRay.vec3(), endRay.vec3());
-        
-        if(bbResult != null)
-        {
-            Vector3 hitVec = new Vector3(bbResult.hitVec).add(posvec);
-            EnumFacing sideHit = bbResult.sideHit;
-            double dist = hitVec.copy().subtract(start).magSquared();
-            return new CuboidRayTraceResult(hitVec, pos, sideHit, cuboid, dist);
-        }
-        
-        return null;
-    }
+		Vector3 startRay = start.copy().subtract(posvec);
+		Vector3 endRay = end.copy().subtract(posvec);
+		RayTraceResult bbResult = cuboid.aabb().calculateIntercept(startRay.vec3(), endRay.vec3());
+		
+		if(bbResult != null)
+		{
+			Vector3 hitVec = new Vector3(bbResult.hitVec).add(posvec);
+			EnumFacing sideHit = bbResult.sideHit;
+			double dist = hitVec.copy().subtract(start).magSquared();
+			return new CuboidRayTraceResult(hitVec, pos, sideHit, cuboid, dist);
+		}
+		
+		return null;
+	}
 	
 	public static RayTraceResult retraceBlock(World world, EntityPlayer player, BlockPos pos)
 	{
@@ -244,7 +248,8 @@ public class RayTracer
 	{
 		Entity entity = retraceEntity(player, reach);
 		RayTraceResult block = retrace(player, reach);
-		if(entity != null && (block == null || (entity.getDistanceToEntity(player) <= player.getDistanceSq(block.getBlockPos())))) return new RayTraceResult(entity);
+		if(entity != null && (block == null || (entity.getDistanceToEntity(player) <= player.getDistanceSq(block.getBlockPos()))))
+			return new RayTraceResult(entity);
 		return block;
 	}
 	
@@ -261,7 +266,8 @@ public class RayTracer
 		if(entities)
 		{
 			Entity entityResult = retraceEntity(player, reach);
-			if(entityResult != null) return new RayTraceResult(entityResult);
+			if(entityResult != null)
+				return new RayTraceResult(entityResult);
 		}
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
@@ -287,12 +293,12 @@ public class RayTracer
 		
 		float f = 1.0F;
 		List<Entity> list = player.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(vec3d1.xCoord * reach, vec3d1.yCoord * reach, vec3d1.zCoord * reach).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
-				{
-					public boolean apply(Entity entity)
-					{
-						return entity != null && entity.canBeCollidedWith();
-					}
-				}));
+		{
+			public boolean apply(Entity entity)
+			{
+				return entity != null && entity.canBeCollidedWith();
+			}
+		}));
 		
 		double d2 = reach;
 		
@@ -312,7 +318,7 @@ public class RayTracer
 					vec3d3 = raytraceresult == null ? vec3d : raytraceresult.hitVec;
 					d2 = 0.0D;
 				}
-			}else if(raytraceresult != null)
+			} else if(raytraceresult != null)
 			{
 				double d3 = vec3d.distanceTo(raytraceresult.hitVec);
 				
@@ -325,7 +331,7 @@ public class RayTracer
 							pointedEntity = entity1;
 							vec3d3 = raytraceresult.hitVec;
 						}
-					}else
+					} else
 					{
 						pointedEntity = entity1;
 						vec3d3 = raytraceresult.hitVec;

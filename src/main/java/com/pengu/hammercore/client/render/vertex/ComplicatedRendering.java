@@ -222,8 +222,9 @@ class ComplicatedRendering
 						
 						if(ln.length() > 0 && !lnsDup.contains(ln))
 							lns.add(ln);
-//						else
-//							System.out.println(lnsDup + " " + ln + " " + lnsDup.contains(ln));
+						// else
+						// System.out.println(lnsDup + " " + ln + " " +
+						// lnsDup.contains(ln));
 					}
 				}
 		lns_.clear();
@@ -254,7 +255,8 @@ class ComplicatedRendering
 		if(!points.contains(p2) || !points.contains(p1))
 			return false;
 		Axis ax = p1.onSameAxisWith(p2);
-		if(ax == null) return false;
+		if(ax == null)
+			return false;
 		EnumEdge e = isEdgePoint(points, p1, ax);
 		if(e != null && e.opposite() == isEdgePoint(points, p2, ax) && hasNothingBetween(p1, p2, points))
 			return true;
@@ -269,11 +271,13 @@ class ComplicatedRendering
 			if(a == null)
 				return false;
 			
-//			if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) == p1.vec.distanceTo(p2.vec))
-//				return true;
+			// if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) ==
+			// p1.vec.distanceTo(p2.vec))
+			// return true;
 			
-//			if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) == p1.vec.distanceTo(p2.vec))
-//				return true;
+			// if(p1.vec.distanceTo(p.vec) + p2.vec.distanceTo(p.vec) ==
+			// p1.vec.distanceTo(p2.vec))
+			// return true;
 		}
 		
 		return false;

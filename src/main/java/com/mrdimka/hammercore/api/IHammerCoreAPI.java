@@ -1,7 +1,8 @@
 package com.mrdimka.hammercore.api;
 
 /**
- * Represents API to be used. You need to use @{@link HammerCoreAPI} to class this interface is applied
+ * Represents API to be used. You need to use @{@link HammerCoreAPI} to class
+ * this interface is applied
  */
 public interface IHammerCoreAPI
 {

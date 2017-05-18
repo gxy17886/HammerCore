@@ -20,15 +20,15 @@ public class NetPropertyNumber<T extends Number> extends NetPropertyAbstract<T>
 	}
 	
 	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+	{
 		NBTUtils.writeNumberToNBT("val", nbt, value);
-	    return nbt;
-    }
+		return nbt;
+	}
 	
 	@Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+	public void readFromNBT(NBTTagCompound nbt)
+	{
 		value = (T) NBTUtils.readNumberFromNBT("val", nbt);
-    }
+	}
 }

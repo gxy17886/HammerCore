@@ -54,8 +54,7 @@ public class CSVFile
 		try
 		{
 			read(new FileInputStream(file));
-		}
-		catch(FileNotFoundException e)
+		} catch(FileNotFoundException e)
 		{
 			Throwables.propagate(e);
 		}

@@ -27,7 +27,9 @@ public class SimpleRegistration
 				{
 					f.setAccessible(true);
 					registerItem((Item) f.get(null), modid, tab);
-				}catch(Throwable err) {}
+				} catch(Throwable err)
+				{
+				}
 	}
 	
 	public static void registerFieldBlocksFrom(Class<?> owner, String modid, CreativeTabs tab)
@@ -39,44 +41,55 @@ public class SimpleRegistration
 				{
 					f.setAccessible(true);
 					registerBlock((Block) f.get(null), modid, tab);
-				}catch(Throwable err) {}
+				} catch(Throwable err)
+				{
+				}
 	}
 	
 	public static void registerItem(Item item, String modid, CreativeTabs tab)
 	{
-		if(item == null) return;
+		if(item == null)
+			return;
 		String name = item.getUnlocalizedName().substring("item.".length());
 		item.setRegistryName(modid, name);
 		item.setUnlocalizedName(modid + ":" + name);
-		if(tab != null) item.setCreativeTab(tab);
+		if(tab != null)
+			item.setCreativeTab(tab);
 		GameRegistry.register(item);
-		if(item instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) item);
-		else ModItems.items.add(item);
+		if(item instanceof MultiVariantItem)
+			ModItems.multiitems.add((MultiVariantItem) item);
+		else
+			ModItems.items.add(item);
 	}
 	
 	public static void registerBlock(Block block, String modid, CreativeTabs tab)
 	{
-		if(block == null) return;
+		if(block == null)
+			return;
 		String name = block.getUnlocalizedName().substring("tile.".length());
 		block.setUnlocalizedName(modid + ":" + name);
 		block.setCreativeTab(tab);
 		
-		//ItemBlockDefinition
+		// ItemBlockDefinition
 		Item ib = null;
 		
-		if(block instanceof BlockMultipartProvider) ib = ((BlockMultipartProvider) block).createItem();
-		else ib = new ItemBlock(block);
+		if(block instanceof BlockMultipartProvider)
+			ib = ((BlockMultipartProvider) block).createItem();
+		else
+			ib = new ItemBlock(block);
 		
 		GameRegistry.register(block, new ResourceLocation(modid, name));
-		if(!(block instanceof INoItemBlock)) GameRegistry.register(ib.setRegistryName(block.getRegistryName()));
+		if(!(block instanceof INoItemBlock))
+			GameRegistry.register(ib.setRegistryName(block.getRegistryName()));
 		
 		if(block instanceof ITileBlock)
 		{
 			Class c = ((ITileBlock) block).getTileClass();
 			
-			//Better registration of tiles. Maybe this will fix tile disappearing?
+			// Better registration of tiles. Maybe this will fix tile
+			// disappearing?
 			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1).toLowerCase());
-		}else if(block instanceof ITileEntityProvider)
+		} else if(block instanceof ITileEntityProvider)
 		{
 			ITileEntityProvider te = (ITileEntityProvider) block;
 			TileEntity t = te.createNewTileEntity(null, 0);
@@ -90,8 +103,10 @@ public class SimpleRegistration
 		if(!(block instanceof INoItemBlock))
 		{
 			Item i = Item.getItemFromBlock(block);
-			if(i instanceof MultiVariantItem) ModItems.multiitems.add((MultiVariantItem) i);
-			else if(i != null) ModItems.items.add(i);
+			if(i instanceof MultiVariantItem)
+				ModItems.multiitems.add((MultiVariantItem) i);
+			else if(i != null)
+				ModItems.items.add(i);
 		}
 	}
 }

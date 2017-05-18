@@ -25,7 +25,7 @@ public class BookPageCustom extends BookPage
 		pos.add(new Vec2f((float) x, (float) y));
 		return this;
 	}
-
+	
 	@Override
 	public void render(int mouseX, int mouseY)
 	{

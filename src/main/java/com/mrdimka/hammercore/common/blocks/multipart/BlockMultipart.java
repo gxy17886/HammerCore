@@ -70,7 +70,8 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		if(tmp != null && cbd != null)
 		{
 			MultipartSignature signature = tmp.getSignature(cbd.center().toVec3d());
-			if(signature != null) return signature.getPickBlock(player);
+			if(signature != null)
+				return signature.getPickBlock(player);
 		}
 		
 		return super.getPickBlock(state, target, world, pos, player);
@@ -106,7 +107,8 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 			if(tmp != null && cbd != null)
 			{
 				MultipartSignature s = tmp.getSignature(cbd.center().toVec3d());
-				if(s.getState() != null) return s.getSoundType(player);
+				if(s.getState() != null)
+					return s.getSoundType(player);
 			}
 		}
 		return super.getSoundType(state, world, pos, entity);
@@ -186,7 +188,8 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 			if(stack.getItem() instanceof ItemBlockMultipartProvider)
 			{
 				EnumActionResult r = stack.getItem().onItemUse(playerIn, worldIn, pos, hand, facing, hitX + 1, hitY, hitZ);
-				if(r == EnumActionResult.SUCCESS) playerIn.swingArm(hand);
+				if(r == EnumActionResult.SUCCESS)
+					playerIn.swingArm(hand);
 			}
 		}
 		return activated;
@@ -228,7 +231,8 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		if(tmp != null && cbd != null)
 		{
 			MultipartSignature signature = tmp.getSignature(cbd.aabb().getCenter());
-			if(signature != null) signature.addHitEffects(world, target, manager);
+			if(signature != null)
+				signature.addHitEffects(world, target, manager);
 		}
 		return true;
 	}
@@ -237,7 +241,9 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
-		if(tmp != null) for(MultipartSignature s : tmp.signatures()) s.addDestroyEffects(world, pos, manager);
+		if(tmp != null)
+			for(MultipartSignature s : tmp.signatures())
+				s.addDestroyEffects(world, pos, manager);
 		return true;
 	}
 	
@@ -254,7 +260,9 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
-		for(MultipartSignature s : tmp.signatures()) if(s != null && s.canConnectRedstone(side)) return true;
+		for(MultipartSignature s : tmp.signatures())
+			if(s != null && s.canConnectRedstone(side))
+				return true;
 		return false;
 	}
 	
@@ -274,14 +282,17 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
 	{
 		TileMultipart tmp = WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class);
-		if(tmp != null) for(MultipartSignature s : tmp.signatures()) tmp.removeMultipart(s, true); //Drop everything!
+		if(tmp != null)
+			for(MultipartSignature s : tmp.signatures())
+				tmp.removeMultipart(s, true); // Drop everything!
 	}
 	
 	@Override
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
 		TileMultipart tmp = WorldUtil.cast(worldIn.getTileEntity(pos), TileMultipart.class);
-		if(tmp != null) tmp.randomDisplayTick(rand);
+		if(tmp != null)
+			tmp.randomDisplayTick(rand);
 	}
 	
 	@Override
@@ -294,7 +305,9 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor)
 	{
 		TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
-		if(tmp != null) for(MultipartSignature sign : tmp.signatures()) sign.onNeighborChange(world, pos, neighbor);
+		if(tmp != null)
+			for(MultipartSignature sign : tmp.signatures())
+				sign.onNeighborChange(world, pos, neighbor);
 	}
 	
 	@Override
@@ -328,9 +341,9 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 	}
 	
 	public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param)
-    {
-        super.eventReceived(state, worldIn, pos, id, param);
-        TileEntity tileentity = worldIn.getTileEntity(pos);
-        return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
-    }
+	{
+		super.eventReceived(state, worldIn, pos, id, param);
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		return tileentity == null ? false : tileentity.receiveClientEvent(id, param);
+	}
 }

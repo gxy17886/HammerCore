@@ -17,9 +17,11 @@ public class TileHandler
 	public void breakBlock(BlockEvent.BreakEvent evt)
 	{
 		IBlockState state = evt.getState();
-		if(state.getBlock() instanceof ITileDroppable) ((ITileDroppable) state.getBlock()).createDrop(evt.getPlayer(), evt.getWorld(), evt.getPos());
+		if(state.getBlock() instanceof ITileDroppable)
+			((ITileDroppable) state.getBlock()).createDrop(evt.getPlayer(), evt.getWorld(), evt.getPos());
 		TileEntity te = evt.getWorld().getTileEntity(evt.getPos());
-		if(te instanceof ITileDroppable) ((ITileDroppable) te).createDrop(evt.getPlayer(), evt.getWorld(), evt.getPos());
+		if(te instanceof ITileDroppable)
+			((ITileDroppable) te).createDrop(evt.getPlayer(), evt.getWorld(), evt.getPos());
 	}
 	
 	private long lastCheck;

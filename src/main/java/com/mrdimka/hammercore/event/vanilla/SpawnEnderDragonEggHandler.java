@@ -27,12 +27,15 @@ public class SpawnEnderDragonEggHandler
 		
 		dde: if(dragon != null && !dragon.world.isRemote)
 		{
-			if(!HammerCoreConfigs.vanilla_alwaysSpawnDragonEggs) break dde;
+			if(!HammerCoreConfigs.vanilla_alwaysSpawnDragonEggs)
+				break dde;
 			DragonFightManager mgr = dragon.getFightManager();
 			
 			boolean shouldSpawnEgg = false;
-			if(mgr != null) shouldSpawnEgg = mgr.hasPreviouslyKilledDragon();
-			else shouldSpawnEgg = true;
+			if(mgr != null)
+				shouldSpawnEgg = mgr.hasPreviouslyKilledDragon();
+			else
+				shouldSpawnEgg = true;
 			
 			HammerCore.LOG.debug("We should" + (shouldSpawnEgg ? "" : "n't") + " spawn an egg.");
 			
@@ -49,7 +52,8 @@ public class SpawnEnderDragonEggHandler
 					{
 						WorldServer TheEnd = server.worldServerForDimension(1);
 						TheEnd.getChunkFromBlockCoords(WorldGenEndPodium.END_PODIUM_LOCATION);
-						if(HolidayTrigger.isHalloween()) TheEnd.setBlockState(TheEnd.getHeight(WorldGenEndPodium.END_PODIUM_LOCATION), Blocks.LIT_PUMPKIN.getDefaultState());
+						if(HolidayTrigger.isHalloween())
+							TheEnd.setBlockState(TheEnd.getHeight(WorldGenEndPodium.END_PODIUM_LOCATION), Blocks.LIT_PUMPKIN.getDefaultState());
 						TheEnd.setBlockState(TheEnd.getHeight(WorldGenEndPodium.END_PODIUM_LOCATION), HolidayTrigger.isAprilFools() && TheEnd.rand.nextBoolean() ? Blocks.DIRT.getDefaultState() : Blocks.DRAGON_EGG.getDefaultState());
 						ticks = 10000;
 					}
@@ -62,7 +66,8 @@ public class SpawnEnderDragonEggHandler
 				}
 			};
 			
-			if(shouldSpawnEgg) HammerCore.updatables.add(SetEgg);
+			if(shouldSpawnEgg)
+				HammerCore.updatables.add(SetEgg);
 		}
 	}
 }

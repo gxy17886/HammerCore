@@ -66,8 +66,10 @@ public class GuiModBrowser extends GuiScreen
 			
 			for(Version ver : mod.supportedVersions.keySet())
 			{
-				if(mouseX >= 68 + verX && mouseY >= y + 14 + verY && mouseX < 68 + verX + 18 && mouseY < y + 14 + verY + 18) GL11.glColor3f(1, 1, 1);
-				else GL11.glColor3f(.6F, .6F, .6F);
+				if(mouseX >= 68 + verX && mouseY >= y + 14 + verY && mouseX < 68 + verX + 18 && mouseY < y + 14 + verY + 18)
+					GL11.glColor3f(1, 1, 1);
+				else
+					GL11.glColor3f(.6F, .6F, .6F);
 				
 				ver.icon.render(68 + verX, y + 14 + verY, 18, 18);
 				
@@ -79,7 +81,11 @@ public class GuiModBrowser extends GuiScreen
 					else
 						ModBrowserUVs.INSTALLED.render(0, y, 64, 64);
 				verY += 24;
-				if(verY == 48) { verY = 0; verX += 24; }
+				if(verY == 48)
+				{
+					verY = 0;
+					verX += 24;
+				}
 			}
 		}
 		
@@ -108,7 +114,11 @@ public class GuiModBrowser extends GuiScreen
 				}
 				
 				verY += 24;
-				if(verY == 48) { verY = 0; verX += 24; }
+				if(verY == 48)
+				{
+					verY = 0;
+					verX += 24;
+				}
 			}
 		}
 		
@@ -122,7 +132,8 @@ public class GuiModBrowser extends GuiScreen
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
-		if(keyCode == 1) mc.displayGuiScreen(hasInstalled ? new GuiModBrowserRebootGame() : null);
+		if(keyCode == 1)
+			mc.displayGuiScreen(hasInstalled ? new GuiModBrowserRebootGame() : null);
 	}
 	
 	@Override
@@ -150,7 +161,8 @@ public class GuiModBrowser extends GuiScreen
 					
 					mc.displayGuiScreen(new GuiDownloading(this, mouseX, mouseY, dest = new File("mods", TextCoding.urlDecode(filename)), browser.loadedMods.get(mod.modid) != null ? browser.loadedMods.get(mod.modid).associated_file : null, u, mod.fileSizes.get(mod.supportedVersions.get(ver))));
 					
-					if(ModsDownloaded.files.get(mod.modid) != null) ModsDownloaded.files.get(mod.modid).delete();
+					if(ModsDownloaded.files.get(mod.modid) != null)
+						ModsDownloaded.files.get(mod.modid).delete();
 					ModsDownloaded.files.put(mod.modid, dest);
 					
 					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
@@ -158,7 +170,11 @@ public class GuiModBrowser extends GuiScreen
 				}
 				
 				verY += 24;
-				if(verY == 48) { verY = 0; verX += 24; }
+				if(verY == 48)
+				{
+					verY = 0;
+					verX += 24;
+				}
 			}
 		}
 	}

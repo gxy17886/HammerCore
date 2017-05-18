@@ -34,7 +34,8 @@ public class CommandPosToLong extends CommandBase
 			int z = parseInt(args[2], -30_000_0000, 30_000_0000);
 			
 			sender.sendMessage(new TextComponentString("Position: " + new BlockPos(x, y, z).toLong()));
-		}else sender.sendMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 3."));
+		} else
+			sender.sendMessage(new TextComponentString("Invalid length of " + args.length + ". Expected 3."));
 	}
 	
 	@Override

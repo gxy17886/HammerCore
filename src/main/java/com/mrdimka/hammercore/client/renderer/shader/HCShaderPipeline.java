@@ -45,9 +45,11 @@ public class HCShaderPipeline
 		
 		public void add()
 		{
-			if(op == null) return;
+			if(op == null)
+				return;
 			
-			for(PipelineNode dep : deps) dep.add();
+			for(PipelineNode dep : deps)
+				dep.add();
 			
 			deps.clear();
 			sorted.add(op);
@@ -95,18 +97,22 @@ public class HCShaderPipeline
 	
 	public void rebuild()
 	{
-		if(ops.isEmpty()) return;
-		while(nodes.size() < operationCount()) nodes.add(new PipelineNode());
+		if(ops.isEmpty())
+			return;
+		while(nodes.size() < operationCount())
+			nodes.add(new PipelineNode());
 		unbuild();
 		
 		for(IShaderOperation op : ops)
 		{
 			loading = nodes.get(op.operationID());
 			boolean loaded = op.load(program);
-			if(loaded) loading.op = op;
+			if(loaded)
+				loading.op = op;
 		}
 		
-		for(PipelineNode node : nodes) node.add();
+		for(PipelineNode node : nodes)
+			node.add();
 	}
 	
 	public void addRequirement(int opRef)
@@ -116,7 +122,8 @@ public class HCShaderPipeline
 	
 	public void operate()
 	{
-		for(IShaderOperation op : sorted) op.operate(program);
+		for(IShaderOperation op : sorted)
+			op.operate(program);
 	}
 	
 	public PipelineBuilder builder()

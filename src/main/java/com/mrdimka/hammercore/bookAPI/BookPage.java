@@ -11,5 +11,8 @@ public abstract class BookPage
 	}
 	
 	public abstract void render(int mouseX, int mouseY);
-	public void prepare() {};
+	
+	public void prepare()
+	{
+	};
 }

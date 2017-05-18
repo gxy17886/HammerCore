@@ -11,7 +11,9 @@ import java.lang.annotation.Target;
 public @interface ModConfigPropertyBool
 {
 	String category();
+	
 	String name();
+	
 	String comment();
 	
 	boolean defaultValue();

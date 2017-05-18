@@ -19,14 +19,15 @@ public class TileEntityItemStackRendererHC extends TileEntityItemStackRenderer
 	@Override
 	public void renderByItem(ItemStack itemStackIn)
 	{
-		if(itemStackIn == null || itemStackIn.isEmpty()) return;
+		if(itemStackIn == null || itemStackIn.isEmpty())
+			return;
 		Item item = itemStackIn.getItem();
 		
 		if(ItemRenderingHandler.INSTANCE.canRender(item))
 		{
 			IItemRender render = ItemRenderingHandler.INSTANCE.getRender(item);
 			render.renderItem(itemStackIn);
-		}
-		else parent.renderByItem(itemStackIn);
+		} else
+			parent.renderByItem(itemStackIn);
 	}
 }

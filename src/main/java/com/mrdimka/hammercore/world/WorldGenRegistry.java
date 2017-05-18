@@ -11,7 +11,8 @@ public class WorldGenRegistry
 	
 	public static void registerFeature(IWorldGenFeature feature)
 	{
-		if(feature != null) features.add(feature);
+		if(feature != null)
+			features.add(feature);
 	}
 	
 	public static Set<IWorldGenFeature> listFeatures()

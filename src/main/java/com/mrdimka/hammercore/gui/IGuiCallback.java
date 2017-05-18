@@ -19,6 +19,7 @@ public interface IGuiCallback
 	}
 	
 	Object getServerGuiElement(EntityPlayer player, World world, BlockPos pos);
+	
 	Object getClientGuiElement(EntityPlayer player, World world, BlockPos pos);
 	
 	static class Vars

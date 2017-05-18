@@ -45,9 +45,11 @@ public class TooltipAPI
 		{
 			String b = evt.getItemStack().getUnlocalizedName() + ".tooltip" + i;
 			String l = I18n.translateToLocal(b);
-			if(b.equals(l)) break;
+			if(b.equals(l))
+				break;
 			
-			for(String var : currentVars.keySet()) l = l.replaceAll("&" + var, currentVars.get(var));
+			for(String var : currentVars.keySet())
+				l = l.replaceAll("&" + var, currentVars.get(var));
 			
 			try
 			{
@@ -67,8 +69,7 @@ public class TooltipAPI
 						if(results.containsKey(expr))
 						{
 							sput += results.get(expr);
-						}
-						else
+						} else
 						{
 							try
 							{
@@ -87,8 +88,9 @@ public class TooltipAPI
 					}
 					l = sput;
 				}
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 			
 			tooltip.add(l);
 			++i;
@@ -105,10 +107,12 @@ public class TooltipAPI
 	public void playerConnected(PlayerLoggedInEvent evt)
 	{
 		EntityPlayer client = HammerCore.renderProxy.getClientPlayer();
-		if(client != null && client.getGameProfile().getId().equals(evt.player.getGameProfile().getId())) return;
+		if(client != null && client.getGameProfile().getId().equals(evt.player.getGameProfile().getId()))
+			return;
 		
 		if(!evt.player.world.isRemote && evt.player instanceof EntityPlayerMP && GRCProvider.getScriptCount() > 0)
 			HCNetwork.manager.sendTo(new PacketSendGlobalRecipeScriptsWithRemoval(0, GRCProvider.getScript(0)), (EntityPlayerMP) evt.player);
-		if(evt.player instanceof EntityPlayerMP) HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), (EntityPlayerMP) evt.player);
+		if(evt.player instanceof EntityPlayerMP)
+			HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), (EntityPlayerMP) evt.player);
 	}
 }

@@ -19,7 +19,10 @@ final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
 	final Map<Block, Cuboid6[]> cubes = new HashMap<Block, Cuboid6[]>();
 	final Map<Block, ICubeManager> mgrs = new HashMap<Block, ICubeManager>();
 	
-	private RayCubeRegistry() { Instance.getter = this; }
+	private RayCubeRegistry()
+	{
+		Instance.getter = this;
+	}
 	
 	@Override
 	public void bindBlockCube6(BlockTraceable target, Cuboid6... boxes)
@@ -38,13 +41,13 @@ final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
 	{
 		mgrs.put(target, manager);
 	}
-
+	
 	@Override
 	public ICubeManager getBoundCubeManager(BlockTraceable target)
 	{
 		return mgrs.get(target);
 	}
-
+	
 	@Override
 	public EntityPlayer func_0x834823_a()
 	{

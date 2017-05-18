@@ -40,13 +40,18 @@ public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 		SmeltingRecipeHC recipe = new SmeltingRecipeHC();
 		
 		String item = "input";
-		if(json.hasKey(item, NBT.TAG_STRING)) recipe.input.addAll(OreDictionary.getOres(json.getString(item)));
-		else if(json.hasKey(item, NBT.TAG_COMPOUND)) recipe.input.add(loadStack(json.getCompoundTag(item)));
-		else throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + json.getTagId(item) + ", Content: " + json.getTag(item));
+		if(json.hasKey(item, NBT.TAG_STRING))
+			recipe.input.addAll(OreDictionary.getOres(json.getString(item)));
+		else if(json.hasKey(item, NBT.TAG_COMPOUND))
+			recipe.input.add(loadStack(json.getCompoundTag(item)));
+		else
+			throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + json.getTagId(item) + ", Content: " + json.getTag(item));
 		
 		item = "output";
-		if(json.hasKey(item, NBT.TAG_COMPOUND)) recipe.output = loadStack(json.getCompoundTag(item));
-		else throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + json.getTagId(item) + ", Content: " + json.getTag(item));
+		if(json.hasKey(item, NBT.TAG_COMPOUND))
+			recipe.output = loadStack(json.getCompoundTag(item));
+		else
+			throw new RecipeParseException("Undefined type for ingredient '" + item + "': TagID: " + json.getTagId(item) + ", Content: " + json.getTag(item));
 		
 		return recipe;
 	}
@@ -61,7 +66,8 @@ public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 	@Override
 	public void removeRecipe(SmeltingRecipeHC recipe)
 	{
-		for(ItemStack in : recipe.input) FurnaceRecipes.instance().getSmeltingList().remove(in);
+		for(ItemStack in : recipe.input)
+			FurnaceRecipes.instance().getSmeltingList().remove(in);
 	}
 	
 	@Override
@@ -74,6 +80,7 @@ public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 	@Override
 	public void removeOnLoad(SmeltingRecipeHC recipe)
 	{
-		for(ItemStack in : recipe.input) FurnaceRecipes.instance().getSmeltingList().remove(in);
+		for(ItemStack in : recipe.input)
+			FurnaceRecipes.instance().getSmeltingList().remove(in);
 	}
 }

@@ -33,7 +33,7 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	public void register(IModRegistry reg)
 	{
 		
-		//Add click areas to our smotth guis
+		// Add click areas to our smotth guis
 		reg.addRecipeClickArea(GuiBrewingStandSmooth.class, 97, 16, 14, 30, "minecraft.brewing");
 		reg.addRecipeClickArea(GuiFurnaceSmooth.class, 78, 32, 28, 23, "minecraft.smelting");
 	}
@@ -47,18 +47,22 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	public void registerItemSubtypes(ISubtypeRegistry arg0)
 	{
 	}
-
+	
 	@Override
 	public void addJEI(Object recipe)
 	{
-		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
-		else registry.addRecipe(recipe);
+		if(recipe instanceof Consumer)
+			((Consumer) recipe).accept(registry);
+		else
+			registry.addRecipe(recipe);
 	}
 	
 	@Override
 	public void removeJEI(Object recipe)
 	{
-		if(recipe instanceof Consumer) ((Consumer) recipe).accept(registry);
-		else registry.removeRecipe(recipe);
+		if(recipe instanceof Consumer)
+			((Consumer) recipe).accept(registry);
+		else
+			registry.removeRecipe(recipe);
 	}
 }

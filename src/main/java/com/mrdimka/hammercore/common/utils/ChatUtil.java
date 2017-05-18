@@ -38,7 +38,8 @@ public class ChatUtil
 	public static ITextComponent[] wrap(String... s)
 	{
 		ITextComponent[] ret = new ITextComponent[s.length];
-		for(int i = 0; i < ret.length; i++) ret[i] = wrap(s[i]);
+		for(int i = 0; i < ret.length; i++)
+			ret[i] = wrap(s[i]);
 		return ret;
 	}
 	
@@ -89,7 +90,8 @@ public class ChatUtil
 	 */
 	public static void sendChat(EntityPlayer player, ITextComponent... lines)
 	{
-		for(ITextComponent c : lines) player.sendMessage(c);
+		for(ITextComponent c : lines)
+			player.sendMessage(c);
 	}
 	
 	/**
@@ -101,7 +103,7 @@ public class ChatUtil
 	{
 		sendNoSpamClient(localizeAll(unlocLines));
 	}
-
+	
 	/**
 	 * Same as {@link #sendNoSpamClient(ITextComponent...)}, but wraps the
 	 * Strings automatically.
@@ -115,7 +117,7 @@ public class ChatUtil
 	{
 		sendNoSpamClient(wrap(lines));
 	}
-
+	
 	/**
 	 * Skips the packet sending, unsafe to call on servers.
 	 * 
@@ -125,7 +127,7 @@ public class ChatUtil
 	{
 		HammerCore.renderProxy.sendNoSpamMessages(lines);
 	}
-
+	
 	/**
 	 * Localizes the strings before sending them.
 	 * 
@@ -135,7 +137,7 @@ public class ChatUtil
 	{
 		sendNoSpam(player, localizeAll(unlocLines));
 	}
-
+	
 	/**
 	 * @see #wrap(String)
 	 * @see #sendNoSpam(EntityPlayer, ITextComponent...)
@@ -144,7 +146,7 @@ public class ChatUtil
 	{
 		sendNoSpam(player, wrap(lines));
 	}
-
+	
 	/**
 	 * First checks if the player is instanceof {@link EntityPlayerMP} before
 	 * casting.
@@ -153,9 +155,10 @@ public class ChatUtil
 	 */
 	public static void sendNoSpam(EntityPlayer player, ITextComponent... lines)
 	{
-		if(player instanceof EntityPlayerMP) sendNoSpam((EntityPlayerMP) player, lines);
+		if(player instanceof EntityPlayerMP)
+			sendNoSpam((EntityPlayerMP) player, lines);
 	}
-
+	
 	/**
 	 * Localizes the strings before sending them.
 	 * 
@@ -165,7 +168,7 @@ public class ChatUtil
 	{
 		sendNoSpam(player, localizeAll(unlocLines));
 	}
-
+	
 	/**
 	 * @see #wrap(String)
 	 * @see #sendNoSpam(EntityPlayerMP, ITextComponent...)
@@ -174,7 +177,7 @@ public class ChatUtil
 	{
 		sendNoSpam(player, wrap(lines));
 	}
-
+	
 	/**
 	 * Sends a chat message to the client, deleting past messages also sent via
 	 * this method.
@@ -188,12 +191,14 @@ public class ChatUtil
 	 */
 	public static void sendNoSpam(EntityPlayerMP player, ITextComponent... lines)
 	{
-		if(lines.length > 0) HCNetwork.manager.sendTo(new PacketNoSpamChat(lines), player);
+		if(lines.length > 0)
+			HCNetwork.manager.sendTo(new PacketNoSpamChat(lines), player);
 	}
 	
 	public static String[] localizeAll(String... strings)
 	{
-		for(int i = 0; i < strings.length; ++i) strings[i] = I18n.translateToLocal(strings[i]);
+		for(int i = 0; i < strings.length; ++i)
+			strings[i] = I18n.translateToLocal(strings[i]);
 		return strings;
 	}
 }

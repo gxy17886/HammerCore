@@ -6,9 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GLRenderState
 {
-	public static final GLRenderState
-									BLEND = new GLRenderState(GL11.GL_BLEND),
-									NORMALIZE = new GLRenderState(GL11.GL_NORMALIZE);
+	public static final GLRenderState BLEND = new GLRenderState(GL11.GL_BLEND), NORMALIZE = new GLRenderState(GL11.GL_NORMALIZE);
 	
 	private final int opcode;
 	public boolean isEnabled = false;
@@ -39,7 +37,9 @@ public class GLRenderState
 	
 	public void reset()
 	{
-		if(isEnabled) on();
-		else off();
+		if(isEnabled)
+			on();
+		else
+			off();
 	}
 }

@@ -30,11 +30,13 @@ public class PipelineProxy_Common
 			{
 				Class<T> c = (Class<T>) Class.forName(pipedClass);
 				Class<?>[] args = new Class<?>[arguments.length];
-				for(int i = 0; i < args.length; ++i) args[i] = arguments[i].getClass();
+				for(int i = 0; i < args.length; ++i)
+					args[i] = arguments[i].getClass();
 				Constructor<T> constr = c.getConstructor(args);
 				return constr.newInstance(arguments);
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 		}
 		return null;
 	}
@@ -42,8 +44,10 @@ public class PipelineProxy_Common
 	@Nullable
 	public final <T> T createAndPipeDependingOnSide(String clientClass, String serverClass, Object... arguments)
 	{
-		if(getGameSide() == Side.CLIENT) return createAndPipeIfOnGameSide(clientClass, getGameSide(), arguments);
-		if(getGameSide() == Side.SERVER) return createAndPipeIfOnGameSide(serverClass, getGameSide(), arguments);
+		if(getGameSide() == Side.CLIENT)
+			return createAndPipeIfOnGameSide(clientClass, getGameSide(), arguments);
+		if(getGameSide() == Side.SERVER)
+			return createAndPipeIfOnGameSide(serverClass, getGameSide(), arguments);
 		return null;
 	}
 }

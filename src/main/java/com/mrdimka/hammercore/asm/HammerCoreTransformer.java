@@ -26,23 +26,22 @@ public class HammerCoreTransformer implements IClassTransformer
 	/* net/minecraft/world/World */
 	private String classNameWorld = "ajq";
 	
-	/*
-	 * (Lnet/minecraft/util/BlockPos;Lnet/minecraft/world/EnumSkyBlock;)I / func_175638_a
-	 */
+	/* (Lnet/minecraft/util/BlockPos;Lnet/minecraft/world/EnumSkyBlock;)I /
+	 * func_175638_a */
 	private String targetMethodDesc = "(Lco;Lajw;)I";
 	
 	/* net/minecraft/world/World.getRawLight / func_175638_a */
 	private String computeLightValueMethodName = "a";
 	
-	/*
-	 * (Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/BlockPos;)I
-	 */
+	/*(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;
+	 * Lnet/minecraft/util/BlockPos;)I */
 	private String goalInvokeDesc = "(Latj;Laju;Lco;)I";
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass)
 	{
-		if(name.equals(classNameWorld)) return handleWorldTransform(basicClass, true);
+		if(name.equals(classNameWorld))
+			return handleWorldTransform(basicClass, true);
 		else if(name.equals("net.minecraft.world.World"))
 		{
 			computeLightValueMethodName = "getRawLight";
@@ -67,7 +66,8 @@ public class HammerCoreTransformer implements IClassTransformer
 	
 	private byte[] handleWorldTransform(byte[] bytes, boolean obf)
 	{
-//		System.out.println("**************** Dynamic Lights transform running on World, obf: " + obf + " *********************** ");
+		// System.out.println("**************** Dynamic Lights transform running on World, obf: "
+		// + obf + " *********************** ");
 		ClassNode classNode = new ClassNode();
 		ClassReader classReader = new ClassReader(bytes);
 		classReader.accept(classNode, 0);
@@ -75,7 +75,8 @@ public class HammerCoreTransformer implements IClassTransformer
 		{
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))
 			{
-//				System.out.println("In target method " + computeLightValueMethodName + ":" + m.desc + ", Patching!");
+				// System.out.println("In target method " +
+				// computeLightValueMethodName + ":" + m.desc + ", Patching!");
 				AbstractInsnNode targetNode = null;
 				Iterator<AbstractInsnNode> iter = m.instructions.iterator();
 				boolean found = false;
@@ -86,26 +87,31 @@ public class HammerCoreTransformer implements IClassTransformer
 					if(targetNode.getOpcode() == Opcodes.ASTORE)
 					{
 						VarInsnNode astore = (VarInsnNode) targetNode;
-//						System.out.println("Found ASTORE Node at index " + index + ", is writing variable number: " + astore.var);
+						// System.out.println("Found ASTORE Node at index " +
+						// index + ", is writing variable number: " +
+						// astore.var);
 						while(targetNode.getOpcode() != Opcodes.ISTORE)
 						{
 							if(targetNode instanceof MethodInsnNode && targetNode.getOpcode() != Opcodes.INVOKEINTERFACE)
 							{
 								MethodInsnNode mNode = (MethodInsnNode) targetNode;
-//								System.out.printf("found deletion target at index %d: %s\n", index, insnToString(mNode));
+								// System.out.printf("found deletion target at index %d: %s\n",
+								// index, insnToString(mNode));
 								found = true;
 								iter.remove();
 								targetNode = iter.next();
 								break;
 							}
 							targetNode = iter.next();
-//							System.out.print("Reading node: " + insnToString(targetNode));
+							// System.out.print("Reading node: " +
+							// insnToString(targetNode));
 						}
 						break;
 					}
 					index++;
 				}
-				if(found) m.instructions.insertBefore(targetNode, new MethodInsnNode(Opcodes.INVOKESTATIC, "com/mrdimka/hammercore/api/dynlight/ProxiedDynlightGetter", "getLightValue", goalInvokeDesc, false));
+				if(found)
+					m.instructions.insertBefore(targetNode, new MethodInsnNode(Opcodes.INVOKESTATIC, "com/mrdimka/hammercore/api/dynlight/ProxiedDynlightGetter", "getLightValue", goalInvokeDesc, false));
 				break;
 			}
 		}

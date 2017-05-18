@@ -36,9 +36,7 @@ import com.mrdimka.hammercore.json.JSONTokener;
 
 public class ModBrowser
 {
-	public static final String
-							URL_BASE = "https://raw.githubusercontent.com/MrDimkasStudio/HammerCore/mod-list/",
-							SHEETS = URL_BASE + "sheets/";
+	public static final String URL_BASE = "https://raw.githubusercontent.com/MrDimkasStudio/HammerCore/mod-list/", SHEETS = URL_BASE + "sheets/";
 	
 	private static final Map<String, Integer> glImages = new HashMap<>();
 	
@@ -50,7 +48,8 @@ public class ModBrowser
 	{
 		status.set("Checking mod list...");
 		
-		for(LoadedMod mod : collectMods(status)) loadedMods.put(mod.modid, mod);
+		for(LoadedMod mod : collectMods(status))
+			loadedMods.put(mod.modid, mod);
 		
 		status.set("Connecting to github...");
 		
@@ -84,7 +83,7 @@ public class ModBrowser
 				
 				versions.put(key, ver);
 			}
-		} catch (JSONException e)
+		} catch(JSONException e)
 		{
 			e.printStackTrace();
 		}
@@ -125,8 +124,9 @@ public class ModBrowser
 				
 				mods.add(mod);
 			}
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		
 		status.set("Loading icons...");
 		
@@ -143,22 +143,25 @@ public class ModBrowser
 			mod.loadIcon();
 		}
 		
-		for(int i = 0; i < 8; ++i) try
-		{
-			Mod[] sorted = null;
-			Arrays.sort(sorted = mods.toArray(new Mod[0]), new Comparator<Mod>()
+		for(int i = 0; i < 8; ++i)
+			try
 			{
-				@Override
-				public int compare(Mod o1, Mod o2)
+				Mod[] sorted = null;
+				Arrays.sort(sorted = mods.toArray(new Mod[0]), new Comparator<Mod>()
 				{
-					return o1.modName.compareTo(o2.modName);
-				}
-			});
-			mods.clear();
-			mods.addAll(Arrays.asList(sorted));
-			
-			break;
-		}catch(Throwable err) {}
+					@Override
+					public int compare(Mod o1, Mod o2)
+					{
+						return o1.modName.compareTo(o2.modName);
+					}
+				});
+				mods.clear();
+				mods.addAll(Arrays.asList(sorted));
+				
+				break;
+			} catch(Throwable err)
+			{
+			}
 		
 		status.set("Done!");
 	}
@@ -204,7 +207,7 @@ public class ModBrowser
 			
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
 			
-			Minecraft.getMinecraft().addScheduledTask(()->
+			Minecraft.getMinecraft().addScheduledTask(() ->
 			{
 				int newGLID = glImages.get(md5) != null ? glImages.get(md5).intValue() : GL11.glGenTextures();
 				GLImageManager.loadTexture(img, newGLID, false);
@@ -246,7 +249,7 @@ public class ModBrowser
 			
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
 			
-			Minecraft.getMinecraft().addScheduledTask(()->
+			Minecraft.getMinecraft().addScheduledTask(() ->
 			{
 				int newGLID = glImages.get(md5) != null ? glImages.get(md5).intValue() : GL11.glGenTextures();
 				GLImageManager.loadTexture(img, newGLID, false);

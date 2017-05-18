@@ -28,15 +28,18 @@ public class GuiManager implements IGuiHandler
 			TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 			TileSyncable syncable = WorldUtil.cast(te, TileSyncable.class);
 			
-			if(syncable != null) return syncable.getServerGuiElement(player);
+			if(syncable != null)
+				return syncable.getServerGuiElement(player);
 		}
 		
-		if(ID == 1) return new ContainerEmpty();
+		if(ID == 1)
+			return new ContainerEmpty();
 		
 		if(callbacks.size() + lastUsedBuiltintId > ID)
 		{
 			IGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
-			if(c != null) return c.getServerGuiElement(player, world, new BlockPos(x, y, z));
+			if(c != null)
+				return c.getServerGuiElement(player, world, new BlockPos(x, y, z));
 		}
 		
 		return null;
@@ -50,15 +53,18 @@ public class GuiManager implements IGuiHandler
 			TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 			TileSyncable syncable = WorldUtil.cast(te, TileSyncable.class);
 			
-			if(syncable != null) return syncable.getClientGuiElement(player);
+			if(syncable != null)
+				return syncable.getClientGuiElement(player);
 		}
 		
-		if(ID == 1) return new GuiCalculator();
+		if(ID == 1)
+			return new GuiCalculator();
 		
 		if(callbacks.size() + lastUsedBuiltintId > ID)
 		{
 			IGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
-			if(c != null) return c.getClientGuiElement(player, world, new BlockPos(x, y, z));
+			if(c != null)
+				return c.getClientGuiElement(player, world, new BlockPos(x, y, z));
 		}
 		
 		return null;

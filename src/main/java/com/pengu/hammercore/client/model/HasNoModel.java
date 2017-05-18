@@ -11,4 +11,6 @@ import java.lang.annotation.Target;
  **/
 @Retention(RUNTIME)
 @Target(ElementType.TYPE)
-public @interface HasNoModel {}
+public @interface HasNoModel
+{
+}

@@ -44,7 +44,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void tick()
 	{
-//		if(world.isRemote) System.out.println(hasSyncedOnce);
+		// if(world.isRemote) System.out.println(hasSyncedOnce);
 		
 		for(MultipartSignature signature : signatures())
 		{
@@ -57,17 +57,20 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			signature.setWorld(world);
 			signature.setPos(pos);
 			
-			if(signature instanceof ITickable) ((ITickable) signature).update();
+			if(signature instanceof ITickable)
+				((ITickable) signature).update();
 		}
 		
-		//Attempted to wait 4 seconds before actually removing multipart.
-		if(!world.isRemote && signatures().isEmpty()) world.setBlockToAir(pos);
+		// Attempted to wait 4 seconds before actually removing multipart.
+		if(!world.isRemote && signatures().isEmpty())
+			world.setBlockToAir(pos);
 		
-		//Attempted sync
+		// Attempted sync
 		if(!world.isRemote && ticksExisted > 40 && hasSyncedOnce)
 		{
 			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expandXyz(4));
-			if(lastPlayerCount == -1 || lastPlayerCount != players.size()) sync();
+			if(lastPlayerCount == -1 || lastPlayerCount != players.size())
+				sync();
 			lastPlayerCount = players.size();
 		}
 		
@@ -77,6 +80,9 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			hasSyncedOnce = true;
 			lastPlayerCount = -1;
 		}
+		
+		if(ticksExisted % 40 == 0)
+			lastBaked = null;
 	}
 	
 	@Override
@@ -89,14 +95,16 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	public int getWeakPower(EnumFacing side)
 	{
 		int power = 0;
-		for(MultipartSignature s : signatures()) power = Math.max(s.getWeakPower(side), power);
+		for(MultipartSignature s : signatures())
+			power = Math.max(s.getWeakPower(side), power);
 		return power;
 	}
 	
 	public int getStrongPower(EnumFacing side)
 	{
 		int power = 0;
-		for(MultipartSignature s : signatures()) power = Math.max(s.getStrongPower(side), power);
+		for(MultipartSignature s : signatures())
+			power = Math.max(s.getStrongPower(side), power);
 		return power;
 	}
 	
@@ -116,7 +124,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	public int getLightLevel()
 	{
 		int max = 0;
-		for(MultipartSignature s : signatures()) max = Math.max(max, s.getLightLevel());
+		for(MultipartSignature s : signatures())
+			max = Math.max(max, s.getLightLevel());
 		return max;
 	}
 	
@@ -129,14 +138,17 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	@Override
 	public void readNBT(NBTTagCompound nbt)
 	{
-		if(world != null && world.isRemote) hasSyncedOnce = true;
+		if(world != null && world.isRemote)
+			hasSyncedOnce = true;
+		lastBaked = null;
 		
 		signatures = new HashSet<>();
 		renderSignatures = new ArrayList<>();
 		displayTickable = new HashSet<>();
 		
 		NBTTagList list = nbt.getTagList("signature", NBT.TAG_COMPOUND);
-		for(int i = 0; i < list.tagCount(); ++i) internal_addMultipart(MultipartSignature.createAndLoadSignature(list.getCompoundTagAt(i)));
+		for(int i = 0; i < list.tagCount(); ++i)
+			internal_addMultipart(MultipartSignature.createAndLoadSignature(list.getCompoundTagAt(i)));
 	}
 	
 	@Override
@@ -173,7 +185,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public boolean addMultipart(MultipartSignature signature)
 	{
-		if(!canPlace(signature)) return false;
+		if(!canPlace(signature))
+			return false;
 		internal_addMultipart(signature);
 		return true;
 	}
@@ -196,12 +209,14 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		}
 		renderSignatures = new ArrayList<>(signs_new);
 		lastBaked = null;
-		if(world != null && !world.isRemote) sync();
+		if(world != null && !world.isRemote)
+			sync();
 	}
 	
 	public void removeMultipart(MultipartSignature signature, boolean spawnDrop)
 	{
-		if(!signatures.contains(signature)) return;
+		if(!signatures.contains(signature))
+			return;
 		signature.onRemoved(spawnDrop);
 		
 		Set<MultipartSignature> signs_new = new HashSet<>(signatures);
@@ -217,12 +232,14 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			displayTickable = ticks;
 		}
 		lastBaked = null;
-		if(world != null && !world.isRemote) sync();
+		if(world != null && !world.isRemote)
+			sync();
 	}
 	
 	public MultipartSignature getSignature(Vec3d pos)
 	{
-		if(signatures().size() > 100) world.destroyBlock(getPos(), false);
+		if(signatures().size() > 100)
+			world.destroyBlock(getPos(), false);
 		for(MultipartSignature s : signatures())
 			if(s.getBoundingBox() != null && s.getBoundingBox().intersects(pos.addVector(-.0001, -.0001, -.0001), pos.addVector(.0001, .0001, .0001)))
 				return s;
@@ -231,7 +248,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public Cuboid6[] getCuboids()
 	{
-		if(lastBaked == null) lastBaked = bakeCuboids();
+		if(lastBaked == null)
+			lastBaked = bakeCuboids();
 		return lastBaked;
 	}
 	
@@ -252,7 +270,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 			if(provider != null)
 			{
 				T h = provider.getHandler(facing, handler, params);
-				if(handler != null) return h;
+				if(handler != null)
+					return h;
 			}
 		}
 		
@@ -265,7 +284,8 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		for(MultipartSignature signature : signatures())
 		{
 			IHandlerProvider provider = WorldUtil.cast(signature, IHandlerProvider.class);
-			if(provider != null && provider.hasHandler(facing, handler, params)) return true;
+			if(provider != null && provider.hasHandler(facing, handler, params))
+				return true;
 		}
 		
 		return false;

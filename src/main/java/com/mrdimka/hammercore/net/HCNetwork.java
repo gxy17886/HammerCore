@@ -20,9 +20,12 @@ public class HCNetwork
 	
 	public static PacketManager getManager(String name)
 	{
-		if(name == null || name.equals("hammercore")) return manager;
+		if(name == null || name.equals("hammercore"))
+			return manager;
 		return managers.get(name);
 	}
 	
-	public static void clinit() {};
+	public static void clinit()
+	{
+	};
 }

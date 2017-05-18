@@ -38,15 +38,21 @@ public class GuiDownloading extends GuiScreen
 	
 	private void doDownload()
 	{
-		if(opt_toRemove != null && opt_toRemove.isFile() && !opt_toRemove.delete()) // try to delete by normal method
-			opt_toRemove.deleteOnExit(); //if we can't do it, delete the file on app exit
-		
+		if(opt_toRemove != null && opt_toRemove.isFile() && !opt_toRemove.delete()) // try
+																					// to
+																					// delete
+																					// by
+																					// normal
+																					// method
+			opt_toRemove.deleteOnExit(); // if we can't do it, delete the file
+										 // on app exit
+			
 		try
 		{
 			InputStream in = url.openConnection().getInputStream();
 			OutputStream out = new FileOutputStream(dest);
 			
-			byte[] buffer = new byte[867]; //not ram intense, just 1 KiB
+			byte[] buffer = new byte[867]; // not ram intense, just 1 KiB
 			int read = 0;
 			
 			while((read = in.read(buffer)) > 0)
@@ -59,8 +65,10 @@ public class GuiDownloading extends GuiScreen
 			in.close();
 			
 			openBrowserBack = true;
+		} catch(Throwable err)
+		{
+			err.printStackTrace();
 		}
-		catch(Throwable err) { err.printStackTrace(); }
 	}
 	
 	@Override
@@ -95,7 +103,10 @@ public class GuiDownloading extends GuiScreen
 		if(!started)
 		{
 			started = true;
-			new Thread(()-> { doDownload(); }).start();
+			new Thread(() ->
+			{
+				doDownload();
+			}).start();
 		}
 		if(openBrowserBack)
 		{
@@ -105,5 +116,7 @@ public class GuiDownloading extends GuiScreen
 	}
 	
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {}
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
+	{
+	}
 }

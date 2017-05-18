@@ -37,10 +37,12 @@ public class UV
 	public void render(double x, double y)
 	{
 		boolean b = GL11.glIsEnabled(GL11.GL_BLEND);
-		if(!b) GL11.glEnable(GL11.GL_BLEND);
+		if(!b)
+			GL11.glEnable(GL11.GL_BLEND);
 		bindTexture();
 		RenderUtil.drawTexturedModalRect(x, y, posX, posY, width, height);
-		if(!b) GL11.glDisable(GL11.GL_BLEND);
+		if(!b)
+			GL11.glDisable(GL11.GL_BLEND);
 	}
 	
 	public void bindTexture()

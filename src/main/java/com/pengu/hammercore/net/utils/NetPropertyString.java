@@ -20,15 +20,15 @@ public class NetPropertyString extends NetPropertyAbstract<String>
 	}
 	
 	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+	{
 		nbt.setString("val", value);
-	    return nbt;
-    }
+		return nbt;
+	}
 	
 	@Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+	public void readFromNBT(NBTTagCompound nbt)
+	{
 		value = nbt.getString("val");
-    }
+	}
 }

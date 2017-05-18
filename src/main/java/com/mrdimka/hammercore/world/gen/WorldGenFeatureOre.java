@@ -50,13 +50,14 @@ public class WorldGenFeatureOre implements IWorldGenFeature
 	public void generate(World world, BlockPos pos, Random rand)
 	{
 		boolean dimMatches = !enableDimensionWhitelist;
-		if(!dimMatches) dimMatches = dimensionWhitelist.contains(world.provider.getDimension());
+		if(!dimMatches)
+			dimMatches = dimensionWhitelist.contains(world.provider.getDimension());
 		
 		boolean biomeMatches = !enableBiomeWhitelist;
-		if(!biomeMatches) biomeMatches = biomes.contains(world.getBiome(pos));
+		if(!biomeMatches)
+			biomeMatches = biomes.contains(world.getBiome(pos));
 		
 		if(biomeMatches && dimMatches)
-			new WorldGenMinable(oreState, maxCusterSize, Predicates.equalTo(sourceState))
-			.generate(world, rand, pos);
+			new WorldGenMinable(oreState, maxCusterSize, Predicates.equalTo(sourceState)).generate(world, rand, pos);
 	}
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -27,22 +25,18 @@ public class Render3D
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void renderWorld(RenderWorldLastEvent evt)
 	{
-		while(!renderQueue.isEmpty()) renders.add(renderQueue.remove(0));
+		while(!renderQueue.isEmpty())
+			renders.add(renderQueue.remove(0));
 		
 		for(int i = 0; i < renders.size(); ++i)
 		{
 			PositionRenderer render = renders.get(i);
-			if(render.isDead()) renders.remove(i);
+			if(render.isDead())
+				renders.remove(i);
 			else if(render.canRender(Minecraft.getMinecraft().player))
 				render.render(Minecraft.getMinecraft().player, render.calcX(), render.calcY(), render.calcZ());
 		}
 		
 		ParticleList.renderExtendedParticles(evt);
-	}
-	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void renderPlayer(RenderPlayerEvent ev)
-	{
-		
 	}
 }

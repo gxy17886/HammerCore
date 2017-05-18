@@ -30,7 +30,8 @@ public class StructureAPI
 				for(int z = Math.min(start.getZ(), end.getZ()); z <= Math.max(start.getZ(), end.getZ()); ++z)
 				{
 					BlockPos pos = new BlockPos(x, y, z);
-					if(world.isAirBlock(pos) && !includeAir) continue;
+					if(world.isAirBlock(pos) && !includeAir)
+						continue;
 					BlockPos absPos = new BlockPos(x - Math.min(start.getX(), end.getX()), y - Math.min(start.getY(), end.getY()), z - Math.min(start.getZ(), end.getZ()));
 					s.placeStateAt(absPos, world.getBlockState(pos));
 					
@@ -56,18 +57,22 @@ public class StructureAPI
 		for(Long pl : structure.stateMap.keySet())
 		{
 			BlockPos tpos = BlockPos.fromLong(pl);
-			if(!world.isBlockLoaded(tpos)) world.getChunkFromBlockCoords(tpos);
+			if(!world.isBlockLoaded(tpos))
+				world.getChunkFromBlockCoords(tpos);
 			IBlockState src = structure.getStateAt(tpos);
 			IBlockState state = world.getBlockState(tpos.add(centerPos));
 			
-			if(state.getBlock() == src.getBlock() && state.getBlock().getMetaFromState(src) == state.getBlock().getMetaFromState(state));
-			else return false;
+			if(state.getBlock() == src.getBlock() && state.getBlock().getMetaFromState(src) == state.getBlock().getMetaFromState(state))
+				;
+			else
+				return false;
 		}
 		
 		for(Long pl : structure.tileMap.keySet())
 		{
 			BlockPos tpos = BlockPos.fromLong(pl);
-			if(!world.isBlockLoaded(tpos)) world.getChunkFromBlockCoords(tpos);
+			if(!world.isBlockLoaded(tpos))
+				world.getChunkFromBlockCoords(tpos);
 			TileEntity te = world.getTileEntity(tpos.add(centerPos));
 			
 			NBTTagCompound src = structure.getTileNBTAt(tpos);
@@ -76,7 +81,8 @@ public class StructureAPI
 			NBTTagCompound merged = nbt.copy();
 			merged.merge(src);
 			
-			if(!nbt.equals(merged)) return false;
+			if(!nbt.equals(merged))
+				return false;
 		}
 		
 		return true;
@@ -98,7 +104,8 @@ public class StructureAPI
 		{
 			++line;
 			String ln = in.nextLine().replaceAll("\r", "");
-			if(ln.startsWith("#") || ln.trim().isEmpty()) continue;
+			if(ln.startsWith("#") || ln.trim().isEmpty())
+				continue;
 			
 			try
 			{
@@ -106,7 +113,8 @@ public class StructureAPI
 				{
 					ln = ln.substring(9);
 					String pos[] = ln.substring(0, ln.indexOf("}")).split(",");
-					if(pos.length != 3) throw new IOException("Failed to parse position at line #" + line + "!");
+					if(pos.length != 3)
+						throw new IOException("Failed to parse position at line #" + line + "!");
 					
 					int[] xs = From(pos[0]);
 					int[] ys = From(pos[1]);
@@ -120,11 +128,12 @@ public class StructureAPI
 						for(int y : ys)
 							for(int z : zs)
 								struct.placeStateAt(new BlockPos(x, y, z), block.getStateFromMeta(meta));
-				}else if(ln.startsWith("{tile}.{"))
+				} else if(ln.startsWith("{tile}.{"))
 				{
 					ln = ln.substring(8);
 					String pos[] = ln.substring(0, ln.indexOf("}")).split(",");
-					if(pos.length != 3) throw new IOException("Failed to parse position at line #" + line + "!");
+					if(pos.length != 3)
+						throw new IOException("Failed to parse position at line #" + line + "!");
 					
 					int[] xs = From(pos[0]);
 					int[] ys = From(pos[1]);
@@ -137,8 +146,9 @@ public class StructureAPI
 						for(int y : ys)
 							for(int z : zs)
 								struct.placeTileNBTAt(new BlockPos(x, y, z), nbt);
-				}else throw new IOException("Unable to read modifier! [" + ln + "]");
-			}catch(Throwable err)
+				} else
+					throw new IOException("Unable to read modifier! [" + ln + "]");
+			} catch(Throwable err)
 			{
 				throw new IOException("Failed to parse line #" + line + ": " + err.getMessage(), err);
 			}
@@ -167,7 +177,8 @@ public class StructureAPI
 			
 			return struct;
 		}
-		return new Structure(); // empty structure, no blocks/tiles placed/validated.
+		return new Structure(); // empty structure, no blocks/tiles
+								// placed/validated.
 	}
 	
 	public static Set<String> GetAllStructures()
@@ -177,13 +188,16 @@ public class StructureAPI
 	
 	private static int[] From(String str)
 	{
-		if(!str.contains(" to ")) return new int[] { Integer.parseInt(str) };
+		if(!str.contains(" to "))
+			return new int[] { Integer.parseInt(str) };
 		String[] ab = str.split(" to ");
 		int a = Integer.parseInt(ab[0]);
 		int b = Integer.parseInt(ab[1]);
-		if(a > b) return new int[0]; //check if min number is bigger than max
+		if(a > b)
+			return new int[0]; // check if min number is bigger than max
 		int[] abs = new int[b - a + 1];
-		for(int i = 0; i < abs.length; ++i) abs[i] = a + i;
+		for(int i = 0; i < abs.length; ++i)
+			abs[i] = a + i;
 		return abs;
 	}
 	

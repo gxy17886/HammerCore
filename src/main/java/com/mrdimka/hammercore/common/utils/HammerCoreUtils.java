@@ -39,12 +39,13 @@ public class HammerCoreUtils
 			{
 				NonNullList<ItemStack> items = NonNullList.create();
 				displayAllRelevantItems(items);
-				if(items.size() == 0) return new ItemStack(Blocks.BARRIER);
+				if(items.size() == 0)
+					return new ItemStack(Blocks.BARRIER);
 				
-				//move to more-efficient + convenient methods.
+				// move to more-efficient + convenient methods.
 				return items.get((int) ((Minecraft.getSystemTime() / (50L * delayTicks)) % items.size()));
 			}
-
+			
 			@Override
 			public ItemStack getTabIconItem()
 			{

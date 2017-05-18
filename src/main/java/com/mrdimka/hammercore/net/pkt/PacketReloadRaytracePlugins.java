@@ -9,7 +9,7 @@ import com.mrdimka.hammercore.net.packetAPI.IPacketListener;
 
 public class PacketReloadRaytracePlugins implements IPacket, IPacketListener<PacketReloadRaytracePlugins, IPacket>
 {
-
+	
 	@Override
 	public IPacket onArrived(PacketReloadRaytracePlugins packet, MessageContext context)
 	{
@@ -18,8 +18,12 @@ public class PacketReloadRaytracePlugins implements IPacket, IPacketListener<Pac
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) {}
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {}
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+	}
 }

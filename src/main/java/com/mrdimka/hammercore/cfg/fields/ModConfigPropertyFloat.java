@@ -11,10 +11,14 @@ import java.lang.annotation.Target;
 public @interface ModConfigPropertyFloat
 {
 	String category();
+	
 	String name();
+	
 	String comment();
 	
 	float defaultValue();
+	
 	float min();
+	
 	float max();
 }

@@ -24,8 +24,10 @@ public class FluidContainer
 		nbt = stack.tag + "";
 		String ods = "";
 		List<String> fluiddicts = FluidDictionary.getNamesByFluidId(FluidDictionary.getFluidId(stack));
-		for(String i : fluiddicts) ods += i + ";";
-		if(ods.endsWith(";")) ods = ods.substring(0, ods.length() - 1);
+		for(String i : fluiddicts)
+			ods += i + ";";
+		if(ods.endsWith(";"))
+			ods = ods.substring(0, ods.length() - 1);
 		fluiddictNames = ods;
 		mod = stack.getFluid().getBlock().delegate.name().getResourceDomain();
 		type = 0;
@@ -53,9 +55,13 @@ public class FluidContainer
 	
 	public static boolean fluiddictMatches(String a, String b)
 	{
-		if(a == b) return true;
-		if(a == null || b == null) return false;
-		for(String as : a.split(";")) if(b.contains(as)) return true;
+		if(a == b)
+			return true;
+		if(a == null || b == null)
+			return false;
+		for(String as : a.split(";"))
+			if(b.contains(as))
+				return true;
 		return false;
 	}
 	
@@ -66,8 +72,10 @@ public class FluidContainer
 	
 	private static boolean fluidsMatch(String a, String b)
 	{
-		if(a == b) return true;
-		if(a == null || b == null) return false;
+		if(a == b)
+			return true;
+		if(a == null || b == null)
+			return false;
 		return a.equals(b);
 	}
 	

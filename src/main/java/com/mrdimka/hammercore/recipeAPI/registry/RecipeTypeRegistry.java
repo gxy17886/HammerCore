@@ -34,7 +34,8 @@ public class RecipeTypeRegistry implements IRecipeTypeRegistry
 	public IRecipeScript parseAll(String[] jsons) throws JSONException
 	{
 		List<SimpleRecipeScript> scripts = new ArrayList<>();
-		for(String json : jsons) scripts.add(parse(json));
+		for(String json : jsons)
+			scripts.add(parse(json));
 		return new GlobalRecipeScript(scripts.toArray(new SimpleRecipeScript[scripts.size()]));
 	}
 	
@@ -64,11 +65,13 @@ public class RecipeTypeRegistry implements IRecipeTypeRegistry
 					parsed[0] = true;
 					Object o = t.createRecipe(r);
 					script.types.put(o, t);
-					if(nbt.getBoolean("remove")) script.swaps.add(o);
+					if(nbt.getBoolean("remove"))
+						script.swaps.add(o);
 				}
 			});
 			
-			if(!parsed[0]) HammerCore.LOG.warn("Warning: Found non-existing/missing recipe type: " + id + "! This will get ignored.");
+			if(!parsed[0])
+				HammerCore.LOG.warn("Warning: Found non-existing/missing recipe type: " + id + "! This will get ignored.");
 		}
 		
 		return script;

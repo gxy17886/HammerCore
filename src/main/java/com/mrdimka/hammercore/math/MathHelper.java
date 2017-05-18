@@ -15,7 +15,8 @@ public class MathHelper
 	
 	static
 	{
-		for(int i = 0; i < 65536; ++i) SIN_TABLE[i] = Math.sin(i / 65536D * 2 * Math.PI);
+		for(int i = 0; i < 65536; ++i)
+			SIN_TABLE[i] = Math.sin(i / 65536D * 2 * Math.PI);
 		SIN_TABLE[0] = 0;
 		SIN_TABLE[16384] = 1;
 		SIN_TABLE[32768] = 0;
@@ -116,7 +117,8 @@ public class MathHelper
 	public static double approachExp(double a, double b, double ratio, double cap)
 	{
 		double d = (b - a) * ratio;
-		if(Math.abs(d) > cap) d = Math.signum(d) * cap;
+		if(Math.abs(d) > cap)
+			d = Math.signum(d) * cap;
 		return a + d;
 	}
 	
@@ -136,7 +138,8 @@ public class MathHelper
 	public static double retreatExp(double a, double b, double c, double ratio, double kick)
 	{
 		double d = (Math.abs(c - a) + kick) * ratio;
-		if(d > Math.abs(b - a)) return b;
+		if(d > Math.abs(b - a))
+			return b;
 		return a + Math.signum(b - a) * d;
 	}
 	

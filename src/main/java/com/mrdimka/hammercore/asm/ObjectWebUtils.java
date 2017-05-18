@@ -45,7 +45,13 @@ public class ObjectWebUtils
 	public static ClassNode loadClass(URL url) throws IOException
 	{
 		URLConnection conn = url.openConnection();
-		try{conn.setDoInput(true); conn.connect();}catch(Throwable er){}
+		try
+		{
+			conn.setDoInput(true);
+			conn.connect();
+		} catch(Throwable er)
+		{
+		}
 		InputStream stream = conn.getInputStream();
 		ClassNode node = loadClass(stream);
 		stream.close();
@@ -74,7 +80,13 @@ public class ObjectWebUtils
 	public static void writeClassToURL(ClassNode node, URL url) throws IOException
 	{
 		URLConnection conn = url.openConnection();
-		try{conn.setDoOutput(true); conn.connect();}catch(Throwable er){}
+		try
+		{
+			conn.setDoOutput(true);
+			conn.connect();
+		} catch(Throwable er)
+		{
+		}
 		OutputStream os = conn.getOutputStream();
 		writeClassToOutputStream(node, os);
 		os.close();

@@ -14,15 +14,17 @@ public class TextureSpriteFX
 	public int tileSizeSquare = 256;
 	public int tileSizeMask = 15;
 	public int tileSizeSquareMask = 255;
-
+	
 	public boolean anaglyphEnabled;
 	public TextureSpriteCustom texture;
-
-	public TextureSpriteFX(int spriteIndex, SpriteSheet sheet) {
+	
+	public TextureSpriteFX(int spriteIndex, SpriteSheet sheet)
+	{
 		texture = sheet.bindTextureFX(spriteIndex, this);
 	}
-
-	public TextureSpriteFX(int size, String name) {
+	
+	public TextureSpriteFX(int size, String name)
+	{
 		texture = new TextureSpriteCustom(name).blank(size).selfRegister().addTextureFX(this);
 	}
 	
@@ -39,7 +41,8 @@ public class TextureSpriteFX
 	
 	public void onTextureDimensionsUpdate(int width, int height)
 	{
-		if(width != height) throw new IllegalArgumentException("Non-Square textureFX not supported (" + width + ":" + height + ")");
+		if(width != height)
+			throw new IllegalArgumentException("Non-Square textureFX not supported (" + width + ":" + height + ")");
 		tileSizeBase = width;
 		tileSizeSquare = tileSizeBase * tileSizeBase;
 		tileSizeMask = tileSizeBase - 1;
@@ -62,7 +65,8 @@ public class TextureSpriteFX
 	{
 	}
 	
-	public boolean changed() {
+	public boolean changed()
+	{
 		return true;
 	}
 }

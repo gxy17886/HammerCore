@@ -8,6 +8,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class BookRenderingHelper
 {
-	public static Minecraft getMinecraft() { return Minecraft.getMinecraft(); }
-	public static void bindTexture(ResourceLocation location) { getMinecraft().getTextureManager().bindTexture(location); }
+	public static Minecraft getMinecraft()
+	{
+		return Minecraft.getMinecraft();
+	}
+	
+	public static void bindTexture(ResourceLocation location)
+	{
+		getMinecraft().getTextureManager().bindTexture(location);
+	}
 }

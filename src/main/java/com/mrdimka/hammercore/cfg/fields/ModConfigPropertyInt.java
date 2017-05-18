@@ -11,10 +11,14 @@ import java.lang.annotation.Target;
 public @interface ModConfigPropertyInt
 {
 	String category();
+	
 	String name();
+	
 	String comment();
 	
 	int defaultValue();
+	
 	int min();
+	
 	int max();
 }

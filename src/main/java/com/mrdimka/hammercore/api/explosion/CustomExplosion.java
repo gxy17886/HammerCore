@@ -35,9 +35,11 @@ public class CustomExplosion implements IUpdatable
 	}
 	
 	/**
-	 * Creates a big explosion of custom strength and damages entities if(entityDamageSource != null)
-	 * If chunks where explosion happens are unloaded it will manually load them.
-	 * @return was this explosion created -- is happens on server. 
+	 * Creates a big explosion of custom strength and damages entities
+	 * if(entityDamageSource != null) If chunks where explosion happens are
+	 * unloaded it will manually load them.
+	 * 
+	 * @return was this explosion created -- is happens on server.
 	 */
 	public static boolean doExplosionAt(World world, BlockPos pos, float power, DamageSource entityDamageSource)
 	{
@@ -114,8 +116,9 @@ public class CustomExplosion implements IUpdatable
 			float energy = power * 10;
 			
 			if(!worldObj.isBlockLoaded(new BlockPos(xCoord, 16, zCoord)))
-				worldObj.getChunkFromBlockCoords(new BlockPos(xCoord, 16, zCoord)); // load chunk
-			
+				worldObj.getChunkFromBlockCoords(new BlockPos(xCoord, 16, zCoord)); // load
+																					// chunk
+				
 			for(int y = yCoord; y >= 0 && energy > 0; y--)
 			{
 				List<Entity> entities = worldObj.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(xCoord, y, zCoord, xCoord + 1, y + 1, zCoord + 1));
@@ -124,7 +127,8 @@ public class CustomExplosion implements IUpdatable
 					for(Entity entity : entities)
 						entity.attackEntityFrom(entityDamageSource, power * 100);
 				
-				if(energy >= 0) worldObj.setBlockToAir(new BlockPos(xCoord, y, zCoord));
+				if(energy >= 0)
+					worldObj.setBlockToAir(new BlockPos(xCoord, y, zCoord));
 				energy -= 0.5F + (0.1F * (yCoord - y));
 			}
 			
@@ -138,7 +142,8 @@ public class CustomExplosion implements IUpdatable
 					for(Entity entity : entities)
 						entity.attackEntityFrom(entityDamageSource, power * 100);
 				
-				if(energy >= 0) worldObj.setBlockToAir(new BlockPos(xCoord, y, zCoord));
+				if(energy >= 0)
+					worldObj.setBlockToAir(new BlockPos(xCoord, y, zCoord));
 				
 				energy -= 0.5F + (0.1F * (y - yCoord));
 			}

@@ -32,16 +32,28 @@ public interface GLE
 	public static final int GLE_TEXTURE_NORMAL_MODEL_SPH = 12;
 	
 	public int gleGetJoinStyle();
+	
 	public void gleSetJoinStyle(int var1);
+	
 	public void gleTextureMode(int var1);
+	
 	public void glePolyCylinder(int var1, double[][] var2, float[][] var3, double var4, float var6, float var7) throws GLEException;
+	
 	public void glePolyCone(int var1, double[][] var2, float[][] var3, double[] var4, float var5, float var6) throws GLEException;
+	
 	public void gleExtrusion(int var1, double[][] var2, double[][] var3, double[] var4, int var5, double[][] var6, float[][] var7) throws GLEException;
+	
 	public void gleTwistExtrusion(int var1, double[][] var2, double[][] var3, double[] var4, int var5, double[][] var6, float[][] var7, double[] var8) throws GLEException;
+	
 	public void gleSuperExtrusion(int var1, double[][] var2, double[][] var3, double[] var4, int var5, double[][] var6, float[][] var7, double[][][] var8) throws GLEException;
+	
 	public void gleSpiral(int var1, double[][] var2, double[][] var3, double[] var4, double var5, double var7, double var9, double var11, double[][] var13, double[][] var14, double var15, double var17) throws GLEException;
+	
 	public void gleLathe(int var1, double[][] var2, double[][] var3, double[] var4, double var5, double var7, double var9, double var11, double[][] var13, double[][] var14, double var15, double var17) throws GLEException;
+	
 	public void gleHelicoid(double var1, double var3, double var5, double var7, double var9, double[][] var11, double[][] var12, double var13, double var15) throws GLEException;
+	
 	public void gleToroid(double var1, double var3, double var5, double var7, double var9, double[][] var11, double[][] var12, double var13, double var15) throws GLEException;
+	
 	public void gleScrew(int var1, double[][] var2, double[][] var3, double[] var4, double var5, double var7, double var9) throws GLEException;
 }

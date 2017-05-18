@@ -38,10 +38,13 @@ public class XYZMap<T>
 			try
 			{
 				List<BlockPos> decoded = new ArrayList<BlockPos>();
-				for(Long l : VALUES.keySet()) decoded.add(BlockPos.fromLong(l));
+				for(Long l : VALUES.keySet())
+					decoded.add(BlockPos.fromLong(l));
 				return decoded.toArray(new BlockPos[0]);
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
 			}
-			catch(Throwable err) { err.printStackTrace(); }
 		}
 	}
 }

@@ -11,8 +11,11 @@ import java.lang.annotation.Target;
 public @interface ModConfigPropertyStringList
 {
 	String category();
+	
 	String name();
+	
 	String comment();
+	
 	String[] defaultValue();
 	
 	/** Return either null or empty array to allow anything */

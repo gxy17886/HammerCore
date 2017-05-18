@@ -30,39 +30,45 @@ public class JavaCodeLoader
 			for(File f : java.listFiles())
 				addClass(f, classses);
 			return;
-		}else
+		} else
 		{
 			String $package = java.getName();
-			if(!$package.endsWith(".jc")) return;
+			if(!$package.endsWith(".jc"))
+				return;
 			$package = $package.substring(0, $package.length() - 3);
 			FileInputStream fis = new FileInputStream(java);
 			String src = new String(IOUtils.pipeOut(fis)).replaceAll("\r\n", "\n");
 			String[] lines = src.split("\n");
 			
-			if(HammerCore.IS_OBFUSCATED_MC) for(int i = 0; i < lines.length; ++i) //Obfuscate sources
-			{
-				String ln = lines[i];
-				if(ln.startsWith("import")) continue;
-				
-				for(String deobf : HammerCore.FIELD_CSV.getDeobfuscateds())
+			if(HammerCore.IS_OBFUSCATED_MC)
+				for(int i = 0; i < lines.length; ++i) // Obfuscate sources
 				{
-					String obf = HammerCore.FIELD_CSV.getObfuscatedName(deobf);
-					while(ln.contains(deobf) && ln.charAt(ln.indexOf(deobf) - 1) == '.' && !((ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'a' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'z') || (ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'A' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'Z'))) ln = ln.replace(deobf, obf);
+					String ln = lines[i];
+					if(ln.startsWith("import"))
+						continue;
+					
+					for(String deobf : HammerCore.FIELD_CSV.getDeobfuscateds())
+					{
+						String obf = HammerCore.FIELD_CSV.getObfuscatedName(deobf);
+						while(ln.contains(deobf) && ln.charAt(ln.indexOf(deobf) - 1) == '.' && !((ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'a' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'z') || (ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'A' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'Z')))
+							ln = ln.replace(deobf, obf);
+					}
+					
+					for(String deobf : HammerCore.METHODS_CSV.getDeobfuscateds())
+					{
+						String obf = HammerCore.METHODS_CSV.getObfuscatedName(deobf);
+						while(ln.contains(deobf) && ln.charAt(ln.indexOf(deobf) - 1) == '.' && !((ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'a' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'z') || (ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'A' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'Z')))
+							ln = ln.replace(deobf, obf);
+					}
+					
+					lines[i] = ln;
 				}
-				
-				for(String deobf : HammerCore.METHODS_CSV.getDeobfuscateds())
-				{
-					String obf = HammerCore.METHODS_CSV.getObfuscatedName(deobf);
-					while(ln.contains(deobf) && ln.charAt(ln.indexOf(deobf) - 1) == '.' && !((ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'a' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'z') || (ln.charAt(ln.indexOf(deobf) + deobf.length()) >= 'A' && ln.charAt(ln.indexOf(deobf) + deobf.length()) <= 'Z'))) ln = ln.replace(deobf, obf);
-				}
-				
-				lines[i] = ln;
-			}
 			
 			String compiled = bakeClass(lines, $package);
 			
 			File jco = new File("javacode_out");
-			if(!jco.isDirectory()) jco.mkdirs();
+			if(!jco.isDirectory())
+				jco.mkdirs();
 			
 			FileOutputStream out = new FileOutputStream(new File("javacode_out", $package + ".java"));
 			out.write(compiled.getBytes());
@@ -89,12 +95,14 @@ public class JavaCodeLoader
 		
 		for(String ln : lines)
 		{
-			if(ln.isEmpty()) continue;
+			if(ln.isEmpty())
+				continue;
 			if(ln.startsWith("import ") && ln.endsWith(";"))
 			{
 				imports.add(ln);
-				if(mth != null) throw new RuntimeException("Imports inside of methods are not allowed!");
-			}else if(ln.startsWith("@"))
+				if(mth != null)
+					throw new RuntimeException("Imports inside of methods are not allowed!");
+			} else if(ln.startsWith("@"))
 			{
 				if(mth != null)
 				{
@@ -104,9 +112,11 @@ public class JavaCodeLoader
 				
 				String[] subln = ln.substring(1).split(" ");
 				mth = "\n	public static " + subln[0] + " " + subln[1] + "(";
-				for(int i = 2; i < subln.length; ++i) mth += subln[i] + " ";
+				for(int i = 2; i < subln.length; ++i)
+					mth += subln[i] + " ";
 				mth += ") \n	{\n";
-			}else if(mth != null) mth += "		" + ln + "\n";
+			} else if(mth != null)
+				mth += "		" + ln + "\n";
 		}
 		
 		if(mth != null)
@@ -117,7 +127,8 @@ public class JavaCodeLoader
 		
 		String src = "";
 		
-		for(String i : imports) src += i + "\n";
+		for(String i : imports)
+			src += i + "\n";
 		src += "\n";
 		
 		return src + cls + "\n}";
@@ -130,7 +141,8 @@ public class JavaCodeLoader
 			@Override
 			protected Class<?> findClass(String name) throws ClassNotFoundException
 			{
-				if(classes.containsKey(name)) return defineClass(name, classes.get(name), 0, classes.get(name).length);
+				if(classes.containsKey(name))
+					return defineClass(name, classes.get(name), 0, classes.get(name).length);
 				return super.findClass(name);
 			}
 		};

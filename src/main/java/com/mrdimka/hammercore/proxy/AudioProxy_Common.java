@@ -35,17 +35,21 @@ public class AudioProxy_Common
 			List<EntityPlayerMP> ps = world.getMinecraftServer().getPlayerList().getPlayers();
 			for(EntityPlayerMP p : ps)
 			{
-				if(p.world.provider.getDimension() != world.provider.getDimension()) continue;
-				if(p.getDistance(x, y, z) > br) continue;
+				if(p.world.provider.getDimension() != world.provider.getDimension())
+					continue;
+				if(p.getDistance(x, y, z) > br)
+					continue;
 				p.connection.sendPacket(new SPacketCustomSound(sound, SoundCategory.BLOCKS, x, y, z, volume, pitch));
 			}
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 	}
 	
 	public void playBlockStateBreak(World world, IBlockState type, double x, double y, double z, float volume, float pitch, SoundCategory category)
 	{
-		//Since we use _at.cfg file, makesoundName a public field for ease of use ;)
+		// Since we use _at.cfg file, makesoundName a public field for ease of
+		// use ;)
 		playSoundAt(world, type.getBlock().getSoundType().getBreakSound().soundName.toString(), x, y, z, volume, pitch, SoundCategory.BLOCKS);
 	}
 }

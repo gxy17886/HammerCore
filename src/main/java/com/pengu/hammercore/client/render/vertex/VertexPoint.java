@@ -55,7 +55,8 @@ public class VertexPoint
 	@Override
 	public boolean equals(Object obj)
 	{
-		if(!(obj instanceof VertexPoint)) return false;
-	    return ((VertexPoint) obj).vec.equals(vec);
+		if(!(obj instanceof VertexPoint))
+			return false;
+		return ((VertexPoint) obj).vec.equals(vec);
 	}
 }

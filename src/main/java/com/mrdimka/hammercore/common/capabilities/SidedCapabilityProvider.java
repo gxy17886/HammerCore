@@ -14,7 +14,8 @@ public class SidedCapabilityProvider implements ICapabilityProvider
 	public <T> void putCapability(EnumFacing side, Capability<T> cap, T instance)
 	{
 		Map<Capability<?>, Object> SIDED = CAPS.get(side);
-		if(SIDED != null) CAPS.put(side, SIDED = new HashMap<>());
+		if(SIDED != null)
+			CAPS.put(side, SIDED = new HashMap<>());
 		SIDED.put(cap, instance);
 	}
 	
@@ -28,7 +29,8 @@ public class SidedCapabilityProvider implements ICapabilityProvider
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
 		Map<Capability<?>, ?> SIDED = CAPS.get(facing);
-		if(SIDED != null) return SIDED.containsKey(capability);
+		if(SIDED != null)
+			return SIDED.containsKey(capability);
 		return false;
 	}
 	
@@ -36,7 +38,8 @@ public class SidedCapabilityProvider implements ICapabilityProvider
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
 		Map<Capability<?>, ?> SIDED = CAPS.get(facing);
-		if(SIDED != null) return (T) SIDED.get(capability);
+		if(SIDED != null)
+			return (T) SIDED.get(capability);
 		return null;
 	}
 }

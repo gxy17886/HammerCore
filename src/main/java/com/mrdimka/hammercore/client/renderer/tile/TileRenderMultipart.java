@@ -34,7 +34,8 @@ public class TileRenderMultipart extends TESR<TileMultipart>
 		try
 		{
 			List<MultipartSignature> mps = te.signatures();
-			if(mps == null) return;
+			if(mps == null)
+				return;
 			
 			BlockMultipart bmp = (BlockMultipart) ModBlocks.MULTIPART;
 			World w = te.getWorld();
@@ -47,17 +48,21 @@ public class TileRenderMultipart extends TESR<TileMultipart>
 			{
 				IMultipartRender render = MultipartRenderingRegistry.getRender(s);
 				GL11.glPushMatrix();
-				if(render != null) render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? destroyStage : null);
+				if(render != null)
+					render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? destroyStage : null);
 				GL11.glPopMatrix();
 			}
-		}catch(Throwable err) { HammerCore.LOG.error("Failed to render multipart at " + te.getPos() + ": " + err); } //we must ignore all issues that may arise!
+		} catch(Throwable err)
+		{
+			HammerCore.LOG.error("Failed to render multipart at " + te.getPos() + ": " + err);
+		} // we must ignore all issues that may arise!
 	}
 	
 	/** False -- for future use */
 	@Override
 	public boolean canRenderFromNbt()
 	{
-	    return false;
+		return false;
 	}
 	
 	/**
@@ -67,7 +72,8 @@ public class TileRenderMultipart extends TESR<TileMultipart>
 	public static class DestroyStage
 	{
 		/**
-		 * @deprecated use {@link DestroyStageTexture#getByProgress(float)} instead.
+		 * @deprecated use {@link DestroyStageTexture#getByProgress(float)}
+		 *             instead.
 		 */
 		@Deprecated
 		public static ResourceLocation getByProgress(float progress)

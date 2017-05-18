@@ -84,8 +84,9 @@ import com.mrdimka.hammercore.structure.StructureAPI;
 import com.mrdimka.hammercore.world.WorldGenHammerCore;
 
 /**
- * The core of Hammer Core.
- * <br><span style="text-decoration: underline;"><em>This really sounds weird :/</em></span>
+ * The core of Hammer Core. <br>
+ * <span style="text-decoration: underline;">
+ * <em>This really sounds weird :/</em></span>
  **/
 @Mod(modid = "hammercore", version = "@VERSION@", name = "Hammer Core")
 public class HammerCore
@@ -94,15 +95,16 @@ public class HammerCore
 	public static final boolean IS_OBFUSCATED_MC = false;
 	
 	/**
-	 * Render proxy for HC used to handle complicated rendering codes in a simple way.
+	 * Render proxy for HC used to handle complicated rendering codes in a
+	 * simple way.
 	 */
 	@SidedProxy(modId = "hammercore", clientSide = "com.mrdimka.hammercore.proxy.RenderProxy_Client", serverSide = "com.mrdimka.hammercore.proxy.RenderProxy_Common")
 	public static RenderProxy_Common renderProxy;
 	
-//	/**
-//	 * All sources compiled from 'javacode' dir
-//	 */
-//	public static ClassLoader javaLoader;
+	// /**
+	// * All sources compiled from 'javacode' dir
+	// */
+	// public static ClassLoader javaLoader;
 	
 	/**
 	 * Audio proxy for HC used to interact with audio in any way
@@ -173,31 +175,33 @@ public class HammerCore
 		
 		initHCChannels.add("particles");
 		
-//		File javacode = new File(".", "javacode");
-//		if(!javacode.isDirectory()) javacode.mkdir();
-//		try
-//		{
-//			Map<String, byte[]> classes = JavaCodeLoader.compileRoot(javacode);
-//			javaLoader = JavaCodeLoader.toLoader(classes);
-//			for(String clas : classes.keySet())
-//			{
-//				try
-//				{
-////					GameRegistry.makeItemStack(itemName, meta, stackSize, nbtString)
-//					Class cls = javaLoader.loadClass(clas);
-//					IJavaCode code = null;
-//					if(IJavaCode.class.isAssignableFrom(cls)) code = (IJavaCode) cls.newInstance();
-//					else code = new IJavaCode.IJavaCode_IMPL(cls.newInstance());
-//					COMPILED_CODES.add(code);
-//					LOG.info("Added new JavaCode: " + code + " for " + clas);
-//				}
-//				catch(ClassNotFoundException cnfe)
-//				{
-//					LOG.error("Error: unexpected class " + clas + ". Perharps it has different package?");
-//				}
-//				catch(Throwable err) { err.printStackTrace(); }
-//			}
-//		} catch(Exception e1) { e1.printStackTrace(); }
+		// File javacode = new File(".", "javacode");
+		// if(!javacode.isDirectory()) javacode.mkdir();
+		// try
+		// {
+		// Map<String, byte[]> classes = JavaCodeLoader.compileRoot(javacode);
+		// javaLoader = JavaCodeLoader.toLoader(classes);
+		// for(String clas : classes.keySet())
+		// {
+		// try
+		// {
+		// // GameRegistry.makeItemStack(itemName, meta, stackSize, nbtString)
+		// Class cls = javaLoader.loadClass(clas);
+		// IJavaCode code = null;
+		// if(IJavaCode.class.isAssignableFrom(cls)) code = (IJavaCode)
+		// cls.newInstance();
+		// else code = new IJavaCode.IJavaCode_IMPL(cls.newInstance());
+		// COMPILED_CODES.add(code);
+		// LOG.info("Added new JavaCode: " + code + " for " + clas);
+		// }
+		// catch(ClassNotFoundException cnfe)
+		// {
+		// LOG.error("Error: unexpected class " + clas +
+		// ". Perharps it has different package?");
+		// }
+		// catch(Throwable err) { err.printStackTrace(); }
+		// }
+		// } catch(Exception e1) { e1.printStackTrace(); }
 	}
 	
 	@EventHandler
@@ -221,7 +225,8 @@ public class HammerCore
 		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
 		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, IRecipePlugin.class);
 		
-		for(IJavaCode code : COMPILED_CODES) //Add compiled codes
+		for(IJavaCode code : COMPILED_CODES)
+			// Add compiled codes
 			code.addMCFObjects(toRegister);
 		
 		toRegister.add(this);
@@ -277,7 +282,8 @@ public class HammerCore
 		
 		AddCalculatronRecipeEvent evt = new AddCalculatronRecipeEvent();
 		evt.setRecipe(new ShapedOreRecipe(ModItems.calculatron, "igi", "rlr", "idi", 'g', "blockGlass", 'i', "ingotIron", 'r', "dustRedstone", 'd', "ingotGold", 'l', "dyeLime"));
-		if(!MinecraftForge.EVENT_BUS.post(evt)) GameRegistry.addRecipe(evt.getRecipe());
+		if(!MinecraftForge.EVENT_BUS.post(evt))
+			GameRegistry.addRecipe(evt.getRecipe());
 		
 		BrewingRecipeRegistry.addRecipe(BrewingRecipe.INSTANCE);
 		
@@ -292,7 +298,8 @@ public class HammerCore
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		for(IJavaCode code : COMPILED_CODES) code.postInit();
+		for(IJavaCode code : COMPILED_CODES)
+			code.postInit();
 		for(IRecipePlugin plugin : recipePlugins)
 		{
 			LOG.info("Registering recipe plugin: " + plugin.getClass().getName() + " ...");
@@ -317,7 +324,8 @@ public class HammerCore
 		worldFolder.mkdirs();
 		hc_recipes_global.mkdirs();
 		
-		if(recipeScript != null) recipeScript.remove();
+		if(recipeScript != null)
+			recipeScript.remove();
 		List<SimpleRecipeScript> scripts = new ArrayList<>();
 		scripts.addAll(Arrays.asList(parse(worldFolder).scripts));
 		scripts.addAll(Arrays.asList(parse(hc_recipes_global).scripts));
@@ -330,16 +338,19 @@ public class HammerCore
 	@SubscribeEvent
 	public void serverTick(ServerTickEvent evt)
 	{
-		if(evt.side == Side.SERVER) for(int i = 0; i < updatables.size(); ++i)
-		{
-			try
+		if(evt.side == Side.SERVER)
+			for(int i = 0; i < updatables.size(); ++i)
 			{
-				IUpdatable upd = updatables.get(i);
-				upd.update();
-				if(!upd.isAlive()) updatables.remove(i);
+				try
+				{
+					IUpdatable upd = updatables.get(i);
+					upd.update();
+					if(!upd.isAlive())
+						updatables.remove(i);
+				} catch(Throwable err)
+				{
+				}
 			}
-			catch(Throwable err) {}
-		}
 	}
 	
 	@SubscribeEvent
@@ -369,7 +380,8 @@ public class HammerCore
 	@EventHandler
 	public void serverStop(FMLServerStoppingEvent evt)
 	{
-		if(recipeScript != null) recipeScript.remove();
+		if(recipeScript != null)
+			recipeScript.remove();
 		recipeScript = null;
 	}
 	
@@ -390,8 +402,7 @@ public class HammerCore
 				try
 				{
 					jsons.add(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(json)))));
-				}
-				catch(Throwable err)
+				} catch(Throwable err)
 				{
 					LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
 					err.printStackTrace();
@@ -399,13 +410,12 @@ public class HammerCore
 			}
 			
 			return new GlobalRecipeScript(jsons.toArray(new SimpleRecipeScript[jsons.size()]));
-		}else if(path.isFile())
+		} else if(path.isFile())
 		{
 			try
 			{
 				return new GlobalRecipeScript(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(path)))));
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
 				LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
 				err.printStackTrace();
@@ -423,25 +433,36 @@ public class HammerCore
 		
 		public static void setScriptCount(int amt)
 		{
-			if(amt == 0) if(instance.recipeScript != null) { instance.recipeScript.remove(); instance.recipeScript = null; return; }
+			if(amt == 0)
+				if(instance.recipeScript != null)
+				{
+					instance.recipeScript.remove();
+					instance.recipeScript = null;
+					return;
+				}
 			
-			if(instance.recipeScript == null) instance.recipeScript = new GlobalRecipeScript();
+			if(instance.recipeScript == null)
+				instance.recipeScript = new GlobalRecipeScript();
 			instance.recipeScript.remove();
 			SimpleRecipeScript[] old = instance.recipeScript.scripts;
-			if(old.length == amt) return;
+			if(old.length == amt)
+				return;
 			instance.recipeScript.scripts = new SimpleRecipeScript[amt];
-			for(int i = 0; i < Math.min(old.length, amt); ++i) instance.recipeScript.scripts[i] = old[i];
+			for(int i = 0; i < Math.min(old.length, amt); ++i)
+				instance.recipeScript.scripts[i] = old[i];
 		}
 		
 		public static NBTTagList getScript(int id)
 		{
-			if(instance.recipeScript == null) return new NBTTagList();
+			if(instance.recipeScript == null)
+				return new NBTTagList();
 			return id >= instance.recipeScript.scripts.length && instance.recipeScript.scripts[id].makeTag != null ? null : instance.recipeScript.scripts[id].makeTag.copy();
 		}
 		
 		public static void setScript(int id, NBTTagList list)
 		{
-			if(instance.recipeScript == null) instance.recipeScript = new GlobalRecipeScript();
+			if(instance.recipeScript == null)
+				instance.recipeScript = new GlobalRecipeScript();
 			instance.recipeScript.remove();
 			setScriptCount(Math.max(instance.recipeScript.scripts.length, id + 1));
 			instance.recipeScript.scripts[id] = registry.parse(list);

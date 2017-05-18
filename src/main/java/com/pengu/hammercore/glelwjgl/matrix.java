@@ -5,7 +5,8 @@ import java.nio.DoubleBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-public class matrix {
+public class matrix
+{
 	public static final String VERSION = new String("$Id: matrix.java,v 1.2 1998/05/05 23:31:09 descarte Exp descarte $");
 	
 	private static final double[][] ROTX_CS(double cosine, double sine)
@@ -168,7 +169,8 @@ public class matrix {
 	public static final double[][] urot_axis_d(double omega, double[] axis)
 	{
 		double[][] m = new double[4][4];
-		if(axis.length != 3) throw new GLEException("Length of axis parameter != 3. This is not a valid vector!");
+		if(axis.length != 3)
+			throw new GLEException("Length of axis parameter != 3. This is not a valid vector!");
 		double tmp = omega / 2.0;
 		double s = Math.sin(tmp);
 		double c = Math.cos(tmp);
@@ -224,7 +226,8 @@ public class matrix {
 		double[][] m = null;
 		double[] ax = new double[3];
 		double ang = angle;
-		if(axis.length != 3) throw new GLEException("Length of axis parameter != 3. This is not a valid vector!");
+		if(axis.length != 3)
+			throw new GLEException("Length of axis parameter != 3. This is not a valid vector!");
 		ang *= 0.017453292519943295;
 		double len = axis[0] * axis[0] + axis[1] * axis[1] + axis[2] * axis[2];
 		if(len != 1.0)
@@ -234,7 +237,8 @@ public class matrix {
 			ax[1] = axis[1] * len;
 			ax[2] = axis[2] * len;
 			m = matrix.urot_axis_d(ang, ax);
-		} else m = matrix.urot_axis_d(ang, axis);
+		} else
+			m = matrix.urot_axis_d(ang, axis);
 		return m;
 	}
 	
@@ -324,7 +328,8 @@ public class matrix {
 	public static final double VEC_DOT_PRODUCT(double[] v1, double[] v2)
 	{
 		double dot = 0.0;
-		if(v1.length != 3 || v2.length != 3) throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
+		if(v1.length != 3 || v2.length != 3)
+			throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
 		dot = v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 		return dot;
 	}
@@ -333,7 +338,8 @@ public class matrix {
 	{
 		double[] vtmp = new double[3];
 		double dot = matrix.VEC_DOT_PRODUCT(v, n);
-		if(v.length != 3 || n.length != 3) throw new GLEException("Length of v or n !=3. Invalid vectors!");
+		if(v.length != 3 || n.length != 3)
+			throw new GLEException("Length of v or n !=3. Invalid vectors!");
 		vtmp[0] = v[0] - dot * n[0];
 		vtmp[1] = v[1] - dot * n[1];
 		vtmp[2] = v[2] - dot * n[2];
@@ -343,7 +349,8 @@ public class matrix {
 	public static final double[] VEC_DIFF(double[] v2, double[] v1)
 	{
 		double[] vtmp = new double[3];
-		if(v1.length != 3 || v2.length != 3) throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
+		if(v1.length != 3 || v2.length != 3)
+			throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
 		vtmp[0] = v2[0] - v1[0];
 		vtmp[1] = v2[1] - v1[1];
 		vtmp[2] = v2[2] - v1[2];
@@ -353,7 +360,8 @@ public class matrix {
 	public static final double[] VEC_SUM(double[] v1, double[] v2)
 	{
 		double[] vtmp = new double[3];
-		if(v1.length != 3 || v2.length != 3) throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
+		if(v1.length != 3 || v2.length != 3)
+			throw new GLEException("Length of v1 or v2 != 3. Invalid vectors!");
 		vtmp[0] = v2[0] + v1[0];
 		vtmp[1] = v2[1] + v1[1];
 		vtmp[2] = v2[2] + v1[2];
@@ -499,7 +507,8 @@ public class matrix {
 			arrd[0] = arrd[0] * len;
 			double[] arrd2 = p;
 			arrd2[1] = arrd2[1] * len;
-		} else p = matrix.VEC_COPY_2(v);
+		} else
+			p = matrix.VEC_COPY_2(v);
 		return p;
 	}
 	
@@ -522,7 +531,8 @@ public class matrix {
 			v_hat_21 = matrix.VEC_SCALE(len, v_hat_21);
 			sine = Math.sqrt(1.0 - v_hat_21[2] * v_hat_21[2]);
 			amat = matrix.ROTY_CS(-v_hat_21[2], -sine);
-		} else amat = matrix.IDENTIFY_MATRIX_4X4();
+		} else
+			amat = matrix.IDENTIFY_MATRIX_4X4();
 		v_xy[0] = v21[0];
 		v_xy[1] = v21[1];
 		v_xy[2] = 0.0;
@@ -533,7 +543,8 @@ public class matrix {
 			v_xy = matrix.VEC_SCALE(len, v_xy);
 			bmat = matrix.ROTZ_CS(v_xy[0], v_xy[1]);
 			cmat = matrix.MATRIX_PRODUCT_4X4(amat, bmat);
-		} else cmat = matrix.COPY_MATRIX_4X4(amat);
+		} else
+			cmat = matrix.COPY_MATRIX_4X4(amat);
 		up_proj = matrix.VEC_PERP(up, v_hat_21);
 		len = matrix.VEC_LENGTH(up_proj);
 		if(len != 0.0)
@@ -550,7 +561,8 @@ public class matrix {
 			sine = matrix.VEC_DOT_PRODUCT(tmp, up_proj);
 			amat = matrix.ROTZ_CS(cosine, -sine);
 			m = matrix.MATRIX_PRODUCT_4X4(amat, cmat);
-		} else m = matrix.COPY_MATRIX_4X4(cmat);
+		} else
+			m = matrix.COPY_MATRIX_4X4(cmat);
 		return m;
 	}
 	

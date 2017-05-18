@@ -50,7 +50,8 @@ public class GuiBookEntry extends GuiCentered
 			GL11.glTranslated(guiLeft, guiTop, 0);
 			page.render(mouseX, mouseY);
 			GL11.glPopMatrix();
-		}else mc.displayGuiScreen(bookGui);
+		} else
+			mc.displayGuiScreen(bookGui);
 		
 		GLRenderState.BLEND.off();
 		
@@ -82,7 +83,11 @@ public class GuiBookEntry extends GuiCentered
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if(mouseButton == 1) { mc.displayGuiScreen(bookGui); return; }
+		if(mouseButton == 1)
+		{
+			mc.displayGuiScreen(bookGui);
+			return;
+		}
 		if(mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5)
 		{
 			mc.displayGuiScreen(bookGui);
@@ -108,6 +113,7 @@ public class GuiBookEntry extends GuiCentered
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) throws IOException
 	{
-		if(keyCode == 1) mc.displayGuiScreen(bookGui);
+		if(keyCode == 1)
+			mc.displayGuiScreen(bookGui);
 	}
 }

@@ -37,7 +37,8 @@ public class DistanceRayTraceResult extends RayTraceResult implements Comparable
 	
 	public void setData(Object data)
 	{
-		if(data instanceof Integer) subHit = (Integer) data;
+		if(data instanceof Integer)
+			subHit = (Integer) data;
 		hitInfo = data;
 	}
 	

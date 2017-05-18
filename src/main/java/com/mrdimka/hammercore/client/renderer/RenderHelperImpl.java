@@ -29,7 +29,7 @@ public enum RenderHelperImpl implements IRenderHelper
 		ENDFX_buffer.flip();
 		return ENDFX_buffer;
 	}
-
+	
 	@Override
 	public void renderEndPortalEffect(double x, double y, double z, ResourceLocation end_portal_texture, EnumFacing... renderSides)
 	{
@@ -58,7 +58,8 @@ public enum RenderHelperImpl implements IRenderHelper
 			b = 14;
 		else if(d > 256D)
 			b = 15;
-		else b = 16;
+		else
+			b = 16;
 		
 		for(int i = 0; i < b; ++i)
 		{
@@ -74,7 +75,8 @@ public enum RenderHelperImpl implements IRenderHelper
 				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			}
 			
-			if(i >= 1) Minecraft.getMinecraft().renderEngine.bindTexture(end_portal_texture);
+			if(i >= 1)
+				Minecraft.getMinecraft().renderEngine.bindTexture(end_portal_texture);
 			
 			if(i == 1)
 			{

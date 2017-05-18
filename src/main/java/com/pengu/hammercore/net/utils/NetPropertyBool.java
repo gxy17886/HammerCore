@@ -20,15 +20,15 @@ public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 	}
 	
 	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
+	{
 		nbt.setBoolean("val", value);
-	    return nbt;
-    }
+		return nbt;
+	}
 	
 	@Override
-    public void readFromNBT(NBTTagCompound nbt)
-    {
+	public void readFromNBT(NBTTagCompound nbt)
+	{
 		value = nbt.getBoolean("val");
-    }
+	}
 }

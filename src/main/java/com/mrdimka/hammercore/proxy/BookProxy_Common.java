@@ -11,12 +11,21 @@ import com.mrdimka.hammercore.bookAPI.Book;
 
 public class BookProxy_Common
 {
-	public Object getBookInstanceById(String id) { return null; }
+	public Object getBookInstanceById(String id)
+	{
+		return null;
+	}
 	
 	@SideOnly(Side.CLIENT)
-	public void registerBookInstance(Book book) {}
+	public void registerBookInstance(Book book)
+	{
+	}
 	
-	public void openBookGui(String bookId) {}
+	public void openBookGui(String bookId)
+	{
+	}
 	
-	public void init() {}
+	public void init()
+	{
+	}
 }

@@ -65,8 +65,10 @@ public class RenderGui
 				boolean isHovered = mouseX >= xOff && mouseY >= 0 && mouseX < xOff + 30 && mouseY < 3;
 				isHovered |= mouseX >= xOff + 3 && mouseY >= 0 && mouseX < xOff + 27 && mouseY < modListHoverTip + 9;
 				
-				if(isHovered) modListHoverTip = MathHelper.clip(modListHoverTip + .8D, 0, 12);
-				else modListHoverTip = MathHelper.clip(modListHoverTip - .8D, 0, 12);
+				if(isHovered)
+					modListHoverTip = MathHelper.clip(modListHoverTip + .8D, 0, 12);
+				else
+					modListHoverTip = MathHelper.clip(modListHoverTip - .8D, 0, 12);
 				
 				gui.mc.getTextureManager().bindTexture(main_menu_widgets);
 				
@@ -89,7 +91,7 @@ public class RenderGui
 				
 				GL11.glColor4d(1, 1, 1, 1);
 				
-				float f = 1F - net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin((float)((Minecraft.getSystemTime() + 47647L) % 10000L) / 10000.0F * ((float)Math.PI * 2F)) * 0.1F);
+				float f = 1F - net.minecraft.util.math.MathHelper.abs(net.minecraft.util.math.MathHelper.sin((float) ((Minecraft.getSystemTime() + 47647L) % 10000L) / 10000.0F * ((float) Math.PI * 2F)) * 0.1F);
 				
 				GL11.glPushMatrix();
 				GL11.glTranslated(14 - (f * 8) + 8, modListHoverTip - 3 - (f * 8) + 8, 0);
@@ -111,30 +113,30 @@ public class RenderGui
 	public void mouseClick(MouseInputEvent.Pre evt)
 	{
 		int mouseX = Mouse.getEventX() * evt.getGui().width / evt.getGui().mc.displayWidth;
-        int mouseY = evt.getGui().height - Mouse.getEventY() * evt.getGui().height / evt.getGui().mc.displayHeight - 1;
-        int eventButton = Mouse.getEventButton();
-
-        if(Mouse.getEventButtonState())
-        {
-        	GuiScreen gui = evt.getGui();
-        	
-        	if(gui instanceof GuiMainMenu)
-        	{
-        		int xOff = evt.getGui().width / 2 - 15;
-    			
-    			boolean isHovered = mouseX >= xOff && mouseY >= 0 && mouseX < xOff + 30 && mouseY < 3;
-    			isHovered |= mouseX >= xOff + 3 && mouseY >= 0 && mouseX < xOff + 27 && mouseY < modListHoverTip + 9;
-    			
-    			if(isHovered && eventButton == 0 && HammerCoreConfigs.client_modBrowser)
-    			{
-    				modListHoverTip = 0;
-    				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
-    				GuiModBrowserLoading gui0;
-    				gui.mc.displayGuiScreen(gui0 = new GuiModBrowserLoading());
-    				gui0.panoramaTimer = ((GuiMainMenu) gui).panoramaTimer;
-    			}
-        	}
-        }
+		int mouseY = evt.getGui().height - Mouse.getEventY() * evt.getGui().height / evt.getGui().mc.displayHeight - 1;
+		int eventButton = Mouse.getEventButton();
+		
+		if(Mouse.getEventButtonState())
+		{
+			GuiScreen gui = evt.getGui();
+			
+			if(gui instanceof GuiMainMenu)
+			{
+				int xOff = evt.getGui().width / 2 - 15;
+				
+				boolean isHovered = mouseX >= xOff && mouseY >= 0 && mouseX < xOff + 30 && mouseY < 3;
+				isHovered |= mouseX >= xOff + 3 && mouseY >= 0 && mouseX < xOff + 27 && mouseY < modListHoverTip + 9;
+				
+				if(isHovered && eventButton == 0 && HammerCoreConfigs.client_modBrowser)
+				{
+					modListHoverTip = 0;
+					Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					GuiModBrowserLoading gui0;
+					gui.mc.displayGuiScreen(gui0 = new GuiModBrowserLoading());
+					gui0.panoramaTimer = ((GuiMainMenu) gui).panoramaTimer;
+				}
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -145,19 +147,21 @@ public class RenderGui
 		
 		if(gui instanceof GuiMainMenu)
 		{
-			new Thread(()->
+			new Thread(() ->
 			{
 				user.download();
 				user.reload(true);
 			}).start();
 		}
 		
-		if(gui instanceof GuiMainMenu && !RequiredDeps.allDepsResolved()) gui = new GuiMissingApis();
+		if(gui instanceof GuiMainMenu && !RequiredDeps.allDepsResolved())
+			gui = new GuiMissingApis();
 		
 		smooth:
 		{
-			//@since 1.5.1
-			if(!HammerCoreConfigs.client_smoothVanillaGuis) break smooth;
+			// @since 1.5.1
+			if(!HammerCoreConfigs.client_smoothVanillaGuis)
+				break smooth;
 			
 			if(gui instanceof GuiFurnace)
 			{
@@ -174,7 +178,8 @@ public class RenderGui
 			break smooth;
 		}
 		
-		if(fgui != gui) evt.setGui(gui);
+		if(fgui != gui)
+			evt.setGui(gui);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -218,8 +223,9 @@ public class RenderGui
 					img.height = signature.getString("height");
 					images.add(img);
 				}
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 		}
 		
 		private boolean reload(boolean launchThread)
@@ -248,14 +254,15 @@ public class RenderGui
 				height = ExpressionEvaluator.evaluateDouble(sh);
 				
 				return true;
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
-				if(launchThread) new Thread(()->
-				{
-					int i = 0;
-					while(++i < 5 && !reload(false));
-				}).start();
+				if(launchThread)
+					new Thread(() ->
+					{
+						int i = 0;
+						while(++i < 5 && !reload(false))
+							;
+					}).start();
 			}
 			
 			return false;
@@ -263,7 +270,8 @@ public class RenderGui
 		
 		private String format(String s)
 		{
-			if(s == null) return "0";
+			if(s == null)
+				return "0";
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
 			GuiScreen gs = mc.currentScreen;
@@ -271,17 +279,19 @@ public class RenderGui
 			double displacex = sr.getScaledWidth_double() / sr.getScaledWidth();
 			double displacey = sr.getScaledHeight_double() / sr.getScaledHeight();
 			
-//			s = s.replaceAll("mc-width", (mc.displayWidth * displacex) + "");
+			// s = s.replaceAll("mc-width", (mc.displayWidth * displacex) + "");
 			s = s.replaceAll("mc-width", (mc.displayWidth) + "");
 			s = s.replaceAll("mc-height", (mc.displayHeight) + "");
-//			s = s.replaceAll("mc-height", (mc.displayHeight * displacey) + "");
+			// s = s.replaceAll("mc-height", (mc.displayHeight * displacey) +
+			// "");
 			
 			return s;
 		}
 		
 		private void draw()
 		{
-			if(currImg == null || currImg.img == null) return;
+			if(currImg == null || currImg.img == null)
+				return;
 			
 			if(System.currentTimeMillis() - lastDownload > 10000L)
 			{

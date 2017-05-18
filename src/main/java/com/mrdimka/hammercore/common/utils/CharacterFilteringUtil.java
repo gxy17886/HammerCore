@@ -7,17 +7,21 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Lets you filter excess characters, leaving only symbols, numbers, and english words
+ * Lets you filter excess characters, leaving only symbols, numbers, and english
+ * words
  */
 public class CharacterFilteringUtil
 {
 	private static final Set<Character> allowedchars = new HashSet<Character>();
 	
-	public static final char[] NUM_FILTER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-	public static final char[] SYMBOL_FILTER = {'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '/', '+', '\'', '\\', '\"', ';', '.', ',', ' ', ':', '<', '>', '[', ']', '{', '}', '_'};
-	public static final char[] EN_FILTER = {'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'};
+	public static final char[] NUM_FILTER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+	public static final char[] SYMBOL_FILTER = { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '=', '/', '+', '\'', '\\', '\"', ';', '.', ',', ' ', ':', '<', '>', '[', ']', '{', '}', '_' };
+	public static final char[] EN_FILTER = { 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm' };
 	
-	static { allowedchars.addAll(chars()); }
+	static
+	{
+		allowedchars.addAll(chars());
+	}
 	
 	private static List<Character> chars()
 	{
@@ -30,11 +34,14 @@ public class CharacterFilteringUtil
 				if(f.getType().isAssignableFrom(char[].class))
 				{
 					char[] charArr = (char[]) f.get(null);
-					for(char cs : charArr) c.add(cs);
+					for(char cs : charArr)
+						c.add(cs);
 				}
 			}
+		} catch(Throwable err)
+		{
+			err.printStackTrace();
 		}
-		catch(Throwable err) { err.printStackTrace(); }
 		return c;
 	}
 	

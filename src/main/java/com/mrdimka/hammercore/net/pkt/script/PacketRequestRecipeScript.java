@@ -12,7 +12,10 @@ public class PacketRequestRecipeScript implements IPacket, IPacketListener<Packe
 {
 	public int id;
 	
-	public PacketRequestRecipeScript() {}
+	public PacketRequestRecipeScript()
+	{
+	}
+	
 	public PacketRequestRecipeScript(int id)
 	{
 		this.id = id;
@@ -29,8 +32,14 @@ public class PacketRequestRecipeScript implements IPacket, IPacketListener<Packe
 	}
 	
 	@Override
-	public void writeToNBT(NBTTagCompound nbt) { nbt.setInteger("a0", id); }
+	public void writeToNBT(NBTTagCompound nbt)
+	{
+		nbt.setInteger("a0", id);
+	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) { id = nbt.getInteger("a0"); }
+	public void readFromNBT(NBTTagCompound nbt)
+	{
+		id = nbt.getInteger("a0");
+	}
 }

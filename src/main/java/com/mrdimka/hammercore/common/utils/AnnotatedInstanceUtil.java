@@ -11,15 +11,25 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 /**
- * This class helps to gather all required scopes of needed object with specified annotation
+ * This class helps to gather all required scopes of needed object with
+ * specified annotation
  */
 public class AnnotatedInstanceUtil
 {
 	/**
-	 * Gets (well, creates) all scopes of classes that extend (or implement) instanceClass <strong>and</strong> have annotationClass annotation present
-	 * @param asmDataTable the ASM table with all loaded classes (get it via {@link FMLPreInitializationEvent#getAsmData()})
-	 * @param annotationClass the annotation that must be present in the class for it to be added to the list
-	 * @param instanceClass the class that object must extend in order for it to be added to the list
+	 * Gets (well, creates) all scopes of classes that extend (or implement)
+	 * instanceClass <strong>and</strong> have annotationClass annotation
+	 * present
+	 * 
+	 * @param asmDataTable
+	 *            the ASM table with all loaded classes (get it via
+	 *            {@link FMLPreInitializationEvent#getAsmData()})
+	 * @param annotationClass
+	 *            the annotation that must be present in the class for it to be
+	 *            added to the list
+	 * @param instanceClass
+	 *            the class that object must extend in order for it to be added
+	 *            to the list
 	 */
 	public static <T> List<T> getInstances(@Nonnull ASMDataTable asmDataTable, Class annotationClass, Class<T> instanceClass)
 	{
@@ -34,8 +44,9 @@ public class AnnotatedInstanceUtil
 				Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
 				T instance = asmInstanceClass.newInstance();
 				instances.add(instance);
+			} catch(Throwable e)
+			{
 			}
-			catch(Throwable e) {}
 		}
 		return instances;
 	}

@@ -30,12 +30,13 @@ public class GlobalRecipeScript extends SimpleRecipeScript
 			if(s != null)
 				s.remove();
 	}
-
+	
 	@Override
 	public NBTTagCompound writeToNbt()
 	{
 		NBTTagList l = new NBTTagList();
-		for(SimpleRecipeScript s : scripts) l.appendTag(s.makeTag.copy());
+		for(SimpleRecipeScript s : scripts)
+			l.appendTag(s.makeTag.copy());
 		NBTTagCompound n = new NBTTagCompound();
 		n.setTag("l", l);
 		return n;
@@ -46,6 +47,7 @@ public class GlobalRecipeScript extends SimpleRecipeScript
 	{
 		NBTTagList list = nbt.getTagList("l", NBT.TAG_LIST);
 		scripts = new SimpleRecipeScript[list.tagCount()];
-		for(int i = 0; i < scripts.length; ++i) scripts[i] = HammerCore.registry.parse((NBTTagList) list.get(i));
+		for(int i = 0; i < scripts.length; ++i)
+			scripts[i] = HammerCore.registry.parse((NBTTagList) list.get(i));
 	}
 }

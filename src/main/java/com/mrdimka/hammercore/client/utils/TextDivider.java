@@ -33,7 +33,8 @@ public class TextDivider
 		{
 			if(fontRendererObj.getStringWidth(currentLn + lines[i]) >= maxWidth)
 			{
-				if(currentLn.endsWith(" ")) currentLn = currentLn.substring(0, currentLn.length() - 1);
+				if(currentLn.endsWith(" "))
+					currentLn = currentLn.substring(0, currentLn.length() - 1);
 				lns.add(currentLn);
 				currentLn = "";
 			}
@@ -41,7 +42,8 @@ public class TextDivider
 			currentLn += lines[i] + " ";
 		}
 		
-		if(!currentLn.isEmpty()) lns.add(currentLn);
+		if(!currentLn.isEmpty())
+			lns.add(currentLn);
 		return lns;
 	}
 }

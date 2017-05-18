@@ -9,7 +9,10 @@ import net.minecraft.world.World;
 public interface IWorldGenFeature
 {
 	int getMaxChances(World world, ChunkPos chunk, Random rand);
+	
 	int getMinY(World world, BlockPos pos, Random rand);
+	
 	int getMaxY(World world, BlockPos pos, Random rand);
+	
 	void generate(World world, BlockPos pos, Random rand);
 }

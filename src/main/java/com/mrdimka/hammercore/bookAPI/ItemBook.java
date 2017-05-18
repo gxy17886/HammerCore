@@ -16,7 +16,8 @@ public abstract class ItemBook extends Item
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
 	{
-		if(worldIn.isRemote) HammerCore.bookProxy.openBookGui(getBookId());
+		if(worldIn.isRemote)
+			HammerCore.bookProxy.openBookGui(getBookId());
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 }

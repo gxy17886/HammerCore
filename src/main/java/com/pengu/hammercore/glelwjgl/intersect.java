@@ -26,7 +26,7 @@ public class intersect
 			slen = matrix.VEC_LENGTH(summa);
 			slen *= 2.0E-6D;
 			i++;
-		} while ((tlen <= slen) && (i < npoints - 1));
+		} while((tlen <= slen) && (i < npoints - 1));
 		return i;
 	}
 	
@@ -51,7 +51,8 @@ public class intersect
 			numer += (p[1] - v2[1]) * n[1];
 			t = (numer += (p[2] - v2[2]) * n[2]) / deno;
 			omt = 1.0 - t;
-			if (1.0 < t * 2.0E-6 || -1.0 > t * 2.0E-6) {
+			if(1.0 < t * 2.0E-6 || -1.0 > t * 2.0E-6)
+			{
 				valid = false;
 			}
 			sect[0] = t * v1[0] + omt * v2[0];
@@ -95,7 +96,8 @@ public class intersect
 				len21 = 1.0 / len21;
 				v21 = matrix.VEC_SCALE(len21, v21);
 				double dot = matrix.VEC_DOT_PRODUCT(v32 = matrix.VEC_SCALE(len32 = 1.0 / len32, v32), v21);
-				if(dot >= 0.999998 || dot <= -0.999998) n = matrix.VEC_COPY(v21);
+				if(dot >= 0.999998 || dot <= -0.999998)
+					n = matrix.VEC_COPY(v21);
 				else
 				{
 					n[0] = dot * (v32[0] + v21[0]) - v32[0] - v21[0];

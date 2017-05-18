@@ -7,9 +7,13 @@ import net.minecraft.world.World;
 public interface IMovable
 {
 	int getX();
+	
 	int getY();
+	
 	int getZ();
+	
 	World getWorld();
+	
 	boolean isAlive();
 	
 	public static class BlockMovable implements IMovable
@@ -40,7 +44,7 @@ public interface IMovable
 		}
 		
 		@Override
-		public int getY() 
+		public int getY()
 		{
 			return pos.getY();
 		}

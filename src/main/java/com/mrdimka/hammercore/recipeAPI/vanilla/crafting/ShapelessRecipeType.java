@@ -44,9 +44,12 @@ public class ShapelessRecipeType implements IRecipeType<ShapelessOreRecipe>
 			NBTTagCompound ing = ingredients.getCompoundTagAt(i);
 			String item = "item";
 			
-			if(ing.hasKey(item, NBT.TAG_STRING)) data.add(ing.getString(item));
-			else if(ing.hasKey(item, NBT.TAG_COMPOUND)) data.add(loadStack(ing.getCompoundTag(item)));
-			else throw new RecipeParseException("Undefined type for ingredient '" + i + "': TagID: " + ing.getTagId(item) + ", Content: " + ing.getTag(item));
+			if(ing.hasKey(item, NBT.TAG_STRING))
+				data.add(ing.getString(item));
+			else if(ing.hasKey(item, NBT.TAG_COMPOUND))
+				data.add(loadStack(ing.getCompoundTag(item)));
+			else
+				throw new RecipeParseException("Undefined type for ingredient '" + i + "': TagID: " + ing.getTagId(item) + ", Content: " + ing.getTag(item));
 		}
 		
 		return new ShapelessOreRecipe(out, data.toArray());

@@ -25,8 +25,8 @@ public class RenderBlocks
 	private static RenderBlocks instance;
 	
 	/**
-	 * Replaced with instance alpha. This field is useless from now on.
-	 * moved to field {@link #renderAlpha}
+	 * Replaced with instance alpha. This field is useless from now on. moved to
+	 * field {@link #renderAlpha}
 	 */
 	@Deprecated
 	public static float alpha = 1F;
@@ -126,11 +126,12 @@ public class RenderBlocks
 	public int setLighting(World world, BlockPos pos)
 	{
 		int i = world.getCombinedLight(pos, 0);
-		for(EnumFacing f : EnumFacing.VALUES) i = Math.max(world.getCombinedLight(pos.offset(f), 0), i);
+		for(EnumFacing f : EnumFacing.VALUES)
+			i = Math.max(world.getCombinedLight(pos.offset(f), 0), i);
 		int j = i % 65536;
-        int k = i / 65536;
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
-        return i;
+		int k = i / 65536;
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, j, k);
+		return i;
 	}
 	
 	public void setRenderBounds(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)
@@ -177,7 +178,7 @@ public class RenderBlocks
 	public void renderFaceYNeg(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
 	{
 		Tessellator tessellator = Tessellator.getInstance();
-
+		
 		double d3 = sprite.getInterpolatedU(renderMinX * 16D);
 		double d4 = sprite.getInterpolatedU(renderMaxX * 16D);
 		double d5 = sprite.getInterpolatedV(renderMinZ * 16D);
@@ -212,7 +213,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateBottom == 1)
+		} else if(uvRotateBottom == 1)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxZ * 16D);
 			d5 = sprite.getInterpolatedV(renderMinX * 16D);
@@ -224,7 +225,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateBottom == 3)
+		} else if(uvRotateBottom == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinX * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxX * 16D);
@@ -251,7 +252,7 @@ public class RenderBlocks
 		int i = bright;
 		int j = i >> 16 & 0xFFFF;
 		int k = i & 0xFFFF;
-
+		
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d8, d10).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d14).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 		tessellator.getBuffer().pos(d12, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
@@ -261,7 +262,7 @@ public class RenderBlocks
 	public void renderFaceYPos(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
 	{
 		Tessellator tessellator = Tessellator.getInstance();
-
+		
 		double d3 = sprite.getInterpolatedU(renderMinX * 16D);
 		double d4 = sprite.getInterpolatedU(renderMaxX * 16D);
 		double d5 = sprite.getInterpolatedV(renderMinZ * 16D);
@@ -296,7 +297,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateTop == 2)
+		} else if(uvRotateTop == 2)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxZ * 16D);
 			d5 = sprite.getInterpolatedV(renderMinX * 16D);
@@ -308,7 +309,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateTop == 3)
+		} else if(uvRotateTop == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinX * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxX * 16D);
@@ -326,7 +327,7 @@ public class RenderBlocks
 		double d14 = z + renderMinZ;
 		double d15 = z + renderMaxZ;
 		
-		if (renderFromInside)
+		if(renderFromInside)
 		{
 			d11 = x + renderMaxX;
 			d12 = x + renderMinX;
@@ -345,7 +346,7 @@ public class RenderBlocks
 	public void renderFaceZNeg(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
 	{
 		Tessellator tessellator = Tessellator.getInstance();
-
+		
 		double d3 = sprite.getInterpolatedU(renderMinX * 16D);
 		double d4 = sprite.getInterpolatedU(renderMaxX * 16D);
 		
@@ -394,7 +395,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateEast == 1)
+		} else if(uvRotateEast == 1)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxY * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMinY * 16D);
@@ -406,7 +407,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateEast == 3)
+		} else if(uvRotateEast == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinX * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxX * 16D);
@@ -443,7 +444,7 @@ public class RenderBlocks
 	public void renderFaceZPos(double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
 	{
 		Tessellator tessellator = Tessellator.getInstance();
-
+		
 		double d3 = sprite.getInterpolatedU(renderMinX * 16D);
 		double d4 = sprite.getInterpolatedU(renderMaxX * 16D);
 		double d5 = sprite.getInterpolatedV(16D - renderMaxY * 16D);
@@ -485,7 +486,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateWest == 2)
+		} else if(uvRotateWest == 2)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxY * 16D);
 			d5 = sprite.getInterpolatedV(renderMinX * 16D);
@@ -497,7 +498,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateWest == 3)
+		} else if(uvRotateWest == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinX * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxX * 16D);
@@ -576,7 +577,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateNorth == 2)
+		} else if(uvRotateNorth == 2)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxY * 16D);
 			d5 = sprite.getInterpolatedV(renderMinZ * 16D);
@@ -588,7 +589,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateNorth == 3)
+		} else if(uvRotateNorth == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinZ * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxZ * 16D);
@@ -674,7 +675,7 @@ public class RenderBlocks
 			d8 = d4;
 			d5 = d6;
 			d6 = d9;
-		}else if(uvRotateSouth == 1)
+		} else if(uvRotateSouth == 1)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMaxY * 16D);
 			d5 = sprite.getInterpolatedV(renderMaxZ * 16D);
@@ -686,7 +687,7 @@ public class RenderBlocks
 			d4 = d8;
 			d9 = d6;
 			d10 = d5;
-		}else if(uvRotateSouth == 3)
+		} else if(uvRotateSouth == 3)
 		{
 			d3 = sprite.getInterpolatedU(16D - renderMinZ * 16D);
 			d4 = sprite.getInterpolatedU(16D - renderMaxZ * 16D);
@@ -724,7 +725,8 @@ public class RenderBlocks
 	@Nonnull
 	public static RenderBlocks getInstance()
 	{
-		if(instance == null) instance = new RenderBlocks();
+		if(instance == null)
+			instance = new RenderBlocks();
 		return instance;
 	}
 	
@@ -732,7 +734,8 @@ public class RenderBlocks
 	public static RenderBlocks forMod(String modid)
 	{
 		RenderBlocks i = INSTANCES.get(modid);
-		if(i == null) INSTANCES.put(modid, i = new RenderBlocks());
+		if(i == null)
+			INSTANCES.put(modid, i = new RenderBlocks());
 		return i;
 	}
 }

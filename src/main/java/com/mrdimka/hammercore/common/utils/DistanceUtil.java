@@ -38,8 +38,10 @@ public class DistanceUtil
 	
 	private static final Set<EnumFacing> used = new HashSet<EnumFacing>();
 	private static final Map<EnumFacing, Double> facesMapped = new HashMap<EnumFacing, Double>();
+	
 	/**
-	 * Gets a {@link EnumFacing}[6] array containing sorted ways from fastest to, well, never
+	 * Gets a {@link EnumFacing}[6] array containing sorted ways from fastest
+	 * to, well, never
 	 */
 	public static EnumFacing[] sortByDistance(BlockPos from, BlockPos to)
 	{

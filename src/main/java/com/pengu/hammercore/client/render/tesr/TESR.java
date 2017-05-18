@@ -22,12 +22,13 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 {
 	/** This is safe to use while rendering */
 	protected float destroyProgress;
+	protected Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
 	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		ResourceLocation destroy = null;
-		RayTraceResult over = Minecraft.getMinecraft().objectMouseOver;
+		RayTraceResult over = mc.objectMouseOver;
 		destroyProgress = 0;
 		if(over != null && over.typeOfHit == Type.BLOCK && over.getBlockPos().equals(te.getPos()))
 		{
@@ -43,14 +44,13 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	public final void renderTileEntityFast(T te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer)
 	{
 		ResourceLocation destroy = null;
-		RayTraceResult over = Minecraft.getMinecraft().objectMouseOver;
+		RayTraceResult over = mc.objectMouseOver;
 		if(over != null && over.typeOfHit == Type.BLOCK && over.getBlockPos().equals(te.getPos()))
 		{
 			float progress = Minecraft.getMinecraft().playerController.curBlockDamageMP;
 			if(progress > 0F)
 				destroy = DestroyStageTexture.getByProgress(progress);
 		}
-		
 		renderTileEntityFast(te, x, y, z, partialTicks, destroy, buffer);
 	}
 	
@@ -125,8 +125,6 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 			return tags.getCompoundTag("tags");
 		return null;
 	}
-	
-	protected Minecraft mc = Minecraft.getMinecraft();
 	
 	protected int getBrightnessForRB(T te, RenderBlocks rb)
 	{

@@ -58,12 +58,13 @@ public class ItemBattery extends ItemFEBase
 				ItemStack a = inv.getStackInSlot(i);
 				chargeItem(stack, a);
 			}
-		}else
+		} else
 		{
 			if(mode.isChargingArmor())
 			{
 				Iterable<ItemStack> armorStacks = entityIn.getArmorInventoryList();
-				for(ItemStack a : armorStacks) chargeItem(stack, a);
+				for(ItemStack a : armorStacks)
+					chargeItem(stack, a);
 			}
 			
 			if(mode.isChargingHotbar())
@@ -75,28 +76,33 @@ public class ItemBattery extends ItemFEBase
 					InventoryPlayer inv = ((EntityPlayer) entityIn).inventory;
 					ArrayList<ItemStack> stacks;
 					heldEquipmentStacks = stacks = new ArrayList<>();
-					for(int i = 0; i < 9; ++i) stacks.add(inv.getStackInSlot(i));
+					for(int i = 0; i < 9; ++i)
+						stacks.add(inv.getStackInSlot(i));
 				}
 				
-				for(ItemStack a : heldEquipmentStacks) chargeItem(stack, a);
+				for(ItemStack a : heldEquipmentStacks)
+					chargeItem(stack, a);
 			}
 		}
 	}
 	
 	protected void chargeItem(ItemStack batteryStack, ItemStack targetStack)
 	{
-		//don't charge other active batteries
-		if(targetStack.getItem() instanceof ItemBattery && getMode(targetStack) != EnumBatteryShareMode.NOT_SHARE) return;
+		// don't charge other active batteries
+		if(targetStack.getItem() instanceof ItemBattery && getMode(targetStack) != EnumBatteryShareMode.NOT_SHARE)
+			return;
 		
 		if(targetStack.hasCapability(CapabilityEnergy.ENERGY, null))
 		{
 			IEnergyStorage storage = targetStack.getCapability(CapabilityEnergy.ENERGY, null);
-			if(storage != null && storage.canReceive()) extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
-		}else if(targetStack.hasCapability(CapabilityEJ.ENERGY, null))
+			if(storage != null && storage.canReceive())
+				extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
+		} else if(targetStack.hasCapability(CapabilityEJ.ENERGY, null))
 		{
 			IPowerStorage storage = targetStack.getCapability(CapabilityEJ.ENERGY, null);
-			if(storage != null) extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
-		}else if(targetStack.getItem() instanceof IPowerContainerItem)
+			if(storage != null)
+				extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
+		} else if(targetStack.getItem() instanceof IPowerContainerItem)
 		{
 			IPowerContainerItem pci = (IPowerContainerItem) targetStack.getItem();
 			extractEnergy(batteryStack, pci.receiveEnergy(targetStack, Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
@@ -111,23 +117,21 @@ public class ItemBattery extends ItemFEBase
 	
 	public EnumBatteryShareMode getMode(ItemStack stack)
 	{
-		if(stack.getTagCompound() == null) return EnumBatteryShareMode.NOT_SHARE;
+		if(stack.getTagCompound() == null)
+			return EnumBatteryShareMode.NOT_SHARE;
 		return EnumBatteryShareMode.values()[stack.getTagCompound().getByte("ShareMode") % EnumBatteryShareMode.values().length];
 	}
 	
 	public void setMode(ItemStack stack, EnumBatteryShareMode mode)
 	{
-		if(stack.getTagCompound() == null) stack.setTagCompound(new NBTTagCompound());
+		if(stack.getTagCompound() == null)
+			stack.setTagCompound(new NBTTagCompound());
 		stack.getTagCompound().setByte("ShareMode", (byte) (mode != null ? mode.ordinal() : 1));
 	}
 	
 	public enum EnumBatteryShareMode
 	{
-		NOT_SHARE("noshare"),
-		HOTBAR("hotbar"),
-		ARMOR("armor"),
-		ARMOR_AND_HOTBAR("armor_hotbar"),
-		ENTIRE_INVENTORY("inventory");
+		NOT_SHARE("noshare"), HOTBAR("hotbar"), ARMOR("armor"), ARMOR_AND_HOTBAR("armor_hotbar"), ENTIRE_INVENTORY("inventory");
 		
 		private final String i18n;
 		
