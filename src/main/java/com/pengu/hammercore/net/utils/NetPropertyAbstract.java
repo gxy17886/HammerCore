@@ -28,6 +28,11 @@ public abstract class NetPropertyAbstract<T>
 		value = initialValue;
 	}
 	
+	public int getId()
+    {
+	    return id;
+    }
+	
 	public abstract NBTTagCompound writeToNBT(NBTTagCompound nbt);
 	
 	public abstract void readFromNBT(NBTTagCompound nbt);

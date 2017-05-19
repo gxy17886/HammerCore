@@ -83,12 +83,7 @@ public class GuiBookEntry extends GuiCentered
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if(mouseButton == 1)
-		{
-			mc.displayGuiScreen(bookGui);
-			return;
-		}
-		if(mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5)
+		if(mouseButton == 1 || (mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5))
 		{
 			mc.displayGuiScreen(bookGui);
 			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));

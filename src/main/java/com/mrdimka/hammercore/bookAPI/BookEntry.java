@@ -34,6 +34,16 @@ public class BookEntry
 		return I18n.translateToLocal(title);
 	}
 	
+	public boolean isDisabled()
+	{
+		return true;
+	}
+	
+	public int getHoverColor()
+	{
+		return isDisabled() ? 0xFF0000 : 0xFFFFFF;
+	}
+	
 	@Nullable
 	public BookPage getPageAt(int index)
 	{

@@ -2,7 +2,7 @@ package com.mrdimka.hammercore.common.blocks.tesseract;
 
 public enum TransferMode
 {
-	SEND_RECEIVE, RECEIVE, SEND, DISABLED;
+	ALLOW, DECLINE;
 	
 	public static TransferMode fromByte(byte val)
 	{
@@ -14,13 +14,8 @@ public enum TransferMode
 		return (byte) ordinal();
 	}
 	
-	public boolean receives()
+	public boolean active()
 	{
-		return this == RECEIVE || this == SEND_RECEIVE;
-	}
-	
-	public boolean sends()
-	{
-		return this == SEND || this == SEND_RECEIVE;
+		return this == ALLOW;
 	}
 }

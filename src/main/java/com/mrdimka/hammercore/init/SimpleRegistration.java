@@ -15,6 +15,7 @@ import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.api.multipart.BlockMultipartProvider;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
+import com.pengu.hammercore.utils.IRegisterListener;
 
 public class SimpleRegistration
 {
@@ -56,6 +57,8 @@ public class SimpleRegistration
 		if(tab != null)
 			item.setCreativeTab(tab);
 		GameRegistry.register(item);
+		if(item instanceof IRegisterListener)
+			((IRegisterListener) item).onRegistered();
 		if(item instanceof MultiVariantItem)
 			ModItems.multiitems.add((MultiVariantItem) item);
 		else
@@ -82,6 +85,9 @@ public class SimpleRegistration
 		if(!(block instanceof INoItemBlock))
 			GameRegistry.register(ib.setRegistryName(block.getRegistryName()));
 		
+		if(block instanceof IRegisterListener)
+			((IRegisterListener) block).onRegistered();
+		
 		if(block instanceof ITileBlock)
 		{
 			Class c = ((ITileBlock) block).getTileClass();
@@ -103,6 +109,8 @@ public class SimpleRegistration
 		if(!(block instanceof INoItemBlock))
 		{
 			Item i = Item.getItemFromBlock(block);
+			if(i instanceof IRegisterListener)
+				((IRegisterListener) i).onRegistered();
 			if(i instanceof MultiVariantItem)
 				ModItems.multiitems.add((MultiVariantItem) i);
 			else if(i != null)

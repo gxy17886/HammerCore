@@ -14,6 +14,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants.NBT;
@@ -41,6 +42,16 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	 * tags are equal
 	 */
 	public boolean escapeSyncIfIdentical = false;
+	
+	{
+		initProperties();
+	}
+	
+	/** Called while constructing this tile */
+	public void initProperties()
+	{
+		
+	}
 	
 	@Override
 	public void markDirty()
@@ -206,6 +217,11 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 			FMLNetworkHandler.openGui(player, HammerCore.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
+	public void onPlacedBy(EntityPlayer player, EnumHand hand)
+	{
+		
+	}
+	
 	/** NEW GUI API */
 	
 	public boolean hasGui()
@@ -231,7 +247,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 		if(properties.contains(prop))
 			return properties.indexOf(prop);
 		properties.add(prop);
-		return properties.size();
+		return properties.size() - 1;
 	}
 	
 	@Override

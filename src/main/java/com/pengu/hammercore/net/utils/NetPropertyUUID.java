@@ -1,20 +1,21 @@
 package com.pengu.hammercore.net.utils;
 
 import java.nio.ByteBuffer;
+import java.util.UUID;
 
 import com.pengu.hammercore.utils.NBTUtils;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class NetPropertyString extends NetPropertyAbstract<String>
+public class NetPropertyUUID extends NetPropertyAbstract<UUID>
 {
-	public NetPropertyString(IPropertyChangeHandler handler)
+	public NetPropertyUUID(IPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyString(IPropertyChangeHandler handler, String initialValue)
+	public NetPropertyUUID(IPropertyChangeHandler handler, UUID initialValue)
 	{
 		super(handler, initialValue);
 	}
@@ -23,13 +24,13 @@ public class NetPropertyString extends NetPropertyAbstract<String>
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
 		if(value != null)
-			nbt.setString("val", value);
+			nbt.setUniqueId("val", value);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = nbt.getString("val");
+		value = nbt.getUniqueId("val");
 	}
 }

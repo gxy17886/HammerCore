@@ -14,6 +14,7 @@ import com.mrdimka.hammercore.bookAPI.BookEntry;
 import com.mrdimka.hammercore.client.GLRenderState;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.gui.GuiCentered;
+import com.pengu.hammercore.color.Color;
 
 public class GuiBookCategory extends GuiCentered
 {
@@ -61,8 +62,10 @@ public class GuiBookCategory extends GuiCentered
 			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				GL11.glColor4f(1, 1, 1, 1);
+				Color.glColourRGB(ent.getHoverColor());
 				mc.getTextureManager().bindTexture(category.book.customBackground);
 				RenderUtil.drawTexturedModalRect(guiLeft + 10, guiTop + 12 + y, 146, 0, 110, 11);
+				GL11.glColor4f(1, 1, 1, 1);
 			}
 			
 			y += fontRenderer.FONT_HEIGHT + 4;
@@ -79,17 +82,13 @@ public class GuiBookCategory extends GuiCentered
 	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
-		if(mouseButton == 1)
-		{
-			mc.displayGuiScreen(bookGui);
-			return;
-		}
-		if(mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5)
+		if(mouseButton == 1 || (mouseButton == 0 && mouseX >= guiLeft + xSize / 2 - 9 && mouseY >= guiTop + ySize - 4 && mouseX < guiLeft + xSize / 2 + 9 && mouseY < guiTop + ySize + 5))
 		{
 			mc.displayGuiScreen(bookGui);
 			mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
 			return;
 		}
+		
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		
 		int y = 0;
@@ -98,8 +97,15 @@ public class GuiBookCategory extends GuiCentered
 			{
 				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 				{
-					mc.displayGuiScreen(new GuiBookEntry(this, ent));
-					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					if(ent.isDisabled())
+					{
+						mc.displayGuiScreen(new GuiBookEntry(this, ent));
+						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, .6F));
+					} else
+					{
+						mc.displayGuiScreen(new GuiBookEntry(this, ent));
+						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					}
 					break;
 				}
 				

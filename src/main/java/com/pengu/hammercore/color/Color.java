@@ -209,6 +209,14 @@ public abstract class Color implements Copyable<Color>
 		GlStateManager.color(r, g, b, a);
 	}
 	
+	public static void glColourRGB(int color)
+	{
+		float r = ((color >> 16) & 0xFF) / 255F;
+		float g = ((color >> 8) & 0xFF) / 255F;
+		float b = ((color >> 0) & 0xFF) / 255F;
+		GlStateManager.color(r, g, b, 1);
+	}
+	
 	public static void glColourARGB(int color)
 	{
 		float r = ((color >> 16) & 0xFF) / 255F;

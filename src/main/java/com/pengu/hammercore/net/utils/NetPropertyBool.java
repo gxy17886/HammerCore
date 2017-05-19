@@ -2,6 +2,8 @@ package com.pengu.hammercore.net.utils;
 
 import java.nio.ByteBuffer;
 
+import javax.annotation.Nonnull;
+
 import com.pengu.hammercore.utils.NBTUtils;
 
 import io.netty.buffer.ByteBuf;
@@ -22,7 +24,7 @@ public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		nbt.setBoolean("val", value);
+		nbt.setBoolean("val", value == Boolean.TRUE);
 		return nbt;
 	}
 	
@@ -30,5 +32,18 @@ public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 		value = nbt.getBoolean("val");
+	}
+	
+	@Override
+	@Nonnull
+	public Boolean get()
+	{
+		return super.get() == Boolean.TRUE;
+	}
+	
+	@Override
+	public void set(Boolean val)
+	{
+		super.set(val == Boolean.TRUE);
 	}
 }

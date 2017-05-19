@@ -60,6 +60,7 @@ public class NumberUtils
 	public static Number fromBytes(byte[] array)
 	{
 		ByteBuffer buf = ByteBuffer.wrap(array);
+		if(array.length == 0) return null;
 		EnumNumberType type = EnumNumberType.values()[buf.get() % EnumNumberType.values().length];
 		if(type != EnumNumberType.UNDEFINED)
 		{
