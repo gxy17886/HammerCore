@@ -81,14 +81,19 @@ public class ParticleList
 		extendedParticleList.addAll(extendedParticleMap.values());
 		
 		for(int i = 0; i < extendedParticleList.size(); ++i)
-			if(extendedParticleList.get(i).isDead.get())
+		{
+			ExtendedParticle p = extendedParticleList.get(i);
+			p.update();
+			if(p.isDead.get())
 				extendedParticleList.remove(i);
+		}
 	}
 	
 	public static void renderExtendedParticles(RenderWorldLastEvent evt)
 	{
-		for(ExtendedParticle p : extendedParticleList)
+		for(int i = 0; i < extendedParticleList.size(); ++i)
 		{
+			ExtendedParticle p = extendedParticleList.get(i);
 			ParticleRenderer r = getRenderer(p.getClass());
 			if(r != null)
 				r.doRender(p, p.posX.get() - staticPlayerX, p.posY.get() - staticPlayerY, p.posZ.get() - staticPlayerZ, evt.getPartialTicks());

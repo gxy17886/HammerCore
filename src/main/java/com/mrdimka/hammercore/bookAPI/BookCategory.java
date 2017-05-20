@@ -32,7 +32,7 @@ public class BookCategory
 	
 	public boolean isDisabled()
 	{
-		return true;
+		return false;
 	}
 	
 	public int getHoverColor()
