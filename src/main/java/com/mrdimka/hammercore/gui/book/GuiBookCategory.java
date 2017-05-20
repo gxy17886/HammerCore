@@ -99,7 +99,6 @@ public class GuiBookCategory extends GuiCentered
 				{
 					if(ent.isDisabled())
 					{
-						mc.displayGuiScreen(new GuiBookEntry(this, ent));
 						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, .6F));
 					} else
 					{

@@ -25,6 +25,16 @@ public class BookCategory
 		return I18n.translateToLocal("bookapi." + book.bookId + ":" + categoryId);
 	}
 	
+	public boolean isDisabled()
+	{
+		return true;
+	}
+	
+	public int getHoverColor()
+	{
+		return isDisabled() ? 0xFF0000 : 0xFFFFFF;
+	}
+	
 	protected ItemStack icon;
 	
 	public ItemStack getIcon()

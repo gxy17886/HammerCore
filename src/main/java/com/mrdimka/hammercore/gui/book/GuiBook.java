@@ -14,6 +14,7 @@ import com.mrdimka.hammercore.bookAPI.BookCategory;
 import com.mrdimka.hammercore.client.GLRenderState;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.gui.GuiCentered;
+import com.pengu.hammercore.color.Color;
 
 public class GuiBook extends GuiCentered
 {
@@ -59,8 +60,10 @@ public class GuiBook extends GuiCentered
 			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				GL11.glColor4f(1, 1, 1, 1);
+				Color.glColourRGB(cat.getHoverColor());
 				mc.getTextureManager().bindTexture(book.customBackground);
 				RenderUtil.drawTexturedModalRect(guiLeft + 10, guiTop + 12 + y, 146, 0, 110, 11);
+				GL11.glColor4f(1, 1, 1, 1);
 			}
 			
 			y += fontRenderer.FONT_HEIGHT + 4;
@@ -79,8 +82,14 @@ public class GuiBook extends GuiCentered
 			{
 				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 				{
-					mc.displayGuiScreen(new GuiBookCategory(this, cat));
-					mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					if(cat.isDisabled())
+					{
+						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, .6F));
+					}else
+					{
+						mc.displayGuiScreen(new GuiBookCategory(this, cat));
+						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));
+					}
 					break;
 				}
 				
