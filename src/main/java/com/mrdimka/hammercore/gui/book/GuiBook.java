@@ -39,6 +39,8 @@ public class GuiBook extends GuiCentered
 		int y = 0;
 		for(BookCategory cat : book.categories)
 		{
+			if(cat.isHidden())
+				continue;
 			fontRenderer.drawString(cat.getTitle(), (int) guiLeft + 12 + (!cat.getIcon().isEmpty() ? FONT_HEIGHT : 0), (int) guiTop + 14 + y, 0, false);
 			if(!cat.getIcon().isEmpty())
 			{
@@ -57,6 +59,8 @@ public class GuiBook extends GuiCentered
 		y = 0;
 		for(BookCategory cat : book.categories)
 		{
+			if(cat.isHidden())
+				continue;
 			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				GL11.glColor4f(1, 1, 1, 1);
@@ -80,12 +84,15 @@ public class GuiBook extends GuiCentered
 		if(mouseButton == 0)
 			for(BookCategory cat : book.categories)
 			{
+				if(cat.isHidden())
+					continue;
+				
 				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 				{
 					if(cat.isDisabled())
 					{
 						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, .6F));
-					}else
+					} else
 					{
 						mc.displayGuiScreen(new GuiBookCategory(this, cat));
 						mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1));

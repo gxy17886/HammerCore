@@ -41,6 +41,8 @@ public class GuiBookCategory extends GuiCentered
 		int y = 0;
 		for(BookEntry ent : category.entries)
 		{
+			if(ent.isHidden())
+				continue;
 			fontRenderer.drawString(ent.getTitle(), (int) guiLeft + 12 + (!ent.getIcon().isEmpty() ? FONT_HEIGHT : 0), (int) guiTop + 14 + y, 0, false);
 			if(!ent.getIcon().isEmpty())
 			{
@@ -59,6 +61,8 @@ public class GuiBookCategory extends GuiCentered
 		y = 0;
 		for(BookEntry ent : category.entries)
 		{
+			if(ent.isHidden())
+				continue;
 			if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 			{
 				GL11.glColor4f(1, 1, 1, 1);
@@ -95,6 +99,8 @@ public class GuiBookCategory extends GuiCentered
 		if(mouseButton == 0)
 			for(BookEntry ent : category.entries)
 			{
+				if(ent.isHidden())
+					continue;
 				if(mouseX >= guiLeft + 10 && mouseY >= guiTop + 12 + y && mouseX < guiLeft + 124 && mouseY < guiTop + 14 + y + fontRenderer.FONT_HEIGHT)
 				{
 					if(ent.isDisabled())

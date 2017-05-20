@@ -34,6 +34,11 @@ public class BookEntry
 		return I18n.translateToLocal(title);
 	}
 	
+	public boolean isHidden()
+	{
+		return false;
+	}
+	
 	public boolean isDisabled()
 	{
 		return true;

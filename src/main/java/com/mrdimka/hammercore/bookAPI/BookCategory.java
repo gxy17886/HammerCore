@@ -25,6 +25,11 @@ public class BookCategory
 		return I18n.translateToLocal("bookapi." + book.bookId + ":" + categoryId);
 	}
 	
+	public boolean isHidden()
+	{
+		return false;
+	}
+	
 	public boolean isDisabled()
 	{
 		return true;
