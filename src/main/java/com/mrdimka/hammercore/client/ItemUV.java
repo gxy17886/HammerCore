@@ -36,6 +36,6 @@ public class ItemUV extends UV
 	@Override
 	public String toString()
 	{
-		return getClass().getName() + "@[path=" + path + ",x=" + posX + ",double y=" + posY + ",width=" + width + ",height=" + height + "]";
+		return getClass().getName() + "@[item=" + icon + ",width=" + width + ",height=" + height + "]";
 	}
 }
