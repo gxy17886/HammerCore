@@ -1,15 +1,6 @@
 package com.mrdimka.hammercore.asm;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.math.BigInteger;
-import java.net.URLClassLoader;
 import java.util.Map;
-
-import com.mrdimka.hammercore.common.utils.IOUtils;
 
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 

@@ -6,11 +6,11 @@ import java.util.Iterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
+import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
@@ -24,7 +24,7 @@ import org.objectweb.asm.util.TraceMethodVisitor;
 public class HammerCoreTransformer implements IClassTransformer
 {
 	/* net/minecraft/world/World */
-	private String classNameWorld = "ajq";
+	private String classNameWorld = "ajs";
 	
 	/* (Lnet/minecraft/util/BlockPos;Lnet/minecraft/world/EnumSkyBlock;)I /
 	 * func_175638_a */
@@ -33,7 +33,7 @@ public class HammerCoreTransformer implements IClassTransformer
 	/* net/minecraft/world/World.getRawLight / func_175638_a */
 	private String computeLightValueMethodName = "a";
 	
-	/*(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;
+	/* (Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;
 	 * Lnet/minecraft/util/BlockPos;)I */
 	private String goalInvokeDesc = "(Latj;Laju;Lco;)I";
 	
@@ -68,11 +68,27 @@ public class HammerCoreTransformer implements IClassTransformer
 	{
 		// System.out.println("**************** Dynamic Lights transform running on World, obf: "
 		// + obf + " *********************** ");
-		ClassNode classNode = new ClassNode();
-		ClassReader classReader = new ClassReader(bytes);
-		classReader.accept(classNode, 0);
+		ClassNode classNode = ObjectWebUtils.loadClass(bytes);
+		
+		String desc = "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Z)Z";
+		if(obf)
+			desc = "(L" + classNameWorld + ";Lco;Z)Z";
+		
+		InsnList canSnowAtBody = new InsnList();
+		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 0));
+		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 1));
+		canSnowAtBody.add(new VarInsnNode(Opcodes.ILOAD, 2));
+		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
+		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
+		
 		for(MethodNode m : classNode.methods)
 		{
+			if(m.name.equals("canSnowAtBody"))
+			{
+				m.instructions = canSnowAtBody;
+				System.out.println("Sending instructions to World for function canSnowAtBody");
+			}
+			
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))
 			{
 				// System.out.println("In target method " +
@@ -115,8 +131,7 @@ public class HammerCoreTransformer implements IClassTransformer
 				break;
 			}
 		}
-		ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
-		classNode.accept(writer);
-		return writer.toByteArray();
+		
+		return ObjectWebUtils.writeClassToByteArray(classNode);
 	}
 }

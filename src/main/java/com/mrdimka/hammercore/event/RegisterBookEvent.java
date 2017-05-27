@@ -1,9 +1,9 @@
 package com.mrdimka.hammercore.event;
 
+import net.minecraftforge.fml.common.eventhandler.Event;
+
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.bookAPI.Book;
-
-import net.minecraftforge.fml.common.eventhandler.Event;
 
 public class RegisterBookEvent extends Event
 {

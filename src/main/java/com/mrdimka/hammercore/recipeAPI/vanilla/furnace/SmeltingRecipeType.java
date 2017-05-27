@@ -1,9 +1,5 @@
 package com.mrdimka.hammercore.recipeAPI.vanilla.furnace;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
-
-import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.plugins.vanilla.furnace.SmeltingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -12,7 +8,6 @@ import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.mrdimka.hammercore.recipeAPI.types.IRecipeType;
-import com.mrdimka.hammercore.recipeAPI.types.IRecipeType.RecipeParseException;
 
 public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
 {

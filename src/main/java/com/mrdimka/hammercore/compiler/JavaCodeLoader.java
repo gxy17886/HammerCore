@@ -9,8 +9,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.common.utils.IOUtils;
 

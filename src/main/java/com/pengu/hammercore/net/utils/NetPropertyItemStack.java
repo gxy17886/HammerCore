@@ -3,9 +3,6 @@ package com.pengu.hammercore.net.utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
-import com.pengu.hammercore.net.utils.NetPropertyAbstract;
-
 public class NetPropertyItemStack extends NetPropertyAbstract<ItemStack>
 {
 	public NetPropertyItemStack(IPropertyChangeHandler handler)

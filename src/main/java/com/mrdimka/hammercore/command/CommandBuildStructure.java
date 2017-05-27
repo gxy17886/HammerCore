@@ -2,10 +2,7 @@ package com.mrdimka.hammercore.command;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.mrdimka.hammercore.structure.StructureAPI;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -15,6 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+
+import com.mrdimka.hammercore.structure.StructureAPI;
 
 public class CommandBuildStructure extends CommandBase
 {

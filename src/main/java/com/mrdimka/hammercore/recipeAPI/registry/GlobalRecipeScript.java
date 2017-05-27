@@ -1,11 +1,10 @@
 package com.mrdimka.hammercore.recipeAPI.registry;
 
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.recipeAPI.RecipePlugin;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
+
+import com.mrdimka.hammercore.HammerCore;
 
 public class GlobalRecipeScript extends SimpleRecipeScript
 {

@@ -5,20 +5,7 @@ import java.util.List;
 
 import com.mrdimka.hammercore.common.utils.Chars;
 import com.mrdimka.hammercore.math.functions.ExpressionFunction;
-import com.mrdimka.hammercore.math.functions.FunctionAbs;
-import com.mrdimka.hammercore.math.functions.FunctionAcos;
-import com.mrdimka.hammercore.math.functions.FunctionAsin;
-import com.mrdimka.hammercore.math.functions.FunctionAtan;
-import com.mrdimka.hammercore.math.functions.FunctionCos;
-import com.mrdimka.hammercore.math.functions.FunctionCosh;
-import com.mrdimka.hammercore.math.functions.FunctionExp;
-import com.mrdimka.hammercore.math.functions.FunctionLog;
-import com.mrdimka.hammercore.math.functions.FunctionRand;
-import com.mrdimka.hammercore.math.functions.FunctionSin;
-import com.mrdimka.hammercore.math.functions.FunctionSinh;
-import com.mrdimka.hammercore.math.functions.FunctionSqrt;
-import com.mrdimka.hammercore.math.functions.FunctionTan;
-import com.mrdimka.hammercore.math.functions.FunctionTanh;
+import com.mrdimka.hammercore.math.functions.FunctionMath;
 
 public class ExpressionEvaluator
 {
@@ -29,29 +16,16 @@ public class ExpressionEvaluator
 	
 	{
 		// ADD FUNCTIONS. rand(num) is very good, if you try :P
-		addFunction(FunctionSqrt.inst);
-		addFunction(FunctionAbs.inst);
-		addFunction(FunctionSin.inst);
-		addFunction(FunctionCos.inst);
-		addFunction(FunctionTan.inst);
-		addFunction(FunctionAsin.inst);
-		addFunction(FunctionAcos.inst);
-		addFunction(FunctionAtan.inst);
-		addFunction(FunctionSinh.inst);
-		addFunction(FunctionCosh.inst);
-		addFunction(FunctionTanh.inst);
-		addFunction(FunctionLog.inst);
-		addFunction(FunctionRand.inst);
-		addFunction(FunctionExp.inst);
+		addFunction(FunctionMath.inst);
 	}
 	
 	public ExpressionEvaluator(String str)
 	{
 		str = str.replaceAll(Chars.PI + "", "PI");
 		str = str.replaceAll("PI", Math.PI + ""); // Include Math.PI into this
-												  // expression
+		                                          // expression
 		str = str.replaceAll("E", Math.E + ""); // Include Math.E (Euler's
-												// number) into this expression
+		                                        // number) into this expression
 		this.str = str;
 	}
 	
@@ -151,9 +125,9 @@ public class ExpressionEvaluator
 			
 			boolean funcFound = false;
 			for(ExpressionFunction f : functions)
-				if(f.functionName.equalsIgnoreCase(func))
+				if(f.accepts(func, x))
 				{
-					x = f.apply(x);
+					x = f.apply(func, x);
 					funcFound = true;
 					break;
 				}

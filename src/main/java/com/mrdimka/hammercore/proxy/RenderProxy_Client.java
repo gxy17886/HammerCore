@@ -1,9 +1,7 @@
 package com.mrdimka.hammercore.proxy;
 
 import java.util.Iterator;
-import java.util.UUID;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -20,8 +18,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.client.RenderGui;
 import com.mrdimka.hammercore.client.renderer.IRenderHelper;
@@ -31,14 +27,10 @@ import com.mrdimka.hammercore.client.renderer.tile.TileRenderTesseract;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.blocks.tesseract.TileTesseract;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
-import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.mrdimka.hammercore.init.ModItems;
-import com.mrdimka.hammercore.json.JSONObject;
-import com.mrdimka.hammercore.json.JSONTokener;
 import com.pengu.hammercore.client.model.HasNoModel;
 import com.pengu.hammercore.client.render.item.TileEntityItemStackRendererHC;
 import com.pengu.hammercore.client.texture.TextureFXManager;
-import com.pengu.hammercore.client.texture.URLImageTexture;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common
@@ -76,18 +68,20 @@ public class RenderProxy_Client extends RenderProxy_Common
 		ClientRegistry.bindTileEntitySpecialRenderer(TileMultipart.class, new TileRenderMultipart());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTesseract.class, new TileRenderTesseract());
 		
-//		try
-//		{
-//			JSONObject obj = (JSONObject) new JSONTokener(new String(IOUtils.downloadData("https://raw.githubusercontent.com/APengu/HammerCore/1.11.x/hd_skins.json"))).nextValue();
-//			for(String key : obj.keySet())
-//			{
-//				HammerCore.LOG.info("HD Skin for " + key + ": Loading...");
-//				ResourceLocation path = new ResourceLocation("skins/" + key);
-//				Minecraft.getMinecraft().getTextureManager().mapTextureObjects.put(path, new URLImageTexture(path, obj.getString(key)));
-//				HammerCore.LOG.info("HD Skin for " + key + ": Imported");
-//			}
-//		}
-//		catch(Throwable err) {}
+		// try
+		// {
+		// JSONObject obj = (JSONObject) new JSONTokener(new
+		// String(IOUtils.downloadData("https://raw.githubusercontent.com/APengu/HammerCore/1.11.x/hd_skins.json"))).nextValue();
+		// for(String key : obj.keySet())
+		// {
+		// HammerCore.LOG.info("HD Skin for " + key + ": Loading...");
+		// ResourceLocation path = new ResourceLocation("skins/" + key);
+		// Minecraft.getMinecraft().getTextureManager().mapTextureObjects.put(path,
+		// new URLImageTexture(path, obj.getString(key)));
+		// HammerCore.LOG.info("HD Skin for " + key + ": Imported");
+		// }
+		// }
+		// catch(Throwable err) {}
 	}
 	
 	@Override

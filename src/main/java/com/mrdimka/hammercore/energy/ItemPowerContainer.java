@@ -3,7 +3,6 @@ package com.mrdimka.hammercore.energy;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 public class ItemPowerContainer extends Item implements IPowerContainerItem
 {

@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import scala.actors.threadpool.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -178,7 +177,7 @@ public class StructureAPI
 			return struct;
 		}
 		return new Structure(); // empty structure, no blocks/tiles
-								// placed/validated.
+		                        // placed/validated.
 	}
 	
 	public static Set<String> GetAllStructures()

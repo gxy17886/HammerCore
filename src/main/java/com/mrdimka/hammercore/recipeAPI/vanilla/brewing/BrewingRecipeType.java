@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import com.mrdimka.hammercore.common.match.item.ItemListContainerHelper;
 import com.mrdimka.hammercore.common.match.item.ItemMatchParams;
 import com.mrdimka.hammercore.recipeAPI.BrewingRecipe;
-import com.mrdimka.hammercore.recipeAPI.BrewingRecipe.BSR;
 import com.mrdimka.hammercore.recipeAPI.types.IRecipeType;
 
 public class BrewingRecipeType implements IRecipeType<BrewingRecipeHC>

@@ -3,13 +3,13 @@ package com.pengu.hammercore.client.texture;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.pengu.hammercore.client.texture.TextureUtils.IIconRegister;
-
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.pengu.hammercore.client.texture.TextureUtils.IIconRegister;
 
 public class SpriteSheetManager
 {

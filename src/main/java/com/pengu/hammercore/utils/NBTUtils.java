@@ -1,8 +1,8 @@
 package com.pengu.hammercore.utils;
 
-import com.pengu.hammercore.utils.NumberUtils.EnumNumberType;
-
 import net.minecraft.nbt.NBTTagCompound;
+
+import com.pengu.hammercore.utils.NumberUtils.EnumNumberType;
 
 public class NBTUtils
 {

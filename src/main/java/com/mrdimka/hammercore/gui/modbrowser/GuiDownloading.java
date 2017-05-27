@@ -39,13 +39,13 @@ public class GuiDownloading extends GuiScreen
 	private void doDownload()
 	{
 		if(opt_toRemove != null && opt_toRemove.isFile() && !opt_toRemove.delete()) // try
-																					// to
-																					// delete
-																					// by
-																					// normal
-																					// method
+		                                                                            // to
+		                                                                            // delete
+		                                                                            // by
+		                                                                            // normal
+		                                                                            // method
 			opt_toRemove.deleteOnExit(); // if we can't do it, delete the file
-										 // on app exit
+			                             // on app exit
 			
 		try
 		{

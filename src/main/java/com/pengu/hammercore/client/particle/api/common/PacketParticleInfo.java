@@ -1,7 +1,6 @@
 package com.pengu.hammercore.client.particle.api.common;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleLava;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

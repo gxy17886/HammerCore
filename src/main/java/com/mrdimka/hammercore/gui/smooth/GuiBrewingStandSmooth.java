@@ -1,13 +1,13 @@
 package com.mrdimka.hammercore.gui.smooth;
 
-import com.mrdimka.hammercore.client.utils.RenderUtil;
-
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+
+import com.mrdimka.hammercore.client.utils.RenderUtil;
 
 public class GuiBrewingStandSmooth extends GuiBrewingStand
 {

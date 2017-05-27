@@ -15,9 +15,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.pengu.hammercore.client.render.vertex.SimpleBlockRendering;
 
 @SideOnly(Side.CLIENT)
 public class RenderBlocks
@@ -30,6 +31,11 @@ public class RenderBlocks
 	 */
 	@Deprecated
 	public static float alpha = 1F;
+	
+	/**
+	 * Use this to make your rendering very easy
+	 */
+	public final SimpleBlockRendering simpleRenderer = new SimpleBlockRendering(this);
 	
 	public float renderAlpha = 1F;
 	public IBlockAccess blockAccess;
@@ -718,6 +724,22 @@ public class RenderBlocks
 		tessellator.getBuffer().pos(d11, d12, d14).tex(d4, d6).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d14).tex(d7, d9).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
 		tessellator.getBuffer().pos(d11, d13, d15).tex(d3, d5).lightmap(j, k).color(red, green, blue, renderAlpha).endVertex();
+	}
+	
+	public void renderFace(EnumFacing face, double x, double y, double z, TextureAtlasSprite sprite, float red, float green, float blue, int bright)
+	{
+		if(face == EnumFacing.DOWN)
+			renderFaceYNeg(x, y, z, sprite, red, green, blue, bright);
+		if(face == EnumFacing.UP)
+			renderFaceYPos(x, y, z, sprite, red, green, blue, bright);
+		if(face == EnumFacing.NORTH)
+			renderFaceZNeg(x, y, z, sprite, red, green, blue, bright);
+		if(face == EnumFacing.SOUTH)
+			renderFaceZPos(x, y, z, sprite, red, green, blue, bright);
+		if(face == EnumFacing.WEST)
+			renderFaceXNeg(x, y, z, sprite, red, green, blue, bright);
+		if(face == EnumFacing.EAST)
+			renderFaceXPos(x, y, z, sprite, red, green, blue, bright);
 	}
 	
 	private static final Map<String, RenderBlocks> INSTANCES = new HashMap<>();

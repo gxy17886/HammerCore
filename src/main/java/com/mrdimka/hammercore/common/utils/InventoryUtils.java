@@ -1,13 +1,13 @@
 package com.mrdimka.hammercore.common.utils;
 
-import com.mrdimka.hammercore.common.InterItemStack;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.common.InterItemStack;
 
 public class InventoryUtils
 {

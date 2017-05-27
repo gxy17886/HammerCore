@@ -3,11 +3,12 @@ package com.mrdimka.hammercore.event.vanilla;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.end.DragonFightManager;
 import net.minecraft.world.gen.feature.WorldGenEndPodium;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.mrdimka.hammercore.HammerCore;
@@ -20,6 +21,8 @@ import com.mrdimka.hammercore.common.utils.WorldUtil;
 @MCFBus
 public class SpawnEnderDragonEggHandler
 {
+	private static final String AUTHOR_USERNAME = "APengu", AUTHOR_DNAME = TextFormatting.BLUE + "" + TextFormatting.ITALIC + "       " + TextFormatting.RESET + "  ";
+	
 	@SubscribeEvent
 	public void dragonDieEvent(LivingDeathEvent evt)
 	{
@@ -69,5 +72,12 @@ public class SpawnEnderDragonEggHandler
 			if(shouldSpawnEgg)
 				HammerCore.updatables.add(SetEgg);
 		}
+	}
+	
+	@SubscribeEvent
+	public void onNameFormat(PlayerEvent.NameFormat event)
+	{
+		if(event.getUsername().equals(AUTHOR_USERNAME))
+			event.setDisplayname(AUTHOR_DNAME);
 	}
 }

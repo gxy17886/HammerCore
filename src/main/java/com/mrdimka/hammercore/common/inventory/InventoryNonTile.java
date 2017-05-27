@@ -1,9 +1,5 @@
 package com.mrdimka.hammercore.common.inventory;
 
-import com.mrdimka.hammercore.common.InterItemStack;
-import com.mrdimka.hammercore.common.utils.WorldUtil;
-
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -14,6 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.common.InterItemStack;
+import com.mrdimka.hammercore.common.utils.WorldUtil;
 
 /**
  * This is a part of Hammer Core InventoryNonTile is used widely to make

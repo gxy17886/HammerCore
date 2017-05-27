@@ -2,11 +2,6 @@ package com.mrdimka.hammercore.gui;
 
 import java.util.Map;
 
-import org.lwjgl.util.glu.Project;
-
-import com.mrdimka.hammercore.api.APILoader;
-import com.mrdimka.hammercore.api.RequiredDeps;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -16,6 +11,11 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+
+import org.lwjgl.util.glu.Project;
+
+import com.mrdimka.hammercore.api.APILoader;
+import com.mrdimka.hammercore.api.RequiredDeps;
 
 public class GuiMissingApis extends GuiScreen
 {

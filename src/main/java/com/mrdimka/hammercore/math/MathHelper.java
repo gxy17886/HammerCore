@@ -1,8 +1,5 @@
 package com.mrdimka.hammercore.math;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 public class MathHelper
 {
 	public static final double phi = 1.618033988749894;

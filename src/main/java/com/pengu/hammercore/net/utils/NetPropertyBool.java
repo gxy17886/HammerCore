@@ -1,12 +1,7 @@
 package com.pengu.hammercore.net.utils;
 
-import java.nio.ByteBuffer;
-
 import javax.annotation.Nonnull;
 
-import com.pengu.hammercore.utils.NBTUtils;
-
-import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyBool extends NetPropertyAbstract<Boolean>
@@ -24,14 +19,17 @@ public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		nbt.setBoolean("val", value == Boolean.TRUE);
+		nbt.setBoolean("Val", value == Boolean.TRUE);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = nbt.getBoolean("val");
+		if(!nbt.hasKey("Val") && nbt.hasKey("val"))
+			value = nbt.getBoolean("val");
+		else
+			value = nbt.getBoolean("Val");
 	}
 	
 	@Override

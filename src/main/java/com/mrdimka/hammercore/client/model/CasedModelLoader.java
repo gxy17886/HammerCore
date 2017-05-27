@@ -5,7 +5,6 @@ import java.util.Set;
 
 import net.minecraft.client.model.ModelRenderer;
 
-import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.client.model.SimpleModelLoader.ModelLoadingException;
 import com.mrdimka.hammercore.client.model.SimpleModelLoader.ModelLoadingExceptionMessage;
 import com.mrdimka.hammercore.client.model.file.ModelCube;

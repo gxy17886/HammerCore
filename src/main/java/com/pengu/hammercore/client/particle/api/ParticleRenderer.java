@@ -1,7 +1,5 @@
 package com.pengu.hammercore.client.particle.api;
 
-import net.minecraft.client.renderer.VertexBuffer;
-
 import com.pengu.hammercore.client.particle.api.common.ExtendedParticle;
 
 public abstract class ParticleRenderer<T extends ExtendedParticle>

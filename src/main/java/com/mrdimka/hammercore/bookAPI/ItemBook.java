@@ -1,13 +1,13 @@
 package com.mrdimka.hammercore.bookAPI;
 
-import com.mrdimka.hammercore.HammerCore;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.HammerCore;
 
 public abstract class ItemBook extends Item
 {

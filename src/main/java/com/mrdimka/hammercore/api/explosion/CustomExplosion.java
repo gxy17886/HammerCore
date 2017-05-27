@@ -117,7 +117,7 @@ public class CustomExplosion implements IUpdatable
 			
 			if(!worldObj.isBlockLoaded(new BlockPos(xCoord, 16, zCoord)))
 				worldObj.getChunkFromBlockCoords(new BlockPos(xCoord, 16, zCoord)); // load
-																					// chunk
+				                                                                    // chunk
 				
 			for(int y = yCoord; y >= 0 && energy > 0; y--)
 			{

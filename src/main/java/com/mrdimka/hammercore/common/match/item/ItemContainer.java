@@ -1,14 +1,11 @@
 package com.mrdimka.hammercore.common.match.item;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import com.google.common.base.Predicate;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
+
+import com.google.common.base.Predicate;
 
 public class ItemContainer implements Predicate<ItemStack>
 {

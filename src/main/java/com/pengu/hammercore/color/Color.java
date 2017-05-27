@@ -1,8 +1,5 @@
 package com.pengu.hammercore.color;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -109,12 +106,45 @@ public abstract class Color implements Copyable<Color>
 		return this.add(color2.copy().sub(this).scale(d));
 	}
 	
+	public static int interpolateARGB(int ca, int cb, double d)
+	{
+		int a1 = (ca >> 24) & 0xFF;
+		int a2 = (cb >> 24) & 0xFF;
+		int r1 = (ca >> 16) & 0xFF;
+		int r2 = (cb >> 16) & 0xFF;
+		int g1 = (ca >> 8) & 0xFF;
+		int g2 = (cb >> 8) & 0xFF;
+		int b1 = (ca >> 0) & 0xFF;
+		int b2 = (cb >> 0) & 0xFF;
+		int inta = (int) ((a1 - a2) * d) + a1;
+		int intr = (int) ((r1 - r2) * d) + r1;
+		int intg = (int) ((g1 - g2) * d) + g1;
+		int intb = (int) ((b1 - b2) * d) + b1;
+		return packARGB(intr, intg, intb, inta);
+	}
+	
+	public static int interpolateRGBA(int ca, int cb, double d)
+	{
+		int r1 = (ca >> 24) & 0xFF;
+		int r2 = (cb >> 24) & 0xFF;
+		int g1 = (ca >> 16) & 0xFF;
+		int g2 = (cb >> 16) & 0xFF;
+		int b1 = (ca >> 8) & 0xFF;
+		int b2 = (cb >> 8) & 0xFF;
+		int a1 = (ca >> 0) & 0xFF;
+		int a2 = (cb >> 0) & 0xFF;
+		int inta = (int) ((a1 - a2) * d) + a1;
+		int intr = (int) ((r1 - r2) * d) + r1;
+		int intg = (int) ((g1 - g2) * d) + g1;
+		int intb = (int) ((b1 - b2) * d) + b1;
+		return packARGB(intr, intg, intb, inta);
+	}
+	
 	public Color multiplyC(double d)
 	{
 		r = (byte) MathHelper.clip((r & 0xFF) * d, 0, 255);
 		g = (byte) MathHelper.clip((g & 0xFF) * d, 0, 255);
 		b = (byte) MathHelper.clip((b & 0xFF) * d, 0, 255);
-		
 		return this;
 	}
 	

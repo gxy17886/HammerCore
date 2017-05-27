@@ -1,14 +1,13 @@
 package com.mrdimka.hammercore.client.utils;
 
-import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.common.base.Joiner;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.google.common.base.Joiner;
 
 @SideOnly(Side.CLIENT)
 public class TextDivider

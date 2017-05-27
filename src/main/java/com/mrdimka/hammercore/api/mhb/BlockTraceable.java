@@ -1,6 +1,5 @@
 package com.mrdimka.hammercore.api.mhb;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.mrdimka.hammercore.raytracer.CuboidRayTraceResult;
 import com.mrdimka.hammercore.raytracer.IndexedCuboid6;
 import com.mrdimka.hammercore.raytracer.RayTracer;
 import com.mrdimka.hammercore.vec.Cuboid6;

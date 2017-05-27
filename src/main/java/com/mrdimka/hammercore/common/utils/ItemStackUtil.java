@@ -3,8 +3,6 @@ package com.mrdimka.hammercore.common.utils;
 import java.util.Arrays;
 import java.util.List;
 
-import com.mrdimka.hammercore.common.InterItemStack;
-
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -14,6 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.common.InterItemStack;
 
 /**
  * Contains some utilities to make life with {@link ItemStack}s easier

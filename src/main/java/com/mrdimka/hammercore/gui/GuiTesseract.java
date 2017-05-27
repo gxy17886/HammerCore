@@ -40,7 +40,8 @@ public class GuiTesseract extends GuiCentered
 		super.initGui();
 		
 		String text = getTileText();
-		if(freq != null) text = freq.getText();
+		if(freq != null)
+			text = freq.getText();
 		
 		freq = new GuiTextField(0, fontRenderer, (int) guiLeft + 23, (int) guiTop + 7, 130, 14);
 		freq.setMaxStringLength(36);
@@ -50,7 +51,8 @@ public class GuiTesseract extends GuiCentered
 	private String getTileText()
 	{
 		String s = tile.frequency.get();
-		if(s == null) return "";
+		if(s == null)
+			return "";
 		return s;
 	}
 	
@@ -63,7 +65,8 @@ public class GuiTesseract extends GuiCentered
 		mouseX -= guiLeft;
 		mouseY -= guiTop;
 		
-		if(lastTileFreq == null) lastTileFreq = getTileText();
+		if(lastTileFreq == null)
+			lastTileFreq = getTileText();
 		if(!lastTileFreq.equals(getTileText()))
 		{
 			lastTileFreq = tile.frequency.get();

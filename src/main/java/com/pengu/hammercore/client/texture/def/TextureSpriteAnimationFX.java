@@ -1,9 +1,6 @@
 package com.pengu.hammercore.client.texture.def;
 
-import net.minecraft.client.Minecraft;
-
 import com.mrdimka.hammercore.math.MathHelper;
-import com.pengu.hammercore.client.texture.TextureSpriteCustom;
 import com.pengu.hammercore.client.texture.TextureSpriteFX;
 
 public class TextureSpriteAnimationFX extends TextureSpriteFX

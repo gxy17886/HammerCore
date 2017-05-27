@@ -1,10 +1,5 @@
 package com.pengu.hammercore.net.utils;
 
-import java.nio.ByteBuffer;
-
-import com.pengu.hammercore.utils.NBTUtils;
-
-import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyString extends NetPropertyAbstract<String>
@@ -22,14 +17,24 @@ public class NetPropertyString extends NetPropertyAbstract<String>
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		if(value != null)
-			nbt.setString("val", value);
+		if(value != null && !value.isEmpty())
+			nbt.setString("Val", value);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = nbt.getString("val");
+		if(!nbt.hasKey("Val") && nbt.hasKey("val"))
+			value = nbt.getString("val");
+		else
+			value = nbt.getString("Val");
+	}
+	
+	@Override
+	public String get()
+	{
+		String s = super.get();
+		return s == null ? "" : s;
 	}
 }

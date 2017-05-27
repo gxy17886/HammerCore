@@ -179,7 +179,13 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 		readNBT_world = worldIn;
 	}
 	
-	private IItemHandler[] itemHandlers = new SidedInvWrapper[6];
+	/**
+	 * Was previously "new {@link SidedInvWrapper}[6]", which could give
+	 * {@link ArrayStoreException} Now "new {@link IItemHandler}[6]"
+	 * 
+	 * @since 1.7.1
+	 */
+	private IItemHandler[] itemHandlers = new IItemHandler[6];
 	
 	protected IItemHandler createSidedHandler(EnumFacing side)
 	{

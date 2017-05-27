@@ -1,11 +1,8 @@
 package com.pengu.hammercore.net.utils;
 
-import java.nio.ByteBuffer;
+import net.minecraft.nbt.NBTTagCompound;
 
 import com.pengu.hammercore.utils.NBTUtils;
-
-import io.netty.buffer.ByteBuf;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyNumber<T extends Number> extends NetPropertyAbstract<T>
 {
@@ -22,13 +19,23 @@ public class NetPropertyNumber<T extends Number> extends NetPropertyAbstract<T>
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		NBTUtils.writeNumberToNBT("val", nbt, value);
+		NBTUtils.writeNumberToNBT("Val", nbt, value);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = (T) NBTUtils.readNumberFromNBT("val", nbt);
+		if(!nbt.hasKey("Val") && nbt.hasKey("val"))
+			value = (T) NBTUtils.readNumberFromNBT("val", nbt);
+		else
+			value = (T) NBTUtils.readNumberFromNBT("Val", nbt);
+	}
+	
+	@Override
+	public T get()
+	{
+		T t = super.get();
+		return t != null ? t : (T) (Number) 0;
 	}
 }

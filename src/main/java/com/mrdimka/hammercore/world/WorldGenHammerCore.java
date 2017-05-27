@@ -2,14 +2,14 @@ package com.mrdimka.hammercore.world;
 
 import java.util.Random;
 
-import com.mrdimka.hammercore.world.gen.IWorldGenFeature;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
+
+import com.mrdimka.hammercore.world.gen.IWorldGenFeature;
 
 public class WorldGenHammerCore implements IWorldGenerator
 {

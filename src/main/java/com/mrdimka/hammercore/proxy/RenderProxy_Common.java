@@ -13,7 +13,6 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.client.renderer.IRenderHelper;
-import com.mrdimka.hammercore.common.utils.ChatUtil;
 
 public class RenderProxy_Common
 {

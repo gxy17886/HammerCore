@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mrdimka.hammercore.bookAPI.BookCategory;
 import com.mrdimka.hammercore.bookAPI.BookEntry;
 import com.mrdimka.hammercore.bookAPI.BookPage;
 import com.mrdimka.hammercore.client.GLRenderState;

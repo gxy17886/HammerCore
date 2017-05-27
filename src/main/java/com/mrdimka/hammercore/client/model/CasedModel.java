@@ -3,15 +3,9 @@ package com.mrdimka.hammercore.client.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBox;
-import net.minecraft.client.model.ModelRenderer;
-
-import com.mrdimka.hammercore.client.model.file.ModelCube;
 import com.mrdimka.hammercore.client.model.file.ModelPart;
 
 public class CasedModel

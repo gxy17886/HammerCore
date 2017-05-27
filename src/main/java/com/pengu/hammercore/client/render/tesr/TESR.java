@@ -3,26 +3,51 @@ package com.pengu.hammercore.client.render.tesr;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import com.mrdimka.hammercore.client.utils.RenderBlocks;
 import com.mrdimka.hammercore.tile.TileSyncable;
 import com.pengu.hammercore.client.DestroyStageTexture;
 import com.pengu.hammercore.client.render.item.IItemRender;
+import com.pengu.hammercore.client.render.item.ItemRenderingHandler;
 
 public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> implements IItemRender
 {
 	/** This is safe to use while rendering */
 	protected float destroyProgress;
 	protected Minecraft mc = Minecraft.getMinecraft();
+	
+	public void bindTo(Class<? extends T> tileClass)
+	{
+		ClientRegistry.bindTileEntitySpecialRenderer(tileClass, this);
+	}
+	
+	public void bindTo(Item item)
+	{
+		ItemRenderingHandler.INSTANCE.bindItemRender(item, this);
+	}
+	
+	public void bindTo(Block block)
+	{
+		bindTo(Item.getItemFromBlock(block));
+	}
+	
+	public void bindTo(Class<? extends T> tileClass, Block block)
+	{
+		bindTo(tileClass);
+		bindTo(block);
+	}
 	
 	@Override
 	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage)
@@ -37,6 +62,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 				destroy = DestroyStageTexture.getByProgress(progress);
 		}
 		
+		renderBase(te, null, x, y, z, destroy);
 		renderTileEntityAt(te, x, y, z, partialTicks, destroy);
 	}
 	
@@ -90,12 +116,22 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	@Override
 	public void renderItem(ItemStack item)
 	{
+		renderBase(null, item, 0, 0, 0, null);
+		
 		if(canRenderFromNbt())
 		{
 			NBTTagCompound nbt = getNBTFromItemStack(item);
 			if(nbt != null)
 				renderFromNBT(nbt, 0D, 0D, 0D, 0F, null);
 		}
+	}
+	
+	/**
+	 * Shared method that is executed on rendering both: item AND tile
+	 */
+	public void renderBase(@Nullable T tile, @Nullable ItemStack stack, double x, double y, double z, @Nullable ResourceLocation destroyStage)
+	{
+		
 	}
 	
 	public static NBTTagCompound getNBTFromTile(TileEntity tile)
@@ -122,7 +158,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 		if(tags != null)
 			tags = tags.getCompoundTag("BlockEntityTag");
 		if(tags != null && !tags.hasNoTags())
-			return tags.getCompoundTag("tags");
+			return tags.getCompoundTag("Tags");
 		return null;
 	}
 	

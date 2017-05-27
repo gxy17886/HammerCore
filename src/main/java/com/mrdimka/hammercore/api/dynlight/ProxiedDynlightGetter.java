@@ -1,10 +1,10 @@
 package com.mrdimka.hammercore.api.dynlight;
 
-import com.mrdimka.hammercore.HammerCore;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+
+import com.mrdimka.hammercore.HammerCore;
 
 public class ProxiedDynlightGetter
 {

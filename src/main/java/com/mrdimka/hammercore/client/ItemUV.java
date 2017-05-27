@@ -1,15 +1,13 @@
 package com.mrdimka.hammercore.client;
 
-import org.lwjgl.opengl.GL11;
-
+import static com.mrdimka.hammercore.client.GLRenderState.BLEND;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import static com.mrdimka.hammercore.client.GLRenderState.BLEND;
+
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class ItemUV extends UV

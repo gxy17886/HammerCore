@@ -13,8 +13,6 @@ public class HammerLanguage
 	{
 		HLDefinerImpl impl = (HLDefinerImpl) definer;
 		
-		
-		
 		return null;
 	}
 	

@@ -4,7 +4,6 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerY;
 import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher.staticPlayerZ;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public abstract class PositionRenderer
 {

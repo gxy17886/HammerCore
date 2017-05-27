@@ -9,5 +9,19 @@ public abstract class ExpressionFunction
 		functionName = funcName;
 	}
 	
-	public abstract double apply(double x);
+	public boolean accepts(String functionName, double x)
+	{
+		return this.functionName.equalsIgnoreCase(functionName);
+	}
+	
+	public double apply(String functionName, double x)
+	{
+		return apply(x);
+	}
+	
+	@Deprecated
+	public double apply(double x)
+	{
+		return x;
+	}
 }

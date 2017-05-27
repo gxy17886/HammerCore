@@ -6,7 +6,6 @@ import java.util.Set;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
-import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
 import com.mrdimka.hammercore.common.items.ItemCalculatron;
 import com.mrdimka.hammercore.common.items.ItemHammerCoreManual;

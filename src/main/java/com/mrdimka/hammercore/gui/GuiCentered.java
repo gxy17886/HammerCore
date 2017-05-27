@@ -1,10 +1,7 @@
 package com.mrdimka.hammercore.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 
 /**
  * Similar to {@link GuiContainer} but doesn't have container. This gets rid of

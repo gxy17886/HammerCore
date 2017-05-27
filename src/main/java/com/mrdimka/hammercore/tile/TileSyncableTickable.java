@@ -1,8 +1,8 @@
 package com.mrdimka.hammercore.tile;
 
-import com.pengu.hammercore.net.utils.NetPropertyAbstract;
-
 import net.minecraft.util.ITickable;
+
+import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 
 public abstract class TileSyncableTickable extends TileSyncable implements ITickable
 {
@@ -18,7 +18,7 @@ public abstract class TileSyncableTickable extends TileSyncable implements ITick
 		if(changes > 0)
 		{
 			changes = 0;
-			sendChangesToNearby();
+			sync();
 		}
 	}
 	

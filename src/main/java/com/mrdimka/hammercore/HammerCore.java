@@ -88,7 +88,7 @@ import com.mrdimka.hammercore.world.WorldGenHammerCore;
  * <span style="text-decoration: underline;">
  * <em>This really sounds weird :/</em></span>
  **/
-@Mod(modid = "hammercore", version = "@VERSION@", name = "Hammer Core")
+@Mod(modid = "hammercore", version = "@VERSION@", name = "Hammer Core", guiFactory = "com.mrdimka.hammercore.cfg.gui.GuiConfigFactory")
 public class HammerCore
 {
 	public static final List<String> initHCChannels = new ArrayList<>();

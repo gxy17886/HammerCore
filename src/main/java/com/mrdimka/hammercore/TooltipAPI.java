@@ -23,12 +23,12 @@ import com.mrdimka.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRe
 @MCFBus
 public class TooltipAPI
 {
-	private static final ThreadLocal<Map<String, String>> results = ThreadLocal.withInitial(()->
+	private static final ThreadLocal<Map<String, String>> results = ThreadLocal.withInitial(() ->
 	{
 		return new HashMap<>();
 	});
 	
-	private static final ThreadLocal<Map<String, String>> currentVars = ThreadLocal.withInitial(()->
+	private static final ThreadLocal<Map<String, String>> currentVars = ThreadLocal.withInitial(() ->
 	{
 		return new HashMap<>();
 	});

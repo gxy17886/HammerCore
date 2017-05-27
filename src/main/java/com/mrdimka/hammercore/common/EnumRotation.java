@@ -11,10 +11,10 @@ public enum EnumRotation implements IStringSerializable
 {
 	SOUTH, NORTH, EAST, WEST;
 	
-	public static final PropertyEnum EFACING = PropertyEnum.create("facing", EnumFacing.class);
+	public static final PropertyEnum<EnumFacing> EFACING = PropertyEnum.create("facing", EnumFacing.class);
 	
-	public static final PropertyEnum FACING = PropertyEnum.create("facing", EnumRotation.class);
-	public static final PropertyEnum ROTATION = PropertyEnum.create("rotation", EnumRotation.class);
+	public static final PropertyEnum<EnumRotation> FACING = PropertyEnum.create("facing", EnumRotation.class);
+	public static final PropertyEnum<EnumRotation> ROTATION = PropertyEnum.create("rotation", EnumRotation.class);
 	
 	private EnumRotation()
 	{

@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.HammerCore.GRCProvider;
 import com.mrdimka.hammercore.net.packetAPI.IPacket;
 import com.mrdimka.hammercore.net.packetAPI.IPacketListener;

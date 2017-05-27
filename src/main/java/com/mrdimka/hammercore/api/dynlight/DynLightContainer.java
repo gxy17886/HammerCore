@@ -1,6 +1,5 @@
 package com.mrdimka.hammercore.api.dynlight;
 
-import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumSkyBlock;
 

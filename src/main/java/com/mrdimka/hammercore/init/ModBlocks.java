@@ -14,7 +14,7 @@ public class ModBlocks
 	static
 	{
 		TESSERACT = new BlockTesseract();
-//		TESSERACT = null;
+		// TESSERACT = null;
 		
 		SimpleRegistration.registerFieldBlocksFrom(ModBlocks.class, "hammercore", HammerCore.tab);
 	}

@@ -2,8 +2,6 @@ package com.mrdimka.hammercore.common.utils;
 
 import javax.annotation.Nullable;
 
-import com.mrdimka.hammercore.common.InterItemStack;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -13,6 +11,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+
+import com.mrdimka.hammercore.common.InterItemStack;
 
 /**
  * Allows to insert items like vanilla hoppers do

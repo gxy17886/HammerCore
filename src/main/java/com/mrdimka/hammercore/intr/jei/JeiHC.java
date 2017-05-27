@@ -2,10 +2,6 @@ package com.mrdimka.hammercore.intr.jei;
 
 import java.util.function.Consumer;
 
-import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
-import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
-
-import net.minecraft.client.gui.inventory.GuiFurnace;
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -13,6 +9,9 @@ import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
+
+import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
+import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
 
 @JEIPlugin
 public class JeiHC implements IModPlugin, IJeiRecipeModifier

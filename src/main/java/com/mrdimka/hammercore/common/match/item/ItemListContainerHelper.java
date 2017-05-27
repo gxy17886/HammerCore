@@ -2,9 +2,9 @@ package com.mrdimka.hammercore.common.match.item;
 
 import java.util.List;
 
-import com.google.common.base.Predicate;
-
 import net.minecraft.item.ItemStack;
+
+import com.google.common.base.Predicate;
 
 public class ItemListContainerHelper
 {

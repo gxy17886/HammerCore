@@ -10,8 +10,6 @@ import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 
-import com.mrdimka.hammercore.common.utils.IOUtils;
-
 public class JavaCompilerImpl
 {
 	public static byte[] compile(byte[] source, String srcName)

@@ -1,7 +1,5 @@
 package com.mrdimka.hammercore.client.utils;
 
-import com.pengu.hammercore.color.Color;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -10,6 +8,8 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.pengu.hammercore.color.Color;
 
 @SideOnly(Side.CLIENT)
 public class RenderUtil
@@ -111,9 +111,9 @@ public class RenderUtil
 		GlStateManager.enableAlpha();
 		GlStateManager.enableTexture2D();
 	}
-
+	
 	public static void drawTextRGBA(FontRenderer font, String s, int x, int y, int r, int g, int b, int a)
-    {
+	{
 		font.drawString(s, x, y, Color.packARGB(r, g, b, a));
-    }
+	}
 }

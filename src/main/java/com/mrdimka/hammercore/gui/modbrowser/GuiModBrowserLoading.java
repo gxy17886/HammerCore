@@ -1,13 +1,6 @@
 package com.mrdimka.hammercore.gui.modbrowser;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
-
-import org.lwjgl.util.glu.Project;
-
-import com.mrdimka.hammercore.common.HolidayTrigger;
-import com.mrdimka.hammercore.common.utils.DynamicObject;
-import com.mrdimka.hammercore.modbrowser.ModBrowser;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -19,6 +12,12 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+
+import org.lwjgl.util.glu.Project;
+
+import com.mrdimka.hammercore.common.HolidayTrigger;
+import com.mrdimka.hammercore.common.utils.DynamicObject;
+import com.mrdimka.hammercore.modbrowser.ModBrowser;
 
 public class GuiModBrowserLoading extends GuiScreen
 {

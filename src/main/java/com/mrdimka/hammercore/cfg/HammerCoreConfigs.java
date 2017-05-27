@@ -1,12 +1,8 @@
 package com.mrdimka.hammercore.cfg;
 
-import java.io.File;
+import net.minecraftforge.common.config.Configuration;
 
 import com.mrdimka.hammercore.cfg.fields.ModConfigPropertyBool;
-
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @HCModConfigurations(modid = "hammercore")
 public class HammerCoreConfigs implements IConfigReloadListener
@@ -25,4 +21,18 @@ public class HammerCoreConfigs implements IConfigReloadListener
 	
 	@ModConfigPropertyBool(name = "Always Spawn Dragon Egg", category = "Vanilla Improvements", defaultValue = true, comment = "Should Hammer Core force-spawn Ender Dragon Egg on Ender Dragon death?")
 	public static boolean vanilla_alwaysSpawnDragonEggs = true;
+	
+	@ModConfigPropertyBool(name = "Enable", category = "Snowfall", defaultValue = true, comment = "Should Hammer Core use Snowfall feature?")
+	public static boolean snowfall_enabled;
+	
+	@ModConfigPropertyBool(name = "Snow World", category = "Snowfall", defaultValue = false, comment = "Make whole world cover with snow! Yay for penguins!")
+	public static boolean snowfall_snowWorld;
+	
+	public static Configuration cfg;
+	
+	@Override
+	public void reloadCustom(Configuration cfgs)
+	{
+		cfg = cfgs;
+	}
 }

@@ -2,10 +2,8 @@ package com.mrdimka.hammercore.net.packetAPI;
 
 import io.netty.buffer.ByteBuf;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Constructor;
 
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -37,26 +35,28 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 			NBTTagCompound nbt = message.nbt;
 			PacketManager mgr = PacketManager.getManagerByChannel(message.nbt.getString("Channel"));
 			Class<IPacket> packetClass = (Class<IPacket>) Class.forName(nbt.getString("PacketClass"));
-			IPacket packet = packetClass.newInstance();
+			Constructor<IPacket> contr = packetClass.getConstructor();
+			contr.setAccessible(true);
+			IPacket packet = contr.newInstance();
 			IPacketListener listener = null;
 			
 			if(packet instanceof IPacketListener)
 				listener = (IPacketListener) packet; // New: handle packets if
-													 // they are their own
-													 // listeners. No packet
-													 // registration will be
-													 // required.
+				                                     // they are their own
+				                                     // listeners. No packet
+				                                     // registration will be
+				                                     // required.
 			else
 				mgr.stringClassRegistry.get(packetClass.getName()); // Otherwise
-																	// lookup
-																	// for
-																	// listener
-																	// in the
-																	// registry.
-																	// Packet
-																	// registration
-																	// will be
-																	// required.
+				                                                    // lookup
+				                                                    // for
+				                                                    // listener
+				                                                    // in the
+				                                                    // registry.
+				                                                    // Packet
+				                                                    // registration
+				                                                    // will be
+				                                                    // required.
 				
 			packet.readFromNBT(nbt.getCompoundTag("PacketData"));
 			IPacket pkt = listener.onArrived(packet, ctx);

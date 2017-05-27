@@ -1,7 +1,5 @@
 package com.mrdimka.hammercore.client;
 
-import net.minecraft.client.renderer.GlStateManager;
-
 import org.lwjgl.opengl.GL11;
 
 public class GLRenderState

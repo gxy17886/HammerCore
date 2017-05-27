@@ -3,9 +3,9 @@ package com.mrdimka.hammercore.recipeAPI.vanilla.brewing;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mrdimka.hammercore.recipeAPI.BrewingRecipe.BSR;
-
 import net.minecraft.item.ItemStack;
+
+import com.mrdimka.hammercore.recipeAPI.BrewingRecipe.BSR;
 
 public class BrewingRecipeHC
 {

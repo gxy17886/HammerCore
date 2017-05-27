@@ -55,7 +55,8 @@ public class PacketSetProperty implements IPacket, IPacketListener<PacketSetProp
 			
 			if(world != null && world.isBlockLoaded(pos) && world.getTileEntity(pos) instanceof TileSyncable)
 				((TileSyncable) world.getTileEntity(pos)).load(id, prop);
-		}else HammerCore.LOG.warn("Attempted to run PacketSetProperty on client. This is not going to work! Use TileSyncable.sync() instead!");
+		} else
+			HammerCore.LOG.warn("Attempted to run PacketSetProperty on client. This is not going to work! Use TileSyncable.sync() instead!");
 		return null;
 	}
 	

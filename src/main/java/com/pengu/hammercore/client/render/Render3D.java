@@ -23,7 +23,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,8 +39,8 @@ import com.pengu.hammercore.color.Color;
 
 public class Render3D
 {
-	public static int ticks = 0;
 	private static final String AUTHOR_USERNAME = "APengu", AUTHOR_DNAME = TextFormatting.BLUE + "" + TextFormatting.ITALIC + "       " + TextFormatting.RESET + "  ";
+	public static int ticks = 0;
 	
 	private static final List<PositionRenderer> renders = new ArrayList<>();
 	private static final List<PositionRenderer> renderQueue = new ArrayList<>();
@@ -167,13 +166,6 @@ public class Render3D
 			}
 			
 		}
-	}
-	
-	@SubscribeEvent
-	public void onNameFormat(PlayerEvent.NameFormat event)
-	{
-		if(event.getUsername().equals(AUTHOR_USERNAME))
-			event.setDisplayname(AUTHOR_DNAME);
 	}
 	
 	public static void drawTextGlowingAuraTransparent(FontRenderer font, String s, int x, int y, int a)

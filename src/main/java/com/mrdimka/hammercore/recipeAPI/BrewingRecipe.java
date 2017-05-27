@@ -7,8 +7,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 import com.google.common.base.Predicate;
-import com.mrdimka.hammercore.common.match.item.ItemContainer;
-import com.mrdimka.hammercore.common.match.item.ItemMatchParams;
 
 public enum BrewingRecipe implements IBrewingRecipe
 {
