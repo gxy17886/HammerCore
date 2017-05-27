@@ -10,11 +10,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.mrdimka.hammercore.common.utils.WorldUtil;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+
+import com.mrdimka.hammercore.common.utils.WorldUtil;
 
 public class ParticleList
 {
@@ -58,12 +61,33 @@ public class ParticleList
 	
 	public static void renderExtendedParticles(RenderWorldLastEvent evt)
 	{
+		EntityPlayer entityIn = Minecraft.getMinecraft().player;
+		ActiveRenderInfo.updateRenderInfo(entityIn, Minecraft.getMinecraft().gameSettings.thirdPersonView == 2);
+		
 		for(int i = 0; i < renderedParticleList.size(); ++i)
 		{
 			Particle p = (Particle) renderedParticleList.get(i);
 			IRenderedParticle rp = WorldUtil.cast(p, IRenderedParticle.class);
 			if(rp != null)
-				rp.doRenderParticle(p.posX - staticPlayerX, p.posY - staticPlayerY, p.posZ - staticPlayerZ, evt.getPartialTicks());
+			{
+				float rotationX = ActiveRenderInfo.getRotationX();
+				float rotationZ = ActiveRenderInfo.getRotationXZ();
+				float rotationYZ = ActiveRenderInfo.getRotationZ();
+				float rotationXY = ActiveRenderInfo.getRotationYZ();
+				float rotationXZ = ActiveRenderInfo.getRotationXY();
+				
+				float partialTicks = evt.getPartialTicks();
+				
+				Particle.interpPosX = entityIn.lastTickPosX + (entityIn.posX - entityIn.lastTickPosX) * (double) partialTicks;
+				Particle.interpPosY = entityIn.lastTickPosY + (entityIn.posY - entityIn.lastTickPosY) * (double) partialTicks;
+				Particle.interpPosZ = entityIn.lastTickPosZ + (entityIn.posZ - entityIn.lastTickPosZ) * (double) partialTicks;
+				Particle.cameraViewDir = entityIn.getLook(partialTicks);
+				GlStateManager.enableBlend();
+				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+				GlStateManager.alphaFunc(516, 0.003921569F);
+				
+				rp.doRenderParticle(p.posX - staticPlayerX, p.posY - staticPlayerY, p.posZ - staticPlayerZ, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+			}
 		}
 	}
 	

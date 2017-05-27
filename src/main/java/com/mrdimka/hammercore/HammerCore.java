@@ -52,8 +52,10 @@ import com.mrdimka.hammercore.cfg.ConfigHolder;
 import com.mrdimka.hammercore.cfg.HCModConfigurations;
 import com.mrdimka.hammercore.cfg.IConfigReloadListener;
 import com.mrdimka.hammercore.command.CommandBuildStructure;
+import com.mrdimka.hammercore.command.CommandLoadChunk;
 import com.mrdimka.hammercore.command.CommandPosToLong;
 import com.mrdimka.hammercore.command.CommandTPX;
+import com.mrdimka.hammercore.command.CommandTimeToTicks;
 import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
 import com.mrdimka.hammercore.common.utils.AnnotatedInstanceUtil;
 import com.mrdimka.hammercore.common.utils.HammerCoreUtils;
@@ -82,6 +84,7 @@ import com.mrdimka.hammercore.recipeAPI.registry.RecipeTypeRegistry;
 import com.mrdimka.hammercore.recipeAPI.registry.SimpleRecipeScript;
 import com.mrdimka.hammercore.structure.StructureAPI;
 import com.mrdimka.hammercore.world.WorldGenHammerCore;
+import com.pengu.hammercore.common.chunk.ChunkLoaderHC;
 
 /**
  * The core of Hammer Core. <br>
@@ -317,6 +320,8 @@ public class HammerCore
 		e.registerServerCommand(new CommandPosToLong());
 		e.registerServerCommand(new CommandTPX());
 		e.registerServerCommand(new CommandBuildStructure());
+		e.registerServerCommand(new CommandTimeToTicks());
+		e.registerServerCommand(new CommandLoadChunk());
 		
 		File hc_recipes_global = new File("hc-recipes");
 		MinecraftServer server = e.getServer();
@@ -339,6 +344,8 @@ public class HammerCore
 	public void serverTick(ServerTickEvent evt)
 	{
 		if(evt.side == Side.SERVER)
+		{
+			ChunkLoaderHC.INSTANCE.update();
 			for(int i = 0; i < updatables.size(); ++i)
 			{
 				try
@@ -351,6 +358,13 @@ public class HammerCore
 				{
 				}
 			}
+		}
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		return 0x666666;
 	}
 	
 	@SubscribeEvent
