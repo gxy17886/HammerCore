@@ -39,6 +39,13 @@ public class Vector3 implements Copyable<Vector3>
 		z = d2;
 	}
 	
+	public Vector3(TileEntity tile)
+	{
+		x = tile.getPos().getX() + .5;
+		y = tile.getPos().getY() + .5;
+		z = tile.getPos().getZ() + .5;
+	}
+	
 	public Vector3(Vector3 vec)
 	{
 		x = vec.x;
@@ -63,6 +70,13 @@ public class Vector3 implements Copyable<Vector3>
 		x = pos.getX();
 		y = pos.getY();
 		z = pos.getZ();
+	}
+	
+	public Vector3(Entity entity)
+	{
+		x = entity.posX;
+		y = entity.posY;
+		z = entity.posZ;
 	}
 	
 	public Vector3 copy()
@@ -493,5 +507,42 @@ public class Vector3 implements Copyable<Vector3>
 	public double $dot$times(Vector3 v)
 	{
 		return dotProduct(v);
+	}
+	
+	public Vector3 scale(float scale)
+	{
+		return new Vector3(x * scale, y * scale, z * scale);
+	}
+	
+	public static float anglePreNorm(Vector3 vec1, Vector3 vec2)
+	{
+		return (float) Math.acos(vec1.dotProduct(vec2));
+	}
+	
+	public float length()
+	{
+		return (float) Math.sqrt(x * x + y * y + z * z);
+	}
+	
+	public static Vector3 xCrossProduct(Vector3 vec)
+	{
+		return new Vector3(0.0, vec.z, -vec.y);
+	}
+	
+	public static Vector3 zCrossProduct(Vector3 vec)
+	{
+		return new Vector3(-vec.y, vec.x, 0.0);
+	}
+	
+	public static Vector3 getPerpendicular(Vector3 vec)
+	{
+		if(vec.z == 0)
+			return Vector3.zCrossProduct(vec);
+		return Vector3.xCrossProduct(vec);
+	}
+	
+	public Vector3 rotate(float angle, Vector3 axis)
+	{
+		return Mat4.rotationMat(angle, axis).translate(this);
 	}
 }

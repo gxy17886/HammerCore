@@ -6,18 +6,15 @@ import static net.minecraft.client.renderer.tileentity.TileEntityRendererDispatc
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
+
+import com.mrdimka.hammercore.common.utils.WorldUtil;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-
-import com.pengu.hammercore.client.particle.api.common.ExtendedParticle;
 
 public class ParticleList
 {
@@ -26,24 +23,11 @@ public class ParticleList
 	private static final Set<Particle> vanillaParticleSet = new HashSet<>();
 	private static final List<Particle> vanillaParticleList = new ArrayList<>();
 	
-	private static final Map<UUID, ExtendedParticle> extendedParticleMap = new HashMap<>();
-	private static final List<ExtendedParticle> extendedParticleList = new ArrayList<>();
-	
-	private static final Map<Class<?>, ParticleRenderer> renderers = new HashMap<>();
+	private static final List<IRenderedParticle> renderedParticleList = new ArrayList<>();
 	
 	static
 	{
 		addGetter(new DefaultParticleGetter());
-	}
-	
-	public static <T extends ExtendedParticle> void registerRenderer(Class<T> particleClass, ParticleRenderer<T> renderer)
-	{
-		renderers.put(particleClass, renderer);
-	}
-	
-	public static <T extends ExtendedParticle> ParticleRenderer<T> getRenderer(Class<T> particleClass)
-	{
-		return renderers.get(particleClass);
 	}
 	
 	public static void addGetter(IParticleGetter getter)
@@ -51,24 +35,11 @@ public class ParticleList
 		getters.add(getter);
 	}
 	
-	public static ExtendedParticle getExtendedParticle(UUID id)
-	{
-		return extendedParticleMap.get(id);
-	}
-	
-	public static void spawnExtendedParticle(ExtendedParticle e)
-	{
-		if(getExtendedParticle(e.getUUID()) != null)
-			return;
-		extendedParticleMap.put(e.getUUID(), e);
-		extendedParticleList.add(e);
-	}
-	
 	public static void refreshParticles()
 	{
 		vanillaParticleSet.clear();
 		vanillaParticleList.clear();
-		extendedParticleList.clear();
+		renderedParticleList.clear();
 		
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().world == null)
 			return;
@@ -77,25 +48,22 @@ public class ParticleList
 			getter.addParticles(vanillaParticleSet);
 		
 		vanillaParticleList.addAll(vanillaParticleSet);
-		extendedParticleList.addAll(extendedParticleMap.values());
-		
-		for(int i = 0; i < extendedParticleList.size(); ++i)
+		for(int i = 0; i < vanillaParticleList.size(); ++i)
 		{
-			ExtendedParticle p = extendedParticleList.get(i);
-			p.update();
-			if(p.isDead.get())
-				extendedParticleList.remove(i);
+			Particle p = vanillaParticleList.get(i);
+			if(p instanceof IRenderedParticle)
+				renderedParticleList.add((IRenderedParticle) p);
 		}
 	}
 	
 	public static void renderExtendedParticles(RenderWorldLastEvent evt)
 	{
-		for(int i = 0; i < extendedParticleList.size(); ++i)
+		for(int i = 0; i < renderedParticleList.size(); ++i)
 		{
-			ExtendedParticle p = extendedParticleList.get(i);
-			ParticleRenderer r = getRenderer(p.getClass());
-			if(r != null)
-				r.doRender(p, p.posX.get() - staticPlayerX, p.posY.get() - staticPlayerY, p.posZ.get() - staticPlayerZ, evt.getPartialTicks());
+			Particle p = (Particle) renderedParticleList.get(i);
+			IRenderedParticle rp = WorldUtil.cast(p, IRenderedParticle.class);
+			if(rp != null)
+				rp.doRenderParticle(p.posX - staticPlayerX, p.posY - staticPlayerY, p.posZ - staticPlayerZ, evt.getPartialTicks());
 		}
 	}
 	
@@ -108,6 +76,11 @@ public class ParticleList
 	{
 		return vanillaParticleList;
 	}
+	
+	public static List<IRenderedParticle> getRenderedParticleList()
+    {
+	    return renderedParticleList;
+    }
 	
 	private static class DefaultParticleGetter implements IParticleGetter
 	{

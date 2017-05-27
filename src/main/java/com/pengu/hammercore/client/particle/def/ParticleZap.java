@@ -1,4 +1,4 @@
-package com.pengu.hammercore.client.particle.old;
+package com.pengu.hammercore.client.particle.def;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,8 +18,11 @@ import org.lwjgl.opengl.GL11;
 import com.mrdimka.hammercore.client.utils.UtilsFX;
 import com.mrdimka.hammercore.math.MathHelper;
 import com.mrdimka.hammercore.vec.Vector3;
+import com.pengu.hammercore.client.particle.api.IRenderedParticle;
+import com.pengu.hammercore.client.particle.old.IOldParticle;
+import com.pengu.hammercore.client.particle.old.ParticleParam;
 
-public class ParticleZap extends Particle implements IOldParticle
+public class ParticleZap extends Particle implements IOldParticle, IRenderedParticle
 {
 	public ParticleZap(World par1World, double x, double y, double z, double tx, double ty, double tz, float red, float green, float blue)
 	{
@@ -128,14 +131,15 @@ public class ParticleZap extends Particle implements IOldParticle
 		particleBlue = b;
 	}
 	
-	public void renderParticle(VertexBuffer wr, Entity entity, float f, float cosyaw, float cospitch, float sinyaw, float cossinpitch, float f5)
+	@Override
+	public void doRenderParticle(double x, double y, double z, float partialTicks)
 	{
-		Tessellator.getInstance().draw();
+		VertexBuffer wr = Tessellator.getInstance().getBuffer();
 		
 		GL11.glPushMatrix();
-		double ePX = prevPosX + (posX - prevPosX) * f - interpPosX;
-		double ePY = prevPosY + (posY - prevPosY) * f - interpPosY;
-		double ePZ = prevPosZ + (posZ - prevPosZ) * f - interpPosZ;
+		double ePX = prevPosX + (posX - prevPosX) * partialTicks - interpPosX;
+		double ePY = prevPosY + (posY - prevPosY) * partialTicks - interpPosY;
+		double ePZ = prevPosZ + (posZ - prevPosZ) * partialTicks - interpPosZ;
 		GL11.glTranslated(ePX, ePY, ePZ);
 		
 		Minecraft.getMinecraft().renderEngine.bindTexture(beamTexture);
@@ -201,10 +205,11 @@ public class ParticleZap extends Particle implements IOldParticle
 		GL11.glDepthMask(true);
 		
 		GL11.glPopMatrix();
-		
-		Minecraft.getMinecraft().renderEngine.bindTexture(UtilsFX.getMCParticleTexture());
-		
-		wr.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+	}
+	
+	@Override
+	public void renderParticle(VertexBuffer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+	{
 	}
 	
 	public float length = 1.0F;

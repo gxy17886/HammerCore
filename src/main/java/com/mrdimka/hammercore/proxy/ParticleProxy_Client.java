@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 import com.mrdimka.hammercore.api.dynlight.DynamicLightGetter;
 import com.pengu.hammercore.client.particle.api.ParticleList;
+import com.pengu.hammercore.client.particle.def.ParticleZap;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
-import com.pengu.hammercore.client.particle.old.ParticleZap;
 import com.pengu.hammercore.client.render.Render3D;
 
 public class ParticleProxy_Client extends ParticleProxy_Common
