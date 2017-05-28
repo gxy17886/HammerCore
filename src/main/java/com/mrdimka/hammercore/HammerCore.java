@@ -397,6 +397,7 @@ public class HammerCore
 		if(recipeScript != null)
 			recipeScript.remove();
 		recipeScript = null;
+		ChunkLoaderHC.INSTANCE.isAlive();
 	}
 	
 	private GlobalRecipeScript parse(File path)

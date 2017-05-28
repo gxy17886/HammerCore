@@ -2,6 +2,8 @@ package com.mrdimka.hammercore.asm;
 
 import java.util.Map;
 
+import com.mrdimka.hammercore.common.utils.WrappedLog;
+
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 /**
@@ -9,6 +11,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
  */
 public class HammerCoreCore implements IFMLLoadingPlugin
 {
+	public static final WrappedLog ASM_LOG = new WrappedLog("Hammer Core [ASM]");
 	// public static BufferedWriter hc_classes;
 	// public static BigInteger classID = BigInteger.ONE;
 	//

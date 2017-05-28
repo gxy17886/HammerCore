@@ -5,6 +5,8 @@ import java.io.StringWriter;
 import java.util.Iterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
+import net.minecraftforge.fml.common.asm.transformers.deobf.FMLRemappingAdapter;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -17,6 +19,8 @@ import org.objectweb.asm.tree.VarInsnNode;
 import org.objectweb.asm.util.Printer;
 import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
+
+import com.pengu.hammercore.utils.RoundRobinList;
 
 /**
  * Transforms classes
@@ -37,8 +41,27 @@ public class HammerCoreTransformer implements IClassTransformer
 	 * Lnet/minecraft/util/BlockPos;)I */
 	private String goalInvokeDesc = "(Latj;Laju;Lco;)I";
 	
+//	private static final RoundRobinList<SaveThread> saves = new RoundRobinList<>();
+//	
+//	static
+//	{
+//		for(int i = 0; i < 2; ++i)
+//		{
+//			SaveThread e = new SaveThread();
+//			e.start();
+//			saves.add(e);
+//		}
+//	}
+	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass)
+	{
+		byte[] cl = handleTransform(name, transformedName, basicClass);
+		// saves.next().addSaveFile(transformedName, cl);
+		return cl;
+	}
+	
+	private byte[] handleTransform(String name, String transformedName, byte[] basicClass)
 	{
 		if(name.equals(classNameWorld))
 			return handleWorldTransform(basicClass, true);
@@ -47,6 +70,34 @@ public class HammerCoreTransformer implements IClassTransformer
 			computeLightValueMethodName = "getRawLight";
 			goalInvokeDesc = "(Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/util/math/BlockPos;)I";
 			return handleWorldTransform(basicClass, false);
+		}
+		
+		if(name.equals("net.minecraft.block.BlockSnow") || name.equals("aqs"))
+		{
+			HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.block.BlockSnow (" + name + ")...");
+			ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
+			boolean obf = name.equals("aqs");
+			HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") + "obfuscated minecraft.");
+			
+			for(MethodNode m : classNode.methods)
+			{
+				String obfn = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(name, m.name, m.desc);
+				if(obfn.equals("func_180650_b"))
+				{
+					InsnList updateTick = new InsnList();
+					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
+					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
+					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
+					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
+					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
+					updateTick.add(new InsnNode(Opcodes.RETURN));
+					
+					m.instructions = updateTick;
+					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
+				}
+			}
+			
+			return ObjectWebUtils.writeClassToByteArray(classNode);
 		}
 		
 		return basicClass;
@@ -66,6 +117,7 @@ public class HammerCoreTransformer implements IClassTransformer
 	
 	private byte[] handleWorldTransform(byte[] bytes, boolean obf)
 	{
+		HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.world.World...");
 		// System.out.println("**************** Dynamic Lights transform running on World, obf: "
 		// + obf + " *********************** ");
 		ClassNode classNode = ObjectWebUtils.loadClass(bytes);
@@ -86,7 +138,7 @@ public class HammerCoreTransformer implements IClassTransformer
 			if(m.name.equals("canSnowAtBody"))
 			{
 				m.instructions = canSnowAtBody;
-				System.out.println("Sending instructions to World for function canSnowAtBody");
+				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
 			}
 			
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))

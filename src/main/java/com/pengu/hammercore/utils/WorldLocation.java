@@ -18,8 +18,8 @@ import com.mrdimka.hammercore.net.pkt.PacketSetBiome;
 
 public class WorldLocation
 {
-	private World world;
-	private BlockPos pos;
+	private transient World world;
+	private transient BlockPos pos;
 	
 	public WorldLocation(World world, BlockPos pos)
 	{
@@ -45,6 +45,12 @@ public class WorldLocation
 	public <T extends TileEntity> T getTileOfType(Class<T> tile)
 	{
 		return WorldUtil.cast(getTile(), tile);
+	}
+	
+	public void setTile(TileEntity tile)
+	{
+		if(world.isBlockLoaded(pos))
+			world.setTileEntity(pos, tile);
 	}
 	
 	public IBlockState getState()

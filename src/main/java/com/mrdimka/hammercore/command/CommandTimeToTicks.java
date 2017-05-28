@@ -69,7 +69,7 @@ public class CommandTimeToTicks extends CommandBase
 		
 		for(int i = 0; i < arr.length; ++i)
 		{
-			if(arr[i] >= '0' && arr[i] <= '9')
+			if(arr[i] >= '0' && arr[i] <= '9' || arr[i] == '-')
 				continue;
 			
 			if(arr[i] == 't')

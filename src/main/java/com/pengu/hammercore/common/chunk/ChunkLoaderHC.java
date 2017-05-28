@@ -45,6 +45,8 @@ public enum ChunkLoaderHC implements IChunkLoader, IUpdatable
 	@Override
 	public boolean isAlive()
 	{
+		chunks.clear();
+		chunkTimers.clear();
 		return true;
 	}
 	
