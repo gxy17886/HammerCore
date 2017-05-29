@@ -11,6 +11,7 @@ com.mrdimka.hammercore.bookAPI
 com.mrdimka.hammercore.bookAPI.pages
 com.mrdimka.hammercore.cfg
 com.mrdimka.hammercore.cfg.fields
+com.mrdimka.hammercore.cfg.gui
 com.mrdimka.hammercore.client
 com.mrdimka.hammercore.client.audio
 com.mrdimka.hammercore.client.model
@@ -68,10 +69,11 @@ com.mrdimka.hammercore.tile
 com.mrdimka.hammercore.vec
 com.mrdimka.hammercore.world
 com.mrdimka.hammercore.world.gen
+com.pengu.hammercore.asm
 com.pengu.hammercore.client
 com.pengu.hammercore.client.model
 com.pengu.hammercore.client.particle.api
-com.pengu.hammercore.client.particle.api.common
+com.pengu.hammercore.client.particle.def
 com.pengu.hammercore.client.particle.old
 com.pengu.hammercore.client.render
 com.pengu.hammercore.client.render.item
@@ -81,6 +83,7 @@ com.pengu.hammercore.client.render.world
 com.pengu.hammercore.client.texture
 com.pengu.hammercore.client.texture.def
 com.pengu.hammercore.color
+com.pengu.hammercore.common.chunk
 com.pengu.hammercore.common.items
 com.pengu.hammercore.glelwjgl
 com.pengu.hammercore.hlang
