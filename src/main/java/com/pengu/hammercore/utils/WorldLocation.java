@@ -1,12 +1,15 @@
 package com.pengu.hammercore.utils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -35,6 +38,11 @@ public class WorldLocation
 	public BlockPos getPos()
 	{
 		return pos;
+	}
+	
+	public AxisAlignedBB getAABB()
+	{
+		return new AxisAlignedBB(pos);
 	}
 	
 	public TileEntity getTile()
@@ -138,5 +146,15 @@ public class WorldLocation
 	public Material getMaterial()
 	{
 		return getBlock().getMaterial(getState());
+	}
+	
+	public SoundType getSoundType()
+	{
+		return getSoundType(null);
+	}
+	
+	public SoundType getSoundType(Entity e)
+	{
+		return getBlock().getSoundType(getState(), getWorld(), getPos(), e);
 	}
 }

@@ -104,7 +104,7 @@ public class InventoryNonTile implements IInventory
 		} catch(Throwable err)
 		{
 		}
-		return null;
+		return InterItemStack.NULL_STACK;
 	}
 	
 	@Override

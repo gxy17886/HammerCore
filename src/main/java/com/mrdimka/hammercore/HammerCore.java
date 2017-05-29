@@ -23,7 +23,9 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
 import net.minecraftforge.fml.common.ModMetadata;
+import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -210,15 +212,23 @@ public class HammerCore
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		CapabilityEJ.register();
-		
 		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);
+		List<IConfigReloadListener> listeners = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HCModConfigurations.class, IConfigReloadListener.class);
+		
+		toRegister.add(this);
+		
+		ProgressBar bar = ProgressManager.push("Loading", 3 + apis.size() + toRegister.size() + listeners.size());
+		
+		bar.step("Registering EJ");
+		CapabilityEJ.register();
 		
 		configListeners = new ArrayList<>();
-		
-		for(IConfigReloadListener listener : AnnotatedInstanceUtil.getInstances(e.getAsmData(), HCModConfigurations.class, IConfigReloadListener.class))
+		int i = 0;
+		for(IConfigReloadListener listener : listeners)
 		{
+			i++;
+			bar.step("Registering Custom Configs (" + i + "/" + listeners.size() + ")");
 			ConfigHolder h = new ConfigHolder(listener, new Configuration(listener.getSuggestedConfigurationFile()));
 			h.reload();
 			configListeners.add(h);
@@ -232,10 +242,11 @@ public class HammerCore
 			// Add compiled codes
 			code.addMCFObjects(toRegister);
 		
-		toRegister.add(this);
-		
+		i = 0;
 		for(Object o : toRegister)
 		{
+			i++;
+			bar.step("Registering Objects to Event Bus (" + i + "/" + toRegister.size() + ")");
 			MinecraftForge.EVENT_BUS.register(o);
 			LOG.info("Added \"" + o + "\" to MCF Event Bus.");
 		}
@@ -248,8 +259,11 @@ public class HammerCore
 			RequiredDeps.addRequests(evt);
 		}
 		
+		i = 0;
 		for(IHammerCoreAPI api : apis)
 		{
+			i++;
+			bar.step("Registering external libraries (" + i + "/" + apis.size() + ")");
 			HammerCoreAPI apia = api.getClass().getAnnotation(HammerCoreAPI.class);
 			if(apia != null)
 			{
@@ -259,7 +273,10 @@ public class HammerCore
 			}
 		}
 		
-		new ModBlocks();
+		bar.step("Registering Blocks");
+		SimpleRegistration.registerFieldBlocksFrom(ModBlocks.class, "hammercore", HammerCore.tab);
+		
+		bar.step("Registering Items");
 		SimpleRegistration.registerFieldItemsFrom(ModItems.class, "hammercore", HammerCore.tab);
 		
 		ModMetadata meta = e.getModMetadata();
@@ -269,6 +286,8 @@ public class HammerCore
 		
 		for(IJavaCode code : COMPILED_CODES)
 			code.preInit();
+		
+		ProgressManager.pop(bar);
 	}
 	
 	@EventHandler

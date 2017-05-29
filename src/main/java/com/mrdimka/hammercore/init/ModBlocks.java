@@ -9,15 +9,10 @@ import com.mrdimka.hammercore.common.blocks.tesseract.BlockTesseract;
 
 public class ModBlocks
 {
-	public static final Block INFI_RF = new BlockInfiRF(), MULTIPART = new BlockMultipart(), TESSERACT;
-	
-	static
-	{
-		TESSERACT = new BlockTesseract();
-		// TESSERACT = null;
-		
-		SimpleRegistration.registerFieldBlocksFrom(ModBlocks.class, "hammercore", HammerCore.tab);
-	}
+	public static final Block //
+	        INFI_RF = new BlockInfiRF(), //
+	        MULTIPART = new BlockMultipart(), //
+	        TESSERACT = new BlockTesseract();
 	
 	@Deprecated
 	public static void registerBlock(Block b, String modid)
