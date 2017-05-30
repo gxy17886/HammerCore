@@ -167,6 +167,12 @@ public class ExpressionEvaluator
 	 */
 	public static double evaluateDouble(String expression, ExpressionFunction... functions)
 	{
+		try
+		{
+			return Double.parseDouble(expression);
+		} catch(Throwable err)
+		{
+		}
 		ExpressionEvaluator eval = new ExpressionEvaluator(expression);
 		for(ExpressionFunction func : functions)
 			eval.addFunction(func);
