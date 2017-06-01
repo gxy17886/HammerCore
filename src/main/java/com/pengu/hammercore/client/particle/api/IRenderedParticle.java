@@ -11,4 +11,14 @@ public interface IRenderedParticle
 	{
 		doRenderParticle(x, y, z, partialTicks);
 	}
+	
+	default boolean isRendered()
+	{
+		return false;
+	}
+	
+	default void setRendered()
+	{
+		
+	}
 }

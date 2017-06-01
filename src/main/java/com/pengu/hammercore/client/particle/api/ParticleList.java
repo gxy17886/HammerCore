@@ -67,9 +67,12 @@ public class ParticleList
 		for(int i = 0; i < renderedParticleList.size(); ++i)
 		{
 			Particle p = (Particle) renderedParticleList.get(i);
-			IRenderedParticle rp = WorldUtil.cast(p, IRenderedParticle.class);
-			if(rp != null)
+			IRenderedParticle rp = renderedParticleList.get(i);
+			
+			if(rp != null && rp.isRendered())
 			{
+				rp.setRendered();
+				
 				float rotationX = ActiveRenderInfo.getRotationX();
 				float rotationZ = ActiveRenderInfo.getRotationXZ();
 				float rotationYZ = ActiveRenderInfo.getRotationZ();

@@ -64,7 +64,7 @@ public class SnowfallHooks
 	{
 		meltSnow(world, pos, state, rand);
 		
-		if(state.getBlock() != Blocks.SNOW_LAYER || !HammerCoreConfigs.snowfall_balanceSnow)
+		if(world.getBlockState(pos).getBlock() != Blocks.SNOW_LAYER || !HammerCoreConfigs.snowfall_balanceSnow)
 			return;
 		
 		/** The code below allows snow to get balanced */

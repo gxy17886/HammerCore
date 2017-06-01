@@ -39,7 +39,7 @@ public class HammerCoreTransformer implements IClassTransformer
 	
 	/* (Lnet/minecraft/block/state/IBlockState;Lnet/minecraft/world/IBlockAccess;
 	 * Lnet/minecraft/util/BlockPos;)I */
-	private String goalInvokeDesc = "(Latj;Laju;Lco;)I";
+	private String goalInvokeDesc = "(Latl;Laju;Lco;)I";
 	
 //	private static final RoundRobinList<SaveThread> saves = new RoundRobinList<>();
 //	
@@ -57,7 +57,6 @@ public class HammerCoreTransformer implements IClassTransformer
 	public byte[] transform(String name, String transformedName, byte[] basicClass)
 	{
 		byte[] cl = handleTransform(name, transformedName, basicClass);
-		// saves.next().addSaveFile(transformedName, cl);
 		return cl;
 	}
 	
@@ -79,10 +78,13 @@ public class HammerCoreTransformer implements IClassTransformer
 			boolean obf = name.equals("aqs");
 			HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") + "obfuscated minecraft.");
 			
+			String desc = "(Lajs;Lco;Latl;Ljava/util/Random;)V";
+			if(!obf)
+				desc = "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
+			
 			for(MethodNode m : classNode.methods)
 			{
-				String obfn = FMLDeobfuscatingRemapper.INSTANCE.mapMethodName(name, m.name, m.desc);
-				if(obfn.equals("func_180650_b"))
+				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
 				{
 					InsnList updateTick = new InsnList();
 					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));

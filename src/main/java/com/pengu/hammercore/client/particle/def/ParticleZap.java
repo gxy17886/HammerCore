@@ -19,14 +19,15 @@ import com.mrdimka.hammercore.client.utils.UtilsFX;
 import com.mrdimka.hammercore.math.MathHelper;
 import com.mrdimka.hammercore.vec.Vector3;
 import com.pengu.hammercore.client.particle.api.IRenderedParticle;
+import com.pengu.hammercore.client.particle.api.SimpleParticle;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
 import com.pengu.hammercore.client.particle.old.ParticleParam;
 
-public class ParticleZap extends Particle implements IOldParticle, IRenderedParticle
+public class ParticleZap extends SimpleParticle implements IOldParticle
 {
 	public ParticleZap(World par1World, double x, double y, double z, double tx, double ty, double tz, float red, float green, float blue)
 	{
-		super(par1World, x, y, z, 0, 0, 0);
+		super(par1World, x, y, z);
 		particleRed = red;
 		particleGreen = green;
 		particleBlue = blue;
@@ -132,7 +133,7 @@ public class ParticleZap extends Particle implements IOldParticle, IRenderedPart
 	}
 	
 	@Override
-	public void doRenderParticle(double x, double y, double z, float partialTicks)
+	public void doRenderParticle(double x, double y, double z, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
 	{
 		VertexBuffer wr = Tessellator.getInstance().getBuffer();
 		
@@ -201,15 +202,10 @@ public class ParticleZap extends Particle implements IOldParticle, IRenderedPart
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(2884);
 		GL11.glBlendFunc(770, 771);
-		GL11.glDisable(3042);
+//		GL11.glDisable(3042);
 		GL11.glDepthMask(true);
 		
 		GL11.glPopMatrix();
-	}
-	
-	@Override
-	public void renderParticle(VertexBuffer buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-	{
 	}
 	
 	public float length = 1.0F;
