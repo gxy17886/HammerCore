@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.asm.transformers.deobf.FMLRemappingAdapter;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
@@ -141,6 +142,19 @@ public class HammerCoreTransformer implements IClassTransformer
 			{
 				m.instructions = canSnowAtBody;
 				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
+			}
+			
+			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
+			{
+				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+				AnnotationNode sideonly = null;
+				for(AnnotationNode node : m.visibleAnnotations)
+					if(node.desc.equals("Lnet/minecraftforge/fml/relauncher/SideOnly;"))
+					{
+						sideonly = node;
+						break;
+					}
+				HammerCoreCore.ASM_LOG.info("    Removing @SideOnly annotation");
 			}
 			
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))
