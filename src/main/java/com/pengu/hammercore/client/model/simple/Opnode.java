@@ -10,12 +10,12 @@ import com.pengu.hammercore.utils.IndexedMap;
 public class Opnode implements Serializable
 {
 	public int[] opnode;
-	public String texture;
+	public String[] textures = new String[6];
 	public String name;
 	
 	public Opnode(int[] opnode, String tex)
 	{
-		texture = tex;
+		Arrays.fill(textures, tex);
 		this.opnode = opnode;
 	}
 	
@@ -82,7 +82,11 @@ public class Opnode implements Serializable
 	{
 		String s = "{\n";
 		s += "name " + name + "\n";
-		s += "texture " + texture + "\n";
+		for(int face = 0; face < 6; ++face)
+		{
+			String sface = (face < 2 ? "y" : face < 4 ? "z" : "x") + (face % 2 == 0 ? "-" : "+");
+			s += "texture " + sface + " " + textures[face] + "\n";
+		}
 		
 		for(int i = 0; i < opnode.length; ++i)
 		{

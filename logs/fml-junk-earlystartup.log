@@ -1,0 +1,42 @@
+[00:49:07] [main/INFO] [GradleStart]: Extra: []
+[00:49:07] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:49:07] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:49:07] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:49:07] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:49:07] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:49:07] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:50:44] [main/INFO] [GradleStart]: Extra: []
+[00:50:44] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:50:45] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:50:45] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:50:45] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:50:45] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:50:45] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:53:16] [main/INFO] [GradleStart]: Extra: []
+[00:53:16] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:53:17] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:53:17] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:53:17] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:53:17] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:53:17] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:55:20] [main/INFO] [GradleStart]: Extra: []
+[00:55:21] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:55:21] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:55:21] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:55:21] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:55:21] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:55:21] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:57:01] [main/INFO] [GradleStart]: Extra: []
+[00:57:01] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:57:01] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:57:01] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:57:01] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:57:01] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:57:01] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:58:27] [main/INFO] [GradleStart]: Extra: []
+[00:58:27] [main/INFO] [GradleStart]: Found and added coremod: com.mrdimka.hammercore.asm.HammerCoreCore
+[00:58:27] [main/INFO] [GradleStart]: Running with arguments: [--tweakClass, net.minecraftforge.fml.common.launcher.FMLServerTweaker, --tweakClass, net.minecraftforge.gradle.tweakers.CoremodTweaker]
+[00:58:27] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:58:27] [main/INFO] [LaunchWrapper]: Using primary tweak class name net.minecraftforge.fml.common.launcher.FMLServerTweaker
+[00:58:27] [main/INFO] [LaunchWrapper]: Loading tweak class name net.minecraftforge.gradle.tweakers.CoremodTweaker
+[00:58:27] [main/INFO] [LaunchWrapper]: Calling tweak class net.minecraftforge.fml.common.launcher.FMLServerTweaker

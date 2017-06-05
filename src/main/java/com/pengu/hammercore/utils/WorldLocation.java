@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSetBiome;
+import com.mrdimka.hammercore.tile.TileSyncable;
 
 public class WorldLocation
 {
@@ -156,5 +157,24 @@ public class WorldLocation
 	public SoundType getSoundType(Entity e)
 	{
 		return getBlock().getSoundType(getState(), getWorld(), getPos(), e);
+	}
+	
+	public int getRedstone()
+	{
+		return world.isBlockIndirectlyGettingPowered(pos);
+	}
+	
+	public void markDirty()
+	{
+		markDirty(3);
+	}
+	
+	public void markDirty(int flags)
+	{
+		if(world.isRemote) return;
+		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), getState(), getState(), flags);
+		TileSyncable sync = getTileOfType(TileSyncable.class);
+		if(sync != null)
+			sync.sync();
 	}
 }

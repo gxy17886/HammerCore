@@ -15,6 +15,7 @@ import com.mrdimka.hammercore.api.INoItemBlock;
 import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.api.multipart.BlockMultipartProvider;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
+import com.pengu.hammercore.common.blocks.IItemBlock;
 import com.pengu.hammercore.utils.IRegisterListener;
 
 public class SimpleRegistration
@@ -78,6 +79,8 @@ public class SimpleRegistration
 		
 		if(block instanceof BlockMultipartProvider)
 			ib = ((BlockMultipartProvider) block).createItem();
+		else if(block instanceof IItemBlock)
+			ib = ((IItemBlock) block).getItemBlock();
 		else
 			ib = new ItemBlock(block);
 		

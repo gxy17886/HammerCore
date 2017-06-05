@@ -2,11 +2,10 @@ package com.mrdimka.hammercore.asm;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
-import net.minecraftforge.fml.common.asm.transformers.deobf.FMLDeobfuscatingRemapper;
-import net.minecraftforge.fml.common.asm.transformers.deobf.FMLRemappingAdapter;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -20,8 +19,6 @@ import org.objectweb.asm.tree.VarInsnNode;
 import org.objectweb.asm.util.Printer;
 import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
-
-import com.pengu.hammercore.utils.RoundRobinList;
 
 /**
  * Transforms classes
@@ -42,17 +39,18 @@ public class HammerCoreTransformer implements IClassTransformer
 	 * Lnet/minecraft/util/BlockPos;)I */
 	private String goalInvokeDesc = "(Latl;Laju;Lco;)I";
 	
-//	private static final RoundRobinList<SaveThread> saves = new RoundRobinList<>();
-//	
-//	static
-//	{
-//		for(int i = 0; i < 2; ++i)
-//		{
-//			SaveThread e = new SaveThread();
-//			e.start();
-//			saves.add(e);
-//		}
-//	}
+	// private static final RoundRobinList<SaveThread> saves = new
+	// RoundRobinList<>();
+	//
+	// static
+	// {
+	// for(int i = 0; i < 2; ++i)
+	// {
+	// SaveThread e = new SaveThread();
+	// e.start();
+	// saves.add(e);
+	// }
+	// }
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass)
@@ -136,6 +134,8 @@ public class HammerCoreTransformer implements IClassTransformer
 		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
 		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
 		
+		boolean add_func_72853_d = true;
+		
 		for(MethodNode m : classNode.methods)
 		{
 			if(m.name.equals("canSnowAtBody"))
@@ -146,6 +146,7 @@ public class HammerCoreTransformer implements IClassTransformer
 			
 			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
 			{
+				add_func_72853_d = false;
 				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
 				AnnotationNode sideonly = null;
 				for(AnnotationNode node : m.visibleAnnotations)
@@ -200,6 +201,32 @@ public class HammerCoreTransformer implements IClassTransformer
 			}
 		}
 		
+		if(add_func_72853_d)
+		{
+			HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+			
+			classNode.methods.add(getMoonPhase("func_72853_d"));
+			classNode.methods.add(getMoonPhase("getMoonPhase"));
+			classNode.methods.add(getMoonPhase("D"));
+			
+			HammerCoreCore.ASM_LOG.info("    Adding getMoonPhase (func_72853_d) back because we are on server.");
+		}
+		
 		return ObjectWebUtils.writeClassToByteArray(classNode);
+	}
+	
+	private MethodNode getMoonPhase(String name)
+	{
+		MethodNode func_72853_d = new MethodNode(Opcodes.ASM5);
+		func_72853_d.desc = "()I";
+		func_72853_d.access = Opcodes.ACC_PUBLIC;
+		func_72853_d.exceptions = new ArrayList<>();
+		func_72853_d.name = name;
+		InsnList list = new InsnList();
+		list.add(new VarInsnNode(Opcodes.ALOAD, 0));
+		list.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/WorldHooks", "getMoonPhase", "(L" + classNameWorld + ";)I"));
+		list.add(new InsnNode(Opcodes.IRETURN));
+		func_72853_d.instructions = list;
+		return func_72853_d;
 	}
 }

@@ -41,7 +41,25 @@ public class SimpleModelParser
 			} else if(s.startsWith("texture "))
 			{
 				NPEUtils.checkNotNull(node, "node");
-				node.texture = s.substring(8);
+				
+				String dir = s.substring(8, 10);
+				int op = 0;
+				if(dir.equals("x-"))
+					op = EnumFacing.WEST.ordinal();
+				else if(dir.equals("x+"))
+					op = EnumFacing.EAST.ordinal();
+				else if(dir.equals("y-"))
+					op = EnumFacing.DOWN.ordinal();
+				else if(dir.equals("y+"))
+					op = EnumFacing.UP.ordinal();
+				else if(dir.equals("z-"))
+					op = EnumFacing.NORTH.ordinal();
+				else if(dir.equals("z+"))
+					op = EnumFacing.SOUTH.ordinal();
+				else
+					NPEUtils.checkNotNull(null, "unknown orientation: " + dir);
+				
+				node.textures[op] = s.substring(10);
 			} else if(s.startsWith("disable face "))
 			{
 				NPEUtils.checkNotNull(node, "node");
