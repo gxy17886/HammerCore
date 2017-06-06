@@ -11,10 +11,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+
+import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.client.utils.RenderBlocks;
 import com.mrdimka.hammercore.tile.TileSyncable;
@@ -47,6 +50,36 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	{
 		bindTo(tileClass);
 		bindTo(block);
+	}
+	
+	private void translateFromOrientation(double x, double y, double z, EnumFacing facing)
+	{
+		int orientation = facing.ordinal();
+		
+		if(orientation == 0)
+		{
+			GL11.glTranslated(x + .5, y + 1, z + .5);
+			GL11.glRotated(180, 1, 0, 0);
+		} else if(orientation == 1)
+		{
+			GL11.glTranslated(x + .5, y, z + .5);
+		} else if(orientation == 2)
+		{
+			GL11.glTranslated(x + .5, y + .5, z + 1);
+			GL11.glRotatef(-90, 1, 0, 0);
+		} else if(orientation == 3)
+		{
+			GL11.glTranslated(x + .5, y + .5, z);
+			GL11.glRotatef(90, 1, 0, 0);
+		} else if(orientation == 4)
+		{
+			GL11.glTranslated(x + 1, y + .5, z + .5);
+			GL11.glRotatef(90, 0, 0, 1);
+		} else if(orientation == 5)
+		{
+			GL11.glTranslated(x, y + .5, z + .5);
+			GL11.glRotatef(-90, 0, 0, 1);
+		}
 	}
 	
 	@Override
