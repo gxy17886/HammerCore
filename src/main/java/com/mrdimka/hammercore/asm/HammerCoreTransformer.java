@@ -134,7 +134,7 @@ public class HammerCoreTransformer implements IClassTransformer
 		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
 		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
 		
-		boolean add_func_72853_d = true;
+//		boolean add_func_72853_d = true;
 		
 		for(MethodNode m : classNode.methods)
 		{
@@ -144,19 +144,18 @@ public class HammerCoreTransformer implements IClassTransformer
 				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
 			}
 			
-			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
-			{
-				add_func_72853_d = false;
-				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
-				AnnotationNode sideonly = null;
-				for(AnnotationNode node : m.visibleAnnotations)
-					if(node.desc.equals("Lnet/minecraftforge/fml/relauncher/SideOnly;"))
-					{
-						sideonly = node;
-						break;
-					}
-				HammerCoreCore.ASM_LOG.info("    Removing @SideOnly annotation");
-			}
+//			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
+//			{
+//				add_func_72853_d = false;
+//				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+//				AnnotationNode sideonly = null;
+//				for(AnnotationNode node : m.visibleAnnotations)
+//					if(node.desc.equals("Lnet/minecraftforge/fml/relauncher/SideOnly;"))
+//					{
+//						sideonly = node;
+//						break;
+//					}
+//			}
 			
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))
 			{
@@ -201,16 +200,14 @@ public class HammerCoreTransformer implements IClassTransformer
 			}
 		}
 		
-		if(add_func_72853_d)
-		{
-			HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
-			
-			classNode.methods.add(getMoonPhase("func_72853_d"));
-			classNode.methods.add(getMoonPhase("getMoonPhase"));
-			classNode.methods.add(getMoonPhase("D"));
-			
-			HammerCoreCore.ASM_LOG.info("    Adding getMoonPhase (func_72853_d) back because we are on server.");
-		}
+//		if(add_func_72853_d)
+//		{
+//			HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+//			
+//			classNode.methods.add(getMoonPhase(obf ? "D" : "getMoonPhase"));
+//			
+//			HammerCoreCore.ASM_LOG.info("    Adding getMoonPhase (func_72853_d) back because we are on server.");
+//		}
 		
 		return ObjectWebUtils.writeClassToByteArray(classNode);
 	}

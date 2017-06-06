@@ -1,6 +1,8 @@
 package com.mrdimka.hammercore.api.multipart;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -8,6 +10,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -29,11 +32,13 @@ import com.mrdimka.hammercore.client.particle.ParticleDiggingState;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.proxy.ParticleProxy_Client;
+import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
+import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 
 /**
  * The main part of {@link MultipartAPI}
  */
-public abstract class MultipartSignature
+public abstract class MultipartSignature implements IPropertyChangeHandler
 {
 	protected static final SecureRandom RANDOM = new SecureRandom();
 	
@@ -46,6 +51,9 @@ public abstract class MultipartSignature
 	protected World world;
 	protected BlockPos pos;
 	protected IBlockState state;
+	
+	int changes = 0;
+	final List<NetPropertyAbstract> properties = new ArrayList<>();
 	
 	public final void setOwner(TileMultipart owner)
 	{
@@ -60,7 +68,7 @@ public abstract class MultipartSignature
 	public final void requestSync()
 	{
 		if(owner != null)
-			owner.sync();
+			owner.sendChangesToNearby();
 	}
 	
 	public final IBlockState getState()
@@ -270,6 +278,51 @@ public abstract class MultipartSignature
 		return 0;
 	}
 	
+	public final NBTTagCompound writeNBT(NBTTagCompound nbt)
+	{
+		NBTTagList props = new NBTTagList();
+		
+		for(NetPropertyAbstract prop : properties)
+		{
+			NBTTagCompound tag = new NBTTagCompound();
+			prop.writeToNBT(tag);
+			tag.setString("Class", prop.getClass().getName());
+			tag.setInteger("Id", properties.indexOf(prop));
+			props.appendTag(tag);
+		}
+		
+		nbt.setTag("Properties", props);
+		NBTTagCompound tag = new NBTTagCompound();
+		writeToNBT(tag);
+		nbt.setTag("Tags", tag);
+		return nbt;
+	}
+	
+	public final void readNBT(NBTTagCompound nbt)
+	{
+		NBTTagList props = nbt.getTagList("Properties", NBT.TAG_COMPOUND);
+		
+		for(int i = 0; i < props.tagCount(); ++i)
+		{
+			try
+			{
+				NBTTagCompound tag = props.getCompoundTagAt(i);
+				int id = tag.getInteger("Id");
+				NetPropertyAbstract prop;
+				
+				if(properties.size() > id)
+				{
+					prop = properties.get(id);
+					prop.readFromNBT(tag);
+				}
+			} catch(Throwable err)
+			{
+			}
+		}
+		
+		readFromNBT(nbt.getCompoundTag("Tags"));
+	}
+	
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 	}
@@ -337,5 +390,31 @@ public abstract class MultipartSignature
 			state = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(nbt.getString("block"))).getStateFromMeta(nbt.getInteger("meta"));
 		pos = new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"));
 		readFromNBT(nbt.getCompoundTag("nbt"));
+	}
+	
+	@Override
+	public int registerProperty(NetPropertyAbstract prop)
+	{
+		if(properties.contains(prop))
+			return properties.indexOf(prop);
+		properties.add(prop);
+		return properties.size() - 1;
+	}
+	
+	@Override
+	public void load(int id, NBTTagCompound nbt)
+	{
+		if(id >= 0 && id < properties.size())
+			properties.get(id).readFromNBT(nbt);
+	}
+	
+	public void notifyOfChange(NetPropertyAbstract prop)
+	{
+	}
+	
+	@Override
+	public void sendChangesToNearby()
+	{
+		requestSync();
 	}
 }
