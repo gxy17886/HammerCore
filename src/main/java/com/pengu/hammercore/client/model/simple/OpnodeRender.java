@@ -2,6 +2,7 @@ package com.pengu.hammercore.client.model.simple;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
 import scala.actors.threadpool.Arrays;
 
@@ -25,6 +26,8 @@ public class OpnodeRender
 			sbr.begin();
 		sbr.setBrightness(bright);
 		int[] opnode = node.opnode;
+		for(EnumFacing facing : EnumFacing.VALUES)
+			sbr.setSpriteForSide(facing, Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(node.textures[facing.ordinal()]));
 		for(int i = 0; i < opnode.length; ++i)
 		{
 			int code = opnode[i];
