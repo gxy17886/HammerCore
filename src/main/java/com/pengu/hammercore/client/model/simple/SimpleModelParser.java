@@ -60,6 +60,10 @@ public class SimpleModelParser
 					NPEUtils.checkNotNull(null, "unknown orientation: " + dir);
 				
 				node.textures[op] = s.substring(10);
+			} else if(s.startsWith("textures "))
+			{
+				NPEUtils.checkNotNull(node, "node");
+				Arrays.fill(node.textures, s.substring(9));
 			} else if(s.startsWith("disable face "))
 			{
 				NPEUtils.checkNotNull(node, "node");
