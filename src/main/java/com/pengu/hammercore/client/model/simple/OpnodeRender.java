@@ -10,24 +10,21 @@ import com.pengu.hammercore.client.render.vertex.SimpleBlockRendering;
 
 public class OpnodeRender
 {
-	public void renderOpnodes(SimpleBlockRendering sbr, List<Opnode> nodes, int bright, boolean newTessellation)
+	public static void renderOpnodes(SimpleBlockRendering sbr, List<int[]> nodes, int bright, boolean newTessellation)
 	{
 		if(newTessellation)
 			sbr.begin();
-		for(Opnode node : nodes)
+		for(int[] node : nodes)
 			renderOpnode(sbr, node, bright, false);
 		if(newTessellation)
 			sbr.end();
 	}
 	
-	public void renderOpnode(SimpleBlockRendering sbr, Opnode node, int bright, boolean newTessellation)
+	public static void renderOpnode(SimpleBlockRendering sbr, int[] opnode, int bright, boolean newTessellation)
 	{
 		if(newTessellation)
 			sbr.begin();
 		sbr.setBrightness(bright);
-		int[] opnode = node.opnode;
-		for(EnumFacing facing : EnumFacing.VALUES)
-			sbr.setSpriteForSide(facing, Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(node.textures[facing.ordinal()]));
 		for(int i = 0; i < opnode.length; ++i)
 		{
 			int code = opnode[i];
@@ -38,17 +35,13 @@ public class OpnodeRender
 				EnumFacing f = EnumFacing.VALUES[opnode[i]];
 				sbr.disableFace(f);
 				continue;
-			} else
-			
-			if(code == ModelOpcodes.EFACE)
+			} else if(code == ModelOpcodes.EFACE)
 			{
 				i++;
 				EnumFacing f = EnumFacing.VALUES[opnode[i]];
 				sbr.enableFace(f);
 				continue;
-			} else
-			
-			if(code == ModelOpcodes.COLOR)
+			} else if(code == ModelOpcodes.COLOR)
 			{
 				i++;
 				int r = opnode[i];
@@ -59,11 +52,9 @@ public class OpnodeRender
 				i++;
 				int a = opnode[i];
 				Arrays.fill(sbr.rgb, (r >> 16) | (g >> 8) | b);
-				sbr.rb.renderAlpha = a;
+				sbr.rb.renderAlpha = a / 255F;
 				continue;
-			} else
-			
-			if(code == ModelOpcodes.BOUNDS)
+			} else if(code == ModelOpcodes.BOUNDS)
 			{
 				double m1 = SimpleModelParser.getDouble(opnode, i + 1);
 				double m2 = SimpleModelParser.getDouble(opnode, i + 3);
@@ -80,10 +71,27 @@ public class OpnodeRender
 				sbr.disableFaces();
 			else if(code == ModelOpcodes.DRAW)
 				sbr.drawBlock(0, 0, 0);
+			else if(code == ModelOpcodes.INAME)
+			{
+				i++;
+				i += opnode[i];
+			} else if(code == ModelOpcodes.ITEX)
+			{
+				i++;
+				int len = opnode[i];
+				i++;
+				int face = opnode[i];
+				i++;
+				byte[] buf = new byte[len];
+				for(int j = 0; j < len; ++j)
+					buf[j] = (byte) opnode[i + j];
+				i += len - 1;
+				sbr.setSpriteForSide(EnumFacing.VALUES[face], Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new String(buf)));
+			}
 		}
 		if(newTessellation)
 			sbr.end();
 		Arrays.fill(sbr.rgb, 0xFFFFFF);
-		sbr.rb.renderAlpha = 255;
+		sbr.rb.renderAlpha = 1F;
 	}
 }

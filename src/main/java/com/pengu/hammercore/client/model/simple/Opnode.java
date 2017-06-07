@@ -9,22 +9,7 @@ import com.pengu.hammercore.utils.IndexedMap;
 
 public class Opnode implements Serializable
 {
-	public int[] opnode;
-	public String[] textures = new String[6];
-	public String name;
-	
-	public Opnode(int[] opnode, String tex)
-	{
-		Arrays.fill(textures, tex);
-		this.opnode = opnode;
-	}
-	
-	public String toString()
-	{
-		return stringify();
-	}
-	
-	public void verify()
+	public static void verify(int[] opnode)
 	{
 		for(int i = 0; i < opnode.length; ++i)
 		{
@@ -75,18 +60,21 @@ public class Opnode implements Serializable
 				;
 			else if(code == ModelOpcodes.DRAW)
 				;
+			else if(code == ModelOpcodes.INAME)
+			{
+				i++;
+				i += opnode[i];
+			} else if(code == ModelOpcodes.ITEX)
+			{
+				i++;
+				i += opnode[i] + 1;
+			}
 		}
 	}
 	
-	public String stringify()
+	public static String stringify(int[] opnode)
 	{
 		String s = "{\n";
-		s += "name " + name + "\n";
-		for(int face = 0; face < 6; ++face)
-		{
-			String sface = (face < 2 ? "y" : face < 4 ? "z" : "x") + (face % 2 == 0 ? "-" : "+");
-			s += "texture " + sface + " " + textures[face] + "\n";
-		}
 		
 		for(int i = 0; i < opnode.length; ++i)
 		{
@@ -141,6 +129,30 @@ public class Opnode implements Serializable
 				s += "disable faces\n";
 			else if(code == ModelOpcodes.DRAW)
 				s += "draw\n";
+			else if(code == ModelOpcodes.INAME)
+			{
+				i++;
+				int len = opnode[i];
+				i++;
+				byte[] buf = new byte[len];
+				for(int j = 0; j < len; ++j)
+					buf[j] = (byte) opnode[i + j];
+				i += len - 1;
+				s += "name " + new String(buf) + "\n";
+			} else if(code == ModelOpcodes.ITEX)
+			{
+				i++;
+				int len = opnode[i];
+				i++;
+				int face = opnode[i];
+				i++;
+				byte[] buf = new byte[len];
+				for(int j = 0; j < len; ++j)
+					buf[j] = (byte) opnode[i + j];
+				i += len - 1;
+				String sface = (face < 2 ? "y" : face < 4 ? "z" : "x") + (face % 2 == 0 ? "-" : "+");
+				s += "texture " + sface + " " + new String(buf) + "\n";
+			}
 		}
 		
 		if(s.endsWith("\n"))

@@ -9,4 +9,6 @@ public interface ModelOpcodes
 	public static final int DRAW = 0x04;
 	public static final int DFACES = 0x05;
 	public static final int EFACES = 0x06;
+	public static final int ITEX = 0x07;
+	public static final int INAME = 0x08;
 }

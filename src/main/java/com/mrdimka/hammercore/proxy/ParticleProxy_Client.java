@@ -11,10 +11,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 import com.mrdimka.hammercore.api.dynlight.DynamicLightGetter;
+import com.pengu.hammercore.client.OpnodeLoader;
 import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.particle.def.ParticleZap;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
@@ -128,5 +131,11 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	public static void setParticlePosZ(Particle part, double d)
 	{
 		part.posZ = d;
+	}
+	
+	@SubscribeEvent
+	public void reloadTextures(TextureStitchEvent evt)
+	{
+		OpnodeLoader.reloadModels();
 	}
 }
