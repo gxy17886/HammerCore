@@ -1,10 +1,10 @@
 package com.pengu.hammercore.client.model.simple;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
-import scala.actors.threadpool.Arrays;
 
 import com.pengu.hammercore.client.render.vertex.SimpleBlockRendering;
 
