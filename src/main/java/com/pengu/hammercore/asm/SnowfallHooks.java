@@ -20,7 +20,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
+import com.pengu.hammercore.cfg.HammerCoreConfigs;
 import com.pengu.hammercore.utils.WorldLocation;
 
 public class SnowfallHooks
@@ -80,7 +80,7 @@ public class SnowfallHooks
 			
 			while(al.getPos().getY() > 0 && (al.getBlock() == Blocks.AIR || al.getBlock() == Blocks.SNOW_LAYER))
 			{
-				if(al.getBlock() == Blocks.SNOW_LAYER)
+				if(al.getBlock() == Blocks.SNOW_LAYER && l.getBlock() == Blocks.SNOW_LAYER)
 				{
 					int fm = al.getMeta();
 					int lm = l.getMeta();
@@ -108,7 +108,7 @@ public class SnowfallHooks
 						
 						if(s != null && !world.isRemote)
 						{
-							WorldServer w = s.worldServerForDimension(world.provider.getDimension());
+							WorldServer w = s.getWorld(world.provider.getDimension());
 							w.spawnParticle(EnumParticleTypes.FALLING_DUST, l.getPos().getX() + f.getFrontOffsetX() + .5 - .45 * f.getFrontOffsetX(), l.getPos().getY() + .125 * (l.getMeta() + 1), l.getPos().getZ() + f.getFrontOffsetZ() + .5 - .45 * f.getFrontOffsetZ(), 5, Math.abs(f.getFrontOffsetZ()) * .45, 0, Math.abs(f.getFrontOffsetX()) * .45, 0, new int[] { Block.getStateId(Blocks.SNOW.getDefaultState()) });
 						}
 						
@@ -118,7 +118,7 @@ public class SnowfallHooks
 					break;
 				}
 				
-				if(l.getMeta() > 0 && al.getBlock() == Blocks.AIR)
+				if(l.getBlock() == Blocks.SNOW_LAYER && l.getMeta() > 0 && al.getBlock() == Blocks.AIR)
 				{
 					if(Blocks.SNOW_LAYER.canPlaceBlockAt(world, al.getPos()))
 					{
@@ -177,24 +177,25 @@ public class SnowfallHooks
 			}
 		}
 		
-		if(checkLight && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 10 && loc.getBlock() == Blocks.SNOW_LAYER && !world.isRemote)
+		try
 		{
-			int smallest = loc.getMeta();
-			
-			if(world.rand.nextInt(smallest + 2) == 0)
+			if(checkLight && world.getLightFor(EnumSkyBlock.BLOCK, pos) < 10 && loc.getBlock() == Blocks.SNOW_LAYER && !world.isRemote)
 			{
-				try
+				int smallest = loc.getMeta();
+				
+				if(world.rand.nextInt(smallest + 2) == 0)
 				{
 					int m = loc.getMeta();
 					if(m < 7)
 						grow(loc, m);
+					
+					return true;
 				}
-				catch(Throwable err) {}
 				
-				return true;
+				return false;
 			}
-			
-			return false;
+		} catch(Throwable err)
+		{
 		}
 		
 		return false;

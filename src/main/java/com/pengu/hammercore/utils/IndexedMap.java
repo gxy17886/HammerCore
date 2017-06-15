@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.mrdimka.hammercore.common.utils.ArrayEntry;
+import com.pengu.hammercore.common.utils.ArrayEntry;
 
 /**
  * This map uses ArrayLists to store key-value pairs. It does not support

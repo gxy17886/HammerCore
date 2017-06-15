@@ -32,9 +32,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.render.world.PositionRenderer;
+import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.color.Color;
 
 public class Render3D

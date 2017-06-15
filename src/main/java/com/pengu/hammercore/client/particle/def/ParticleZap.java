@@ -4,24 +4,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mrdimka.hammercore.client.utils.UtilsFX;
-import com.mrdimka.hammercore.math.MathHelper;
-import com.mrdimka.hammercore.vec.Vector3;
-import com.pengu.hammercore.client.particle.api.IRenderedParticle;
 import com.pengu.hammercore.client.particle.api.SimpleParticle;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
 import com.pengu.hammercore.client.particle.old.ParticleParam;
+import com.pengu.hammercore.math.MathHelper;
+import com.pengu.hammercore.vec.Vector3;
 
 public class ParticleZap extends SimpleParticle implements IOldParticle
 {
@@ -135,7 +131,7 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 	@Override
 	public void doRenderParticle(double x, double y, double z, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
 	{
-		VertexBuffer wr = Tessellator.getInstance().getBuffer();
+		BufferBuilder wr = Tessellator.getInstance().getBuffer();
 		
 		GL11.glPushMatrix();
 		double ePX = prevPosX + (posX - prevPosX) * partialTicks - interpPosX;
@@ -173,8 +169,8 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 			Vec3d v = v1.add(v2).normalize();
 			v = v.rotatePitch(1.5707964F);
 			Vector3 vf = new Vector3(v).multiply(size);
-			wr.pos(vc.xCoord + vf.x, vc.yCoord + vf.y, vc.zCoord + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
-			wr.pos(vc.xCoord - vf.x, vc.yCoord - vf.y, vc.zCoord - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x + vf.x, vc.y + vf.y, vc.z + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x - vf.x, vc.y - vf.y, vc.z - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
 		}
 		
 		Tessellator.getInstance().draw();
@@ -193,8 +189,8 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 			Vec3d v = v1.add(v2).normalize();
 			v = v.rotateYaw(1.5707964F);
 			Vector3 vf = new Vector3(v).multiply(size);
-			wr.pos(vc.xCoord + vf.x, vc.yCoord + vf.y, vc.zCoord + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
-			wr.pos(vc.xCoord - vf.x, vc.yCoord - vf.y, vc.zCoord - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x + vf.x, vc.y + vf.y, vc.z + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x - vf.x, vc.y - vf.y, vc.z - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
 		}
 		
 		Tessellator.getInstance().draw();

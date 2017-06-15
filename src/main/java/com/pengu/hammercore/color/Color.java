@@ -4,8 +4,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mrdimka.hammercore.common.utils.Copyable;
-import com.mrdimka.hammercore.math.MathHelper;
+import com.pengu.hammercore.common.utils.Copyable;
+import com.pengu.hammercore.math.MathHelper;
 
 public abstract class Color implements Copyable<Color>
 {

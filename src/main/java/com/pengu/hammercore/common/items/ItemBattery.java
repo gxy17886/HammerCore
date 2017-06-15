@@ -15,11 +15,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
-import com.mrdimka.hammercore.common.utils.ChatUtil;
-import com.mrdimka.hammercore.energy.IPowerContainerItem;
-import com.mrdimka.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.HammerCore;
+import com.pengu.hammercore.common.capabilities.CapabilityEJ;
+import com.pengu.hammercore.common.utils.ChatUtil;
+import com.pengu.hammercore.energy.IPowerContainerItem;
+import com.pengu.hammercore.energy.IPowerStorage;
 
 public class ItemBattery extends ItemFEBase
 {

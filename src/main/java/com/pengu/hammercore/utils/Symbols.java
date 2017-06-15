@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.base.Stopwatch;
-import com.mrdimka.hammercore.HammerCore;
+import com.pengu.hammercore.HammerCore;
 
 public class Symbols
 {

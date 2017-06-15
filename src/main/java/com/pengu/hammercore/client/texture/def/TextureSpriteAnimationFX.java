@@ -1,7 +1,7 @@
 package com.pengu.hammercore.client.texture.def;
 
-import com.mrdimka.hammercore.math.MathHelper;
 import com.pengu.hammercore.client.texture.TextureSpriteFX;
+import com.pengu.hammercore.math.MathHelper;
 
 public class TextureSpriteAnimationFX extends TextureSpriteFX
 {

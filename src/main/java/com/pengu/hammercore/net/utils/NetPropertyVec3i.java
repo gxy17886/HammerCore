@@ -2,8 +2,8 @@ package com.pengu.hammercore.net.utils;
 
 import javax.annotation.Nonnull;
 
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.asm.HammerCoreCore;
+import com.pengu.hammercore.HammerCore;
+import com.pengu.hammercore.asm.HammerCoreCore;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;

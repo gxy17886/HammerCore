@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -26,7 +26,7 @@ configFile.withReader {
 }
 
 version = "${config.mod_version}"
-group = "com.mrdimka.hammercore"
+group = "com.pengu.hammercore"
 archivesBaseName = "HammerCore_${config.minecraft_version}"
 
 sourceCompatibility = targetCompatibility = "1.8"
@@ -37,7 +37,7 @@ compileJava {
 minecraft {
     version = "${config.forge_version}"
     runDir = "run"
-    mappings = "snapshot_20170516"
+    mappings = "snapshot_20170614"
     makeObfSourceJar = false
 	replace '@VERSION@', "${config.mod_version}"
 	replace 'IS_OBFUSCATED_MC = false', 'IS_OBFUSCATED_MC = true'
@@ -61,7 +61,7 @@ processResources {
 
 jar {
 	manifest {
-		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePlugin': 'com.pengu.hammercore.asm.HammerCoreCore'
 		attributes 'FMLCorePluginContainsFMLMod': 'false'
 		attributes 'FMLAT': 'hc_at.cfg'
 	}
@@ -71,7 +71,7 @@ task srcJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
     classifier = 'sources'
 	manifest {
-		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePlugin': 'com.pengu.hammercore.asm.HammerCoreCore'
 		attributes 'FMLCorePluginContainsFMLMod': 'false'
 		attributes 'FMLAT': 'hc_at.cfg'
 	}
@@ -81,7 +81,7 @@ task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
     manifest {
-		attributes 'FMLCorePlugin': 'com.mrdimka.hammercore.asm.HammerCoreCore'
+		attributes 'FMLCorePlugin': 'com.pengu.hammercore.asm.HammerCoreCore'
 		attributes 'FMLCorePluginContainsFMLMod': 'false'
 		attributes 'FMLAT': 'hc_at.cfg'
 	}

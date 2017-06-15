@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,11 +19,11 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mrdimka.hammercore.client.utils.RenderBlocks;
-import com.mrdimka.hammercore.tile.TileSyncable;
 import com.pengu.hammercore.client.DestroyStageTexture;
 import com.pengu.hammercore.client.render.item.IItemRender;
 import com.pengu.hammercore.client.render.item.ItemRenderingHandler;
+import com.pengu.hammercore.client.utils.RenderBlocks;
+import com.pengu.hammercore.tile.TileSyncable;
 
 public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> implements IItemRender
 {
@@ -83,7 +83,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	}
 	
 	@Override
-	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage)
+	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_)
 	{
 		ResourceLocation destroy = null;
 		RayTraceResult over = mc.objectMouseOver;
@@ -100,7 +100,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	}
 	
 	@Override
-	public final void renderTileEntityFast(T te, double x, double y, double z, float partialTicks, int destroyStage, VertexBuffer buffer)
+	public final void renderTileEntityFast(T te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer)
 	{
 		ResourceLocation destroy = null;
 		RayTraceResult over = mc.objectMouseOver;
@@ -126,7 +126,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	{
 	}
 	
-	public void renderFromNBTFast(@Nonnull NBTTagCompound nbt, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage, VertexBuffer buffer)
+	public void renderFromNBTFast(@Nonnull NBTTagCompound nbt, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage, BufferBuilder buffer)
 	{
 	}
 	
@@ -136,7 +136,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 			renderFromNBT(getNBTFromTile(te), x, y, z, partialTicks, destroyStage);
 	}
 	
-	public void renderTileEntityFast(@Nonnull T te, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage, VertexBuffer buffer)
+	public void renderTileEntityFast(@Nonnull T te, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage, BufferBuilder buffer)
 	{
 		if(canRenderFromNbt())
 			renderFromNBTFast(getNBTFromTile(te), x, y, z, partialTicks, destroyStage, buffer);

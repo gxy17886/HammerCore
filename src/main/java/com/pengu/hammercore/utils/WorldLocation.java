@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
-import com.mrdimka.hammercore.common.utils.WorldUtil;
-import com.mrdimka.hammercore.net.HCNetwork;
-import com.mrdimka.hammercore.net.pkt.PacketSetBiome;
-import com.mrdimka.hammercore.tile.TileSyncable;
+import com.pengu.hammercore.common.utils.WorldUtil;
+import com.pengu.hammercore.net.HCNetwork;
+import com.pengu.hammercore.net.pkt.PacketSetBiome;
+import com.pengu.hammercore.tile.TileSyncable;
 
 public class WorldLocation
 {

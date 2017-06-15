@@ -8,8 +8,8 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
-import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.pengu.hammercore.client.model.simple.SimpleModelParser;
+import com.pengu.hammercore.common.utils.IOUtils;
 
 public class OpnodeLoader
 {

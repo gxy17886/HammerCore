@@ -4,8 +4,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.mrdimka.hammercore.common.inventory.IInventoryListener;
-import com.mrdimka.hammercore.common.inventory.InventoryNonTile;
+import com.pengu.hammercore.common.inventory.IInventoryListener;
+import com.pengu.hammercore.common.inventory.InventoryNonTile;
 
 public class NetPropertyInventoryNonTile extends NetPropertyAbstract<InventoryNonTile> implements IInventoryListener
 {

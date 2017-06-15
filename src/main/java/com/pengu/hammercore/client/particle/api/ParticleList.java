@@ -17,7 +17,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
-import com.mrdimka.hammercore.common.utils.WorldUtil;
+import com.pengu.hammercore.common.utils.WorldUtil;
 
 public class ParticleList
 {

@@ -2,20 +2,21 @@ package com.pengu.hammercore.common.items;
 
 import java.util.List;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import com.mrdimka.hammercore.common.capabilities.ItemCapabilityProvider;
-import com.mrdimka.hammercore.energy.IPowerContainerItem;
-import com.mrdimka.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.common.capabilities.ItemCapabilityProvider;
+import com.pengu.hammercore.energy.IPowerContainerItem;
+import com.pengu.hammercore.energy.IPowerStorage;
 
 public class ItemFEBase extends Item implements IPowerContainerItem
 {
@@ -61,22 +62,22 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 	}
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
-		ItemStack stack = new ItemStack(itemIn);
+		ItemStack stack = new ItemStack(this);
 		subItems.add(stack);
 		setFE(stack, 0);
 		
-		stack = new ItemStack(itemIn);
+		stack = new ItemStack(this);
 		subItems.add(stack);
 		setFE(stack, maxFE);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		super.addInformation(stack, playerIn, tooltip, advanced);
-		int fe = getEnergyStored(stack);
+	    super.addInformation(stack, worldIn, tooltip, flagIn);
+	    int fe = getEnergyStored(stack);
 		tooltip.add(I18n.translateToLocal("info.hammercore:energy_stored") + ": " + fe);
 		if(this instanceof ItemBattery)
 			tooltip.add(I18n.translateToLocal("info.hammercore:changed_mode") + ": " + ((ItemBattery) this).getMode(stack));
@@ -95,7 +96,7 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 		if(stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());
 		stack.getTagCompound().setInteger("EnergyStored", fe);
-		stack.setItemDamage((int) com.mrdimka.hammercore.math.MathHelper.clip((int) (256 - (fe / (double) maxFE) * 255D), 0, getMaxDamage()));
+		stack.setItemDamage((int) com.pengu.hammercore.math.MathHelper.clip((int) (256 - (fe / (double) maxFE) * 255D), 0, getMaxDamage()));
 	}
 	
 	@Override

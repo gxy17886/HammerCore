@@ -26,8 +26,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import com.mrdimka.hammercore.api.IUpdatable;
-import com.mrdimka.hammercore.vec.Vector3;
+import com.pengu.hammercore.api.IUpdatable;
+import com.pengu.hammercore.vec.Vector3;
 
 public class LightningBoltCommon implements IUpdatable
 {
@@ -191,8 +191,8 @@ public class LightningBoltCommon implements IUpdatable
 		{
 			for(Entity entity : entitylist)
 			{
-				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expandXyz((double) entity.getCollisionBorderSize());
-				if(!(entity instanceof EntityLiving) || !axisalignedbb.isVecInside(start3D))
+				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand(entity.getCollisionBorderSize(), entity.getCollisionBorderSize(), entity.getCollisionBorderSize());
+				if(!(entity instanceof EntityLiving) || !axisalignedbb.contains(start3D))
 					continue;
 				
 				if(wrapper == null || !(wrapper instanceof EntityLiving))

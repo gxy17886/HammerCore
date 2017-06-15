@@ -18,11 +18,11 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mrdimka.hammercore.client.GLRenderState;
-import com.mrdimka.hammercore.client.utils.RenderBlocks;
-import com.mrdimka.hammercore.vec.Cuboid6;
-import com.mrdimka.hammercore.vec.Vector3;
+import com.pengu.hammercore.client.GLRenderState;
 import com.pengu.hammercore.client.render.vertex.SpriteTexture.BlockSpriteTexture;
+import com.pengu.hammercore.client.utils.RenderBlocks;
+import com.pengu.hammercore.vec.Cuboid6;
+import com.pengu.hammercore.vec.Vector3;
 
 public class SimpleBlockRendering
 {
@@ -117,7 +117,7 @@ public class SimpleBlockRendering
 	
 	public void setRenderBounds(Vec3d min, Vec3d max)
 	{
-		setRenderBounds(min.xCoord, min.yCoord, min.zCoord, max.xCoord, max.yCoord, max.zCoord);
+		setRenderBounds(min.x, min.y, min.z, max.x, max.y, max.z);
 	}
 	
 	public void setRenderBounds(AxisAlignedBB aabb)

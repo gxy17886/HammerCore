@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.world.World;
 
-import com.mrdimka.hammercore.api.IUpdatable;
+import com.pengu.hammercore.api.IUpdatable;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 

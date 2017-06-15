@@ -1,10 +1,7 @@
 package com.pengu.hammercore.common.chunk;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.Set;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
@@ -16,7 +13,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
-import com.mrdimka.hammercore.annotations.MCFBus;
+import com.pengu.hammercore.annotations.MCFBus;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 
@@ -49,7 +46,7 @@ public class ChunkloadAPI
 			int x = pos.getY();
 			int z = pos.getZ();
 			
-			WorldServer ws = server.worldServerForDimension(dim);
+			WorldServer ws = server.getWorld(dim);
 			ws.getChunkProvider().provideChunk(x, z);
 			
 			chunks.remove(i);
@@ -59,7 +56,7 @@ public class ChunkloadAPI
 		for(int i = 0; i < chunks.size(); ++i)
 		{
 			LoadableChunk c = chunks.get(i);
-			WorldServer ws = server.worldServerForDimension(c.dim);
+			WorldServer ws = server.getWorld(c.dim);
 			ws.getChunkProvider().provideChunk(c.x, c.z);
 		}
 	}

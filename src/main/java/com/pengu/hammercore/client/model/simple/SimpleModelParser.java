@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.mrdimka.hammercore.math.ExpressionEvaluator;
+import com.pengu.hammercore.math.ExpressionEvaluator;
 import com.pengu.hammercore.utils.NPEUtils;
 import com.pengu.hammercore.utils.UnmodifiableList;
 
