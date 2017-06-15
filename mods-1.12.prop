@@ -1,0 +1,129 @@
+{
+	"Black Hole Storage": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
+		"modid": "blackholestorage",
+		"tooltip": "Store infinite amounts of something inside of a stabilized black holes",
+		"authors": [ "APengu" ],
+		"versions": {
+			"alpha": {
+				"version": "3a",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2385875/download",
+				"size": 636111
+			},
+			"beta": {
+				"version": "6b",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2390299/download",
+				"size": 692175
+			},
+			"release": {
+				"version": "14r",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2413821/download",
+				"size": 1557816
+			}
+		}
+	},
+	"Solar Flux Reborn": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/191/71/190/130/275f5c830a2ff1712dc11fab9bb96ece.png",
+		"modid": "solarfluxreborn",
+		"tooltip": "A reborn of Solar Flux mod",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "2.15r",
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download",
+				"size": 211090
+			}
+		}
+	},
+	"Machine Power Craft": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/189/282/190/130/7df9fc5572d9c16fa6d5ca9d723370d7.png",
+		"modid": "machinepowercraft",
+		"tooltip": "Machine Power Craft adds machines, with them you can triple+ ores, teleport around, and more!",
+		"authors": [ "APengu" ],
+		"versions": {
+			"preview": {
+				"version": "7a",
+				"download": "https://minecraft.curseforge.com/projects/machine-power-craft/files/2414130/download",
+				"size": 1352655
+			}
+		}
+	},
+	"Programmable Command Blocks (PCB)": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/240/505/190/130/4fa2ba4f4facf7776d29ab68df59a16c.gif",
+		"modid": "pcb",
+		"tooltip": "Now making one-command block creations is easier!",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "1.3r",
+				"download": "https://minecraft.curseforge.com/projects/programmable-command-blocks-pcb/files/2402904/download",
+				"size": 340240
+			}
+		}
+	},
+	"Player Stats 2": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/236/939/190/130/57c65c54a4c354b60fd5d7448b50e0bc.png",
+		"modid": "playerstats2",
+		"tooltip": "PlayerStats gets a reboot!",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "14r",
+				"download": "https://minecraft.curseforge.com/projects/player-stats-2/files/2397070/download",
+				"size": 360652
+			}
+		}
+	},
+	"Solar Energy Craft III": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/244/795/190/130/74047f505b81651a5415819be0d52910.png",
+		"modid": "secraft",
+		"tooltip": "This addon for mod \"Machine Power Craft\"",
+		"authors": [ "TheOrriver" ],
+		"versions": {
+			"alpha": {
+				"version": "1a",
+				"download": "https://minecraft.curseforge.com/projects/solar-energy-craft-iii/files/2404799/download",
+				"size": 68006
+			}
+		}
+	},
+	"Terraria Craft": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/206/927/190/130/7fe8d3eeef720941c8c028423400d208.png",
+		"modid": "terraria",
+		"tooltip": "Adding Terraria Content to Minecraft",
+		"authors": [ "APengu" ],
+		"versions": {
+			"preview": {
+				"version": "38a",
+				"download": "https://minecraft.curseforge.com/projects/terraria-craft/files/2396248/download",
+				"size": 1345798
+			}
+		}
+	},
+	"Biome Paint Tools": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/214/512/190/130/8ffe50cf8fca85aea25fadd5e818d309.png",
+		"modid": "biomepainttools",
+		"tooltip": "Paint world with biomes",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "1.0.4",
+				"download": "https://minecraft.curseforge.com/projects/biome-paint-tools/files/2396518/download",
+				"size": 53206
+			}
+		}
+	},
+	"Lost Thaumaturgy": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/175/173/190/130/f5dce94f6ce90c14cd046f50584566f1.jpeg",
+		"modid": "lostthaumaturgy",
+		"tooltip": "Adding plenty of useful utilities from Thaumcraft 2",
+		"authors": [ "APengu" ],
+		"versions": {
+			"beta": {
+				"version": "7b",
+				"download": "https://minecraft.curseforge.com/projects/lost-thaumaturgy/files/2426245/download",
+				"size": 1480217
+			}
+		}
+	}
+}
