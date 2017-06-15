@@ -16,9 +16,9 @@
 				"size": 692175
 			},
 			"release": {
-				"version": "14r",
-				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2413821/download",
-				"size": 1557816
+				"version": "15r",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2430096/download",
+				"size": 1572864
 			}
 		}
 	},
@@ -29,9 +29,9 @@
 		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
-				"version": "2.15r",
-				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2394491/download",
-				"size": 211090
+				"version": "2.21r",
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2431626/download",
+				"size": 204800
 			}
 		}
 	},
@@ -107,9 +107,9 @@
 		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
-				"version": "1.0.4",
-				"download": "https://minecraft.curseforge.com/projects/biome-paint-tools/files/2396518/download",
-				"size": 53206
+				"version": "1.0.5",
+				"download": "https://minecraft.curseforge.com/projects/biome-paint-tools/files/2428676/download",
+				"size": 53248
 			}
 		}
 	},
@@ -123,6 +123,11 @@
 				"version": "7b",
 				"download": "https://minecraft.curseforge.com/projects/lost-thaumaturgy/files/2426245/download",
 				"size": 1480217
+			},
+			"release": {
+				"version": "8r",
+				"download": "https://minecraft.curseforge.com/projects/lost-thaumaturgy/files/2434185/download",
+				"size": 4665344
 			}
 		}
 	}
