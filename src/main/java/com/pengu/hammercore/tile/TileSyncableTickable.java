@@ -12,6 +12,9 @@ public abstract class TileSyncableTickable extends TileSyncable implements ITick
 	@Override
 	public final void update()
 	{
+		/* Updates location each tick, if needed. */
+		getLocation();
+		
 		ticksExisted++;
 		tick();
 		

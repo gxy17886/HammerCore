@@ -50,6 +50,7 @@ public class GuiModBrowser extends GuiScreen
 		GLRenderState.BLEND.on();
 		
 		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
 		
 		for(int i = beginIndex; i < browser.mods.size(); ++i)
 		{
@@ -96,6 +97,8 @@ public class GuiModBrowser extends GuiScreen
 			{
 				drawHoveringText(Arrays.asList(mod.modName, mod.description + "", "by " + mod.authors), 56, y + 12);
 				GlStateManager.disableLighting();
+				GlStateManager.enableAlpha();
+				GlStateManager.enableBlend();
 			}
 			
 			int verX = 0, verY = 0;
@@ -107,6 +110,8 @@ public class GuiModBrowser extends GuiScreen
 					LoadedMod lmod = browser.loadedMods.get(mod.modid);
 					drawHoveringText(Arrays.asList("Latest: " + mod.supportedVersions.get(ver), "Version type: " + ver.getId(), lmod != null ? "Current Version: " + lmod.version + "" : "Not installed. Press to install"), 78 + verX, y + 16 + verY);
 					GlStateManager.disableLighting();
+					GlStateManager.enableAlpha();
+					GlStateManager.enableBlend();
 				}
 				
 				verY += 24;
