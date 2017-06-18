@@ -53,7 +53,7 @@ public class SpawnEnderDragonEggHandler
 				{
 					if(ticks++ >= 601 && ticks < 1000)
 					{
-						WorldServer TheEnd = server.worldServerForDimension(1);
+						WorldServer TheEnd = server.getWorld(1);
 						TheEnd.getChunkFromBlockCoords(WorldGenEndPodium.END_PODIUM_LOCATION);
 						if(HolidayTrigger.isHalloween())
 							TheEnd.setBlockState(TheEnd.getHeight(WorldGenEndPodium.END_PODIUM_LOCATION), Blocks.LIT_PUMPKIN.getDefaultState());

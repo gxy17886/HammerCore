@@ -31,7 +31,7 @@ public class HammerCoreConfigs implements IConfigReloadListener
 	@ModConfigPropertyBool(name = "Snow Melting", category = "Snowfall", defaultValue = false, comment = "Should snow layers melt depending on biome?")
 	public static boolean snowfall_meltSnow;
 	
-	@ModConfigPropertyBool(name = "Snow Balancing", category = "Snowfall", defaultValue = true, comment = "Should snow layers balance out? \nWarning: This also allows snow to fall from mountains!")
+	@ModConfigPropertyBool(name = "Snow Balancing", category = "Snowfall", defaultValue = false, comment = "Should snow layers balance out? \nWarning: This also allows snow to fall from mountains!")
 	public static boolean snowfall_balanceSnow;
 	
 	public static Configuration cfg;

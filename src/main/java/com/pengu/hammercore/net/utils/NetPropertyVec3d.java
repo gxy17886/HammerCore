@@ -20,9 +20,9 @@ public class NetPropertyVec3d extends NetPropertyAbstract<Vec3d>
 	{
 		if(value != null)
 		{
-			nbt.setDouble("x", value.xCoord);
-			nbt.setDouble("y", value.yCoord);
-			nbt.setDouble("z", value.zCoord);
+			nbt.setDouble("x", value.x);
+			nbt.setDouble("y", value.y);
+			nbt.setDouble("z", value.z);
 		}
 		return nbt;
 	}

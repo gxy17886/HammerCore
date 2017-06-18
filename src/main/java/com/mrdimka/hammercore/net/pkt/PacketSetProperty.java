@@ -51,7 +51,7 @@ public class PacketSetProperty implements IPacket, IPacketListener<PacketSetProp
 			int id = nbt.getInteger("Id");
 			
 			MinecraftServer server = context.getServerHandler().player.mcServer;
-			WorldServer world = server.worldServerForDimension(dim);
+			WorldServer world = server.getWorld(dim);
 			
 			if(world != null && world.isBlockLoaded(pos) && world.getTileEntity(pos) instanceof TileSyncable)
 				((TileSyncable) world.getTileEntity(pos)).load(id, prop);

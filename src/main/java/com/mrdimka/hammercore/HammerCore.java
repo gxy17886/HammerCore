@@ -218,6 +218,10 @@ public class HammerCore
 		
 		toRegister.add(this);
 		
+		for(IJavaCode code : COMPILED_CODES)
+			// Add compiled codes
+			code.addMCFObjects(toRegister);
+		
 		ProgressBar bar = ProgressManager.push("Loading", 3 + apis.size() + toRegister.size() + listeners.size());
 		
 		bar.step("Registering EJ");
@@ -232,15 +236,11 @@ public class HammerCore
 			ConfigHolder h = new ConfigHolder(listener, new Configuration(listener.getSuggestedConfigurationFile()));
 			h.reload();
 			configListeners.add(h);
-			LOG.info("Added \"" + h.getClass().getName() + "\" to Hammer Core Simple Configs.");
+			LOG.info("Added \"" + listener.getClass().getName() + "\" to Hammer Core Simple Configs.");
 		}
 		
 		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
 		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, IRecipePlugin.class);
-		
-		for(IJavaCode code : COMPILED_CODES)
-			// Add compiled codes
-			code.addMCFObjects(toRegister);
 		
 		i = 0;
 		for(Object o : toRegister)

@@ -191,8 +191,8 @@ public class LightningBoltCommon implements IUpdatable
 		{
 			for(Entity entity : entitylist)
 			{
-				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expandXyz((double) entity.getCollisionBorderSize());
-				if(!(entity instanceof EntityLiving) || !axisalignedbb.isVecInside(start3D))
+				AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow((double) entity.getCollisionBorderSize());
+				if(!(entity instanceof EntityLiving) || !axisalignedbb.contains(start3D))
 					continue;
 				
 				if(wrapper == null || !(wrapper instanceof EntityLiving))

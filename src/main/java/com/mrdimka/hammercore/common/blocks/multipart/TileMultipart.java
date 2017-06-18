@@ -68,7 +68,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		// Attempted sync
 		if(!world.isRemote && ticksExisted > 40 && hasSyncedOnce)
 		{
-			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).expandXyz(4));
+			List<EntityPlayerMP> players = world.getEntitiesWithinAABB(EntityPlayerMP.class, new AxisAlignedBB(pos).grow(4));
 			if(lastPlayerCount == -1 || lastPlayerCount != players.size())
 				sync();
 			lastPlayerCount = players.size();
@@ -116,7 +116,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	public boolean onBoxActivated(int boxID, Cuboid6 box, World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		for(MultipartSignature s : signatures())
-			if(s != null && box != null && s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(box.aabb()))
+			if(s != null && box != null && s.getBoundingBox() != null && s.getBoundingBox().intersects(box.aabb()))
 				return s.onSignatureActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		return false;
 	}
@@ -173,7 +173,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	{
 		AxisAlignedBB aabb = signature.getBoundingBox();
 		for(MultipartSignature s : signatures())
-			if(s.getBoundingBox() != null && s.getBoundingBox().intersectsWith(aabb) && !s.isReplaceable() && s.doesMindCollision(signature.getBoundingBox(), aabb.union(signature.getBoundingBox())))
+			if(s.getBoundingBox() != null && s.getBoundingBox().intersects(aabb) && !s.isReplaceable() && s.doesMindCollision(signature.getBoundingBox(), aabb.union(signature.getBoundingBox())))
 				return false;
 		return true;
 	}

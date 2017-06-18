@@ -43,7 +43,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	{
 		if(!w.isRemote)
 			return super.spawnZap(w, start, end, rgb);
-		ParticleZap zap = new ParticleZap(w, start.xCoord, start.yCoord, start.zCoord, end.xCoord, end.yCoord, end.zCoord, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
+		ParticleZap zap = new ParticleZap(w, start.x, start.y, start.z, end.x, end.y, end.z, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
 		zap.spawn();
 		return zap;
 	}
@@ -54,7 +54,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 		ParticleZap zap = null;
 		if(Minecraft.getMinecraft().world.provider.getDimension() == w)
 		{
-			zap = new ParticleZap(Minecraft.getMinecraft().world, start.xCoord, start.yCoord, start.zCoord, end.xCoord, end.yCoord, end.zCoord, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
+			zap = new ParticleZap(Minecraft.getMinecraft().world, start.x, start.y, start.z, end.x, end.y, end.z, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
 			zap.spawn();
 		}
 		return zap;

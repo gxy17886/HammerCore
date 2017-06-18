@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.mrdimka.hammercore.api.INoItemBlock;
@@ -17,6 +18,7 @@ import com.mrdimka.hammercore.api.multipart.BlockMultipartProvider;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.pengu.hammercore.common.blocks.IItemBlock;
 import com.pengu.hammercore.utils.IRegisterListener;
+import com.pengu.hammercore.utils.SoundObject;
 
 public class SimpleRegistration
 {
@@ -46,6 +48,29 @@ public class SimpleRegistration
 				} catch(Throwable err)
 				{
 				}
+	}
+	
+	public static void registerFieldSoundsFrom(Class<?> owner)
+	{
+		Field[] fs = owner.getDeclaredFields();
+		for(Field f : fs)
+			if(SoundObject.class.isAssignableFrom(f.getType()))
+				try
+				{
+					f.setAccessible(true);
+					registerSound((SoundObject) f.get(null));
+				} catch(Throwable err)
+				{
+				}
+	}
+	
+	/**
+	 * Registers {@link SoundObject} to registry and populates
+	 * {@link SoundObject} with {@link SoundEvent}.
+	 **/
+	public static void registerSound(SoundObject sound)
+	{
+		sound.sound = GameRegistry.register(sound.sound = new SoundEvent(sound.name).setRegistryName(sound.name));
 	}
 	
 	public static void registerItem(Item item, String modid, CreativeTabs tab)
@@ -94,9 +119,6 @@ public class SimpleRegistration
 		if(block instanceof ITileBlock)
 		{
 			Class c = ((ITileBlock) block).getTileClass();
-			
-			// Better registration of tiles. Maybe this will fix tile
-			// disappearing?
 			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1).toLowerCase());
 		} else if(block instanceof ITileEntityProvider)
 		{

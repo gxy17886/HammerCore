@@ -29,11 +29,8 @@ public class AudioProxy_Client extends AudioProxy_Common
 	{
 		try
 		{
-			float br = volume * volume * 512F;
 			EntityPlayerSP p = Minecraft.getMinecraft().player;
 			if(p.world.provider.getDimension() != world.provider.getDimension())
-				return;
-			if(p.getDistance(x, y, z) > br)
 				return;
 			p.connection.handleCustomSound(new SPacketCustomSound(sound, category, x, y, z, volume, pitch));
 		} catch(Throwable err)

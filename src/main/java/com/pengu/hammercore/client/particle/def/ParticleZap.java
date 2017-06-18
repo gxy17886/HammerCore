@@ -173,8 +173,8 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 			Vec3d v = v1.add(v2).normalize();
 			v = v.rotatePitch(1.5707964F);
 			Vector3 vf = new Vector3(v).multiply(size);
-			wr.pos(vc.xCoord + vf.x, vc.yCoord + vf.y, vc.zCoord + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
-			wr.pos(vc.xCoord - vf.x, vc.yCoord - vf.y, vc.zCoord - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x + vf.x, vc.y + vf.y, vc.z + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x - vf.x, vc.y - vf.y, vc.z - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
 		}
 		
 		Tessellator.getInstance().draw();
@@ -193,8 +193,8 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 			Vec3d v = v1.add(v2).normalize();
 			v = v.rotateYaw(1.5707964F);
 			Vector3 vf = new Vector3(v).multiply(size);
-			wr.pos(vc.xCoord + vf.x, vc.yCoord + vf.y, vc.zCoord + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
-			wr.pos(vc.xCoord - vf.x, vc.yCoord - vf.y, vc.zCoord - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x + vf.x, vc.y + vf.y, vc.z + vf.z).tex(f13, f10).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
+			wr.pos(vc.x - vf.x, vc.y - vf.y, vc.z - vf.z).tex(f13, f9).color(particleRed, particleGreen, particleBlue, 0.8F / Math.max(1, particleAge)).lightmap(j, k).endVertex();
 		}
 		
 		Tessellator.getInstance().draw();

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 import com.mrdimka.hammercore.annotations.MCFBus;
+import com.mrdimka.hammercore.common.blocks.tesseract.TileTesseract;
 import com.mrdimka.hammercore.tile.ITileDroppable;
 import com.mrdimka.hammercore.tile.TileSyncable;
 
@@ -27,7 +28,7 @@ public class TileHandler
 	}
 	
 	@SubscribeEvent
-	public void breakBlock(BlockEvent.PlaceEvent evt)
+	public void place(BlockEvent.PlaceEvent evt)
 	{
 		TileEntity te = evt.getWorld().getTileEntity(evt.getPos());
 		
@@ -57,7 +58,7 @@ public class TileHandler
 		
 		if(currentCheck - lastCheck > 40)
 		{
-			// TileTesseract.revalidateTesseracts();
+//			 TileTesseract.revalidateTesseracts();
 			lastCheck = currentCheck;
 		}
 	}

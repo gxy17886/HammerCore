@@ -75,7 +75,7 @@ public class WorldUtil
 			if(mp.world.provider.getDimension() != dim)
 			{
 				MinecraftServer server = mp.mcServer;
-				WorldServer nev = server.worldServerForDimension(dim);
+				WorldServer nev = server.getWorld(dim);
 				server.getPlayerList().transferPlayerToDimension(mp, dim, new BlankTeleporter(nev));
 			}
 			
@@ -91,8 +91,8 @@ public class WorldUtil
 			{
 				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
 				
-				WorldServer old = server.worldServerForDimension(ent.world.provider.getDimension());
-				WorldServer nev = server.worldServerForDimension(dim);
+				WorldServer old = server.getWorld(ent.world.provider.getDimension());
+				WorldServer nev = server.getWorld(dim);
 				
 				server.getPlayerList().transferEntityToWorld(ent, ent.world.provider.getDimension(), old, nev, new BlankTeleporter(nev));
 			}

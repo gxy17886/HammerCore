@@ -209,7 +209,7 @@ public class RayTracer
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1.0F);
 		double reach = getBlockReachDistance(player);
-		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+		Vec3d endVec = headVec.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 		return b.getBlock().collisionRayTrace(world.getBlockState(pos), world, pos, headVec, endVec);
 	}
 	
@@ -257,7 +257,7 @@ public class RayTracer
 	{
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
-		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+		Vec3d endVec = headVec.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 		return player.world.rayTraceBlocks(headVec, endVec, false, true, true);
 	}
 	
@@ -271,7 +271,7 @@ public class RayTracer
 		}
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
-		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+		Vec3d endVec = headVec.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 		return player.world.rayTraceBlocks(headVec, endVec, false, true, true);
 	}
 	
@@ -279,7 +279,7 @@ public class RayTracer
 	{
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1);
-		Vec3d endVec = headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+		Vec3d endVec = headVec.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 		return player.world.rayTraceBlocks(headVec, endVec, true, true, true);
 	}
 	
@@ -288,11 +288,11 @@ public class RayTracer
 		Vec3d vec3d = getCorrectedHeadVec(player);
 		
 		Vec3d vec3d1 = player.getLook(1);
-		Vec3d vec3d2 = vec3d.addVector(vec3d1.xCoord * reach, vec3d1.yCoord * reach, vec3d1.zCoord * reach);
+		Vec3d vec3d2 = vec3d.addVector(vec3d1.x * reach, vec3d1.y * reach, vec3d1.z * reach);
 		Vec3d vec3d3 = null;
 		
 		float f = 1.0F;
-		List<Entity> list = player.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().addCoord(vec3d1.xCoord * reach, vec3d1.yCoord * reach, vec3d1.zCoord * reach).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
+		List<Entity> list = player.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().offset(vec3d1.x * reach, vec3d1.y * reach, vec3d1.z * reach).expand(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
 		{
 			public boolean apply(Entity entity)
 			{
@@ -307,10 +307,10 @@ public class RayTracer
 		for(int j = 0; j < list.size(); ++j)
 		{
 			Entity entity1 = (Entity) list.get(j);
-			AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expandXyz((double) entity1.getCollisionBorderSize());
+			AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().grow((double) entity1.getCollisionBorderSize());
 			RayTraceResult raytraceresult = axisalignedbb.calculateIntercept(vec3d, vec3d2);
 			
-			if(axisalignedbb.isVecInside(vec3d))
+			if(axisalignedbb.contains(vec3d))
 			{
 				if(d2 >= 0.0D)
 				{
@@ -366,6 +366,6 @@ public class RayTracer
 		Vec3d headVec = getCorrectedHeadVec(player);
 		Vec3d lookVec = player.getLook(1.0F);
 		double reach = getBlockReachDistance(player);
-		return headVec.addVector(lookVec.xCoord * reach, lookVec.yCoord * reach, lookVec.zCoord * reach);
+		return headVec.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
 	}
 }

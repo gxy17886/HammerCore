@@ -22,7 +22,7 @@ public class NetPropertyEnum<T extends Enum> extends NetPropertyAbstract<T>
 		if(value != null)
 		{
 			nbt.setInteger("Val", value.ordinal());
-			nbt.setString("Class", value.getClass().getName());
+			nbt.setString("EClass", value.getClass().getName());
 		}
 		return nbt;
 	}
@@ -30,11 +30,11 @@ public class NetPropertyEnum<T extends Enum> extends NetPropertyAbstract<T>
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		if(nbt.hasKey("Class") && nbt.hasKey("Val"))
+		if(nbt.hasKey("EClass") && nbt.hasKey("Val"))
 		{
 			try
 			{
-				Class<T> c = (Class<T>) Class.forName(nbt.getString("Class"));
+				Class<T> c = (Class<T>) Class.forName(nbt.getString("EClass"));
 				T[] values = (T[]) c.getMethod("values").invoke(null);
 				value = values[nbt.getInteger("Val")];
 			}

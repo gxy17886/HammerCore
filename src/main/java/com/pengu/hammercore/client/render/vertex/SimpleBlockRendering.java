@@ -117,7 +117,7 @@ public class SimpleBlockRendering
 	
 	public void setRenderBounds(Vec3d min, Vec3d max)
 	{
-		setRenderBounds(min.xCoord, min.yCoord, min.zCoord, max.xCoord, max.yCoord, max.zCoord);
+		setRenderBounds(min.x, min.y, min.z, max.x, max.y, max.z);
 	}
 	
 	public void setRenderBounds(AxisAlignedBB aabb)

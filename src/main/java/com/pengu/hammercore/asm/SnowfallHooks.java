@@ -108,7 +108,7 @@ public class SnowfallHooks
 						
 						if(s != null && !world.isRemote)
 						{
-							WorldServer w = s.worldServerForDimension(world.provider.getDimension());
+							WorldServer w = s.getWorld(world.provider.getDimension());
 							w.spawnParticle(EnumParticleTypes.FALLING_DUST, l.getPos().getX() + f.getFrontOffsetX() + .5 - .45 * f.getFrontOffsetX(), l.getPos().getY() + .125 * (l.getMeta() + 1), l.getPos().getZ() + f.getFrontOffsetZ() + .5 - .45 * f.getFrontOffsetZ(), 5, Math.abs(f.getFrontOffsetZ()) * .45, 0, Math.abs(f.getFrontOffsetX()) * .45, 0, new int[] { Block.getStateId(Blocks.SNOW.getDefaultState()) });
 						}
 						

@@ -30,12 +30,14 @@ import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSyncSyncableTile;
 import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
 import com.pengu.hammercore.net.utils.NetPropertyAbstract;
+import com.pengu.hammercore.utils.WorldLocation;
 
 public abstract class TileSyncable extends TileEntity implements IPropertyChangeHandler
 {
 	protected World readNBT_world;
 	private final List<NetPropertyAbstract> properties = new ArrayList<>();
 	private NBTTagCompound lastSyncTag;
+	protected WorldLocation loc;
 	
 	/**
 	 * Turn this to false to force this tile to sync even if it's old and new
@@ -46,6 +48,13 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	{
 		initProperties();
 	}
+	
+	public WorldLocation getLocation()
+    {
+		if(loc == null || !loc.getPos().equals(pos))
+			loc = new WorldLocation(world, pos);
+	    return loc;
+    }
 	
 	/** Called while constructing this tile */
 	public void initProperties()
@@ -62,6 +71,8 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	
 	public void sync()
 	{
+		getLocation();
+		
 		if(escapeSyncIfIdentical)
 		{
 			NBTTagCompound nbt = new NBTTagCompound();

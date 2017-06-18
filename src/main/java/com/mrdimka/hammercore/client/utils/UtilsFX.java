@@ -40,32 +40,32 @@ public class UtilsFX
 	{
 		int j = bright >> 16 & 0xFFFF;
 		int k = bright & 0xFFFF;
-		buf.pos(p1.xCoord, p1.yCoord, p1.zCoord).tex(0.0D, 0.0D).lightmap(j, k).color(r, g, b, a).endVertex();
-		buf.pos(p2.xCoord, p2.yCoord, p2.zCoord).tex(1.0D, 0.0D).lightmap(j, k).color(r, g, b, a).endVertex();
-		buf.pos(p3.xCoord, p3.yCoord, p3.zCoord).tex(1.0D, 1.0D).lightmap(j, k).color(r, g, b, a).endVertex();
-		buf.pos(p4.xCoord, p4.yCoord, p4.zCoord).tex(0.0D, 1.0D).lightmap(j, k).color(r, g, b, a).endVertex();
+		buf.pos(p1.x, p1.y, p1.z).tex(0.0D, 0.0D).lightmap(j, k).color(r, g, b, a).endVertex();
+		buf.pos(p2.x, p2.y, p2.z).tex(1.0D, 0.0D).lightmap(j, k).color(r, g, b, a).endVertex();
+		buf.pos(p3.x, p3.y, p3.z).tex(1.0D, 1.0D).lightmap(j, k).color(r, g, b, a).endVertex();
+		buf.pos(p4.x, p4.y, p4.z).tex(0.0D, 1.0D).lightmap(j, k).color(r, g, b, a).endVertex();
 	}
 	
 	private static Vec3d Cross(Vec3d a, Vec3d b)
 	{
-		double xCoord = a.yCoord * b.zCoord - a.zCoord * b.yCoord;
-		double yCoord = a.zCoord * b.xCoord - a.xCoord * b.zCoord;
-		double zCoord = a.xCoord * b.yCoord - a.yCoord * b.xCoord;
+		double xCoord = a.y * b.z - a.z * b.y;
+		double yCoord = a.z * b.x - a.x * b.z;
+		double zCoord = a.x * b.y - a.y * b.x;
 		return new Vec3d(xCoord, yCoord, zCoord);
 	}
 	
 	public static Vec3d Sub(Vec3d a, Vec3d b)
 	{
-		return new Vec3d(a.xCoord - b.xCoord, a.yCoord - b.yCoord, a.zCoord - b.zCoord);
+		return new Vec3d(a.x - b.x, a.y - b.y, a.z - b.z);
 	}
 	
 	private static Vec3d Add(Vec3d a, Vec3d b)
 	{
-		return new Vec3d(a.xCoord + b.xCoord, a.yCoord + b.yCoord, a.zCoord + b.zCoord);
+		return new Vec3d(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 	
 	private static Vec3d Mul(Vec3d a, float f)
 	{
-		return new Vec3d(a.xCoord * f, a.yCoord * f, a.zCoord * f);
+		return new Vec3d(a.x * f, a.y * f, a.z * f);
 	}
 }

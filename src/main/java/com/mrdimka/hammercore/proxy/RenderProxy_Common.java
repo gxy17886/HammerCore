@@ -61,16 +61,16 @@ public class RenderProxy_Common
 	public World getWorld(MessageContext context, int dim)
 	{
 		if(context == null)
-			return FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(dim);
+			return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(dim);
 		if(context.side == Side.SERVER)
-			return context.getServerHandler().player.mcServer.worldServerForDimension(dim);
+			return context.getServerHandler().player.mcServer.getWorld(dim);
 		return null;
 	}
 	
 	public World getWorld(MessageContext context)
 	{
 		if(context == null)
-			return FMLCommonHandler.instance().getMinecraftServerInstance().worldServerForDimension(0);
+			return FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0);
 		if(context.side == Side.SERVER)
 			return context.getServerHandler().player.world;
 		return null;
