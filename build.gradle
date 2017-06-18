@@ -37,7 +37,7 @@ compileJava {
 minecraft {
     version = "${config.forge_version}"
     runDir = "run"
-    mappings = "snapshot_20170516"
+    mappings = "stable_32"
     makeObfSourceJar = false
 	replace '@VERSION@', "${config.mod_version}"
 	replace 'IS_OBFUSCATED_MC = false', 'IS_OBFUSCATED_MC = true'
