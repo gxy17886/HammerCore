@@ -13,12 +13,14 @@ import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -287,6 +289,15 @@ public class HammerCore
 			code.preInit();
 		
 		ProgressManager.pop(bar);
+	}
+	
+	@SubscribeEvent
+	public void registerRecipes(RegistryEvent.Register evt)
+	{
+		if(evt.getGenericType() != IRecipe.class)
+			return;
+		
+		SimpleRegistration.registerRegisteredRecipes(evt.getRegistry());
 	}
 	
 	@EventHandler

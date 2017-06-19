@@ -64,6 +64,8 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	
 	public void sync()
 	{
+		getLocation();
+		
 		if(escapeSyncIfIdentical)
 		{
 			NBTTagCompound nbt = new NBTTagCompound();

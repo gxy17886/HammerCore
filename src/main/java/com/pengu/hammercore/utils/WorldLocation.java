@@ -9,12 +9,14 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
+import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.net.pkt.PacketSetBiome;
@@ -176,5 +178,10 @@ public class WorldLocation
 		TileSyncable sync = getTileOfType(TileSyncable.class);
 		if(sync != null)
 			sync.sync();
+	}
+	
+	public void playSound(String sound, float volume, float pitch, SoundCategory cat)
+	{
+		HammerCore.audioProxy.playSoundAt(world, sound, pos, volume, pitch, cat);
 	}
 }

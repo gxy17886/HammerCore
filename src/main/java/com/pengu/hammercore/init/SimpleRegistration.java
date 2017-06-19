@@ -11,7 +11,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -19,9 +18,11 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.google.common.collect.Maps;
@@ -30,14 +31,21 @@ import com.pengu.hammercore.api.ITileBlock;
 import com.pengu.hammercore.api.multipart.BlockMultipartProvider;
 import com.pengu.hammercore.common.blocks.IItemBlock;
 import com.pengu.hammercore.common.items.MultiVariantItem;
-import com.pengu.hammercore.common.utils.RegistryUtil;
 import com.pengu.hammercore.utils.IRegisterListener;
+import com.pengu.hammercore.utils.SoundObject;
 
 public class SimpleRegistration
 {
-	public static void implementRecipe(ResourceLocation name, IRecipe recipe)
+	private static final List<IRecipe> recipes = new ArrayList<>();
+	
+	public static void implementRecipe(IRecipe recipe)
 	{
-		CraftingManager.REGISTRY.register(RegistryUtil.getNextRegistryId(CraftingManager.REGISTRY), name, recipe);
+		recipes.add(recipe);
+	}
+	
+	public static void registerRegisteredRecipes(IForgeRegistry<IRecipe> reg)
+	{
+		reg.registerAll(recipes.toArray(new IRecipe[recipes.size()]));
 	}
 	
 	/**
@@ -111,7 +119,7 @@ public class SimpleRegistration
 				aitemstack.set(l, Ingredient.fromStacks(map.get(Character.valueOf(c0))));
 		}
 		
-		implementRecipe(new ResourceLocation(name), new ShapedRecipes(name, j, k, aitemstack, stack));
+		implementRecipe(new ShapedRecipes(name, j, k, aitemstack, stack));
 	}
 	
 	/**
@@ -147,7 +155,7 @@ public class SimpleRegistration
 			}
 		}
 		
-		implementRecipe(new ResourceLocation(name), new ShapelessRecipes(name, stack, list));
+		implementRecipe(new ShapelessRecipes(name, stack, list));
 	}
 	
 	public static void registerFieldItemsFrom(Class<?> owner, String modid, CreativeTabs tab)
@@ -176,6 +184,29 @@ public class SimpleRegistration
 				} catch(Throwable err)
 				{
 				}
+	}
+	
+	public static void registerFieldSoundsFrom(Class<?> owner)
+	{
+		Field[] fs = owner.getDeclaredFields();
+		for(Field f : fs)
+			if(SoundObject.class.isAssignableFrom(f.getType()))
+				try
+				{
+					f.setAccessible(true);
+					registerSound((SoundObject) f.get(null));
+				} catch(Throwable err)
+				{
+				}
+	}
+	
+	/**
+	 * Registers {@link SoundObject} to registry and populates
+	 * {@link SoundObject} with {@link SoundEvent}.
+	 **/
+	public static void registerSound(SoundObject sound)
+	{
+		sound.sound = GameRegistry.register(sound.sound = new SoundEvent(sound.name).setRegistryName(sound.name));
 	}
 	
 	public static void registerItem(Item item, String modid, CreativeTabs tab)
