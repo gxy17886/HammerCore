@@ -46,7 +46,7 @@ public class GuiModBrowserLoading extends GuiScreen
 		this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
 		this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
 		
-		String splashText = "this is a WIP mod browser for MrDimka's mods";
+		String splashText = "this is a WIP mod browser for Pengu's mods";
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((float) (this.width / 2), 70.0F, 0.0F);

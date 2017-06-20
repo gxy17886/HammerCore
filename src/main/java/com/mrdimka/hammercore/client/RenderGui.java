@@ -15,9 +15,15 @@ import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +36,7 @@ import com.mrdimka.hammercore.cfg.HammerCoreConfigs;
 import com.mrdimka.hammercore.client.utils.GLImageManager;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
+import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.gui.GuiMissingApis;
 import com.mrdimka.hammercore.gui.modbrowser.GuiModBrowserLoading;
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
@@ -39,6 +46,8 @@ import com.mrdimka.hammercore.json.JSONObject;
 import com.mrdimka.hammercore.json.JSONTokener;
 import com.mrdimka.hammercore.math.ExpressionEvaluator;
 import com.mrdimka.hammercore.math.MathHelper;
+import com.mrdimka.hammercore.tile.TileSyncable;
+import com.pengu.hammercore.utils.IndexedMap;
 
 @SideOnly(Side.CLIENT)
 public class RenderGui
@@ -136,6 +145,52 @@ public class RenderGui
 					gui0.panoramaTimer = ((GuiMainMenu) gui).panoramaTimer;
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void addF3Info(RenderGameOverlayEvent.Pre event)
+	{
+		if(event.getType() == ElementType.DEBUG)
+			renderF3 = true;
+	}
+	
+	private boolean renderF3;
+	private final IndexedMap<String, Object> f3Right = new IndexedMap<>();
+	
+	@SubscribeEvent
+	public void addF3Info(RenderGameOverlayEvent.Text f3)
+	{
+		RayTraceResult omon = Minecraft.getMinecraft().objectMouseOver;
+		World world = Minecraft.getMinecraft().world;
+		
+		if(renderF3)
+		{
+			List<String> tip = f3.getRight();
+			if(world != null && omon != null && omon.typeOfHit == Type.BLOCK)
+			{
+				TileSyncable ts = WorldUtil.cast(world.getTileEntity(omon.getBlockPos()), TileSyncable.class);
+				if(ts != null)
+				{
+					f3Right.clear();
+					ts.addProperties(f3Right, omon);
+					List<String> keys = f3Right.getKeys();
+					for(int i = 0; i < keys.size(); ++i)
+					{
+						String key = keys.get(i);
+						Object val = f3Right.get(key);
+						String str = "";
+						
+						if(val instanceof Boolean)
+							str = (val == Boolean.TRUE ? TextFormatting.GREEN : TextFormatting.RED) + (val + "") + TextFormatting.RESET;
+						else
+							str = val + "";
+						
+						tip.add(key.toLowerCase() + ": " + str);
+					}
+				}
+			}
+			renderF3 = false;
 		}
 	}
 	

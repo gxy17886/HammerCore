@@ -134,6 +134,16 @@ public class IndexedMap<K, V> implements Map<K, V>, Serializable
 		return values;
 	}
 	
+	public List<K> getKeys()
+    {
+	    return keys;
+    }
+	
+	public List<V> getValues()
+    {
+	    return values;
+    }
+	
 	@Override
 	public Set<Entry<K, V>> entrySet()
 	{

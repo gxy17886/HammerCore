@@ -18,6 +18,9 @@ item.hammercore:battery.name=Аккумулятор
 item.hammercore:battery.tooltip0=Используйте сидя чтобы
 item.hammercore:battery.tooltip1=изменить режим раздачи.
 
+item.hammercore:wrench.name=Гаечный ключ
+item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
+
 ###########
 
 ###BLOCKS###

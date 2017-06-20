@@ -31,8 +31,7 @@ public class JeiHC implements IModPlugin, IJeiRecipeModifier
 	@Override
 	public void register(IModRegistry reg)
 	{
-		
-		// Add click areas to our smotth guis
+		// Add click areas to our smooth guis
 		reg.addRecipeClickArea(GuiBrewingStandSmooth.class, 97, 16, 14, 30, "minecraft.brewing");
 		reg.addRecipeClickArea(GuiFurnaceSmooth.class, 78, 32, 28, 23, "minecraft.smelting");
 	}

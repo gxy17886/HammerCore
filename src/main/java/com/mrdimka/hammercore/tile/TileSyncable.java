@@ -2,6 +2,8 @@ package com.mrdimka.hammercore.tile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -15,11 +17,14 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -38,6 +43,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	private final List<NetPropertyAbstract> properties = new ArrayList<>();
 	private NBTTagCompound lastSyncTag;
 	protected WorldLocation loc;
+	protected Random rand = new Random();
 	
 	/**
 	 * Turn this to false to force this tile to sync even if it's old and new
@@ -60,6 +66,13 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	public void initProperties()
 	{
 		
+	}
+	
+	public Random getRNG()
+	{
+		if(rand == null)
+			rand = new Random();
+		return rand;
 	}
 	
 	@Override
@@ -282,5 +295,11 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	public void sendChangesToNearby()
 	{
 		sync();
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public void addProperties(Map<String, Object> properties, RayTraceResult trace)
+	{
+		
 	}
 }

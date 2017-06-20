@@ -1,5 +1,7 @@
 package com.mrdimka.hammercore.common.blocks.tesseract;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -8,21 +10,29 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants.NBT;
 
 import com.mrdimka.hammercore.api.ITileBlock;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 import com.mrdimka.hammercore.gui.GuiManager;
 import com.mrdimka.hammercore.tile.TileSyncable;
+import com.pengu.hammercore.common.IWrenchable;
+import com.pengu.hammercore.utils.WorldLocation;
 
-public class BlockTesseract extends Block implements ITileEntityProvider, ITileBlock<TileTesseract>
+public class BlockTesseract extends Block implements ITileEntityProvider, ITileBlock<TileTesseract>, IWrenchable
 {
 	public static final PropertyBool active = PropertyBool.create("active");
 	
@@ -34,6 +44,42 @@ public class BlockTesseract extends Block implements ITileEntityProvider, ITileB
 		setResistance(2000);
 		setHarvestLevel("pickaxe", 2);
 		setUnlocalizedName("tesseract");
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced)
+	{
+		if(stack.hasTagCompound())
+		{
+			if(stack.getTagCompound().hasKey("Private", NBT.TAG_BYTE))
+			{
+				boolean b = stack.getTagCompound().getBoolean("Private");
+				tooltip.add("Private: " + (b ? TextFormatting.GREEN : TextFormatting.RED) + b + TextFormatting.RESET);
+			}
+			
+			if(stack.getTagCompound().hasKey("Frequency", NBT.TAG_STRING))
+			{
+				String s = stack.getTagCompound().getString("Frequency");
+				tooltip.add("Frequency: " + s);
+			}
+		}
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+	{
+		WorldLocation loc = new WorldLocation(worldIn, pos);
+		TileTesseract tess = loc.getTileOfType(TileTesseract.class);
+		if(tess == null)
+			loc.setTile(tess = new TileTesseract());
+		if(stack.hasTagCompound())
+		{
+			NBTTagCompound nbt = stack.getTagCompound();
+			if(nbt.hasKey("Frequency", NBT.TAG_STRING))
+				tess.setFrequency(nbt.getString("Frequency"));
+			if(nbt.hasKey("Private", NBT.TAG_BYTE))
+				tess.isPrivate.set(nbt.getBoolean("Private"));
+		}
 	}
 	
 	@Override
@@ -96,5 +142,21 @@ public class BlockTesseract extends Block implements ITileEntityProvider, ITileB
 	public BlockRenderLayer getBlockLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
+	}
+	
+	@Override
+	public boolean onWrenchUsed(WorldLocation loc, EntityPlayer player, EnumHand hand)
+	{
+		TileTesseract tess = loc.getTileOfType(TileTesseract.class);
+		if(player.isSneaking() && tess != null)
+		{
+			loc.setState(Blocks.AIR.getDefaultState());
+			ItemStack stack = new ItemStack(this);
+			stack.setTagCompound(new NBTTagCompound());
+			stack.getTagCompound().setString("Frequency", tess.frequency.get());
+			stack.getTagCompound().setBoolean("Private", tess.isPrivate.get());
+			WorldUtil.spawnItemStack(loc, stack);
+		}
+		return true;
 	}
 }

@@ -16,6 +16,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -29,6 +31,7 @@ import com.mrdimka.hammercore.gui.GuiTesseract;
 import com.mrdimka.hammercore.gui.container.ContainerEmpty;
 import com.mrdimka.hammercore.init.ModBlocks;
 import com.mrdimka.hammercore.init.ModItems;
+import com.mrdimka.hammercore.tile.IMalfunctionable;
 import com.mrdimka.hammercore.tile.ITileDroppable;
 import com.mrdimka.hammercore.tile.TileSyncableTickable;
 import com.pengu.hammercore.net.utils.NetPropertyBool;
@@ -36,7 +39,7 @@ import com.pengu.hammercore.net.utils.NetPropertyNumber;
 import com.pengu.hammercore.net.utils.NetPropertyString;
 import com.pengu.hammercore.net.utils.NetPropertyUUID;
 
-public class TileTesseract extends TileSyncableTickable implements ITileDroppable
+public class TileTesseract extends TileSyncableTickable implements ITileDroppable, IMalfunctionable
 {
 	public static final Map<String, List<TileTesseract>> TESSERACTS = new HashMap<>();
 	
@@ -44,6 +47,7 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	public final NetPropertyUUID owner;
 	public final NetPropertyBool isPrivate;
 	public final NetPropertyNumber<Integer> ioPage;
+	private int malfunctionTicks = 0;
 	
 	{
 		frequency = new NetPropertyString(this, "");
@@ -70,6 +74,23 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 		ALLOWED_CAPABILITIES.add(cap);
 		ALLOWED_CAPABILITY_NAMES.add(id);
 		ALLOWED_CAPABILITY_ICONS.add(icon);
+	}
+	
+	@Override
+	public void addProperties(Map<String, Object> properties, RayTraceResult trace)
+	{
+		properties.put("private", isPrivate.get());
+		
+		String frequency = this.frequency.get();
+		
+		if(frequency != null && !frequency.isEmpty())
+			for(int i = 0; i < ALLOWED_CAPABILITIES.size(); ++i)
+			{
+				Capability cap = ALLOWED_CAPABILITIES.get(i);
+				properties.put(getCapName(cap), getMode(cap) == TransferMode.ALLOW);
+			}
+		
+		properties.put((frequency != null && !frequency.isEmpty() ? TextFormatting.GREEN : TextFormatting.RED) + "frequency" + TextFormatting.RESET, frequency != null && !frequency.isEmpty() ? frequency : TextFormatting.RED + "?" + TextFormatting.RESET);
 	}
 	
 	public static List<Capability> getAllowedCapabilities()
@@ -110,9 +131,14 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	@Override
 	public void tick()
 	{
+		if(malfunctionTicks > 0)
+			malfunctionTicks--;
+		
 		// Put all tesseracts
-		if(frequency.get() != null && !frequency.get().isEmpty() && atTickRate(20))
+		if(frequency.get() != null && !frequency.get().isEmpty() && malfunctionTicks <= 0 && atTickRate(20))
 			addTesseract(this);
+		if(frequency.get() != null && !frequency.get().isEmpty() && malfunctionTicks > 0 && atTickRate(20))
+			removeTesseract(this);
 		
 		if(atTickRate(20))
 		{
@@ -120,7 +146,7 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 			if(state.getBlock() == ModBlocks.TESSERACT)
 			{
 				boolean isActive = state.getValue(BlockTesseract.active);
-				boolean shouldBeActive = frequency.get() != null && !frequency.get().isEmpty();
+				boolean shouldBeActive = frequency.get() != null && !frequency.get().isEmpty() && malfunctionTicks <= 0;
 				
 				if(isActive != shouldBeActive)
 				{
@@ -374,5 +400,11 @@ public class TileTesseract extends TileSyncableTickable implements ITileDroppabl
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
 		return getCapability(capability, facing) != null;
+	}
+	
+	@Override
+	public void causeGeneralMalfunction()
+	{
+		malfunctionTicks += 80 + world.rand.nextInt(80);
 	}
 }
