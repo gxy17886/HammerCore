@@ -1,2 +1,26 @@
-{
-}
+"Black Hole Storage": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
+		"modid": "blackholestorage",
+		"tooltip": "Store infinite amounts of something inside of a stabilized black holes",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "16r",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2447475/download",
+				"size": 1572864
+			}
+		}
+	},
+	"Solar Flux Reborn": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/253/450/190/130/05fc336d6866e07c60ecad01e53109e0.png",
+		"modid": "solarfluxreborn",
+		"tooltip": "A reborn of Solar Flux mod",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "3.22r",
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2447517/download",
+				"size": 204800
+			}
+		}
+	}
