@@ -7,7 +7,7 @@ import com.pengu.hammercore.common.blocks.BlockInfiRF;
 import com.pengu.hammercore.common.blocks.multipart.BlockMultipart;
 import com.pengu.hammercore.common.blocks.tesseract.BlockTesseract;
 
-public class ModBlocks
+public class BlocksHC
 {
 	public static final Block //
 	        INFI_RF = new BlockInfiRF(), //

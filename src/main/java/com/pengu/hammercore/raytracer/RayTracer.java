@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.math.MathHelper;
 import com.pengu.hammercore.vec.Cuboid6;
@@ -283,77 +281,29 @@ public class RayTracer
 		return player.world.rayTraceBlocks(headVec, endVec, true, true, true);
 	}
 	
-	public static Entity retraceEntity(EntityPlayer player, double reach)
+	public static Entity retraceEntity(EntityLivingBase ent, double reach)
 	{
-		Vec3d vec3d = getCorrectedHeadVec(player);
-		
-		Vec3d vec3d1 = player.getLook(1);
-		Vec3d vec3d2 = vec3d.addVector(vec3d1.x * reach, vec3d1.y * reach, vec3d1.z * reach);
-		Vec3d vec3d3 = null;
-		
-		float f = 1.0F;
-		List<Entity> list = player.world.getEntitiesInAABBexcluding(player, player.getEntityBoundingBox().offset(vec3d1.x * reach, vec3d1.y * reach, vec3d1.z * reach).expand(1, 1, 1), Predicates.and(EntitySelectors.NOT_SPECTATING, new Predicate<Entity>()
-		{
-			public boolean apply(Entity entity)
-			{
-				return entity != null && entity.canBeCollidedWith();
-			}
-		}));
-		
-		double d2 = reach;
-		
-		Entity pointedEntity = null;
-		
-		for(int j = 0; j < list.size(); ++j)
-		{
-			Entity entity1 = (Entity) list.get(j);
-			AxisAlignedBB axisalignedbb = entity1.getEntityBoundingBox().expand(entity1.getCollisionBorderSize(), entity1.getCollisionBorderSize(), entity1.getCollisionBorderSize());
-			RayTraceResult raytraceresult = axisalignedbb.calculateIntercept(vec3d, vec3d2);
-			
-			if(axisalignedbb.contains(vec3d))
-			{
-				if(d2 >= 0.0D)
-				{
-					pointedEntity = entity1;
-					vec3d3 = raytraceresult == null ? vec3d : raytraceresult.hitVec;
-					d2 = 0.0D;
-				}
-			} else if(raytraceresult != null)
-			{
-				double d3 = vec3d.distanceTo(raytraceresult.hitVec);
-				
-				if(d3 < d2 || d2 == 0.0D)
-				{
-					if(entity1.getLowestRidingEntity() == player.getLowestRidingEntity() && !player.canRiderInteract())
-					{
-						if(d2 == 0.0D)
-						{
-							pointedEntity = entity1;
-							vec3d3 = raytraceresult.hitVec;
-						}
-					} else
-					{
-						pointedEntity = entity1;
-						vec3d3 = raytraceresult.hitVec;
-						d2 = d3;
-					}
-				}
-			}
-		}
-		
-		return pointedEntity;
+		Vec3d begin = getStartVec(ent);
+		Vec3d lookVec = ent.getLook(1);
+		Vec3d end = begin.addVector(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
+		List<Entity> tracedList = ent.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(begin.x, begin.y, begin.z, end.x, end.y, end.z), t -> t != ent && ent.canEntityBeSeen(t) && t.canBeCollidedWith() && t.getEntityBoundingBox().calculateIntercept(begin, end) != null);
+		Entity traced = null;
+		for(int i = 0; i < tracedList.size(); ++i)
+			if(traced == null || ent.getDistanceSqToEntity(tracedList.get(i)) < ent.getDistanceSqToEntity(traced))
+				traced = tracedList.get(i);
+		return traced;
 	}
 	
-	public static Vec3d getCorrectedHeadVec(EntityPlayer player)
+	public static Vec3d getCorrectedHeadVec(EntityLivingBase entity)
 	{
-		Vector3 v = Vector3.fromEntity(player);
-		v.y += player.getEyeHeight();
+		Vector3 v = Vector3.fromEntity(entity);
+		v.y += entity.getEyeHeight();
 		return v.vec3();
 	}
 	
-	public static Vec3d getStartVec(EntityPlayer player)
+	public static Vec3d getStartVec(EntityLivingBase entity)
 	{
-		return getCorrectedHeadVec(player);
+		return getCorrectedHeadVec(entity);
 	}
 	
 	public static double getBlockReachDistance(EntityPlayer player)

@@ -3,6 +3,7 @@ package com.pengu.hammercore.client.texture;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.PngSizeInfo;
@@ -144,7 +145,7 @@ public class TextureSpriteCustom extends TextureAtlasSprite implements IIconRegi
 	}
 	
 	@Override
-	public boolean load(IResourceManager manager, ResourceLocation location)
+	public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, TextureAtlasSprite> textureGetter)
 	{
 		if(baseTextures != null)
 		{

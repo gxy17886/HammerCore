@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.pengu.hammercore.HammerCore;
+import com.pengu.hammercore.utils.WorldLocation;
 
 public class WorldUtil
 {
@@ -66,6 +67,11 @@ public class WorldUtil
 	public static void spawnItemStack(World worldIn, BlockPos pos, ItemStack stackIn)
 	{
 		spawnItemStack(worldIn, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, stackIn);
+	}
+	
+	public static void spawnItemStack(WorldLocation loc, ItemStack stackIn)
+	{
+		spawnItemStack(loc.getWorld(), loc.getPos(), stackIn);
 	}
 	
 	public static void teleportPlayer(EntityPlayerMP mp, int dim, double x, double y, double z)

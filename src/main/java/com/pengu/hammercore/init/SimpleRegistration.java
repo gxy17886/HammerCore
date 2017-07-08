@@ -17,13 +17,12 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.IForgeRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import com.google.common.collect.Maps;
 import com.pengu.hammercore.api.INoItemBlock;
@@ -31,6 +30,7 @@ import com.pengu.hammercore.api.ITileBlock;
 import com.pengu.hammercore.api.multipart.BlockMultipartProvider;
 import com.pengu.hammercore.common.blocks.IItemBlock;
 import com.pengu.hammercore.common.items.MultiVariantItem;
+import com.pengu.hammercore.utils.IGetter;
 import com.pengu.hammercore.utils.IRegisterListener;
 import com.pengu.hammercore.utils.SoundObject;
 
@@ -105,6 +105,8 @@ public class SimpleRegistration
 				itemstack.add(((ItemStack) recipeComponents[i + 1]).copy());
 			else if(recipeComponents[i + 1] instanceof String)
 				itemstack.addAll(OreDictionary.getOres(recipeComponents[i + 1] + ""));
+			else if(recipeComponents[i + 1] instanceof IGetter)
+				itemstack.add(((IGetter<ItemStack>) recipeComponents[i + 1]).get());
 			
 			map.put(character, itemstack.toArray(new ItemStack[0]));
 		}
@@ -147,6 +149,8 @@ public class SimpleRegistration
 				list.add(Ingredient.fromStacks(new ItemStack((Item) object)));
 			else if(object instanceof String)
 				list.add(Ingredient.fromStacks(OreDictionary.getOres(object + "").toArray(new ItemStack[0])));
+			else if(object instanceof IGetter)
+				list.add(Ingredient.fromStacks(((IGetter<ItemStack>) object).get()));
 			else
 			{
 				if(!(object instanceof Block))
@@ -206,7 +210,7 @@ public class SimpleRegistration
 	 **/
 	public static void registerSound(SoundObject sound)
 	{
-		sound.sound = GameRegistry.register(sound.sound = new SoundEvent(sound.name).setRegistryName(sound.name));
+		GameRegistry.findRegistry(SoundEvent.class).register(sound.sound = new SoundEvent(sound.name).setRegistryName(sound.name));
 	}
 	
 	public static void registerItem(Item item, String modid, CreativeTabs tab)
@@ -218,13 +222,13 @@ public class SimpleRegistration
 		item.setUnlocalizedName(modid + ":" + name);
 		if(tab != null)
 			item.setCreativeTab(tab);
-		GameRegistry.register(item);
+		GameRegistry.findRegistry(Item.class).register(item);
 		if(item instanceof IRegisterListener)
 			((IRegisterListener) item).onRegistered();
 		if(item instanceof MultiVariantItem)
-			ModItems.multiitems.add((MultiVariantItem) item);
+			ItemsHC.multiitems.add((MultiVariantItem) item);
 		else
-			ModItems.items.add(item);
+			ItemsHC.items.add(item);
 	}
 	
 	public static void registerBlock(Block block, String modid, CreativeTabs tab)
@@ -245,9 +249,10 @@ public class SimpleRegistration
 		else
 			ib = new ItemBlock(block);
 		
-		GameRegistry.register(block, new ResourceLocation(modid, name));
+		block.setRegistryName(modid, name);
+		GameRegistry.findRegistry(Block.class).register(block);
 		if(!(block instanceof INoItemBlock))
-			GameRegistry.register(ib.setRegistryName(block.getRegistryName()));
+			GameRegistry.findRegistry(Item.class).register(ib.setRegistryName(block.getRegistryName()));
 		
 		if(block instanceof IRegisterListener)
 			((IRegisterListener) block).onRegistered();
@@ -276,9 +281,9 @@ public class SimpleRegistration
 			if(i instanceof IRegisterListener)
 				((IRegisterListener) i).onRegistered();
 			if(i instanceof MultiVariantItem)
-				ModItems.multiitems.add((MultiVariantItem) i);
+				ItemsHC.multiitems.add((MultiVariantItem) i);
 			else if(i != null)
-				ModItems.items.add(i);
+				ItemsHC.items.add(i);
 		}
 	}
 }

@@ -16,7 +16,7 @@ import com.pengu.hammercore.bookAPI.BookEntry;
 import com.pengu.hammercore.bookAPI.pages.BookPageTextPlain;
 import com.pengu.hammercore.event.RegisterBookEvent;
 import com.pengu.hammercore.gui.book.GuiBook;
-import com.pengu.hammercore.init.ModItems;
+import com.pengu.hammercore.init.ItemsHC;
 
 public class BookProxy_Client extends BookProxy_Common
 {
@@ -57,13 +57,13 @@ public class BookProxy_Client extends BookProxy_Common
 		Book hammerCoreManual = new Book("hammercore:manual");
 		
 		BookCategory items = new BookCategory(hammerCoreManual, "items");
-		items.setIcon(new ItemStack(ModItems.manual));
+		items.setIcon(new ItemStack(ItemsHC.manual));
 		
 		BookCategory blocks = new BookCategory(hammerCoreManual, "blocks");
 		
 		{
 			BookEntry entry = new BookEntry(items, "calculatron", "gui.hammercore:manual/items/calculatron.title");
-			entry.setIcon(new ItemStack(ModItems.calculatron));
+			entry.setIcon(new ItemStack(ItemsHC.calculatron));
 			
 			new BookPageTextPlain(entry, "gui.hammercore:manual/items/calculatron.desc");
 		}

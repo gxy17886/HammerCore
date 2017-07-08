@@ -2,6 +2,8 @@ package com.pengu.hammercore.common.items;
 
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -64,6 +66,9 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems)
 	{
+		if(!isInCreativeTab(tab))
+			return;
+		
 		ItemStack stack = new ItemStack(this);
 		subItems.add(stack);
 		setFE(stack, 0);

@@ -1,6 +1,7 @@
 package com.pengu.hammercore.client.texture;
 
 import java.io.IOException;
+import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.PngSizeInfo;
@@ -30,7 +31,7 @@ public class TextureAtlasSpriteResource extends TextureAtlasSprite
 	}
 	
 	@Override
-	public boolean load(IResourceManager manager, ResourceLocation location)
+	public boolean load(IResourceManager manager, ResourceLocation location, Function<ResourceLocation, TextureAtlasSprite> textureGetter)
 	{
 		return false;
 	}

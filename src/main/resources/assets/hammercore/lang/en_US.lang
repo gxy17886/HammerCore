@@ -18,6 +18,9 @@ item.hammercore:battery.name=Battery
 item.hammercore:battery.tooltip0=Sneak-Click This Battery to
 item.hammercore:battery.tooltip1=Change Sharing Mode.
 
+item.hammercore:wrench.name=Wrench
+item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
+
 ###########
 
 ###BLOCKS###

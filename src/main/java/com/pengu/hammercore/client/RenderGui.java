@@ -15,9 +15,15 @@ import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +36,7 @@ import com.pengu.hammercore.cfg.HammerCoreConfigs;
 import com.pengu.hammercore.client.utils.GLImageManager;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.common.utils.IOUtils;
+import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.gui.GuiMissingApis;
 import com.pengu.hammercore.gui.modbrowser.GuiModBrowserLoading;
 import com.pengu.hammercore.gui.smooth.GuiBrewingStandSmooth;
@@ -39,6 +46,8 @@ import com.pengu.hammercore.json.JSONObject;
 import com.pengu.hammercore.json.JSONTokener;
 import com.pengu.hammercore.math.ExpressionEvaluator;
 import com.pengu.hammercore.math.MathHelper;
+import com.pengu.hammercore.tile.TileSyncable;
+import com.pengu.hammercore.utils.IndexedMap;
 
 @SideOnly(Side.CLIENT)
 public class RenderGui
@@ -47,6 +56,7 @@ public class RenderGui
 	private static final ResourceLocation main_menu_widgets = new ResourceLocation("hammercore", "textures/gui/main_menu_widgets.png");
 	private static final SpecialUser user = new SpecialUser();
 	private double modListHoverTip = 0;
+	private boolean renderF3;
 	
 	@SubscribeEvent
 	public void guiRender(DrawScreenEvent.Post e)
@@ -136,6 +146,51 @@ public class RenderGui
 					gui0.panoramaTimer = ((GuiMainMenu) gui).panoramaTimer;
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void addF3Info(RenderGameOverlayEvent.Pre event)
+	{
+		if(event.getType() == ElementType.DEBUG)
+			renderF3 = true;
+	}
+	
+	private final IndexedMap<String, Object> f3Right = new IndexedMap<>();
+	
+	@SubscribeEvent
+	public void addF3Info(RenderGameOverlayEvent.Text f3)
+	{
+		RayTraceResult omon = Minecraft.getMinecraft().objectMouseOver;
+		World world = Minecraft.getMinecraft().world;
+		
+		if(renderF3)
+		{
+			List<String> tip = f3.getRight();
+			if(world != null && omon != null && omon.typeOfHit == Type.BLOCK)
+			{
+				TileSyncable ts = WorldUtil.cast(world.getTileEntity(omon.getBlockPos()), TileSyncable.class);
+				if(ts != null)
+				{
+					f3Right.clear();
+					ts.addProperties(f3Right, omon);
+					List<String> keys = f3Right.getKeys();
+					for(int i = 0; i < keys.size(); ++i)
+					{
+						String key = keys.get(i);
+						Object val = f3Right.get(key);
+						String str = "";
+						
+						if(val instanceof Boolean)
+							str = (val == Boolean.TRUE ? TextFormatting.GREEN : TextFormatting.RED) + (val + "") + TextFormatting.RESET;
+						else
+							str = val + "";
+						
+						tip.add(key.toLowerCase() + ": " + str);
+					}
+				}
+			}
+			renderF3 = false;
 		}
 	}
 	

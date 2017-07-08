@@ -30,7 +30,7 @@ import com.pengu.hammercore.client.texture.TextureFXManager;
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 import com.pengu.hammercore.common.blocks.tesseract.TileTesseract;
 import com.pengu.hammercore.common.items.MultiVariantItem;
-import com.pengu.hammercore.init.ModItems;
+import com.pengu.hammercore.init.ItemsHC;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common
@@ -52,8 +52,8 @@ public class RenderProxy_Client extends RenderProxy_Common
 		
 		new TileEntityItemStackRendererHC();
 		
-		registerRenders(ModItems.items);
-		for(MultiVariantItem multi : ModItems.multiitems)
+		registerRenders(ItemsHC.items);
+		for(MultiVariantItem multi : ItemsHC.multiitems)
 		{
 			ResourceLocation[] variants = new ResourceLocation[multi.names.length];
 			for(int i = 0; i < multi.names.length; ++i)

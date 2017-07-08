@@ -16,10 +16,4 @@ public class PlaceholderTexture extends TextureAtlasSprite
 	{
 		return true;
 	}
-	
-	@Override
-	public boolean load(IResourceManager manager, ResourceLocation location)
-	{
-		return true;
-	}
 }

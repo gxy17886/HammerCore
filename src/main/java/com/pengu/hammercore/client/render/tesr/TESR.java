@@ -52,7 +52,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 		bindTo(block);
 	}
 	
-	private void translateFromOrientation(double x, double y, double z, EnumFacing facing)
+	protected void translateFromOrientation(double x, double y, double z, EnumFacing facing)
 	{
 		int orientation = facing.ordinal();
 		
@@ -83,7 +83,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	}
 	
 	@Override
-	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage, float p_192841_10_)
+	public final void render(T te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
 	{
 		ResourceLocation destroy = null;
 		RayTraceResult over = mc.objectMouseOver;
@@ -95,8 +95,8 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 				destroy = DestroyStageTexture.getByProgress(progress);
 		}
 		
-		renderBase(te, null, x, y, z, destroy);
-		renderTileEntityAt(te, x, y, z, partialTicks, destroy);
+		renderBase(te, null, x, y, z, destroy, alpha);
+		renderTileEntityAt(te, x, y, z, partialTicks, destroy, alpha);
 	}
 	
 	@Override
@@ -130,7 +130,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	{
 	}
 	
-	public void renderTileEntityAt(@Nonnull T te, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage)
+	public void renderTileEntityAt(@Nonnull T te, double x, double y, double z, float partialTicks, @Nullable ResourceLocation destroyStage, float alpha)
 	{
 		if(canRenderFromNbt())
 			renderFromNBT(getNBTFromTile(te), x, y, z, partialTicks, destroyStage);
@@ -149,7 +149,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	@Override
 	public void renderItem(ItemStack item)
 	{
-		renderBase(null, item, 0, 0, 0, null);
+		renderBase(null, item, 0, 0, 0, null, 1);
 		
 		if(canRenderFromNbt())
 		{
@@ -162,7 +162,7 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	/**
 	 * Shared method that is executed on rendering both: item AND tile
 	 */
-	public void renderBase(@Nullable T tile, @Nullable ItemStack stack, double x, double y, double z, @Nullable ResourceLocation destroyStage)
+	public void renderBase(@Nullable T tile, @Nullable ItemStack stack, double x, double y, double z, @Nullable ResourceLocation destroyStage, float alpha)
 	{
 		
 	}

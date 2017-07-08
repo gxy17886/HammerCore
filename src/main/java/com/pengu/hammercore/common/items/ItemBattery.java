@@ -131,7 +131,11 @@ public class ItemBattery extends ItemFEBase
 	
 	public enum EnumBatteryShareMode
 	{
-		NOT_SHARE("noshare"), HOTBAR("hotbar"), ARMOR("armor"), ARMOR_AND_HOTBAR("armor_hotbar"), ENTIRE_INVENTORY("inventory");
+		NOT_SHARE("noshare"), //
+		HOTBAR("hotbar"), //
+		ARMOR("armor"), //
+		ARMOR_AND_HOTBAR("armor_hotbar"), //
+		ENTIRE_INVENTORY("inventory");
 		
 		private final String i18n;
 		

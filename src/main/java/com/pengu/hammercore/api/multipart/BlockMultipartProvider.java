@@ -6,11 +6,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
 import com.pengu.hammercore.api.INoItemBlock;
-import com.pengu.hammercore.init.ModBlocks;
+import com.pengu.hammercore.init.BlocksHC;
 
 /**
  * Baseline block that supports multipart. Use
- * {@link ModBlocks#registerBlock(Block, String)} to register it. <br>
+ * {@link BlocksHC#registerBlock(Block, String)} to register it. <br>
  * Optional interfaces: {@link INoItemBlock} (why do you need that?)
  */
 public abstract class BlockMultipartProvider extends Block implements IMultipartProvider

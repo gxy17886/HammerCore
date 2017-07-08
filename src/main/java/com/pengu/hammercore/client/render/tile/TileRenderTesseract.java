@@ -18,16 +18,16 @@ import com.pengu.hammercore.client.render.tesr.TESR;
 import com.pengu.hammercore.client.utils.RenderBlocks;
 import com.pengu.hammercore.common.blocks.tesseract.BlockTesseract;
 import com.pengu.hammercore.common.blocks.tesseract.TileTesseract;
-import com.pengu.hammercore.init.ModBlocks;
+import com.pengu.hammercore.init.BlocksHC;
 
 public class TileRenderTesseract extends TESR<TileTesseract>
 {
 	@Override
-	public void renderTileEntityAt(TileTesseract te, double x, double y, double z, float partialTicks, ResourceLocation destroyStage)
+	public void renderTileEntityAt(TileTesseract te, double x, double y, double z, float partialTicks, ResourceLocation destroyStage, float alpha)
 	{
 		IBlockState state = te.getWorld().getBlockState(te.getPos());
 		
-		if(state.getBlock() == ModBlocks.TESSERACT && state.getValue(BlockTesseract.active))
+		if(state.getBlock() == BlocksHC.TESSERACT && state.getValue(BlockTesseract.active))
 		{
 			GL11.glPushMatrix();
 			GL11.glTranslated(x + .1, y + .1, z + .1);

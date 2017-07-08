@@ -18,14 +18,14 @@ import com.pengu.hammercore.client.DestroyStageTexture;
 import com.pengu.hammercore.client.render.tesr.TESR;
 import com.pengu.hammercore.common.blocks.multipart.BlockMultipart;
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
-import com.pengu.hammercore.init.ModBlocks;
+import com.pengu.hammercore.init.BlocksHC;
 import com.pengu.hammercore.raytracer.RayTracer;
 import com.pengu.hammercore.vec.Cuboid6;
 
 public class TileRenderMultipart extends TESR<TileMultipart>
 {
 	@Override
-	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, ResourceLocation destroyStage)
+	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, ResourceLocation destroyStage, float alpha)
 	{
 		try
 		{
@@ -33,7 +33,7 @@ public class TileRenderMultipart extends TESR<TileMultipart>
 			if(mps == null)
 				return;
 			
-			BlockMultipart bmp = (BlockMultipart) ModBlocks.MULTIPART;
+			BlockMultipart bmp = (BlockMultipart) BlocksHC.MULTIPART;
 			World w = te.getWorld();
 			EntityPlayer p = Minecraft.getMinecraft().player;
 			Cuboid6 cbd = bmp.getCuboidFromRTR(te.getWorld(), bmp.collisionRayTrace(w.getBlockState(te.getPos()), w, te.getPos(), RayTracer.getCorrectedHeadVec(p), RayTracer.getEndVec(p)));

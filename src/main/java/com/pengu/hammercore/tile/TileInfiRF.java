@@ -1,8 +1,11 @@
 package com.pengu.hammercore.tile;
 
+import java.util.Map;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -42,9 +45,15 @@ public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, 
 		}
 	}
 	
+	@Override
+	public void addProperties(Map<String, Object> properties, RayTraceResult trace)
+	{
+		properties.put("power", Integer.MAX_VALUE);
+	}
+	
 	public void writeNBT(NBTTagCompound nbt)
 	{
-	};
+	}
 	
 	public void readNBT(NBTTagCompound nbt)
 	{

@@ -12,8 +12,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 import com.pengu.hammercore.HammerCore;
@@ -58,15 +60,20 @@ public class WorldLocation
 		return WorldUtil.cast(getTile(), tile);
 	}
 	
+	public boolean isLoaded()
+	{
+		return world.isBlockLoaded(pos);
+	}
+	
 	public void setTile(TileEntity tile)
 	{
-		if(world.isBlockLoaded(pos))
+		if(isLoaded())
 			world.setTileEntity(pos, tile);
 	}
 	
 	public IBlockState getState()
 	{
-		return world.isBlockLoaded(pos) ? world.getBlockState(pos) : Blocks.AIR.getDefaultState();
+		return isLoaded() ? world.getBlockState(pos) : Blocks.AIR.getDefaultState();
 	}
 	
 	public Block getBlock()
@@ -81,18 +88,72 @@ public class WorldLocation
 	
 	public void setState(IBlockState state)
 	{
-		if(world.isBlockLoaded(pos))
+		if(isLoaded())
 			world.setBlockState(pos, state);
+	}
+	
+	public void setState(IBlockState state, int flags)
+	{
+		if(isLoaded())
+			world.setBlockState(pos, state, flags);
+	}
+	
+	public void setAir()
+	{
+		if(isLoaded())
+			world.setBlockToAir(pos);
+	}
+	
+	public void destroyBlock(boolean dropBlock)
+	{
+		if(isLoaded())
+			world.destroyBlock(pos, dropBlock);
+	}
+	
+	public boolean canSeeSky()
+	{
+		return canSeeSky(false);
+	}
+	
+	public boolean canSeeSky(boolean __default)
+	{
+		if(isLoaded())
+			return world.canSeeSky(pos);
+		return __default;
+	}
+	
+	public int getLight()
+	{
+		if(isLoaded())
+			return world.getLight(pos);
+		return 0;
+	}
+	
+	public int getLightFor(EnumSkyBlock type)
+	{
+		if(isLoaded())
+			return world.getLightFor(type, pos);
+		return 0;
+	}
+	
+	public BlockPos getHeight()
+	{
+		return world.getHeight(pos);
+	}
+	
+	public void setLight(EnumSkyBlock type, int lightValue)
+	{
+		world.setLightFor(type, pos, lightValue);
 	}
 	
 	public Biome getBiome()
 	{
-		return world.isBlockLoaded(pos) ? world.getBiome(pos) : Biomes.PLAINS;
+		return isLoaded() ? world.getBiome(pos) : Biomes.PLAINS;
 	}
 	
 	public void setBiome(Biome biome)
 	{
-		if(world.isBlockLoaded(pos))
+		if(isLoaded())
 		{
 			int i = pos.getX() & 15;
 			int j = pos.getZ() & 15;
@@ -113,13 +174,13 @@ public class WorldLocation
 	
 	public void setMeta(int meta)
 	{
-		if(world.isBlockLoaded(pos))
+		if(isLoaded())
 			world.setBlockState(pos, getBlock().getStateFromMeta(meta));
 	}
 	
 	public void setBlock(Block block)
 	{
-		if(world.isBlockLoaded(pos))
+		if(isLoaded())
 			world.setBlockState(pos, block.getStateFromMeta(getMeta()));
 	}
 	
@@ -163,7 +224,7 @@ public class WorldLocation
 	
 	public int getRedstone()
 	{
-		return world.isBlockIndirectlyGettingPowered(pos);
+		return isLoaded() ? world.isBlockIndirectlyGettingPowered(pos) : 0;
 	}
 	
 	public void markDirty()
@@ -171,9 +232,15 @@ public class WorldLocation
 		markDirty(3);
 	}
 	
+	public Chunk getChunk()
+	{
+		return world.getChunkFromBlockCoords(pos);
+	}
+	
 	public void markDirty(int flags)
 	{
-		if(world.isRemote) return;
+		if(world.isRemote)
+			return;
 		world.markAndNotifyBlock(pos, world.getChunkFromBlockCoords(pos), getState(), getState(), flags);
 		TileSyncable sync = getTileOfType(TileSyncable.class);
 		if(sync != null)

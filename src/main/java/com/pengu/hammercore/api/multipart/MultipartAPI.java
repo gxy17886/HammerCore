@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 import com.pengu.hammercore.common.utils.WorldUtil;
-import com.pengu.hammercore.init.ModBlocks;
+import com.pengu.hammercore.init.BlocksHC;
 
 /**
  * Some useful utilities for Mutlipart API
@@ -25,7 +25,7 @@ public final class MultipartAPI
 			// Fix, we don't want any unwanted replacements going on
 			boolean replaceable = world.getBlockState(pos).getBlock().isReplaceable(world, pos);
 			if(tmp == null && replaceable)
-				world.setBlockState(pos, ModBlocks.MULTIPART.getDefaultState(), 11);
+				world.setBlockState(pos, BlocksHC.MULTIPART.getDefaultState(), 11);
 			else if(!replaceable)
 				return tmp;
 			

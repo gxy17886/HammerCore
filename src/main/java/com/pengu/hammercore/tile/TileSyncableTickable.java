@@ -1,5 +1,7 @@
 package com.pengu.hammercore.tile;
 
+import java.util.Random;
+
 import net.minecraft.util.ITickable;
 
 import com.pengu.hammercore.net.utils.NetPropertyAbstract;
@@ -9,11 +11,31 @@ public abstract class TileSyncableTickable extends TileSyncable implements ITick
 	public int changes = 0;
 	public int ticksExisted = 0;
 	
+	/** If changed in the constructor, may change random's seed. */
+	protected boolean positionedRandom = false;
+	
+	{
+		rand = null;
+	}
+	
+	@Override
+	public Random getRNG()
+	{
+		/** Make unique random for each position */
+		if(rand == null)
+			rand = new Random(positionedRandom && world != null && pos != null ? (world.getSeed() + pos.toLong() + world.provider.getDimension() * 3L - getClass().getName().hashCode() /* Make random different based on tile class */) : world.rand.nextLong());
+	    return rand;
+	}
+	
 	@Override
 	public final void update()
 	{
 		/* Updates location each tick, if needed. */
 		getLocation();
+		
+		/** Make unique random for each position */
+		if(rand == null)
+			rand = new Random(positionedRandom ? (world.getSeed() + pos.toLong() + world.provider.getDimension() * 3L) : world.rand.nextLong());
 		
 		ticksExisted++;
 		tick();

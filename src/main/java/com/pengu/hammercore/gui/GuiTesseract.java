@@ -90,7 +90,7 @@ public class GuiTesseract extends GuiCentered
 		int startI = page * 5;
 		int endI = Math.min(startI + 5, TileTesseract.getAllowedCapabilities().size());
 		
-		for(int i = startI; i < endI % 5; ++i)
+		for(int i = startI; i < Math.min(endI, 5); ++i)
 		{
 			mc.getTextureManager().bindTexture(gui);
 			boolean active = tile.getMode(TileTesseract.getAllowedCapabilities().get(i)).active();
@@ -110,7 +110,7 @@ public class GuiTesseract extends GuiCentered
 		
 		freq.drawTextBox();
 		
-		for(int i = startI; i < endI % 5; ++i)
+		for(int i = startI; i < Math.min(endI, 5); ++i)
 		{
 			int j = i - startI;
 			int x = 10 + j * 30;
