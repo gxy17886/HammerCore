@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import com.pengu.hammercore.command.CommandTimeToTicks;
 import com.pengu.hammercore.common.capabilities.ItemCapabilityProvider;
 import com.pengu.hammercore.energy.IPowerContainerItem;
 import com.pengu.hammercore.energy.IPowerStorage;
@@ -83,7 +84,7 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 	{
 	    super.addInformation(stack, worldIn, tooltip, flagIn);
 	    int fe = getEnergyStored(stack);
-		tooltip.add(I18n.translateToLocal("info.hammercore:energy_stored") + ": " + fe);
+		tooltip.add(I18n.translateToLocal("info.hammercore:energy_stored") + ": " + CommandTimeToTicks.fancyFormat(fe));
 		if(this instanceof ItemBattery)
 			tooltip.add(I18n.translateToLocal("info.hammercore:changed_mode") + ": " + ((ItemBattery) this).getMode(stack));
 	}

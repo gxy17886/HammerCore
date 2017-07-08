@@ -50,12 +50,12 @@ public class TileHandler
 				
 				WorldLocation wl = new WorldLocation(evt.getWorld(), evt.getPos());
 				
+				boolean swing = false;
 				if(wl.getBlock() instanceof IWrenchable && ((IWrenchable) wl.getBlock()).onWrenchUsed(wl, player, evt.getHand()))
-				{
-					HCNetwork.swingArm(player, evt.getHand());
-					evt.setCanceled(true);
-				}
-				else if(wl.getTile() instanceof IWrenchable && ((IWrenchable) wl.getTile()).onWrenchUsed(wl, player, evt.getHand()))
+					swing = true;
+				if(wl.getTile() instanceof IWrenchable && ((IWrenchable) wl.getTile()).onWrenchUsed(wl, player, evt.getHand()))
+					swing = true;
+				if(swing)
 				{
 					HCNetwork.swingArm(player, evt.getHand());
 					evt.setCanceled(true);
@@ -65,7 +65,7 @@ public class TileHandler
 	}
 	
 	@SubscribeEvent
-	public void breakBlock(BlockEvent.PlaceEvent evt)
+	public void placeBlock(BlockEvent.PlaceEvent evt)
 	{
 		TileEntity te = evt.getWorld().getTileEntity(evt.getPos());
 		

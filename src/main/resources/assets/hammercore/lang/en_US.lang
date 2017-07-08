@@ -14,12 +14,15 @@ item.hammercore:manual.name=Hammer Core Manual
 item.hammercore:manual.tooltip0=Contains all needed info
 item.hammercore:manual.tooltip1=for survival
 
-item.hammercore:battery.name=Battery
-item.hammercore:battery.tooltip0=Sneak-Click This Battery to
+item.hammercore:battery.name=Accumulator
+item.hammercore:battery.tooltip0=Sneak-Click Accumulator to
 item.hammercore:battery.tooltip1=Change Sharing Mode.
 
 item.hammercore:wrench.name=Wrench
 item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
+
+item.hammercore:iron_gear.name=Iron Gear
+item.hammercore:iron_gear.tooltip0=Acts like a gear!
 
 ###########
 
@@ -58,7 +61,12 @@ bookapi.hammercore:manual:items=Items
 bookapi.hammercore:manual:blocks=Blocks
 
 gui.hammercore:manual/items/calculatron.title=Calculatron
-
 gui.hammercore:manual/items/calculatron.desc=This powerful item is capable of calculating very complicated expressions. Try it!
+
+gui.hammercore:manual/items/battery.title=Accumulator
+gui.hammercore:manual/items/battery.desc=This item is capable of storing 2M RF/FE.
+
+gui.hammercore:manual/items/wrench.title=Wrench
+gui.hammercore:manual/items/wrench.desc=HammerCore adds WrenchAPI to make APengu's mods independent of Buildcraft API. This item is a simple wrench that applies on tiles that respond to this API.
 
 ##########

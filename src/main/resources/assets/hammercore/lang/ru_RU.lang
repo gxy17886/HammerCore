@@ -21,6 +21,9 @@ item.hammercore:battery.tooltip1=изменить режим раздачи.
 item.hammercore:wrench.name=Гаечный ключ
 item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
 
+item.hammercore:iron_gear.name=Железная Шестерня
+item.hammercore:iron_gear.tooltip0=Действует как шестеренка!
+
 ###########
 
 ###BLOCKS###
@@ -58,7 +61,12 @@ bookapi.hammercore:manual:items=Предметы
 bookapi.hammercore:manual:blocks=Блоки
 
 gui.hammercore:manual/items/calculatron.title=Калькулятрон
-
 gui.hammercore:manual/items/calculatron.desc=Этот мощный предмет умеет решить очень тяжелые уравнения. Попробуйте!
+
+gui.hammercore:manual/items/battery.title=Аккумулятор
+gui.hammercore:manual/items/battery.desc=Этот предмет может хранить 2М RF/FE.
+
+gui.hammercore:manual/items/wrench.title=Гаечный ключ
+gui.hammercore:manual/items/wrench.desc=HammerCore добавляет WrenchAPI что бы сделать моды от APengu независимыми от Buildcraft API. Данный предмет является простым ключом, который применяется на блоки которые могут реагировать на этот API.
 
 ##########

@@ -68,6 +68,20 @@ public class BookProxy_Client extends BookProxy_Common
 			new BookPageTextPlain(entry, "gui.hammercore:manual/items/calculatron.desc");
 		}
 		
+		{
+			BookEntry entry = new BookEntry(items, "battery", "gui.hammercore:manual/items/battery.title");
+			entry.setIcon(new ItemStack(ItemsHC.battery));
+			
+			new BookPageTextPlain(entry, "gui.hammercore:manual/items/battery.desc");
+		}
+		
+		{
+			BookEntry entry = new BookEntry(items, "wrench", "gui.hammercore:manual/items/wrench.title");
+			entry.setIcon(new ItemStack(ItemsHC.wrench));
+			
+			new BookPageTextPlain(entry, "gui.hammercore:manual/items/wrench.desc");
+		}
+		
 		registerBookInstance(hammerCoreManual);
 	}
 }
