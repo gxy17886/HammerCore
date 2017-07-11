@@ -83,19 +83,19 @@ public class HammerCoreTransformer implements IClassTransformer
 			
 			for(MethodNode m : classNode.methods)
 			{
-				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
-				{
-					InsnList updateTick = new InsnList();
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
-					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
-					updateTick.add(new InsnNode(Opcodes.RETURN));
-					
-					m.instructions = updateTick;
-					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
-				}
+//				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
+//				{
+//					InsnList updateTick = new InsnList();
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
+//					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
+//					updateTick.add(new InsnNode(Opcodes.RETURN));
+//					
+//					m.instructions = updateTick;
+//					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
+//				}
 			}
 			
 			return ObjectWebUtils.writeClassToByteArray(classNode);
@@ -127,22 +127,22 @@ public class HammerCoreTransformer implements IClassTransformer
 		if(obf)
 			desc = "(L" + classNameWorld + ";Lco;Z)Z";
 		
-		InsnList canSnowAtBody = new InsnList();
-		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 0));
-		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 1));
-		canSnowAtBody.add(new VarInsnNode(Opcodes.ILOAD, 2));
-		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
-		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
+//		InsnList canSnowAtBody = new InsnList();
+//		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 0));
+//		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 1));
+//		canSnowAtBody.add(new VarInsnNode(Opcodes.ILOAD, 2));
+//		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
+//		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
 		
 //		boolean add_func_72853_d = true;
 		
 		for(MethodNode m : classNode.methods)
 		{
-			if(m.name.equals("canSnowAtBody"))
-			{
-				m.instructions = canSnowAtBody;
-				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
-			}
+//			if(m.name.equals("canSnowAtBody"))
+//			{
+//				m.instructions = canSnowAtBody;
+//				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
+//			}
 			
 //			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
 //			{

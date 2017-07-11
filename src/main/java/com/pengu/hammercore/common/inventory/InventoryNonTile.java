@@ -112,7 +112,7 @@ public class InventoryNonTile implements IInventory
 	{
 		try
 		{
-			if(inventory.get(slot) != null)
+			if(!inventory.get(slot).isEmpty())
 			{
 				ItemStack is;
 				
@@ -137,7 +137,7 @@ public class InventoryNonTile implements IInventory
 		} catch(Throwable err)
 		{
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 	
 	@Override

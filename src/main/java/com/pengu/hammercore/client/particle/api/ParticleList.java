@@ -15,9 +15,8 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-
-import com.pengu.hammercore.common.utils.WorldUtil;
 
 public class ParticleList
 {
@@ -36,6 +35,20 @@ public class ParticleList
 	public static void addGetter(IParticleGetter getter)
 	{
 		getters.add(getter);
+	}
+	
+	public static List<Particle> getParticlesWithinAABB(AxisAlignedBB bounds)
+	{
+		List<Particle> particles = new ArrayList<>();
+		List<Particle> ps = getParticlesList();
+		for(int i = 0; i < ps.size(); ++i)
+		{
+			Particle p = ps.get(i);
+			AxisAlignedBB pbb = p.getBoundingBox();
+			if(pbb != null && pbb.intersects(bounds))
+				particles.add(p);
+		}
+		return particles;
 	}
 	
 	public static void refreshParticles()

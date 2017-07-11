@@ -24,6 +24,9 @@ item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
 item.hammercore:iron_gear.name=Iron Gear
 item.hammercore:iron_gear.tooltip0=Acts like a gear!
 
+item.hammercore:iwrench.name=iWrench
+item.hammercore:iwrench.tooltip0=Powered by HammerCore WrenchAPI.
+
 ###########
 
 ###BLOCKS###

@@ -13,6 +13,7 @@ public class ItemWrench extends Item implements IWrenchItem
 	public ItemWrench()
 	{
 		setUnlocalizedName("wrench");
+		setMaxStackSize(1);
 	}
 	
 	@Override

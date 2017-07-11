@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.ChatLine;
@@ -15,10 +17,19 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -32,10 +43,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.pengu.hammercore.MultiHitboxGetter;
 import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.render.world.PositionRenderer;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.color.Color;
+import com.pengu.hammercore.common.IWrenchable;
+import com.pengu.hammercore.common.items.ItemIWrench;
+import com.pengu.hammercore.utils.ColorHelper;
+import com.pengu.hammercore.vec.Cuboid6;
 
 public class Render3D
 {
@@ -68,7 +84,57 @@ public class Render3D
 				render.render(Minecraft.getMinecraft().player, render.calcX(), render.calcY(), render.calcZ());
 		}
 		
+		ItemStack mh = Minecraft.getMinecraft().player.getHeldItemMainhand();
+		ItemStack oh = Minecraft.getMinecraft().player.getHeldItemOffhand();
+		
+		if((!mh.isEmpty() && mh.getItem() instanceof ItemIWrench) || (!oh.isEmpty() && oh.getItem() instanceof ItemIWrench))
+		{
+			RayTraceResult o = Minecraft.getMinecraft().objectMouseOver;
+			
+			if(o != null && o.getBlockPos() != null && o.typeOfHit == Type.BLOCK)
+			{
+				World w = Minecraft.getMinecraft().world;
+				BlockPos p = o.getBlockPos();
+				
+				IBlockState s = w.getBlockState(p);
+				Block b = s.getBlock();
+				AxisAlignedBB aabb = s.getBoundingBox(w, p);
+				
+				TileEntity tile = w.getTileEntity(p);
+				
+				boolean wrenchable = tile instanceof IWrenchable || b instanceof IWrenchable;
+				
+				int col = wrenchable ? 0x3322FF22 : 0x33FF2222;
+				
+				Cuboid6[] cbs = MultiHitboxGetter.getCuboidsAt(w, p);
+				for(int i = 0; i < cbs.length; ++i)
+					renderFilledBlockOverlay(cbs[i].aabb().grow(.01D), p, evt.getPartialTicks(), col);
+			}
+		}
+		
 		ParticleList.renderExtendedParticles(evt);
+	}
+	
+	public static void renderFilledBlockOverlay(AxisAlignedBB aabb, BlockPos pos, float partialTicks, int argb)
+	{
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		
+		GL11.glPushMatrix();
+		GL11.glTranslated(pos.getX(), pos.getY(), pos.getZ());
+		GlStateManager.enableBlend();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.disableTexture2D();
+		GlStateManager.depthMask(false);
+		
+		double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
+		double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
+		double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+		RenderGlobal.renderFilledBox(aabb.offset(-d0, -d1, -d2), ColorHelper.getRed(argb), ColorHelper.getGreen(argb), ColorHelper.getBlue(argb), ColorHelper.getAlpha(argb));
+		
+		GlStateManager.depthMask(true);
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
+		GL11.glPopMatrix();
 	}
 	
 	@SubscribeEvent

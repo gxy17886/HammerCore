@@ -36,24 +36,6 @@ public class RenderProxy_Common
 		return null;
 	}
 	
-	@Deprecated
-	public void playSoundAt(World world, String sound, BlockPos pos, float volume, float pitch, SoundCategory category)
-	{
-		HammerCore.audioProxy.playSoundAt(world, sound, pos, volume, pitch, category);
-	}
-	
-	@Deprecated
-	public void playSoundAt(World world, String sound, double x, double y, double z, float volume, float pitch, SoundCategory category)
-	{
-		HammerCore.audioProxy.playSoundAt(world, sound, x, y, z, volume, pitch, category);
-	}
-	
-	@Deprecated
-	public void playBlockStateBreak(World world, IBlockState type, double x, double y, double z, float volume, float pitch, SoundCategory category)
-	{
-		HammerCore.audioProxy.playBlockStateBreak(world, type, x, y, z, volume, pitch, category);
-	}
-	
 	public void sendNoSpamMessages(ITextComponent[] messages)
 	{
 	}

@@ -162,6 +162,108 @@ public class SimpleRegistration
 		implementRecipe(new ShapelessRecipes(name, stack, list));
 	}
 	
+	public static ShapedRecipes parseShapedRecipe(ItemStack stack, Object... recipeComponents)
+	{
+		ModContainer mc = Loader.instance().activeModContainer();
+		String name = (mc != null ? mc.getModId() : "hammercore") + ":" + stack.getUnlocalizedName();
+		String s = "";
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		
+		if(recipeComponents[i] instanceof String[])
+		{
+			String[] astring = (String[]) ((String[]) recipeComponents[i++]);
+			
+			for(String s2 : astring)
+			{
+				++k;
+				j = s2.length();
+				s = s + s2;
+			}
+		} else
+		{
+			while(recipeComponents[i] instanceof String)
+			{
+				String s1 = (String) recipeComponents[i++];
+				++k;
+				j = s1.length();
+				s = s + s1;
+			}
+		}
+		
+		Map<Character, ItemStack[]> map;
+		
+		for(map = Maps.<Character, ItemStack[]> newHashMap(); i < recipeComponents.length; i += 2)
+		{
+			Character character = (Character) recipeComponents[i];
+			List<ItemStack> itemstack = new ArrayList<ItemStack>();
+			
+			if(recipeComponents[i + 1] instanceof Item)
+				itemstack.add(new ItemStack((Item) recipeComponents[i + 1]));
+			else if(recipeComponents[i + 1] instanceof Block)
+				itemstack.add(new ItemStack((Block) recipeComponents[i + 1], 1, OreDictionary.WILDCARD_VALUE));
+			else if(recipeComponents[i + 1] instanceof ItemStack)
+				itemstack.add(((ItemStack) recipeComponents[i + 1]).copy());
+			else if(recipeComponents[i + 1] instanceof String)
+				itemstack.addAll(OreDictionary.getOres(recipeComponents[i + 1] + ""));
+			else if(recipeComponents[i + 1] instanceof IGetter)
+				itemstack.add(((IGetter<ItemStack>) recipeComponents[i + 1]).get());
+			
+			map.put(character, itemstack.toArray(new ItemStack[0]));
+		}
+		
+		NonNullList<Ingredient> aitemstack = NonNullList.withSize(j * k, Ingredient.EMPTY);
+		
+		for(int l = 0; l < j * k; ++l)
+		{
+			char c0 = s.charAt(l);
+			
+			if(map.containsKey(Character.valueOf(c0)))
+				aitemstack.set(l, Ingredient.fromStacks(map.get(Character.valueOf(c0))));
+		}
+		
+		return new ShapedRecipes(name, j, k, aitemstack, stack);
+	}
+	
+	/**
+	 * This should only be used for registering recipes for vanilla objects and
+	 * not mod-specific objects.
+	 * 
+	 * @param name
+	 *            The name of the recipe.
+	 * @param stack
+	 *            The output stack.
+	 * @param recipeComponents
+	 *            The recipe components.
+	 */
+	public static ShapelessRecipes parseShapelessRecipe(ItemStack stack, Object... recipeComponents)
+	{
+		ModContainer mc = Loader.instance().activeModContainer();
+		String name = (mc != null ? mc.getModId() : "hammercore") + ":" + stack.getUnlocalizedName();
+		NonNullList<Ingredient> list = NonNullList.create();
+		
+		for(Object object : recipeComponents)
+		{
+			if(object instanceof ItemStack)
+				list.add(Ingredient.fromStacks(((ItemStack) object).copy()));
+			else if(object instanceof Item)
+				list.add(Ingredient.fromStacks(new ItemStack((Item) object)));
+			else if(object instanceof String)
+				list.add(Ingredient.fromStacks(OreDictionary.getOres(object + "").toArray(new ItemStack[0])));
+			else if(object instanceof IGetter)
+				list.add(Ingredient.fromStacks(((IGetter<ItemStack>) object).get()));
+			else
+			{
+				if(!(object instanceof Block))
+					throw new IllegalArgumentException("Invalid shapeless recipe: unknown type " + object.getClass().getName() + "!");
+				list.add(Ingredient.fromStacks(new ItemStack((Block) object)));
+			}
+		}
+		
+		return new ShapelessRecipes(name, stack, list);
+	}
+	
 	public static void registerFieldItemsFrom(Class<?> owner, String modid, CreativeTabs tab)
 	{
 		Field[] fs = owner.getDeclaredFields();

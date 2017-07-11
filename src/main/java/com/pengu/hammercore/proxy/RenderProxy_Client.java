@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.HammerCore;
+import com.pengu.hammercore.TooltipAPI;
 import com.pengu.hammercore.client.RenderGui;
 import com.pengu.hammercore.client.model.HasNoModel;
 import com.pengu.hammercore.client.particle.IRenderHelper;
@@ -39,6 +40,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 	public void construct()
 	{
 		MinecraftForge.EVENT_BUS.register(new RenderGui());
+		MinecraftForge.EVENT_BUS.register(new TooltipAPI());
 		TextureFXManager.INSTANCE.preInit();
 	}
 	

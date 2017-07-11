@@ -15,6 +15,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.command.CommandTimeToTicks;
 import com.pengu.hammercore.common.capabilities.ItemCapabilityProvider;
@@ -80,6 +82,7 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 	}
 	
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
 	    super.addInformation(stack, worldIn, tooltip, flagIn);

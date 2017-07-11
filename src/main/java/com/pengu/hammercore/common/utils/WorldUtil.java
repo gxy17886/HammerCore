@@ -53,25 +53,24 @@ public class WorldUtil
 		}
 	}
 	
-	public static void spawnItemStack(World worldIn, double x, double y, double z, ItemStack stackIn)
+	public static EntityItem spawnItemStack(World worldIn, double x, double y, double z, ItemStack stackIn)
 	{
-		if(worldIn.isRemote)
-			return;
-		
 		EntityItem entityItem = new EntityItem(worldIn, x, y, z, stackIn);
 		entityItem.motionX = 0;
 		entityItem.motionZ = 0;
-		worldIn.spawnEntity(entityItem);
+		if(!worldIn.isRemote)
+			worldIn.spawnEntity(entityItem);
+		return entityItem;
 	}
 	
-	public static void spawnItemStack(World worldIn, BlockPos pos, ItemStack stackIn)
+	public static EntityItem spawnItemStack(World worldIn, BlockPos pos, ItemStack stackIn)
 	{
-		spawnItemStack(worldIn, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, stackIn);
+		return spawnItemStack(worldIn, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, stackIn);
 	}
 	
-	public static void spawnItemStack(WorldLocation loc, ItemStack stackIn)
+	public static EntityItem spawnItemStack(WorldLocation loc, ItemStack stackIn)
 	{
-		spawnItemStack(loc.getWorld(), loc.getPos(), stackIn);
+		return spawnItemStack(loc.getWorld(), loc.getPos(), stackIn);
 	}
 	
 	public static void teleportPlayer(EntityPlayerMP mp, int dim, double x, double y, double z)

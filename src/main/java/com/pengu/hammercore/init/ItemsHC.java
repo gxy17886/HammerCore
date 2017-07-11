@@ -10,6 +10,7 @@ import com.pengu.hammercore.cfg.HammerCoreConfigs;
 import com.pengu.hammercore.common.items.ItemBattery;
 import com.pengu.hammercore.common.items.ItemCalculatron;
 import com.pengu.hammercore.common.items.ItemHammerCoreManual;
+import com.pengu.hammercore.common.items.ItemIWrench;
 import com.pengu.hammercore.common.items.ItemWrench;
 import com.pengu.hammercore.common.items.MultiVariantItem;
 import com.pengu.hammercore.common.items.debug.ItemRayTracer;
@@ -25,7 +26,8 @@ public class ItemsHC
 	        calculatron = new ItemCalculatron(), //
 	        manual = new ItemHammerCoreManual(), //
 	        battery = new ItemBattery(2_000_000, 25_000).setUnlocalizedName("battery"), //
-	        wrench = new ItemWrench(),
+	        wrench = new ItemWrench(), //
+	        iwrench = new ItemIWrench(), //
 	        iron_gear = new Item().setMaxStackSize(16).setUnlocalizedName("iron_gear");
 	
 	static

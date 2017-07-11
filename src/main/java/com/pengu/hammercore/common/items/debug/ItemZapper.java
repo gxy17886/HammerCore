@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.raytracer.RayTracer;
+import com.pengu.hammercore.utils.ColorHelper;
 
 public final class ItemZapper extends Item
 {
@@ -36,7 +37,7 @@ public final class ItemZapper extends Item
 			{
 				AxisAlignedBB aabb = result.entityHit.getEntityBoundingBox();
 				
-				HammerCore.particleProxy.spawnZap(worldIn, new Vec3d(playerIn.posX, playerIn.posY + 1, playerIn.posZ), new Vec3d(result.entityHit.posX, result.entityHit.posY + (aabb.maxY - aabb.minY) / 2, result.entityHit.posZ), new Color(playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat()));
+				HammerCore.particleProxy.spawnZap(worldIn, new Vec3d(playerIn.posX, playerIn.posY + 1, playerIn.posZ), new Vec3d(result.entityHit.posX, result.entityHit.posY + (aabb.maxY - aabb.minY) / 2, result.entityHit.posZ), ColorHelper.packRGB(playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat()));
 				result.entityHit.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), Float.POSITIVE_INFINITY);
 			}
 			
@@ -48,7 +49,7 @@ public final class ItemZapper extends Item
 				if(playerIn.capabilities.isCreativeMode || worldIn.getBlockState(result.getBlockPos()).getBlockHardness(worldIn, result.getBlockPos()) != -1F)
 					worldIn.destroyBlock(result.getBlockPos(), true);
 				
-				HammerCore.particleProxy.spawnZap(worldIn, new Vec3d(playerIn.posX, playerIn.posY + 1, playerIn.posZ), new Vec3d(result.getBlockPos().getX() + .5, result.getBlockPos().getY() + .5, result.getBlockPos().getZ() + .5), new Color(playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat()));
+				HammerCore.particleProxy.spawnSlowZap(worldIn, new Vec3d(playerIn.posX, playerIn.posY + 1, playerIn.posZ), new Vec3d(result.getBlockPos().getX() + .5, result.getBlockPos().getY() + .5, result.getBlockPos().getZ() + .5), ColorHelper.packRGB(playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat(), playerIn.getRNG().nextFloat()), 10, .15F);
 			}
 			
 			playerIn.swingArm(hand);

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLConnection;
 
 import net.minecraft.client.gui.GuiScreen;
 
@@ -21,7 +22,7 @@ public class GuiDownloading extends GuiScreen
 	private final int mouseX, mouseY;
 	public final File dest, opt_toRemove;
 	public final URL url;
-	public final long expected_size;
+	public long expected_size;
 	private boolean openBrowserBack, started;
 	private long downloaded;
 	
@@ -49,8 +50,11 @@ public class GuiDownloading extends GuiScreen
 			
 		try
 		{
-			InputStream in = url.openConnection().getInputStream();
+			URLConnection conn = url.openConnection();
+			InputStream in = conn.getInputStream();
 			OutputStream out = new FileOutputStream(dest);
+			long len = conn.getContentLengthLong();
+			if(len > 0) expected_size = len;
 			
 			byte[] buffer = new byte[867]; // not ram intense, just 1 KiB
 			int read = 0;

@@ -10,6 +10,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.HammerCore.GRCProvider;
 import com.pengu.hammercore.annotations.MCFBus;
@@ -20,7 +22,7 @@ import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.net.pkt.PacketReloadRaytracePlugins;
 import com.pengu.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRemoval;
 
-@MCFBus
+@SideOnly(Side.CLIENT)
 public class TooltipAPI
 {
 	private static final ThreadLocal<Map<String, String>> results = ThreadLocal.withInitial(() ->

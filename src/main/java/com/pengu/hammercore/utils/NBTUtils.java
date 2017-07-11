@@ -1,5 +1,7 @@
 package com.pengu.hammercore.utils;
 
+import java.util.UUID;
+
 import net.minecraft.nbt.NBTTagCompound;
 
 import com.pengu.hammercore.utils.NumberUtils.EnumNumberType;
@@ -16,5 +18,33 @@ public class NBTUtils
 	public static Number readNumberFromNBT(String key, NBTTagCompound nbt)
 	{
 		return NumberUtils.fromBytes(nbt.getByteArray(key));
+	}
+	
+	public static void writeStringArrayToNBT(String key, NBTTagCompound nbt, String... $)
+	{
+		nbt.setInteger(key + "Length", $.length);
+		for(int i = 0; i < $.length; ++i)
+			nbt.setString(key + i, $[i]);
+	}
+	
+	public static String[] readStringArrayFromNBT(String key, NBTTagCompound nbt)
+	{
+		String[] $ = new String[nbt.getInteger(key + "Length")];
+		for(int i = 0; i < $.length; ++i) $[i] = nbt.getString(key + i);
+		return $;
+	}
+	
+	public static void writeUUIDArrayToNBT(String key, NBTTagCompound nbt, UUID... $)
+	{
+		nbt.setInteger(key + "Length", $.length);
+		for(int i = 0; i < $.length; ++i)
+			nbt.setUniqueId(key + i, $[i]);
+	}
+	
+	public static UUID[] readUUIDArrayFromNBT(String key, NBTTagCompound nbt)
+	{
+		UUID[] $ = new UUID[nbt.getInteger(key + "Length")];
+		for(int i = 0; i < $.length; ++i) $[i] = nbt.getUniqueId(key + i);
+		return $;
 	}
 }

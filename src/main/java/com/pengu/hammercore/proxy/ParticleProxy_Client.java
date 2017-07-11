@@ -1,6 +1,5 @@
 package com.pengu.hammercore.proxy;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +18,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import com.pengu.hammercore.api.dynlight.DynamicLightGetter;
 import com.pengu.hammercore.client.OpnodeLoader;
 import com.pengu.hammercore.client.particle.api.ParticleList;
+import com.pengu.hammercore.client.particle.def.ParticleSlowZap;
 import com.pengu.hammercore.client.particle.def.ParticleZap;
 import com.pengu.hammercore.client.particle.old.IOldParticle;
 import com.pengu.hammercore.client.render.Render3D;
@@ -39,22 +39,44 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	}
 	
 	@Override
-	public IOldParticle spawnZap(World w, Vec3d start, Vec3d end, Color rgb)
+	public IOldParticle spawnZap(World w, Vec3d start, Vec3d end, int rgb)
 	{
 		if(!w.isRemote)
 			return super.spawnZap(w, start, end, rgb);
-		ParticleZap zap = new ParticleZap(w, start.x, start.y, start.z, end.x, end.y, end.z, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
+		ParticleZap zap = new ParticleZap(w, start.x, start.y, start.z, end.x, end.y, end.z, ((rgb >> 16) & 0xFF) / (float) 0xFF, ((rgb >> 8) & 0xFF) / (float) 0xFF, ((rgb >> 0) & 0xFF) / (float) 0xFF);
 		zap.spawn();
 		return zap;
 	}
 	
 	@Override
-	public IOldParticle spawnZap(int w, Vec3d start, Vec3d end, Color rgb)
+	public IOldParticle spawnZap(int w, Vec3d start, Vec3d end, int rgb)
 	{
 		ParticleZap zap = null;
 		if(Minecraft.getMinecraft().world.provider.getDimension() == w)
 		{
-			zap = new ParticleZap(Minecraft.getMinecraft().world, start.x, start.y, start.z, end.x, end.y, end.z, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
+			zap = new ParticleZap(Minecraft.getMinecraft().world, start.x, start.y, start.z, end.x, end.y, end.z, ((rgb >> 16) & 0xFF) / (float) 0xFF, ((rgb >> 8) & 0xFF) / (float) 0xFF, ((rgb >> 0) & 0xFF) / (float) 0xFF);
+			zap.spawn();
+		}
+		return zap;
+	}
+	
+	@Override
+	public IOldParticle spawnSlowZap(World w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
+	{
+		if(!w.isRemote)
+			return super.spawnSlowZap(w, start, end, rgb, maxTicks, ampl);
+		ParticleSlowZap zap = new ParticleSlowZap(w, maxTicks, ampl, start.x, start.y, start.z, end.x, end.y, end.z, ((rgb >> 16) & 0xFF) / (float) 0xFF, ((rgb >> 8) & 0xFF) / (float) 0xFF, ((rgb >> 0) & 0xFF) / (float) 0xFF);
+		zap.spawn();
+		return zap;
+	}
+	
+	@Override
+	public IOldParticle spawnSlowZap(int w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
+	{
+		ParticleSlowZap zap = null;
+		if(Minecraft.getMinecraft().world.provider.getDimension() == w)
+		{
+			zap = new ParticleSlowZap(Minecraft.getMinecraft().world, maxTicks, ampl, start.x, start.y, start.z, end.x, end.y, end.z, ((rgb >> 16) & 0xFF) / (float) 0xFF, ((rgb >> 8) & 0xFF) / (float) 0xFF, ((rgb >> 0) & 0xFF) / (float) 0xFF);
 			zap.spawn();
 		}
 		return zap;

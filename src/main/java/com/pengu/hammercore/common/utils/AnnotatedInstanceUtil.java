@@ -10,6 +10,9 @@ import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import com.pengu.hammercore.annotations.MCFBus;
+import com.pengu.hammercore.utils.EnumSide;
+
 /**
  * This class helps to gather all required scopes of needed object with
  * specified annotation
@@ -41,6 +44,28 @@ public class AnnotatedInstanceUtil
 			try
 			{
 				Class<?> asmClass = Class.forName(asmData.getClassName());
+				Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
+				T instance = asmInstanceClass.newInstance();
+				instances.add(instance);
+			} catch(Throwable e)
+			{
+			}
+		}
+		return instances;
+	}
+	
+	public static <T> List<T> getMCFBInstances(@Nonnull ASMDataTable asmDataTable, EnumSide side, Class<T> instanceClass)
+	{
+		String annotationClassName = MCFBus.class.getCanonicalName();
+		Set<ASMData> asmDatas = asmDataTable.getAll(annotationClassName);
+		List<T> instances = new ArrayList();
+		for(ASMData asmData : asmDatas)
+		{
+			try
+			{
+				Class<?> asmClass = Class.forName(asmData.getClassName());
+				if(!asmClass.getAnnotation(MCFBus.class).side().sideEqual(side))
+					continue;
 				Class<? extends T> asmInstanceClass = asmClass.asSubclass(instanceClass);
 				T instance = asmInstanceClass.newInstance();
 				instances.add(instance);

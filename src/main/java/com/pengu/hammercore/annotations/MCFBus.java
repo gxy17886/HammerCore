@@ -6,6 +6,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.pengu.hammercore.utils.EnumSide;
+
 /**
  * Targets class to be registered to MinecraftForge EVENT_BUS on PreInit
  **/
@@ -13,4 +15,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface MCFBus
 {
+	EnumSide side() default EnumSide.UNIVERSAL;
 }

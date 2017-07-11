@@ -10,16 +10,16 @@ import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.net.packetAPI.IPacket;
 import com.pengu.hammercore.net.packetAPI.IPacketListener;
 
-public class PacketSpawnZap implements IPacket, IPacketListener<PacketSpawnZap, IPacket>
+public class PacketSpawnSlowZap implements IPacket, IPacketListener<PacketSpawnSlowZap, IPacket>
 {
-	public int world;
+	public int world, color, maxTicks;
+	public float ampl;
 	public Vec3d start, end;
-	public int color;
 	
 	@Override
-	public IPacket onArrived(PacketSpawnZap packet, MessageContext context)
+	public IPacket onArrived(PacketSpawnSlowZap packet, MessageContext context)
 	{
-		HammerCore.particleProxy.spawnZap(packet.world, packet.start, packet.end, packet.color);
+		HammerCore.particleProxy.spawnSlowZap(packet.world, packet.start, packet.end, packet.color, packet.maxTicks, packet.ampl);
 		return null;
 	}
 	
@@ -29,14 +29,13 @@ public class PacketSpawnZap implements IPacket, IPacketListener<PacketSpawnZap, 
 		nbt.setDouble("sx", start.x);
 		nbt.setDouble("sy", start.y);
 		nbt.setDouble("sz", start.z);
-		
 		nbt.setDouble("ex", end.x);
 		nbt.setDouble("ey", end.y);
 		nbt.setDouble("ez", end.z);
-		
 		nbt.setInteger("dm", world);
-		
 		nbt.setInteger("cl", color);
+		nbt.setInteger("mt", maxTicks);
+		nbt.setFloat("am", ampl);
 	}
 	
 	@Override
@@ -46,5 +45,7 @@ public class PacketSpawnZap implements IPacket, IPacketListener<PacketSpawnZap, 
 		end = new Vec3d(nbt.getDouble("ex"), nbt.getDouble("ey"), nbt.getDouble("ez"));
 		world = nbt.getInteger("dm");
 		color = nbt.getInteger("cl");
+		maxTicks = nbt.getInteger("mt");
+		ampl = nbt.getFloat("am");
 	}
 }

@@ -19,10 +19,13 @@ item.hammercore:battery.tooltip0=Используйте сидя чтобы
 item.hammercore:battery.tooltip1=изменить режим раздачи.
 
 item.hammercore:wrench.name=Гаечный ключ
-item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
+item.hammercore:wrench.tooltip0=Работет на HammerCore WrenchAPI.
 
 item.hammercore:iron_gear.name=Железная Шестерня
 item.hammercore:iron_gear.tooltip0=Действует как шестеренка!
+
+item.hammercore:iwrench.name=iКлюч
+item.hammercore:iwrench.tooltip0=Работет на HammerCore WrenchAPI.
 
 ###########
 

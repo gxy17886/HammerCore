@@ -153,7 +153,8 @@ public class GuiModBrowser extends GuiScreen
 			{
 				if(mouseX >= 68 + verX && mouseY >= y + 14 + verY && mouseX < 68 + verX + 18 && mouseY < y + 14 + verY + 18)
 				{
-					String url = IOUtils.followRedirects(mod.fileVersions.get(mod.supportedVersions.get(ver))).replaceFirst("http", "https");
+					String url = IOUtils.followRedirects(mod.fileVersions.get(mod.supportedVersions.get(ver)));
+					if(!url.startsWith("https") && url.startsWith("http")) url = url.replaceFirst("http", "https");
 					
 					URL u = new URL(url);
 					
