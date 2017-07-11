@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagList;
@@ -37,6 +39,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -75,6 +78,8 @@ import com.pengu.hammercore.init.BlocksHC;
 import com.pengu.hammercore.init.ItemsHC;
 import com.pengu.hammercore.init.SimpleRegistration;
 import com.pengu.hammercore.net.HCNetwork;
+import com.pengu.hammercore.net.pkt.PacketReloadRaytracePlugins;
+import com.pengu.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRemoval;
 import com.pengu.hammercore.proxy.AudioProxy_Common;
 import com.pengu.hammercore.proxy.BookProxy_Common;
 import com.pengu.hammercore.proxy.LightProxy_Common;
@@ -300,6 +305,25 @@ public class HammerCore
 		LOG.info("Registering SimpleRegistration recipes...");
 		SimpleRegistration.registerRegisteredRecipes(evt.getRegistry());
 		LOG.info("   -Done.");
+	}
+	
+	@SubscribeEvent
+	public void getApis(GetAllRequiredApisEvent evt)
+	{
+		
+	}
+	
+	@SubscribeEvent
+	public void playerConnected(PlayerLoggedInEvent evt)
+	{
+		EntityPlayer client = HammerCore.renderProxy.getClientPlayer();
+		if(client != null && client.getGameProfile().getId().equals(evt.player.getGameProfile().getId()))
+			return;
+		
+		if(!evt.player.world.isRemote && evt.player instanceof EntityPlayerMP && GRCProvider.getScriptCount() > 0)
+			HCNetwork.manager.sendTo(new PacketSendGlobalRecipeScriptsWithRemoval(0, GRCProvider.getScript(0)), (EntityPlayerMP) evt.player);
+		if(evt.player instanceof EntityPlayerMP)
+			HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), (EntityPlayerMP) evt.player);
 	}
 	
 	@EventHandler

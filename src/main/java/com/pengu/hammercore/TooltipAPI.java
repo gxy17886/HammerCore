@@ -4,23 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.pengu.hammercore.HammerCore.GRCProvider;
-import com.pengu.hammercore.annotations.MCFBus;
 import com.pengu.hammercore.common.items.ITooltipInjector;
-import com.pengu.hammercore.event.GetAllRequiredApisEvent;
 import com.pengu.hammercore.math.ExpressionEvaluator;
-import com.pengu.hammercore.net.HCNetwork;
-import com.pengu.hammercore.net.pkt.PacketReloadRaytracePlugins;
-import com.pengu.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRemoval;
 
 @SideOnly(Side.CLIENT)
 public class TooltipAPI
@@ -107,24 +98,5 @@ public class TooltipAPI
 			tooltip.add(l);
 			++i;
 		}
-	}
-	
-	@SubscribeEvent
-	public void getApis(GetAllRequiredApisEvent evt)
-	{
-		
-	}
-	
-	@SubscribeEvent
-	public void playerConnected(PlayerLoggedInEvent evt)
-	{
-		EntityPlayer client = HammerCore.renderProxy.getClientPlayer();
-		if(client != null && client.getGameProfile().getId().equals(evt.player.getGameProfile().getId()))
-			return;
-		
-		if(!evt.player.world.isRemote && evt.player instanceof EntityPlayerMP && GRCProvider.getScriptCount() > 0)
-			HCNetwork.manager.sendTo(new PacketSendGlobalRecipeScriptsWithRemoval(0, GRCProvider.getScript(0)), (EntityPlayerMP) evt.player);
-		if(evt.player instanceof EntityPlayerMP)
-			HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), (EntityPlayerMP) evt.player);
 	}
 }
