@@ -13,7 +13,7 @@ Include following code into your build.gradle:
 >}
 >
 >dependencies {
->		deobfCompile "apengu:SolarFluxReborn:MCVERSION-SFRVERSION:deobf"
+>		deobfCompile "apengu:HammerCore:MCVERSION-HCVERSION:deobf"
 >}
 
-Where "MCVERSION" is Minecraft Version and "SFRVERSION" is Solar Flux Reborn Version starting from 3.24r
+Where "MCVERSION" is Minecraft Version and "HCVERSION" is Hammer Core Version starting from 1.9.2
