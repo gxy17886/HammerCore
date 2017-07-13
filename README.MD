@@ -1,6 +1,6 @@
-# Solar Flux Reborn
-SFR is a mod that adds Solar Panels that generate FE, RF and partially TESLA
-The mod comes by default with 8 different tiers of solar panels (fully configurable)
+# Hammer Core
+Hammer Core is a powerful API that provides a lot of utility code that a normal mod maker usually types.
+It also provides extra utility code that has a wide usage
 
 # How to add to your development environment
 Include following code into your build.gradle:
