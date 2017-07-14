@@ -1,5 +1,8 @@
 package com.pengu.hammercore.intent;
 
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import javax.annotation.Nullable;
 
 import com.pengu.hammercore.utils.IndexedMap;
@@ -28,8 +31,12 @@ public class IntentManager
 	public static <T> IIntentHandler<T> getIntentHandler(String name, Class<T> data)
 	{
 		IndexedMap<Class, IIntentHandler> ints = intents.get(name);
-		if(ints != null && ints.get(data) != null)
-			return ints.get(data);
+		if(ints != null)
+		{
+			Stream<Class> str = ints.getKeys().stream().filter(c -> c.isAssignableFrom(data));
+			Optional<Class> opt = str.findFirst();
+			 return opt.isPresent() ? ints.get(opt.get()) : DEF_INTENT;
+		}
 		return DEF_INTENT;
 	}
 	
