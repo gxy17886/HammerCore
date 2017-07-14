@@ -1,12 +1,13 @@
-"Black Hole Storage": {
+{
+	"Black Hole Storage": {
 		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/238/406/190/130/3c24775282dd0a4e183ba2e59755d53c.png",
 		"modid": "blackholestorage",
 		"tooltip": "Store infinite amounts of something inside of a stabilized black holes",
 		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
-				"version": "16r",
-				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2447475/download",
+				"version": "17r",
+				"download": "https://minecraft.curseforge.com/projects/black-hole-storage/files/2450116/download",
 				"size": 1572864
 			}
 		}
@@ -18,9 +19,36 @@
 		"authors": [ "APengu" ],
 		"versions": {
 			"release": {
-				"version": "3.22r",
-				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2447517/download",
+				"version": "3.24r",
+				"download": "https://minecraft.curseforge.com/projects/solar-flux-reborn/files/2450173/download",
+				"size": 204800
+			}
+		}
+	},
+	"Simple Quarry": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/192/173/190/130/5544f66be314bd91be1594f70f233f8b.png",
+		"modid": "simplequarry",
+		"tooltip": "Adding simple quarry to mine area of blocks",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "1.0.5",
+				"download": "https://minecraft.curseforge.com/projects/simple-quarry/files/2450077/download",
+				"size": 204800
+			}
+		}
+	},
+	"Better Chat": {
+		"logo": "https://media-curse.cursecdn.com/attachments/thumbnails/257/283/190/130/acb7658bacba795d68591a919eb3d178.png",
+		"modid": "betterchat",
+		"tooltip": "Improved PMs, Voice Calls and more!",
+		"authors": [ "APengu" ],
+		"versions": {
+			"release": {
+				"version": "1r",
+				"download": "https://minecraft.curseforge.com/projects/better-chat/files/2448427/download",
 				"size": 204800
 			}
 		}
 	}
+}
