@@ -78,14 +78,14 @@ public class IndexedMap<K, V> implements Map<K, V>, Serializable
 	}
 	
 	public List<K> getKeys()
-    {
-	    return keys;
-    }
+	{
+		return keys;
+	}
 	
 	public List<V> getValues()
-    {
-	    return values;
-    }
+	{
+		return values;
+	}
 	
 	@Override
 	public V put(K key, V value)

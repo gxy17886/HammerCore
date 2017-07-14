@@ -118,9 +118,9 @@ public class ParticleList
 	}
 	
 	public static List<IRenderedParticle> getRenderedParticleList()
-    {
-	    return renderedParticleList;
-    }
+	{
+		return renderedParticleList;
+	}
 	
 	private static class DefaultParticleGetter implements IParticleGetter
 	{

@@ -4,18 +4,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import com.pengu.hammercore.utils.IndexedMap;
+
 public interface IGuiCallback
 {
-	Vars vars = new Vars();
-	
 	default void setGuiID(int id)
 	{
-		vars.id = id;
+		Vars.ids.put(id, this);
 	}
 	
 	default int getGuiID()
 	{
-		return vars.id;
+		Integer i = Vars.ids.getKey(this);
+		return i != null ? i : 0;
 	}
 	
 	Object getServerGuiElement(EntityPlayer player, World world, BlockPos pos);
@@ -24,6 +25,6 @@ public interface IGuiCallback
 	
 	static class Vars
 	{
-		private int id;
+		private static final IndexedMap<Integer, IGuiCallback> ids = new IndexedMap<>();
 	}
 }

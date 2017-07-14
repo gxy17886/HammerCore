@@ -18,10 +18,10 @@ import com.pengu.hammercore.common.utils.IOUtils;
 import com.pengu.hammercore.common.utils.TextCoding;
 import com.pengu.hammercore.math.MathHelper;
 import com.pengu.hammercore.modbrowser.ModBrowser;
-import com.pengu.hammercore.modbrowser.ModBrowserUVs;
 import com.pengu.hammercore.modbrowser.ModBrowser.LoadedMod;
 import com.pengu.hammercore.modbrowser.ModBrowser.Mod;
 import com.pengu.hammercore.modbrowser.ModBrowser.Version;
+import com.pengu.hammercore.modbrowser.ModBrowserUVs;
 
 public class GuiModBrowser extends GuiScreen
 {
@@ -154,7 +154,8 @@ public class GuiModBrowser extends GuiScreen
 				if(mouseX >= 68 + verX && mouseY >= y + 14 + verY && mouseX < 68 + verX + 18 && mouseY < y + 14 + verY + 18)
 				{
 					String url = IOUtils.followRedirects(mod.fileVersions.get(mod.supportedVersions.get(ver)));
-					if(!url.startsWith("https") && url.startsWith("http")) url = url.replaceFirst("http", "https");
+					if(!url.startsWith("https") && url.startsWith("http"))
+						url = url.replaceFirst("http", "https");
 					
 					URL u = new URL(url);
 					

@@ -30,7 +30,8 @@ public class NBTUtils
 	public static String[] readStringArrayFromNBT(String key, NBTTagCompound nbt)
 	{
 		String[] $ = new String[nbt.getInteger(key + "Length")];
-		for(int i = 0; i < $.length; ++i) $[i] = nbt.getString(key + i);
+		for(int i = 0; i < $.length; ++i)
+			$[i] = nbt.getString(key + i);
 		return $;
 	}
 	
@@ -44,7 +45,8 @@ public class NBTUtils
 	public static UUID[] readUUIDArrayFromNBT(String key, NBTTagCompound nbt)
 	{
 		UUID[] $ = new UUID[nbt.getInteger(key + "Length")];
-		for(int i = 0; i < $.length; ++i) $[i] = nbt.getUniqueId(key + i);
+		for(int i = 0; i < $.length; ++i)
+			$[i] = nbt.getUniqueId(key + i);
 		return $;
 	}
 }

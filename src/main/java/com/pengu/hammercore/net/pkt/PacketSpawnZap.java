@@ -1,7 +1,5 @@
 package com.pengu.hammercore.net.pkt;
 
-import java.awt.Color;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

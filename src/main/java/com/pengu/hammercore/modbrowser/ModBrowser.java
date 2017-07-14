@@ -36,7 +36,7 @@ import com.pengu.hammercore.json.JSONTokener;
 
 public class ModBrowser
 {
-	public static final String URL_BASE = "https://raw.githubusercontent.com/MrDimkasStudio/HammerCore/mod-list/", SHEETS = URL_BASE + "sheets/";
+	public static final String URL_BASE = "https://raw.githubusercontent.com/APengu/HammerCore/mod-list/", SHEETS = URL_BASE + "sheets/";
 	
 	private static final Map<String, Integer> glImages = new HashMap<>();
 	

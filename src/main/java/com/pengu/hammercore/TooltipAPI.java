@@ -16,15 +16,8 @@ import com.pengu.hammercore.math.ExpressionEvaluator;
 @SideOnly(Side.CLIENT)
 public class TooltipAPI
 {
-	private static final ThreadLocal<Map<String, String>> results = ThreadLocal.withInitial(() ->
-	{
-		return new HashMap<>();
-	});
-	
-	private static final ThreadLocal<Map<String, String>> currentVars = ThreadLocal.withInitial(() ->
-	{
-		return new HashMap<>();
-	});
+	private static final ThreadLocal<Map<String, String>> results = ThreadLocal.withInitial(() -> new HashMap<>());
+	private static final ThreadLocal<Map<String, String>> currentVars = ThreadLocal.withInitial(() -> new HashMap<>());
 	
 	@SubscribeEvent
 	public void tooltipEvt(ItemTooltipEvent evt)

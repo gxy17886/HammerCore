@@ -9,7 +9,6 @@ import net.minecraft.launchwrapper.IClassTransformer;
 
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
@@ -83,19 +82,23 @@ public class HammerCoreTransformer implements IClassTransformer
 			
 			for(MethodNode m : classNode.methods)
 			{
-//				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
-//				{
-//					InsnList updateTick = new InsnList();
-//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
-//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
-//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
-//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
-//					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
-//					updateTick.add(new InsnNode(Opcodes.RETURN));
-//					
-//					m.instructions = updateTick;
-//					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
-//				}
+				// if(m.desc.equals(desc) && (m.name.equals("b") ||
+				// m.name.equals("func_180650_b") ||
+				// m.name.equals("updateTick")))
+				// {
+				// InsnList updateTick = new InsnList();
+				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
+				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
+				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
+				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
+				// updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+				// "com/pengu/hammercore/asm/SnowfallHooks", "updateTick",
+				// m.desc));
+				// updateTick.add(new InsnNode(Opcodes.RETURN));
+				//
+				// m.instructions = updateTick;
+				// HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
+				// }
 			}
 			
 			return ObjectWebUtils.writeClassToByteArray(classNode);
@@ -127,35 +130,38 @@ public class HammerCoreTransformer implements IClassTransformer
 		if(obf)
 			desc = "(L" + classNameWorld + ";Lco;Z)Z";
 		
-//		InsnList canSnowAtBody = new InsnList();
-//		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 0));
-//		canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 1));
-//		canSnowAtBody.add(new VarInsnNode(Opcodes.ILOAD, 2));
-//		canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
-//		canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
+		// InsnList canSnowAtBody = new InsnList();
+		// canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 0));
+		// canSnowAtBody.add(new VarInsnNode(Opcodes.ALOAD, 1));
+		// canSnowAtBody.add(new VarInsnNode(Opcodes.ILOAD, 2));
+		// canSnowAtBody.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+		// "com/pengu/hammercore/asm/SnowfallHooks", "canSnowAtBody", desc));
+		// canSnowAtBody.add(new InsnNode(Opcodes.IRETURN));
 		
-//		boolean add_func_72853_d = true;
+		// boolean add_func_72853_d = true;
 		
 		for(MethodNode m : classNode.methods)
 		{
-//			if(m.name.equals("canSnowAtBody"))
-//			{
-//				m.instructions = canSnowAtBody;
-//				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
-//			}
+			// if(m.name.equals("canSnowAtBody"))
+			// {
+			// m.instructions = canSnowAtBody;
+			// HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
+			// }
 			
-//			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
-//			{
-//				add_func_72853_d = false;
-//				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
-//				AnnotationNode sideonly = null;
-//				for(AnnotationNode node : m.visibleAnnotations)
-//					if(node.desc.equals("Lnet/minecraftforge/fml/relauncher/SideOnly;"))
-//					{
-//						sideonly = node;
-//						break;
-//					}
-//			}
+			// if((m.name.equals("getMoonPhase") ||
+			// m.name.equals("func_72853_d") || m.name.equals("D")) &&
+			// m.desc.equals("()I"))
+			// {
+			// add_func_72853_d = false;
+			// HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+			// AnnotationNode sideonly = null;
+			// for(AnnotationNode node : m.visibleAnnotations)
+			// if(node.desc.equals("Lnet/minecraftforge/fml/relauncher/SideOnly;"))
+			// {
+			// sideonly = node;
+			// break;
+			// }
+			// }
 			
 			if(m.name.equals(computeLightValueMethodName) && (!obf || m.desc.equals(targetMethodDesc)))
 			{
@@ -200,14 +206,14 @@ public class HammerCoreTransformer implements IClassTransformer
 			}
 		}
 		
-//		if(add_func_72853_d)
-//		{
-//			HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
-//			
-//			classNode.methods.add(getMoonPhase(obf ? "D" : "getMoonPhase"));
-//			
-//			HammerCoreCore.ASM_LOG.info("    Adding getMoonPhase (func_72853_d) back because we are on server.");
-//		}
+		// if(add_func_72853_d)
+		// {
+		// HammerCoreCore.ASM_LOG.info("Sending instructions to World for function getMoonPhase");
+		//
+		// classNode.methods.add(getMoonPhase(obf ? "D" : "getMoonPhase"));
+		//
+		// HammerCoreCore.ASM_LOG.info("    Adding getMoonPhase (func_72853_d) back because we are on server.");
+		// }
 		
 		return ObjectWebUtils.writeClassToByteArray(classNode);
 	}

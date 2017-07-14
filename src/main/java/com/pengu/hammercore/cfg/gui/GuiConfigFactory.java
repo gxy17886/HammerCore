@@ -21,16 +21,16 @@ public class GuiConfigFactory implements IModGuiFactory
 	{
 		return null;
 	}
-
+	
 	@Override
-    public boolean hasConfigGui()
-    {
-	    return true;
-    }
-
+	public boolean hasConfigGui()
+	{
+		return true;
+	}
+	
 	@Override
-    public GuiScreen createConfigGui(GuiScreen parentScreen)
-    {
-	    return new HCConfigGui(parentScreen);
-    }
+	public GuiScreen createConfigGui(GuiScreen parentScreen)
+	{
+		return new HCConfigGui(parentScreen);
+	}
 }

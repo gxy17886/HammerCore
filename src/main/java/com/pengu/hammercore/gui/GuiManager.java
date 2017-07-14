@@ -14,6 +14,7 @@ import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.gui.container.ContainerEmpty;
 import com.pengu.hammercore.tile.TileSyncable;
+import com.pengu.hammercore.utils.WorldLocation;
 
 public class GuiManager implements IGuiHandler
 {
@@ -86,5 +87,20 @@ public class GuiManager implements IGuiHandler
 	{
 		if(!world.isRemote)
 			FMLNetworkHandler.openGui(player, HammerCore.instance, 2 + callbackID, world, pos.getX(), pos.getY(), pos.getZ());
+	}
+	
+	public static void openGuiCallback(IGuiCallback callbackID, EntityPlayer player, World world, BlockPos pos)
+	{
+		openGuiCallback(callbackID.getGuiID(), player, world, pos);
+	}
+	
+	public static void openGuiCallback(int callbackID, EntityPlayer player, WorldLocation loc)
+	{
+		openGuiCallback(callbackID, player, loc.getWorld(), loc.getPos());
+	}
+	
+	public static void openGuiCallback(IGuiCallback callbackID, EntityPlayer player, WorldLocation loc)
+	{
+		openGuiCallback(callbackID.getGuiID(), player, loc.getWorld(), loc.getPos());
 	}
 }

@@ -1,5 +1,7 @@
 package com.pengu.hammercore.common.utils;
 
+import java.io.File;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -29,6 +31,12 @@ public class WorldUtil
 	public static World getWorld(MessageContext context, int dim)
 	{
 		return HammerCore.renderProxy.getWorld(context, dim);
+	}
+	
+	public static File getWorldSubfile(String file)
+	{
+		MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+		return new File((server.isDedicatedServer() ? "" : "saves" + File.separator) + server.getFolderName(), file);
 	}
 	
 	public static NBTTagList saveInv(IInventory inventory)

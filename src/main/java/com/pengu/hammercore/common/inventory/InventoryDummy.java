@@ -15,20 +15,21 @@ import com.pengu.hammercore.common.InterItemStack;
 import com.pengu.hammercore.common.utils.WorldUtil;
 
 /**
- * This is a part of Hammer Core InventoryNonTile is used widely to make
- * inventory code much more simple
+ * This is a part of Hammer Core InventoryDummy is used widely to make inventory
+ * code much more simple
  * 
  * @author APengu
  */
-public class InventoryNonTile implements IInventory
+public class InventoryDummy implements IInventory
 {
 	public IInventoryListener listener;
 	public NonNullList<ItemStack> inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 	private final int[] allSlots;
 	public int inventoryStackLimit = 64;
+	public ISlotPredicate validSlots = (i, stack) -> true;
 	public NBTTagCompound boundCompound = new NBTTagCompound();
 	
-	public InventoryNonTile(int inventorySize, NBTTagCompound boundNBT)
+	public InventoryDummy(int inventorySize, NBTTagCompound boundNBT)
 	{
 		inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
 		allSlots = new int[inventory.size()];
@@ -37,7 +38,7 @@ public class InventoryNonTile implements IInventory
 		boundCompound = boundNBT;
 	}
 	
-	public InventoryNonTile(NBTTagCompound boundNBT, ItemStack... items)
+	public InventoryDummy(NBTTagCompound boundNBT, ItemStack... items)
 	{
 		inventory = NonNullList.withSize(items.length, ItemStack.EMPTY);
 		for(int i = 0; i < items.length; ++i)
@@ -48,7 +49,7 @@ public class InventoryNonTile implements IInventory
 		boundCompound = boundNBT;
 	}
 	
-	public InventoryNonTile(int inventorySize)
+	public InventoryDummy(int inventorySize)
 	{
 		inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
 		allSlots = new int[inventorySize];
@@ -56,7 +57,7 @@ public class InventoryNonTile implements IInventory
 			allSlots[i] = i;
 	}
 	
-	public InventoryNonTile(ItemStack... items)
+	public InventoryDummy(ItemStack... items)
 	{
 		inventory = NonNullList.withSize(items.length, ItemStack.EMPTY);
 		for(int i = 0; i < items.length; ++i)
@@ -74,7 +75,7 @@ public class InventoryNonTile implements IInventory
 	@Override
 	public String getName()
 	{
-		return "Inventory Non Tile Entity";
+		return "Dummy Inventory";
 	}
 	
 	@Override
@@ -180,7 +181,7 @@ public class InventoryNonTile implements IInventory
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
-		return true;
+		return validSlots.test(index, stack);
 	}
 	
 	@Override
@@ -210,13 +211,14 @@ public class InventoryNonTile implements IInventory
 				listener.slotChange(i, inventory.get(i));
 	}
 	
-	public void writeToNBT(NBTTagCompound nbt)
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
 		if(nbt != null)
 		{
 			nbt.setInteger("InvSize", inventory.size());
 			ItemStackHelper.saveAllItems(nbt, inventory);
 		}
+		return nbt;
 	}
 	
 	public void writeToNBT()
@@ -224,13 +226,14 @@ public class InventoryNonTile implements IInventory
 		writeToNBT(boundCompound);
 	}
 	
-	public void readFromNBT(NBTTagCompound nbt)
+	public InventoryDummy readFromNBT(NBTTagCompound nbt)
 	{
 		if(nbt != null)
 		{
 			inventory = NonNullList.withSize(nbt.getInteger("InvSize"), ItemStack.EMPTY);
 			ItemStackHelper.loadAllItems(nbt, inventory);
 		}
+		return this;
 	}
 	
 	public void readFromNBT()
@@ -270,15 +273,6 @@ public class InventoryNonTile implements IInventory
 	}
 	
 	public boolean isUsableByPlayer(EntityPlayer player, BlockPos from)
-	{
-		return player.getDistanceSq(from) <= 64D;
-	}
-	
-	/**
-	 * use {@link #isUsableByPlayer(EntityPlayer, BlockPos)} instead.
-	 */
-	@Deprecated
-	public boolean isUseableByPlayer(EntityPlayer player, BlockPos from)
 	{
 		return player.getDistanceSq(from) <= 64D;
 	}

@@ -54,7 +54,8 @@ public class GuiDownloading extends GuiScreen
 			InputStream in = conn.getInputStream();
 			OutputStream out = new FileOutputStream(dest);
 			long len = conn.getContentLengthLong();
-			if(len > 0) expected_size = len;
+			if(len > 0)
+				expected_size = len;
 			
 			byte[] buffer = new byte[867]; // not ram intense, just 1 KiB
 			int read = 0;

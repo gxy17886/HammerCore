@@ -1,9 +1,6 @@
 package com.pengu.hammercore.net.pkt;
 
-import java.util.UUID;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -23,8 +20,8 @@ public class PacketSwingArm implements IPacket, IPacketListener<PacketSwingArm, 
 	}
 	
 	public PacketSwingArm()
-    {
-    }
+	{
+	}
 	
 	@Override
 	public IPacket onArrived(PacketSwingArm packet, MessageContext context)

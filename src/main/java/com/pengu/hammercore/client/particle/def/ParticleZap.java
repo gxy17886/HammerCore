@@ -198,7 +198,7 @@ public class ParticleZap extends SimpleParticle implements IOldParticle
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(2884);
 		GL11.glBlendFunc(770, 771);
-//		GL11.glDisable(3042);
+		// GL11.glDisable(3042);
 		GL11.glDepthMask(true);
 		
 		GL11.glPopMatrix();

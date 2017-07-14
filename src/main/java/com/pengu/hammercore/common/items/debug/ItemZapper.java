@@ -1,7 +1,5 @@
 package com.pengu.hammercore.common.items.debug;
 
-import java.awt.Color;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

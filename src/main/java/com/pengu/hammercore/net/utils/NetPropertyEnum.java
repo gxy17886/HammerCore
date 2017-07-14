@@ -1,7 +1,5 @@
 package com.pengu.hammercore.net.utils;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyEnum<T extends Enum> extends NetPropertyAbstract<T>
@@ -37,8 +35,9 @@ public class NetPropertyEnum<T extends Enum> extends NetPropertyAbstract<T>
 				Class<T> c = (Class<T>) Class.forName(nbt.getString("Class"));
 				T[] values = (T[]) c.getMethod("values").invoke(null);
 				value = values[nbt.getInteger("Val")];
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 		}
 	}
 }

@@ -41,7 +41,8 @@ public class PacketSendTaskNamed implements IPacket, IPacketListener<PacketSendT
 			for(String $receiver : packet.receivers)
 			{
 				EntityPlayerMP receiver = context.getServerHandler().player.mcServer.getPlayerList().getPlayerByUsername($receiver);
-				if(receiver != null) HCNetwork.manager.sendTo(packet, receiver);
+				if(receiver != null)
+					HCNetwork.manager.sendTo(packet, receiver);
 			}
 		}
 		if(context.side == Side.CLIENT)
@@ -51,8 +52,10 @@ public class PacketSendTaskNamed implements IPacket, IPacketListener<PacketSendT
 				ITask task = (ITask) Class.forName(this.task.getString("Class")).newInstance();
 				task.readFromNBT(this.task.getCompoundTag("Data"));
 				task.execute(context);
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
 			}
-			catch(Throwable err) { err.printStackTrace(); }
 		}
 		return null;
 	}

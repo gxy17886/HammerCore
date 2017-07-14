@@ -31,7 +31,7 @@ public class CommandTimeToTicks extends CommandBase
 		try
 		{
 			return formatTimeToTicks(time);
-		}catch(RuntimeException e)
+		} catch(RuntimeException e)
 		{
 			throw new CommandException(e.getMessage());
 		}

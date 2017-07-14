@@ -1,6 +1,5 @@
 package com.pengu.hammercore.net.utils;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -35,19 +34,19 @@ public class NetPropertyInventoryNonTile extends NetPropertyAbstract<InventoryNo
 		value.writeToNBT(nbt);
 		return nbt;
 	}
-
+	
 	@Override
 	public void set(InventoryNonTile val)
 	{
-	    super.set(val);
-	    if(value != null)
+		super.set(val);
+		if(value != null)
 			value.listener = this;
 	}
 	
 	@Override
 	public InventoryNonTile getInventory()
 	{
-	    return value;
+		return value;
 	}
 	
 	@Override

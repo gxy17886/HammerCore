@@ -31,11 +31,11 @@ import com.pengu.hammercore.gui.GuiTesseract;
 import com.pengu.hammercore.gui.container.ContainerEmpty;
 import com.pengu.hammercore.init.BlocksHC;
 import com.pengu.hammercore.init.ItemsHC;
-import com.pengu.hammercore.tile.IMalfunctionable;
 import com.pengu.hammercore.net.utils.NetPropertyBool;
 import com.pengu.hammercore.net.utils.NetPropertyNumber;
 import com.pengu.hammercore.net.utils.NetPropertyString;
 import com.pengu.hammercore.net.utils.NetPropertyUUID;
+import com.pengu.hammercore.tile.IMalfunctionable;
 import com.pengu.hammercore.tile.ITileDroppable;
 import com.pengu.hammercore.tile.TileSyncableTickable;
 

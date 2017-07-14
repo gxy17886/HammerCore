@@ -43,7 +43,8 @@ public class PacketSendTaskUUID implements IPacket, IPacketListener<PacketSendTa
 			for(UUID $receiver : packet.receivers)
 			{
 				EntityPlayerMP receiver = context.getServerHandler().player.mcServer.getPlayerList().getPlayerByUUID($receiver);
-				if(receiver != null) HCNetwork.manager.sendTo(packet, receiver);
+				if(receiver != null)
+					HCNetwork.manager.sendTo(packet, receiver);
 			}
 		}
 		if(context.side == Side.CLIENT)
@@ -53,8 +54,10 @@ public class PacketSendTaskUUID implements IPacket, IPacketListener<PacketSendTa
 				ITask task = (ITask) Class.forName(this.task.getString("Class")).newInstance();
 				task.readFromNBT(this.task.getCompoundTag("Data"));
 				task.execute(context);
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
 			}
-			catch(Throwable err) { err.printStackTrace(); }
 		}
 		return null;
 	}

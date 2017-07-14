@@ -44,10 +44,10 @@ public class PacketDropItem implements IPacket, IPacketListener<PacketDropItem, 
 		if(nbt.hasKey("e"))
 			ei = nbt.getCompoundTag("e");
 	}
-
+	
 	@Override
-    public IPacket onArrived(PacketDropItem packet, MessageContext context)
-    {
+	public IPacket onArrived(PacketDropItem packet, MessageContext context)
+	{
 		if(context.side == Side.SERVER)
 		{
 			EntityPlayerMP mp = context.getServerHandler().player;
@@ -57,6 +57,6 @@ public class PacketDropItem implements IPacket, IPacketListener<PacketDropItem, 
 				ei.readFromNBT(packet.ei);
 			mp.world.spawnEntity(ei);
 		}
-	    return null;
-    }
+		return null;
+	}
 }

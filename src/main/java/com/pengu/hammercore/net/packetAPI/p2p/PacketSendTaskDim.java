@@ -1,8 +1,5 @@
 package com.pengu.hammercore.net.packetAPI.p2p;
 
-import java.util.UUID;
-
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
@@ -10,7 +7,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.net.packetAPI.IPacket;
 import com.pengu.hammercore.net.packetAPI.IPacketListener;
-import com.pengu.hammercore.utils.NBTUtils;
 
 public class PacketSendTaskDim implements IPacket, IPacketListener<PacketSendTaskDim, IPacket>
 {
@@ -50,8 +46,10 @@ public class PacketSendTaskDim implements IPacket, IPacketListener<PacketSendTas
 				ITask task = (ITask) Class.forName(this.task.getString("Class")).newInstance();
 				task.readFromNBT(this.task.getCompoundTag("Data"));
 				task.execute(context);
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
 			}
-			catch(Throwable err) { err.printStackTrace(); }
 		}
 		return null;
 	}

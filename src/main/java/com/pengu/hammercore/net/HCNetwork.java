@@ -24,9 +24,9 @@ public class HCNetwork
 	}
 	
 	public static P2PManager getP2P()
-    {
-	    return p2p;
-    }
+	{
+		return p2p;
+	}
 	
 	public static void spawnParticle(World world, EnumParticleTypes particle, double x, double y, double z, double motionX, double motionY, double motionZ, int... args)
 	{

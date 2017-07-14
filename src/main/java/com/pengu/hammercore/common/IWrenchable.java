@@ -11,7 +11,8 @@ import com.pengu.hammercore.utils.WorldLocation;
 public interface IWrenchable
 {
 	/**
-	 * Called when player clicks with {@link IWrenchItem} if {@link IWrenchItem#canWrench(net.minecraft.item.ItemStack)} returns true.
+	 * Called when player clicks with {@link IWrenchItem} if
+	 * {@link IWrenchItem#canWrench(net.minecraft.item.ItemStack)} returns true.
 	 */
 	public boolean onWrenchUsed(WorldLocation loc, EntityPlayer player, EnumHand hand);
 }

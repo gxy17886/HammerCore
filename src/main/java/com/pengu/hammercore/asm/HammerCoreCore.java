@@ -23,14 +23,15 @@ public class HammerCoreCore implements IFMLLoadingPlugin
 	// public static BigInteger classID = BigInteger.ONE;
 	//
 	{
-//		File debuginfo = new File("hc_classes.txt");
-//		if(!debuginfo.isFile())
-//			try
-//			{
-//				hc_classes = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(debuginfo)));
-//			} catch(Throwable err)
-//			{
-//			}
+		// File debuginfo = new File("hc_classes.txt");
+		// if(!debuginfo.isFile())
+		// try
+		// {
+		// hc_classes = new BufferedWriter(new OutputStreamWriter(new
+		// FileOutputStream(debuginfo)));
+		// } catch(Throwable err)
+		// {
+		// }
 		
 		try
 		{

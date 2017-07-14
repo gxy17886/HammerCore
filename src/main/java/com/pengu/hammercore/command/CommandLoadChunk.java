@@ -3,9 +3,6 @@ package com.pengu.hammercore.command;
 import java.util.Arrays;
 import java.util.List;
 
-import com.pengu.hammercore.common.chunk.ChunkLoaderHC;
-import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
-
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -13,6 +10,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+
+import com.pengu.hammercore.common.chunk.ChunkLoaderHC;
+import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 
 public class CommandLoadChunk extends CommandBase
 {

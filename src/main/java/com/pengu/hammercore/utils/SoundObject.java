@@ -8,9 +8,12 @@ import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.init.SimpleRegistration;
 
 /**
- * Constructed to register sound via {@link SimpleRegistration#registerSound(SoundObject)}.
- * <br> Example: SimpleRegistration.registerSound(new SoundObject("lostthaumaturgy", "bubbling")).
- * <br> Hint: You should keep {@link SoundObject} as a static-final variable for ease of use.
+ * Constructed to register sound via
+ * {@link SimpleRegistration#registerSound(SoundObject)}. <br>
+ * Example: SimpleRegistration.registerSound(new SoundObject("lostthaumaturgy",
+ * "bubbling")). <br>
+ * Hint: You should keep {@link SoundObject} as a static-final variable for ease
+ * of use.
  **/
 public class SoundObject
 {
@@ -23,9 +26,9 @@ public class SoundObject
 	}
 	
 	public SoundObject(String modid, String path)
-    {
+	{
 		this(new ResourceLocation(modid, path));
-    }
+	}
 	
 	public void playAt(WorldLocation location, float volume, float pitch, SoundCategory category)
 	{

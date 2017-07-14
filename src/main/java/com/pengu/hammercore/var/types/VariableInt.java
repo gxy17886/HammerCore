@@ -6,40 +6,50 @@ import net.minecraft.nbt.NBTTagCompound;
 
 import com.pengu.hammercore.var.IVariable;
 
-public class VariableString implements IVariable<String>
+public class VariableInt implements IVariable<Integer>
 {
 	final String id;
-	String var, prevVar;
+	Integer var, prevVar;
 	
-	public VariableString(String id)
+	public VariableInt(String id)
 	{
 		this.id = id;
 	}
 	
 	@Override
-	public String get()
+	public Integer get()
 	{
 		return var;
 	}
 	
 	@Override
-	public void set(String t)
+	public void set(Integer t)
 	{
 		prevVar = var;
 		var = t;
 	}
 	
+	public void setInt(int i)
+	{
+		set(i);
+	}
+	
+	public int getInt()
+	{
+		return get() != null ? get() : 0;
+	}
+	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		nbt.setString("Var", var);
+		nbt.setInteger("Var", getInt());
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		var = nbt.getString("Var");
+		setInt(nbt.getInteger("Var"));
 	}
 	
 	@Override

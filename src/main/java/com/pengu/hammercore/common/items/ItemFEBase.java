@@ -2,8 +2,6 @@ package com.pengu.hammercore.common.items;
 
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -85,8 +83,8 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-	    super.addInformation(stack, worldIn, tooltip, flagIn);
-	    int fe = getEnergyStored(stack);
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		int fe = getEnergyStored(stack);
 		tooltip.add(I18n.translateToLocal("info.hammercore:energy_stored") + ": " + CommandTimeToTicks.fancyFormat(fe));
 		if(this instanceof ItemBattery)
 			tooltip.add(I18n.translateToLocal("info.hammercore:changed_mode") + ": " + ((ItemBattery) this).getMode(stack));

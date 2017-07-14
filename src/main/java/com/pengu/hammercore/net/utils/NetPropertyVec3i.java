@@ -1,13 +1,10 @@
 package com.pengu.hammercore.net.utils;
 
-import javax.annotation.Nonnull;
-
-import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.asm.HammerCoreCore;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
+
+import com.pengu.hammercore.HammerCore;
 
 public class NetPropertyVec3i<T extends Vec3i> extends NetPropertyAbstract<T>
 {

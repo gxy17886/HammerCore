@@ -38,8 +38,9 @@ public class PlayerUtil
 			JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("https://api.mojang.com/user/profiles/" + StringHelper.trimUUID(uid) + "/names"))).nextValue();
 			JSONObject obj = arr.getJSONObject(arr.length() - 1);
 			return obj.getString("name");
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return "?";
 	}
 }

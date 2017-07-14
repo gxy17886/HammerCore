@@ -1,11 +1,6 @@
 package com.pengu.hammercore.client.model.simple;
 
 import java.io.Serializable;
-import java.util.Arrays;
-
-import net.minecraft.util.EnumFacing;
-
-import com.pengu.hammercore.utils.IndexedMap;
 
 public class Opnode implements Serializable
 {
