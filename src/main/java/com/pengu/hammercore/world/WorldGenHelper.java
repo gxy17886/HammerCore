@@ -17,6 +17,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -25,6 +26,9 @@ import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 import com.pengu.hammercore.annotations.MCFBus;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
@@ -32,6 +36,7 @@ import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.event.WorldEventsHC;
 import com.pengu.hammercore.utils.IndexedMap;
+import com.pengu.hammercore.world.gen.WorldRetroGen;
 
 @MCFBus
 public class WorldGenHelper
@@ -189,6 +194,19 @@ public class WorldGenHelper
 	}
 	
 	@SubscribeEvent
+	public void playerTick(PlayerTickEvent e)
+	{
+		if(e.phase != TickEvent.Phase.END || e.side != Side.SERVER)
+			return;
+		EntityPlayer player = e.player;
+		
+		if(!player.world.isRemote && player.ticksExisted % 10 == 0)
+			for(int x = -8; x < 8; ++x)
+				for(int z = -8; z < 8; ++z)
+					WorldRetroGen.generateChunk(player.world.getChunkFromBlockCoords(player.getPosition().add(x * 16, 0, z * 16)));
+	}
+	
+	@SubscribeEvent
 	public void worldSaveEvt(WorldEvent.Save evt)
 	{
 		try
@@ -207,15 +225,17 @@ public class WorldGenHelper
 	@SubscribeEvent
 	public void worldLoadEvt(WorldEvent.Load evt)
 	{
+		IndexedMap<String, Serializable> pars;
 		try
 		{
 			ObjectInputStream i = new ObjectInputStream(new GZIPInputStream(new FileInputStream(getBlockSaveFile(evt.getWorld().provider.getDimension()))));
 			CHUNKLOADERS.putAll((Map) i.readObject());
-			IndexedMap<String, Serializable> pars = (IndexedMap<String, Serializable>) i.readObject();
-			MinecraftForge.EVENT_BUS.post(new WorldEventsHC.LoadData(evt.getWorld(), pars));
+			pars = (IndexedMap<String, Serializable>) i.readObject();
 			i.close();
 		} catch(Throwable err)
 		{
+			pars = new IndexedMap<String, Serializable>();
 		}
+		MinecraftForge.EVENT_BUS.post(new WorldEventsHC.LoadData(evt.getWorld(), pars));
 	}
 }

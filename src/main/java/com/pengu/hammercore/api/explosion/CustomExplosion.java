@@ -22,6 +22,7 @@ public class CustomExplosion implements IUpdatable
 	private Random random = new Random();
 	private final DamageSource entityDamageSource;
 	private double expansion = 0;
+	public boolean breaksUnbreakableBlocks = false;
 	
 	public CustomExplosion(World world, int x, int y, int z, float power, DamageSource entityDamageSource)
 	{
@@ -32,6 +33,12 @@ public class CustomExplosion implements IUpdatable
 		this.zCoord = z;
 		this.power = power;
 		isDead = world.isRemote;
+	}
+	
+	public CustomExplosion setBreaksUnbreakableBlocks(boolean breaksUnbreakableBlocks)
+	{
+		this.breaksUnbreakableBlocks = breaksUnbreakableBlocks;
+		return this;
 	}
 	
 	/**

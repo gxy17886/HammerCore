@@ -34,6 +34,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -446,10 +447,15 @@ public class HammerCore
 	{
 		if(recipeScript != null)
 			recipeScript.remove();
-		WorldRetroGen.clearCache();
-		WorldGenHelper.CHUNKLOADERS.clear();
 		recipeScript = null;
 		ChunkLoaderHC.INSTANCE.isAlive();
+	}
+	
+	@EventHandler
+	public void serverStopped(FMLServerStoppedEvent e)
+	{
+		WorldRetroGen.clearCache();
+		WorldGenHelper.CHUNKLOADERS.clear();
 	}
 	
 	private GlobalRecipeScript parse(File path)
