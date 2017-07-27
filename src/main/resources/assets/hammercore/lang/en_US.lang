@@ -36,6 +36,7 @@ tile.hammercore:infi_rf.name=Creative Energy Source
 tile.hammercore:infi_rf.tooltip0=Generates 2,147,483,647 En/t
 tile.hammercore:infi_rf.tooltip1=Supported "En" (Energy) types:
 tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
+tile.hammercore:chunk_loader.name=Chunk Loader
 
 ############
 

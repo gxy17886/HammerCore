@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import com.pengu.hammercore.annotations.MCFBus;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
+import com.pengu.hammercore.world.WorldGenHelper;
 
 @MCFBus
 public class ChunkloadAPI
@@ -24,6 +25,7 @@ public class ChunkloadAPI
 	
 	{
 		addChunkLoader(ChunkLoaderHC.INSTANCE);
+		addChunkLoader(WorldGenHelper.chunkLoader());
 	}
 	
 	public static void addChunkLoader(IChunkLoader loader)

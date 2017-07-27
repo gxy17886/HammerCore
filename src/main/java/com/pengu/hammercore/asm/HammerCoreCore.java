@@ -1,15 +1,11 @@
 package com.pengu.hammercore.asm;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Map;
 
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 
-import com.pengu.hammercore.common.utils.IOUtils;
 import com.pengu.hammercore.common.utils.WrappedLog;
 
 /**
@@ -33,16 +29,18 @@ public class HammerCoreCore implements IFMLLoadingPlugin
 		// {
 		// }
 		
-		try
-		{
-			InputStream in = HammerCoreCore.class.getResourceAsStream("/com.pengu.compiler.jar");
-			FileOutputStream mods = new FileOutputStream(new File("mods", "com.pengu.compiler.jar"));
-			IOUtils.pipeData(in, mods);
-			mods.close();
-			in.close();
-		} catch(Throwable err)
-		{
-		}
+		// try
+		// {
+		// InputStream in =
+		// HammerCoreCore.class.getResourceAsStream("/com.pengu.compiler.jar");
+		// FileOutputStream mods = new FileOutputStream(new File("mods",
+		// "com.pengu.compiler.jar"));
+		// IOUtils.pipeData(in, mods);
+		// mods.close();
+		// in.close();
+		// } catch(Throwable err)
+		// {
+		// }
 	}
 	
 	@Override

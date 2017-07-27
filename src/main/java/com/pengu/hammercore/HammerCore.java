@@ -14,15 +14,12 @@ import java.util.Set;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -94,6 +91,8 @@ import com.pengu.hammercore.recipeAPI.RecipeTypeRegistry;
 import com.pengu.hammercore.recipeAPI.SimpleRecipeScript;
 import com.pengu.hammercore.structure.StructureAPI;
 import com.pengu.hammercore.world.WorldGenHammerCore;
+import com.pengu.hammercore.world.WorldGenHelper;
+import com.pengu.hammercore.world.gen.WorldRetroGen;
 
 /**
  * The core of Hammer Core. <br>
@@ -300,14 +299,6 @@ public class HammerCore
 	}
 	
 	@SubscribeEvent
-	public void registerRecipes(RegistryEvent.Register<IRecipe> evt)
-	{
-		LOG.info("Registering SimpleRegistration recipes...");
-		SimpleRegistration.registerRegisteredRecipes(evt.getRegistry());
-		LOG.info("   -Done.");
-	}
-	
-	@SubscribeEvent
 	public void getApis(GetAllRequiredApisEvent evt)
 	{
 		
@@ -320,10 +311,18 @@ public class HammerCore
 		if(client != null && client.getGameProfile().getId().equals(evt.player.getGameProfile().getId()))
 			return;
 		
-		if(!evt.player.world.isRemote && evt.player instanceof EntityPlayerMP && GRCProvider.getScriptCount() > 0)
-			HCNetwork.manager.sendTo(new PacketSendGlobalRecipeScriptsWithRemoval(0, GRCProvider.getScript(0)), (EntityPlayerMP) evt.player);
 		if(evt.player instanceof EntityPlayerMP)
-			HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), (EntityPlayerMP) evt.player);
+			try
+			{
+				EntityPlayerMP mp = (EntityPlayerMP) evt.player;
+				
+				HCNetwork.manager.sendTo(new PacketReloadRaytracePlugins(), mp);
+				
+				if(!evt.player.world.isRemote && GRCProvider.getScriptCount() > 0)
+					HCNetwork.manager.sendTo(new PacketSendGlobalRecipeScriptsWithRemoval(0, GRCProvider.getScript(0)), mp);
+			} catch(Throwable err)
+			{
+			}
 	}
 	
 	@EventHandler
@@ -337,8 +336,6 @@ public class HammerCore
 			code.init();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiManager());
-		
-		SimpleRegistration.addShapedRecipe("calculatron", new ItemStack(ItemsHC.calculatron), "igi", "rlr", "idi", 'g', "blockGlass", 'i', "ingotIron", 'r', "dustRedstone", 'd', "ingotGold", 'l', "dyeLime");
 		
 		BrewingRecipeRegistry.addRecipe(BrewingRecipe.INSTANCE);
 		
@@ -449,6 +446,8 @@ public class HammerCore
 	{
 		if(recipeScript != null)
 			recipeScript.remove();
+		WorldRetroGen.clearCache();
+		WorldGenHelper.CHUNKLOADERS.clear();
 		recipeScript = null;
 		ChunkLoaderHC.INSTANCE.isAlive();
 	}

@@ -5,6 +5,9 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
+
 import com.pengu.hammercore.utils.IndexedMap;
 import com.pengu.hammercore.utils.NPEUtils;
 
@@ -35,7 +38,7 @@ public class IntentManager
 		{
 			Stream<Class> str = ints.getKeys().stream().filter(c -> c.isAssignableFrom(data));
 			Optional<Class> opt = str.findFirst();
-			 return opt.isPresent() ? ints.get(opt.get()) : DEF_INTENT;
+			return opt.isPresent() ? ints.get(opt.get()) : DEF_INTENT;
 		}
 		return DEF_INTENT;
 	}
@@ -46,8 +49,9 @@ public class IntentManager
 		NPEUtils.checkNotNull(data, "data can not be null!");
 		NPEUtils.checkNotNull(name, "name can not be null!");
 		IIntentHandler intent = getIntentHandler(name, data.getClass());
+		ModContainer mc = Loader.instance().activeModContainer();
 		if(intent != null)
-			return intent.execute(name, data);
+			return intent.execute(mc != null ? mc.getModId() : "hammercore", data);
 		return null;
 	}
 }

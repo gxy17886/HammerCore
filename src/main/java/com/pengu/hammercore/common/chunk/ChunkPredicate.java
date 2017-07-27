@@ -35,7 +35,10 @@ public class ChunkPredicate
 	
 	public static interface IChunkLoader
 	{
-		boolean shouldChunkBeLoaded(World world, int x, int z);
+		default boolean shouldChunkBeLoaded(World world, int x, int z)
+		{
+			return false;
+		}
 		
 		ArrayList<LoadableChunk> getForceLoadedChunks();
 	}

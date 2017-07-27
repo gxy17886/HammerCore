@@ -36,6 +36,7 @@ tile.hammercore:infi_rf.name=Творческий источник энерги�
 tile.hammercore:infi_rf.tooltip0=Генерирует 2,147,483,647 Эн/t
 tile.hammercore:infi_rf.tooltip1=Поддерживаемые типы "Эн" (Энергии):
 tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
+tile.hammercore:chunk_loader.name=Загрузчик чанков
 
 ############
 

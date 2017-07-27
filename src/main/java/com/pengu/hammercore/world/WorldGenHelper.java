@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,25 +21,65 @@ import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 import com.pengu.hammercore.annotations.MCFBus;
+import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
+import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 import com.pengu.hammercore.common.utils.WorldUtil;
+import com.pengu.hammercore.event.WorldEventsHC;
 import com.pengu.hammercore.utils.IndexedMap;
 
 @MCFBus
 public class WorldGenHelper
 {
-	public static final Map<String, List<BlockData>> datas = new IndexedMap<>();
+	public static final Map<Integer, List<Long>> CHUNKLOADERS = new IndexedMap<>();
+	private static final ArrayList<LoadableChunk> LOADED_CHUNKS = new ArrayList<>();
 	
 	/** Some handy {@link IBlockState} checkers for {@link #generateFlower} */
 	public static final Predicate<IBlockState> //
 	        GRASS_OR_DIRT_CHECKER = state -> state != null && (state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.DIRT || state.getBlock() == Blocks.FARMLAND), //
 	        NETHERRACK_CHECKER = state -> state != null && state.getBlock() == Blocks.NETHERRACK, //
 	        END_STONE_CHECKER = state -> state != null && state.getBlock() == Blocks.END_STONE;
+	
+	public static void loadChunk(int world, BlockPos chunkloader)
+	{
+		List<Long> longs = WorldGenHelper.CHUNKLOADERS.get(world);
+		if(longs == null)
+			WorldGenHelper.CHUNKLOADERS.put(world, longs = new ArrayList<>());
+		if(!longs.contains(chunkloader.toLong()))
+			longs.add(chunkloader.toLong());
+		reloadChunks();
+	}
+	
+	public static IChunkLoader chunkLoader()
+	{
+		return () -> LOADED_CHUNKS;
+	}
+	
+	public static void unloadChunk(int world, BlockPos chunkloader)
+	{
+		List<Long> longs = WorldGenHelper.CHUNKLOADERS.get(world);
+		if(longs == null)
+			WorldGenHelper.CHUNKLOADERS.put(world, longs = new ArrayList<>());
+		if(longs.contains(chunkloader.toLong()))
+			longs.remove(chunkloader.toLong());
+		reloadChunks();
+	}
+	
+	public static void reloadChunks()
+	{
+		LOADED_CHUNKS.clear();
+		for(Integer i : CHUNKLOADERS.keySet())
+			for(Long l : CHUNKLOADERS.get(i))
+			{
+				BlockPos pos = BlockPos.fromLong(l);
+				LOADED_CHUNKS.add(new LoadableChunk(i, pos.getX() >> 4, pos.getZ() >> 4));
+			}
+	}
 	
 	/**
 	 * Generates a flower. WARNING: This method obtains world's height so you
@@ -110,46 +151,38 @@ public class WorldGenHelper
 		}
 	}
 	
-	public static File getBlockSaveFile()
+	public static File getBlockSaveFile(int world)
 	{
-		return WorldUtil.getWorldSubfile("pengu-pending_blocks.cbd");
+		return WorldUtil.getWorldSubfile("pengu-hc_world_data-" + world + ".srd");
 	}
 	
-	/**
-	 * An attempt to prevent FML's cascading chunkgen lag.
-	 */
 	public static void setBlockState(World world, BlockPos pos, IBlockState state, @Nullable TileEntity tile)
 	{
-		String key = world.provider.getDimension() + "";
-		List<BlockData> ds = datas.get(key);
-		if(ds == null)
-			datas.put(key, ds = new ArrayList<>());
-		ds.add(new BlockData(world, pos, state, tile));
+		boolean logCascade = ForgeModContainer.logCascadingWorldGeneration;
+		ForgeModContainer.logCascadingWorldGeneration = false;
+		
+		world.setBlockState(pos, state);
+		world.setTileEntity(pos, tile);
+		
+		ForgeModContainer.logCascadingWorldGeneration = logCascade;
 	}
 	
-	/**
-	 * An attempt to prevent FML's cascading chunkgen lag.
-	 */
 	public static void setBlockState(World world, BlockPos pos, IBlockState state)
 	{
 		setBlockState(world, pos, state, null);
 	}
 	
-	/**
-	 * An attempt to prevent FML's cascading chunkgen lag.
-	 */
 	public static void setBlockState(World world, BlockPos pos, IBlockState state, int marker, @Nullable TileEntity tile)
 	{
-		String key = world.provider.getDimension() + "";
-		List<BlockData> ds = datas.get(key);
-		if(ds == null)
-			datas.put(key, ds = new ArrayList<>());
-		ds.add(new BlockData(world, pos, state, marker, tile));
+		boolean logCascade = ForgeModContainer.logCascadingWorldGeneration;
+		ForgeModContainer.logCascadingWorldGeneration = false;
+		
+		world.setBlockState(pos, state, marker);
+		world.setTileEntity(pos, tile);
+		
+		ForgeModContainer.logCascadingWorldGeneration = logCascade;
 	}
 	
-	/**
-	 * An attempt to prevent FML's cascading chunkgen lag.
-	 */
 	public static void setBlockState(World world, BlockPos pos, IBlockState state, int marker)
 	{
 		setBlockState(world, pos, state, marker, null);
@@ -160,8 +193,11 @@ public class WorldGenHelper
 	{
 		try
 		{
-			ObjectOutputStream o = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(getBlockSaveFile())));
-			o.writeObject(datas);
+			ObjectOutputStream o = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream(getBlockSaveFile(evt.getWorld().provider.getDimension()))));
+			o.writeObject(CHUNKLOADERS);
+			IndexedMap<String, Serializable> pars = new IndexedMap<String, Serializable>();
+			MinecraftForge.EVENT_BUS.post(new WorldEventsHC.SaveData(evt.getWorld(), pars));
+			o.writeObject(pars);
 			o.close();
 		} catch(Throwable err)
 		{
@@ -173,30 +209,13 @@ public class WorldGenHelper
 	{
 		try
 		{
-			ObjectInputStream i = new ObjectInputStream(new GZIPInputStream(new FileInputStream(getBlockSaveFile())));
-			datas.putAll((Map) i.readObject());
+			ObjectInputStream i = new ObjectInputStream(new GZIPInputStream(new FileInputStream(getBlockSaveFile(evt.getWorld().provider.getDimension()))));
+			CHUNKLOADERS.putAll((Map) i.readObject());
+			IndexedMap<String, Serializable> pars = (IndexedMap<String, Serializable>) i.readObject();
+			MinecraftForge.EVENT_BUS.post(new WorldEventsHC.LoadData(evt.getWorld(), pars));
 			i.close();
 		} catch(Throwable err)
 		{
 		}
-	}
-	
-	@SubscribeEvent
-	public void worldTick(WorldTickEvent evt)
-	{
-		if(evt.phase != Phase.START)
-			return;
-		evt.world.profiler.startSection("Hammer Core BlockGen");
-		String key = evt.world.provider.getDimension() + "";
-		List<BlockData> ds = datas.get(key);
-		if(ds != null)
-		{
-			for(int i = 0; i < ds.size(); ++i)
-			{
-				ds.get(i).place(evt.world);
-				ds.remove(i);
-			}
-		}
-		evt.world.profiler.endSection();
 	}
 }
