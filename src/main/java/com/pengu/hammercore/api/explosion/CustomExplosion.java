@@ -58,6 +58,23 @@ public class CustomExplosion implements IUpdatable
 		return false;
 	}
 	
+	/**
+	 * Creates a big explosion of custom strength and damages entities
+	 * if(entityDamageSource != null) If chunks where explosion happens are
+	 * unloaded it will manually load them.
+	 * 
+	 * @return was this explosion created -- is happens on server.
+	 */
+	public static boolean doExplosionAt(World world, BlockPos pos, float power, DamageSource entityDamageSource, boolean breaksBedrock)
+	{
+		if(world != null && world.isBlockLoaded(pos) && pos != null && !world.isRemote)
+		{
+			HammerCore.updatables.add(new CustomExplosion(world, pos.getX(), pos.getY(), pos.getZ(), power, entityDamageSource).setBreaksUnbreakableBlocks(breaksBedrock));
+			return true;
+		}
+		return false;
+	}
+	
 	public static double getDistanceAtoB(double x1, double z1, double x2, double z2)
 	{
 		double dx = x1 - x2;
@@ -150,7 +167,11 @@ public class CustomExplosion implements IUpdatable
 						entity.attackEntityFrom(entityDamageSource, power * 100);
 				
 				if(energy >= 0)
-					worldObj.setBlockToAir(new BlockPos(xCoord, y, zCoord));
+				{
+					BlockPos pos = new BlockPos(xCoord, y, zCoord);
+					if(breaksUnbreakableBlocks || worldObj.getBlockState(pos).getBlockHardness(worldObj, pos) != -1)
+						worldObj.setBlockToAir(pos);
+				}
 				
 				energy -= 0.5F + (0.1F * (y - yCoord));
 			}

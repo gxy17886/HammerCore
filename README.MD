@@ -16,4 +16,4 @@ Include following code into your build.gradle:
 >		deobfCompile "apengu:HammerCore:MCVERSION-HCVERSION:deobf"
 >}
 
-Where "MCVERSION" is Minecraft Version and "HCVERSION" is Hammer Core Version starting from 1.9.3.7
+Where "MCVERSION" is Minecraft Version and "HCVERSION" is Hammer Core Version starting from 1.9.2.
