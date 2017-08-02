@@ -27,7 +27,7 @@ configFile.withReader {
 
 version = "${config.mod_version}"
 group = "com.mrdimka.hammercore"
-archivesBaseName = "HammerCore_${config.minecraft_version}"
+archivesBaseName = "HammerCore-${config.minecraft_version}"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {

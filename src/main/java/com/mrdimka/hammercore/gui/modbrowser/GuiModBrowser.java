@@ -36,12 +36,6 @@ public class GuiModBrowser extends GuiScreen
 	}
 	
 	@Override
-	public void initGui()
-	{
-		super.initGui();
-	}
-	
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		drawDefaultBackground();
@@ -50,6 +44,7 @@ public class GuiModBrowser extends GuiScreen
 		GLRenderState.BLEND.on();
 		
 		GlStateManager.enableAlpha();
+		GlStateManager.enableBlend();
 		
 		for(int i = beginIndex; i < browser.mods.size(); ++i)
 		{
@@ -96,6 +91,8 @@ public class GuiModBrowser extends GuiScreen
 			{
 				drawHoveringText(Arrays.asList(mod.modName, mod.description + "", "by " + mod.authors), 56, y + 12);
 				GlStateManager.disableLighting();
+				GlStateManager.enableAlpha();
+				GlStateManager.enableBlend();
 			}
 			
 			int verX = 0, verY = 0;
@@ -107,6 +104,8 @@ public class GuiModBrowser extends GuiScreen
 					LoadedMod lmod = browser.loadedMods.get(mod.modid);
 					drawHoveringText(Arrays.asList("Latest: " + mod.supportedVersions.get(ver), "Version type: " + ver.getId(), lmod != null ? "Current Version: " + lmod.version + "" : "Not installed. Press to install"), 78 + verX, y + 16 + verY);
 					GlStateManager.disableLighting();
+					GlStateManager.enableAlpha();
+					GlStateManager.enableBlend();
 				}
 				
 				verY += 24;
@@ -149,6 +148,8 @@ public class GuiModBrowser extends GuiScreen
 				if(mouseX >= 68 + verX && mouseY >= y + 14 + verY && mouseX < 68 + verX + 18 && mouseY < y + 14 + verY + 18)
 				{
 					String url = IOUtils.followRedirects(mod.fileVersions.get(mod.supportedVersions.get(ver))).replaceFirst("http", "https");
+					if(!url.startsWith("https") && url.startsWith("http"))
+						url = url.replaceFirst("http", "https");
 					
 					URL u = new URL(url);
 					

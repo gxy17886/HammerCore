@@ -2,9 +2,10 @@ package com.mrdimka.hammercore.asm;
 
 import java.util.Map;
 
-import com.mrdimka.hammercore.common.utils.WrappedLog;
-
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
+
+import com.mrdimka.hammercore.common.utils.WrappedLog;
+import com.mrdimka.hammercore.math.functions.FunctionMath;
 
 /**
  * FML plugin for HammerCore
@@ -32,6 +33,11 @@ public class HammerCoreCore implements IFMLLoadingPlugin
 	// }
 	// catch(Throwable err) {}
 	// }
+	
+	static
+	{
+		FunctionMath.inst.toString();
+	}
 	
 	@Override
 	public String[] getASMTransformerClass()

@@ -1,5 +1,6 @@
 package com.mrdimka.hammercore.math;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import com.mrdimka.hammercore.common.utils.Chars;
 import com.mrdimka.hammercore.math.functions.ExpressionFunction;
 import com.mrdimka.hammercore.math.functions.FunctionMath;
 
-public class ExpressionEvaluator
+public class BigExpressionEvaluator
 {
 	private final String str;
 	private int pos = -1, ch;
@@ -19,7 +20,7 @@ public class ExpressionEvaluator
 		addFunction(FunctionMath.inst);
 	}
 	
-	public ExpressionEvaluator(String str)
+	public BigExpressionEvaluator(String str)
 	{
 		str = str.replaceAll(Chars.PI + "", "PI");
 		str = str.replaceAll("PI", Math.PI + ""); // Include Math.PI into this
@@ -50,12 +51,12 @@ public class ExpressionEvaluator
 	 * Parses expression. Uses + - * / ^ % and all functions defined by
 	 * {@link #addFunction(ExpressionFunction)}
 	 */
-	public final double parse()
+	public final BigDecimal parse()
 	{
 		pos = -1;
 		
 		nextChar();
-		double x = parseExpression();
+		BigDecimal x = parseExpression();
 		if(pos < str.length())
 			throw new RuntimeException("Unexpected: " + (char) ch);
 		return x;
@@ -66,46 +67,46 @@ public class ExpressionEvaluator
 	// term = factor | term `*` factor | term `/` factor
 	// factor = `+` factor | `-` factor | `(` expression `)`
 	// | number | functionName factor | factor `^` factor
-	private double parseExpression()
+	private BigDecimal parseExpression()
 	{
-		double x = parseTerm();
+		BigDecimal x = parseTerm();
 		for(;;)
 		{
 			if(eat('+'))
-				x += parseTerm(); // addition
+				x = x.add(parseTerm()); // addition
 			else if(eat('-'))
-				x -= parseTerm(); // subtraction
+				x = x.subtract(parseTerm()); // subtraction
 			else
 				return x;
 		}
 	}
 	
-	private double parseTerm()
+	private BigDecimal parseTerm()
 	{
-		double x = parseFactor();
+		BigDecimal x = parseFactor();
 		for(;;)
 		{
 			if(eat('*'))
-				x *= parseFactor(); // multiplication
+				x = x.multiply(parseFactor()); // multiplication
 			else if(eat('/') || eat(':'))
-				x /= parseFactor(); // division
+				x = x.divide(parseFactor()); // division
 			else if(eat('%'))
-				x %= parseFactor(); // mod
+				x = x.remainder(parseFactor()); // mod
 			else if(eat('^'))
-				x = Math.pow(x, parseFactor()); // exponentiation
+				x = x.pow(parseFactor().intValue()); // exponentiation
 			else
 				return x;
 		}
 	}
 	
-	private double parseFactor()
+	private BigDecimal parseFactor()
 	{
 		if(eat('+'))
 			return parseFactor(); // unary plus
 		if(eat('-'))
-			return -parseFactor(); // unary minus
+			return parseFactor().negate(); // unary minus
 			
-		double x;
+		BigDecimal x;
 		int startPos = this.pos;
 		if(eat('(')) // parentheses
 		{
@@ -115,7 +116,7 @@ public class ExpressionEvaluator
 		{
 			while((ch >= '0' && ch <= '9') || ch == '.')
 				nextChar();
-			x = Double.parseDouble(str.substring(startPos, this.pos));
+			x = new BigDecimal(str.substring(startPos, this.pos));
 		} else if(ch >= 'a' && ch <= 'z') // functions
 		{
 			while(ch >= 'a' && ch <= 'z')
@@ -155,9 +156,9 @@ public class ExpressionEvaluator
 	 */
 	public static String evaluate(String expression, ExpressionFunction... functions)
 	{
-		double result = evaluateDouble(expression, functions);
-		if(result == Math.floor(result))
-			return Math.floor(result) + "";
+		BigDecimal result = evaluateDouble(expression, functions);
+		if(result.toString().equals(result.toBigInteger().toString()))
+			return result.toBigInteger() + "";
 		return result + "";
 	}
 	
@@ -165,15 +166,15 @@ public class ExpressionEvaluator
 	 * Evaluates expression with optional functions passed. Returns exact
 	 * number, in double
 	 */
-	public static double evaluateDouble(String expression, ExpressionFunction... functions)
+	public static BigDecimal evaluateDouble(String expression, ExpressionFunction... functions)
 	{
 		try
 		{
-			return Double.parseDouble(expression);
+			return new BigDecimal(expression);
 		} catch(Throwable err)
 		{
 		}
-		ExpressionEvaluator eval = new ExpressionEvaluator(expression);
+		BigExpressionEvaluator eval = new BigExpressionEvaluator(expression);
 		for(ExpressionFunction func : functions)
 			eval.addFunction(func);
 		return eval.parse();

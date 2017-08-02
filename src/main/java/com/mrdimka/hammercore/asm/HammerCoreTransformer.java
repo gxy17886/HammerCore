@@ -70,36 +70,36 @@ public class HammerCoreTransformer implements IClassTransformer
 			return handleWorldTransform(basicClass, false);
 		}
 		
-		if(name.equals("net.minecraft.block.BlockSnow") || name.equals("aqs"))
-		{
-			HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.block.BlockSnow (" + name + ")...");
-			ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
-			boolean obf = name.equals("aqs");
-			HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") + "obfuscated minecraft.");
-			
-			String desc = "(Lajs;Lco;Latl;Ljava/util/Random;)V";
-			if(!obf)
-				desc = "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
-			
-			for(MethodNode m : classNode.methods)
-			{
-				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
-				{
-					InsnList updateTick = new InsnList();
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
-					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
-					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
-					updateTick.add(new InsnNode(Opcodes.RETURN));
-					
-					m.instructions = updateTick;
-					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
-				}
-			}
-			
-			return ObjectWebUtils.writeClassToByteArray(classNode);
-		}
+//		if(name.equals("net.minecraft.block.BlockSnow") || name.equals("aqs"))
+//		{
+//			HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.block.BlockSnow (" + name + ")...");
+//			ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
+//			boolean obf = name.equals("aqs");
+//			HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") + "obfuscated minecraft.");
+//			
+//			String desc = "(Lajs;Lco;Latl;Ljava/util/Random;)V";
+//			if(!obf)
+//				desc = "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
+//			
+//			for(MethodNode m : classNode.methods)
+//			{
+//				if(m.desc.equals(desc) && (m.name.equals("b") || m.name.equals("func_180650_b") || m.name.equals("updateTick")))
+//				{
+//					InsnList updateTick = new InsnList();
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
+//					updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
+//					updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
+//					updateTick.add(new InsnNode(Opcodes.RETURN));
+//					
+//					m.instructions = updateTick;
+//					HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
+//				}
+//			}
+//			
+//			return ObjectWebUtils.writeClassToByteArray(classNode);
+//		}
 		
 		return basicClass;
 	}
@@ -138,11 +138,11 @@ public class HammerCoreTransformer implements IClassTransformer
 		
 		for(MethodNode m : classNode.methods)
 		{
-			if(m.name.equals("canSnowAtBody"))
-			{
-				m.instructions = canSnowAtBody;
-				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
-			}
+//			if(m.name.equals("canSnowAtBody"))
+//			{
+//				m.instructions = canSnowAtBody;
+//				HammerCoreCore.ASM_LOG.info("Sending instructions to World for function canSnowAtBody");
+//			}
 			
 //			if((m.name.equals("getMoonPhase") || m.name.equals("func_72853_d") || m.name.equals("D")) && m.desc.equals("()I"))
 //			{
