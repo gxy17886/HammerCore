@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.HttpUtil;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
@@ -179,6 +180,14 @@ public class HammerCore
 	{
 		renderProxy.construct();
 		audioProxy.construct();
+		
+		try
+		{
+			HttpUtil.getSuitableLanPort();
+		} catch(Throwable err)
+		{
+			err.printStackTrace();
+		}
 		
 		if(!FluidRegistry.isUniversalBucketEnabled())
 			FluidRegistry.enableUniversalBucket();
