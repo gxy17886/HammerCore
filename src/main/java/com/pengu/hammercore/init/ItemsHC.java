@@ -10,7 +10,7 @@ import com.mrdimka.hammercore.common.items.ItemCalculatron;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.common.items.debug.ItemRayTracer;
 import com.mrdimka.hammercore.common.items.debug.ItemZapper;
-import com.mrdimka.hammercore.config.HCConfigs;
+import com.pengu.hammercore.cfg.HammerCoreConfigs;
 
 public class ItemsHC
 {
@@ -20,21 +20,16 @@ public class ItemsHC
 	public static final Item //
 	        ray_tracer, //
 	        zapper, //
-	        calculatron;
+	        calculatron = new ItemCalculatron();
 	
 	static
 	{
-		if(HCConfigs.custom_addCalculatron)
-			calculatron = new ItemCalculatron();
-		else
-			calculatron = null;
-		
-		if(HCConfigs.debug_addRayTracer)
+		if(HammerCoreConfigs.debug_addRaytracer)
 			ray_tracer = new ItemRayTracer();
 		else
 			ray_tracer = null;
 		
-		if(HCConfigs.debug_addZapper)
+		if(HammerCoreConfigs.debug_addZapper)
 			zapper = new ItemZapper();
 		else
 			zapper = null;

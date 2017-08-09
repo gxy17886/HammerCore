@@ -45,7 +45,6 @@ import com.mrdimka.hammercore.common.capabilities.CapabilityEJ;
 import com.mrdimka.hammercore.common.utils.AnnotatedInstanceUtil;
 import com.mrdimka.hammercore.common.utils.HammerCoreUtils;
 import com.mrdimka.hammercore.common.utils.WrappedLog;
-import com.mrdimka.hammercore.config.HCConfigs;
 import com.mrdimka.hammercore.event.AddCalculatronRecipeEvent;
 import com.mrdimka.hammercore.event.GetAllRequiredApisEvent;
 import com.mrdimka.hammercore.ext.TeslaAPI;
@@ -160,7 +159,6 @@ public class HammerCore
 	public void preInit(FMLPreInitializationEvent e)
 	{
 		CapabilityEJ.register();
-		HCConfigs.init(e.getSuggestedConfigurationFile());
 		
 		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);

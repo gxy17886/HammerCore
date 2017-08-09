@@ -12,17 +12,12 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiFurnace;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,13 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 import com.mrdimka.hammercore.api.RequiredDeps;
-import com.mrdimka.hammercore.client.renderer.RenderHelperImpl;
-import com.mrdimka.hammercore.client.renderer.item.EnumItemRender;
-import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
 import com.mrdimka.hammercore.client.utils.GLImageManager;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
-import com.mrdimka.hammercore.config.HCConfigs;
 import com.mrdimka.hammercore.gui.GuiMissingApis;
 import com.mrdimka.hammercore.gui.GuiShareToLanImproved;
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
@@ -58,78 +49,7 @@ public class RenderGui
 		GuiScreen gui = e.getGui();
 		
 		if(gui instanceof GuiMainMenu)
-		{
 			user.draw();
-		}
-		
-		if(gui instanceof GuiContainer)
-		{
-			GuiContainer gc = (GuiContainer) gui;
-			
-			int guiLeft = 0, guiTop = 0;
-			try
-			{
-				guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiLeft", "field_147003_i");
-				guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiTop", "field_147009_r");
-			} catch(Throwable err)
-			{
-			}
-			
-			Container c = gc.inventorySlots;
-			for(int i = 0; i < c.inventorySlots.size(); ++i)
-			{
-				ItemStack stack = c.inventorySlots.get(i).getStack();
-				if(stack != null)
-				{
-					Slot sl = c.getSlot(i);
-					
-					IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-					if(renderer != null)
-					{
-						GlStateManager.disableDepth();
-						renderer.render(EnumItemRender.GUI, stack, guiLeft + sl.xDisplayPosition, guiTop + sl.yDisplayPosition, 0);
-						GlStateManager.enableDepth();
-					}
-				}
-			}
-			
-			ItemStack stack = gc.mc.thePlayer.inventory.getItemStack();
-			if(stack != null)
-			{
-				guiLeft = e.getMouseX();
-				guiTop = e.getMouseY();
-				IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-				if(renderer != null)
-					renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
-			}
-		}
-		
-		// Apparently Minceraft is a thing 0_0
-		//
-		// if(gui instanceof GuiMainMenu)
-		// {
-		// int j = gui.width / 2 - 137;
-		//
-		// GL11.glPushMatrix();
-		// GL11.glTranslated(0, 100, 0);
-		// gui.mc.getTextureManager().bindTexture(new
-		// ResourceLocation("textures/gui/title/minecraft.png"));
-		// boolean tr = true;
-		// if(tr)
-		// {
-		// gui.drawTexturedModalRect(j + 0, 30, 0, 0, 99, 44);
-		// gui.drawTexturedModalRect(j + 99, 30, 129, 0, 27, 44);
-		// gui.drawTexturedModalRect(j + 99 + 26, 30, 126, 0, 3, 44);
-		// gui.drawTexturedModalRect(j + 99 + 26 + 3, 30, 99, 0, 26, 44);
-		// gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
-		// }
-		// else
-		// {
-		// gui.drawTexturedModalRect(j + 0, 30, 0, 0, 155, 44);
-		// gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
-		// }
-		// GL11.glPopMatrix();
-		// }
 	}
 	
 	@SubscribeEvent
@@ -164,7 +84,7 @@ public class RenderGui
 		
 		smooth:
 		{
-			if(!HCConfigs.vanilla_useSmoothGui)
+			if(!HammerCoreConfigs.client_smoothVanillaGuis)
 				break smooth; // Added config
 				
 			if(gui instanceof GuiFurnace)
@@ -232,7 +152,7 @@ public class RenderGui
 		{
 			try
 			{
-				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("https://pastebin.com/raw/JKDpcHL1"))).nextValue();
+				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("http://pastebin.com/raw/ZQaapJ54"))).nextValue();
 				final JSONArray ar0 = arr;
 				
 				for(int i = 0; i < arr.length(); ++i)
