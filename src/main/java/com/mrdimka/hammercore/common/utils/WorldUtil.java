@@ -20,7 +20,8 @@ public class WorldUtil
 {
 	public static <T> T cast(Object obj, Class<T> to)
 	{
-		if(obj != null && to.isAssignableFrom(obj.getClass())) return (T) obj;
+		if(obj != null && to.isAssignableFrom(obj.getClass()))
+			return (T) obj;
 		return null;
 	}
 	
@@ -52,60 +53,61 @@ public class WorldUtil
 	}
 	
 	public static void spawnItemStack(World worldIn, double x, double y, double z, ItemStack stackIn)
-    {
-    	if(worldIn.isRemote) return;
-    	
-        EntityItem entityItem = new EntityItem(worldIn, x, y, z, stackIn);
-        entityItem.motionX = 0;
-        entityItem.motionZ = 0;
-        worldIn.spawnEntityInWorld(entityItem);
-    }
+	{
+		if(worldIn.isRemote)
+			return;
+		
+		EntityItem entityItem = new EntityItem(worldIn, x, y, z, stackIn);
+		entityItem.motionX = 0;
+		entityItem.motionZ = 0;
+		worldIn.spawnEntityInWorld(entityItem);
+	}
 	
 	public static void spawnItemStack(World worldIn, BlockPos pos, ItemStack stackIn)
-    {
-    	spawnItemStack(worldIn, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, stackIn);
-    }
-    
-    public static void teleportPlayer(EntityPlayerMP mp, int dim, double x, double y, double z)
-    {
-    	if(!mp.worldObj.isRemote)
-    	{
-    		if(mp.worldObj.provider.getDimension() != dim)
-    		{
-    			MinecraftServer server = mp.mcServer;
-    			WorldServer nev = server.worldServerForDimension(dim);
-        		server.getPlayerList().transferPlayerToDimension(mp, dim, new BlankTeleporter(nev));
-    		}
-    		
-    		mp.setPositionAndUpdate(x, y, z);
-    	}
-    }
-    
-    public static void teleportEntity(Entity ent, int dim, double x, double y, double z)
-    {
-    	if(!ent.worldObj.isRemote)
-    	{
-    		if(ent.worldObj.provider.getDimension() != dim)
-    		{
-    			MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-    			
-    			WorldServer old = server.worldServerForDimension(ent.worldObj.provider.getDimension());
-    			WorldServer nev = server.worldServerForDimension(dim);
-    			
-        		server.getPlayerList().transferEntityToWorld(ent, ent.worldObj.provider.getDimension(), old, nev, new BlankTeleporter(nev));
-    		}
-    		
-    		ent.setPositionAndUpdate(x, y, z);
-    	}
-    }
-    
-    public static void teleportEntity(Entity ent, double x, double y, double z)
-    {
-    	teleportEntity(ent, ent.worldObj.provider.getDimension(), x, y, z);
-    }
-    
-    public static void teleportEntity(Entity ent, int dim)
-    {
-    	teleportEntity(ent, dim, ent.posX, ent.posY, ent.posZ);
-    }
+	{
+		spawnItemStack(worldIn, pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, stackIn);
+	}
+	
+	public static void teleportPlayer(EntityPlayerMP mp, int dim, double x, double y, double z)
+	{
+		if(!mp.worldObj.isRemote)
+		{
+			if(mp.worldObj.provider.getDimension() != dim)
+			{
+				MinecraftServer server = mp.mcServer;
+				WorldServer nev = server.worldServerForDimension(dim);
+				server.getPlayerList().transferPlayerToDimension(mp, dim, new BlankTeleporter(nev));
+			}
+			
+			mp.setPositionAndUpdate(x, y, z);
+		}
+	}
+	
+	public static void teleportEntity(Entity ent, int dim, double x, double y, double z)
+	{
+		if(!ent.worldObj.isRemote)
+		{
+			if(ent.worldObj.provider.getDimension() != dim)
+			{
+				MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+				
+				WorldServer old = server.worldServerForDimension(ent.worldObj.provider.getDimension());
+				WorldServer nev = server.worldServerForDimension(dim);
+				
+				server.getPlayerList().transferEntityToWorld(ent, ent.worldObj.provider.getDimension(), old, nev, new BlankTeleporter(nev));
+			}
+			
+			ent.setPositionAndUpdate(x, y, z);
+		}
+	}
+	
+	public static void teleportEntity(Entity ent, double x, double y, double z)
+	{
+		teleportEntity(ent, ent.worldObj.provider.getDimension(), x, y, z);
+	}
+	
+	public static void teleportEntity(Entity ent, int dim)
+	{
+		teleportEntity(ent, dim, ent.posX, ent.posY, ent.posZ);
+	}
 }

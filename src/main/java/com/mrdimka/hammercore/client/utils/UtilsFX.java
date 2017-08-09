@@ -8,7 +8,11 @@ import net.minecraft.util.math.Vec3d;
 public class UtilsFX
 {
 	private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
-	public static ResourceLocation getMCParticleTexture() { return PARTICLE_TEXTURES; }
+	
+	public static ResourceLocation getMCParticleTexture()
+	{
+		return PARTICLE_TEXTURES;
+	}
 	
 	public static void drawBeam(Vec3d S, Vec3d E, Vec3d P, float width, int bright)
 	{

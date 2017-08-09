@@ -19,14 +19,17 @@ public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		nbt.setBoolean("val", value == Boolean.TRUE);
+		nbt.setBoolean("Val", value == Boolean.TRUE);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = nbt.getBoolean("val");
+		if(!nbt.hasKey("Val") && nbt.hasKey("val"))
+			value = nbt.getBoolean("val");
+		else
+			value = nbt.getBoolean("Val");
 	}
 	
 	@Override

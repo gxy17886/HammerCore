@@ -5,23 +5,27 @@ import net.minecraft.world.World;
 
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
-import com.mrdimka.hammercore.init.ModBlocks;
+import com.pengu.hammercore.init.BlocksHC;
 
 /**
  * Some useful utilities for Mutlipart API
  */
 public final class MultipartAPI
 {
-	private MultipartAPI() {}
+	private MultipartAPI()
+	{
+	}
 	
 	public static TileMultipart getOrPlaceMultipart(World world, BlockPos pos)
 	{
 		if(world != null && pos != null && world.isBlockLoaded(pos))
 		{
 			TileMultipart tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
-			if(tmp == null) world.setBlockState(pos, ModBlocks.MULTIPART.getDefaultState(), 11);
+			if(tmp == null)
+				world.setBlockState(pos, BlocksHC.MULTIPART.getDefaultState(), 11);
 			tmp = WorldUtil.cast(world.getTileEntity(pos), TileMultipart.class);
-			if(tmp == null) world.setTileEntity(pos, tmp = new TileMultipart());
+			if(tmp == null)
+				world.setTileEntity(pos, tmp = new TileMultipart());
 			return tmp;
 		}
 		return null;

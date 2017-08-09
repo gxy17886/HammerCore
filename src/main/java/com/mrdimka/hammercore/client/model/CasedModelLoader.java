@@ -36,24 +36,30 @@ public class CasedModelLoader
 			ln++;
 			try
 			{
-				if(l.isEmpty()) continue;
-				if(l.startsWith("texturewidth ")) model.textureWidth = Integer.parseInt(l.substring("texturewidth ".length()));
-				if(l.startsWith("textureheight ")) model.textureHeight = Integer.parseInt(l.substring("textureheight ".length()));
+				if(l.isEmpty())
+					continue;
+				if(l.startsWith("texturewidth "))
+					model.textureWidth = Integer.parseInt(l.substring("texturewidth ".length()));
+				if(l.startsWith("textureheight "))
+					model.textureHeight = Integer.parseInt(l.substring("textureheight ".length()));
 				
 				if(l.equals("start"))
 				{
-					if(current != null) throw new ModelLoadingException("Unexpected start: previous part not ended!");
+					if(current != null)
+						throw new ModelLoadingException("Unexpected start: previous part not ended!");
 					current = new ModelPart();
 					condition = "";
 				}
 				
-				if(l.startsWith("conditions ")) condition = l.substring("conditions ".length());
+				if(l.startsWith("conditions "))
+					condition = l.substring("conditions ".length());
 				
 				if(l.startsWith("addbox "))
 				{
 					String l0 = l.substring("addbox ".length());
 					String[] args = l0.trim().split(" ");
-					if(current == null) throw new ModelLoadingExceptionMessage("Unexpected box: Cannot add box to nothing!");
+					if(current == null)
+						throw new ModelLoadingExceptionMessage("Unexpected box: Cannot add box to nothing!");
 					float[] xyz = parseFloats(3, args);
 					int[] size = parseInts(3, Arrays.copyOfRange(args, 3, args.length));
 					current.addBox(xyz[0], xyz[1], xyz[2], size[0], size[1], size[2]);
@@ -63,7 +69,8 @@ public class CasedModelLoader
 				{
 					String l0 = l.substring("rotationpoint ".length());
 					String[] args = l0.trim().split(" ");
-					if(current == null) throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set rotation point to nothing!");
+					if(current == null)
+						throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set rotation point to nothing!");
 					float[] xyz = parseFloats(3, args);
 					current.setRotationPoint(xyz[0], xyz[1], xyz[2]);
 				}
@@ -72,7 +79,8 @@ public class CasedModelLoader
 				{
 					String l0 = l.substring("texturesize ".length());
 					String[] args = l0.trim().split(" ");
-					if(current == null) throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set texture size to nothing!");
+					if(current == null)
+						throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set texture size to nothing!");
 					float[] xy = parseFloats(2, args);
 					current.textureWidth = xy[0];
 					current.textureHeight = xy[1];
@@ -82,27 +90,31 @@ public class CasedModelLoader
 				{
 					String l0 = l.substring("mirror ".length());
 					String[] args = l0.trim().split(" ");
-					if(current == null) throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set mirror to nothing!");
+					if(current == null)
+						throw new ModelLoadingExceptionMessage("Unexpected box: Cannot set mirror to nothing!");
 					boolean[] mirror = parseBooleans(1, args);
 					current.mirror = mirror[0];
 				}
 				
 				if(l.equals("end"))
 				{
-					if(current == null) throw new ModelLoadingException("Unexpected end: Cannot end nothing!");
+					if(current == null)
+						throw new ModelLoadingException("Unexpected end: Cannot end nothing!");
 					model.addBox(current, condition);
 					condition = "";
 					current = null;
 				}
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
 				String msg = "Can't parse model line #" + ln + ": " + err.getClass().getName() + " > " + err.getMessage();
 				
-				if(err instanceof ModelLoadingException) msg = "Can't parse model line #" + ln + ": " + err.getMessage();
+				if(err instanceof ModelLoadingException)
+					msg = "Can't parse model line #" + ln + ": " + err.getMessage();
 				
-				if(ignoreIssues) System.err.println(msg);
-				else throw new ModelLoadingException(msg);
+				if(ignoreIssues)
+					System.err.println(msg);
+				else
+					throw new ModelLoadingException(msg);
 			}
 		}
 		
@@ -124,7 +136,8 @@ public class CasedModelLoader
 		for(ModelPart part : model.PREDICATES.keySet())
 		{
 			Set<ModelCube> boxes = part.boxes;
-			if(boxes == null || boxes.isEmpty()) continue;
+			if(boxes == null || boxes.isEmpty())
+				continue;
 			
 			parsed += ln();
 			parsed += ln("# New Model Part Definition" + (part.name != null && !part.name.isEmpty() ? ", Part Name: " + part.name : "."));
@@ -134,7 +147,8 @@ public class CasedModelLoader
 			parsed += ln("textureSize " + part.textureWidth + " " + part.textureHeight);
 			parsed += ln("mirror " + part.mirror);
 			
-			for(ModelCube box : boxes) parsed += ln("addBox " + box.posX1 + " " + box.posY1 + " " + box.posZ1 + " " + ((int) (box.posX2 - box.posX1)) + " " + ((int) (box.posY2 - box.posY1)) + " " + ((int) (box.posZ2 - box.posZ1)));
+			for(ModelCube box : boxes)
+				parsed += ln("addBox " + box.posX1 + " " + box.posY1 + " " + box.posZ1 + " " + ((int) (box.posX2 - box.posX1)) + " " + ((int) (box.posY2 - box.posY1)) + " " + ((int) (box.posZ2 - box.posZ1)));
 			
 			parsed += ln("end");
 		}
@@ -163,7 +177,12 @@ public class CasedModelLoader
 	{
 		boolean[] booleans = new boolean[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { booleans[i] = Boolean.parseBoolean(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				booleans[i] = Boolean.parseBoolean(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return booleans;
 	}
 	
@@ -171,7 +190,12 @@ public class CasedModelLoader
 	{
 		float[] floats = new float[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { floats[i] = Float.parseFloat(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				floats[i] = Float.parseFloat(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return floats;
 	}
 	
@@ -179,7 +203,12 @@ public class CasedModelLoader
 	{
 		int[] ints = new int[needed];
 		for(int i = 0; i < Math.min(needed, strings.length); ++i)
-			try { ints[i] = Integer.parseInt(strings[i]); } catch(Throwable err) {}
+			try
+			{
+				ints[i] = Integer.parseInt(strings[i]);
+			} catch(Throwable err)
+			{
+			}
 		return ints;
 	}
 }

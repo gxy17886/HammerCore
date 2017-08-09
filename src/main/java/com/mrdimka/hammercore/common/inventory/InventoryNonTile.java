@@ -14,8 +14,9 @@ import com.mrdimka.hammercore.common.InterItemStack;
 import com.mrdimka.hammercore.common.utils.WorldUtil;
 
 /**
- * This is a part of Hammer Core
- * InventoryNonTile is used widely to make inventory code much more simple 
+ * This is a part of Hammer Core InventoryNonTile is used widely to make
+ * inventory code much more simple
+ * 
  * @author MrDimka's Studio (MrDimka)
  */
 public class InventoryNonTile implements IInventory
@@ -30,16 +31,19 @@ public class InventoryNonTile implements IInventory
 	{
 		inventory = new ItemStack[inventorySize];
 		allSlots = new int[inventory.length];
-		for(int i = 0; i < allSlots.length; ++i) allSlots[i] = i;
+		for(int i = 0; i < allSlots.length; ++i)
+			allSlots[i] = i;
 		boundCompound = boundNBT;
 	}
 	
 	public InventoryNonTile(NBTTagCompound boundNBT, ItemStack... items)
 	{
 		inventory = new ItemStack[items.length];
-		for(int i = 0; i < items.length; ++i) inventory[i] = items[i];
+		for(int i = 0; i < items.length; ++i)
+			inventory[i] = items[i];
 		allSlots = new int[items.length];
-		for(int i = 0; i < allSlots.length; ++i) allSlots[i] = i;
+		for(int i = 0; i < allSlots.length; ++i)
+			allSlots[i] = i;
 		boundCompound = boundNBT;
 	}
 	
@@ -47,15 +51,18 @@ public class InventoryNonTile implements IInventory
 	{
 		inventory = new ItemStack[inventorySize];
 		allSlots = new int[inventorySize];
-		for(int i = 0; i < allSlots.length; ++i) allSlots[i] = i;
+		for(int i = 0; i < allSlots.length; ++i)
+			allSlots[i] = i;
 	}
 	
 	public InventoryNonTile(ItemStack... items)
 	{
 		inventory = new ItemStack[items.length];
-		for(int i = 0; i < items.length; ++i) inventory[i] = items[i];
+		for(int i = 0; i < items.length; ++i)
+			inventory[i] = items[i];
 		allSlots = new int[items.length];
-		for(int i = 0; i < allSlots.length; ++i) allSlots[i] = i;
+		for(int i = 0; i < allSlots.length; ++i)
+			allSlots[i] = i;
 	}
 	
 	public int[] getAllAvaliableSlots()
@@ -68,36 +75,37 @@ public class InventoryNonTile implements IInventory
 	{
 		return "Inventory Non Tile Entity";
 	}
-
+	
 	@Override
 	public boolean hasCustomName()
 	{
 		return false;
 	}
-
+	
 	@Override
 	public ITextComponent getDisplayName()
 	{
 		return new TextComponentString(getName());
 	}
-
+	
 	@Override
 	public int getSizeInventory()
 	{
 		return inventory.length;
 	}
-
+	
 	@Override
 	public ItemStack getStackInSlot(int index)
 	{
 		try
 		{
 			return inventory[index];
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return null;
 	}
-
+	
 	@Override
 	public ItemStack decrStackSize(int slot, int count)
 	{
@@ -112,39 +120,46 @@ public class InventoryNonTile implements IInventory
 					is = inventory[slot];
 					inventory[slot] = InterItemStack.NULL_STACK;
 					
-					if(listener != null) listener.slotChange(count, inventory[slot]);
+					if(listener != null)
+						listener.slotChange(count, inventory[slot]);
 					return is;
-				}else
+				} else
 				{
 					is = inventory[slot].splitStack(count);
-					if(InterItemStack.getStackSize(inventory[slot]) == 0) inventory[slot] = InterItemStack.NULL_STACK;
-					if(listener != null) listener.slotChange(count, inventory[slot]);
+					if(InterItemStack.getStackSize(inventory[slot]) == 0)
+						inventory[slot] = InterItemStack.NULL_STACK;
+					if(listener != null)
+						listener.slotChange(count, inventory[slot]);
 					return is;
 				}
 			}
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return null;
 	}
-
+	
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack)
 	{
 		try
 		{
 			inventory[index] = stack;
-			if(listener != null) listener.slotChange(index, stack);
-			if(InterItemStack.getStackSize(inventory[index]) > Math.min(inventory[index].getMaxStackSize(), getInventoryStackLimit())) inventory[index].stackSize = Math.min(inventory[index].getMaxStackSize(), getInventoryStackLimit());
+			if(listener != null)
+				listener.slotChange(index, stack);
+			if(InterItemStack.getStackSize(inventory[index]) > Math.min(inventory[index].getMaxStackSize(), getInventoryStackLimit()))
+				inventory[index].stackSize = Math.min(inventory[index].getMaxStackSize(), getInventoryStackLimit());
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 	}
-
+	
 	@Override
 	public int getInventoryStackLimit()
 	{
 		return inventoryStackLimit;
 	}
-
+	
 	@Override
 	public void markDirty()
 	{
@@ -155,41 +170,44 @@ public class InventoryNonTile implements IInventory
 	public void openInventory(EntityPlayer player)
 	{
 	}
-
+	
 	@Override
 	public void closeInventory(EntityPlayer player)
 	{
 	}
-
+	
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack)
 	{
 		return true;
 	}
-
+	
 	@Override
 	public int getField(int id)
 	{
 		return 0;
 	}
-
+	
 	@Override
 	public void setField(int id, int value)
 	{
 		
 	}
-
+	
 	@Override
 	public int getFieldCount()
 	{
 		return 0;
 	}
-
+	
 	@Override
 	public void clear()
 	{
-		for(int i = 0; i < inventory.length; ++i) inventory[i] = InterItemStack.NULL_STACK;
-		if(listener != null) for(int i = 0; i < inventory.length; ++i) listener.slotChange(i, inventory[i]);
+		for(int i = 0; i < inventory.length; ++i)
+			inventory[i] = InterItemStack.NULL_STACK;
+		if(listener != null)
+			for(int i = 0; i < inventory.length; ++i)
+				listener.slotChange(i, inventory[i]);
 	}
 	
 	public void writeToNBT(NBTTagCompound nbt)
@@ -242,7 +260,8 @@ public class InventoryNonTile implements IInventory
 		{
 			for(ItemStack s : inventory)
 			{
-				if(InterItemStack.isStackNull(s)) continue;
+				if(InterItemStack.isStackNull(s))
+					continue;
 				WorldUtil.spawnItemStack(world, pos, s);
 			}
 		}
@@ -255,7 +274,8 @@ public class InventoryNonTile implements IInventory
 	{
 		ItemStack s = getStackInSlot(slot);
 		setInventorySlotContents(slot, null);
-		if(listener != null) listener.slotChange(slot, null);
+		if(listener != null)
+			listener.slotChange(slot, null);
 		return s;
 	}
 	

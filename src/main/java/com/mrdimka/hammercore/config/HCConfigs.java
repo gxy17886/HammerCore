@@ -19,7 +19,8 @@ public class HCConfigs
 	
 	public static void init(File cfgFile)
 	{
-		if(cfg == null) cfg = new Configuration(cfgFile, true);
+		if(cfg == null)
+			cfg = new Configuration(cfgFile, true);
 		reloadProperties();
 	}
 	
@@ -32,12 +33,14 @@ public class HCConfigs
 		debug_addRayTracer = cfg.getBoolean("Add Ray Tracer", "Debug Content", false, "Should Hammer Core add Ray Tracer?");
 		debug_addZapper = cfg.getBoolean("Add Zapper", "Debug Content", false, "Should Hammer Core add Zapper?");
 		
-		if(cfg.hasChanged()) cfg.save();
+		if(cfg.hasChanged())
+			cfg.save();
 	}
 	
 	@SubscribeEvent
 	public void configChanged(ConfigChangedEvent evt)
 	{
-		if(evt.getModID().equals("hammercore")) reloadProperties();
+		if(evt.getModID().equals("hammercore"))
+			reloadProperties();
 	}
 }

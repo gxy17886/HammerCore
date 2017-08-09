@@ -11,12 +11,14 @@ public class ParticleParam
 	
 	protected void add(String key, Object val)
 	{
-		if(!isSer) data.putIfAbsent(key, val);
+		if(!isSer)
+			data.putIfAbsent(key, val);
 	}
 	
 	protected void clear()
 	{
-		if(!isSer) data.clear();
+		if(!isSer)
+			data.clear();
 	}
 	
 	protected void ser()

@@ -40,7 +40,8 @@ public enum RenderHelperImpl implements IRenderHelper
 	@Override
 	public IItemRenderer getRenderFor(ItemStack stack, EnumItemRender type)
 	{
-		if(stack == null || stack.getItem() == null) return null;
+		if(stack == null || stack.getItem() == null)
+			return null;
 		IItemRenderer r = ITEM_RENDERERS.get(stack.getItem());
 		return r != null && r.handleRenderFor(type, stack) ? r : null;
 	}
@@ -48,7 +49,8 @@ public enum RenderHelperImpl implements IRenderHelper
 	@Override
 	public IItemRenderer getRenderFor(Item item)
 	{
-		if(item == null) return null;
+		if(item == null)
+			return null;
 		return ITEM_RENDERERS.get(item);
 	}
 	
@@ -80,7 +82,8 @@ public enum RenderHelperImpl implements IRenderHelper
 			b = 14;
 		else if(d > 256D)
 			b = 15;
-		else b = 16;
+		else
+			b = 16;
 		
 		for(int i = 0; i < b; ++i)
 		{
@@ -96,7 +99,8 @@ public enum RenderHelperImpl implements IRenderHelper
 				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			}
 			
-			if(i >= 1) Minecraft.getMinecraft().renderEngine.bindTexture(END_PORTAL_TEXTURE);
+			if(i >= 1)
+				Minecraft.getMinecraft().renderEngine.bindTexture(END_PORTAL_TEXTURE);
 			
 			if(i == 1)
 			{

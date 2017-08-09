@@ -24,15 +24,18 @@ public class InventoryUtils
 					InterItemStack.setStackSize(j, InterItemStack.getStackSize(j) - 1);
 				}
 				
-				if(InterItemStack.getStackSize(inv.getStackInSlot(i)) < 1) inv.setInventorySlotContents(i, InterItemStack.NULL_STACK);
-				if(remaining < 1) return maxTake;
+				if(InterItemStack.getStackSize(inv.getStackInSlot(i)) < 1)
+					inv.setInventorySlotContents(i, InterItemStack.NULL_STACK);
+				if(remaining < 1)
+					return maxTake;
 			}
 		return maxTake - remaining;
 	}
 	
 	public static boolean isInRange(World world, BlockPos pos, Block block, int rad)
 	{
-		if(block == null) return true;
+		if(block == null)
+			return true;
 		for(int x = -rad; x <= rad; ++x)
 			for(int y = -rad; y <= rad; ++y)
 				for(int z = -rad; z <= rad; ++z)
@@ -51,7 +54,8 @@ public class InventoryUtils
 	
 	public static int getTotalItemCount(EntityPlayer player, ItemStack stack)
 	{
-		if(stack == null) return 0;
+		if(stack == null)
+			return 0;
 		
 		int total = 0;
 		
@@ -67,12 +71,17 @@ public class InventoryUtils
 	
 	public static boolean equals(ItemStack a, ItemStack b, boolean ignoreNBT)
 	{
-		if(InterItemStack.isStackNull(a) && InterItemStack.isStackNull(b)) return true;
-		if(InterItemStack.isStackNull(a) || InterItemStack.isStackNull(b)) return false;
+		if(InterItemStack.isStackNull(a) && InterItemStack.isStackNull(b))
+			return true;
+		if(InterItemStack.isStackNull(a) || InterItemStack.isStackNull(b))
+			return false;
 		boolean nbt = false;
-		if(a.getTagCompound() == null && b.getTagCompound() == null) nbt = true;
-		else if(a.getTagCompound() == null || b.getTagCompound() == null) nbt = false;
-		else nbt = a.getTagCompound().equals(b.getTagCompound());
+		if(a.getTagCompound() == null && b.getTagCompound() == null)
+			nbt = true;
+		else if(a.getTagCompound() == null || b.getTagCompound() == null)
+			nbt = false;
+		else
+			nbt = a.getTagCompound().equals(b.getTagCompound());
 		return a.getItem() == b.getItem() && a.getItemDamage() == b.getItemDamage() && (ignoreNBT || nbt);
 	}
 }

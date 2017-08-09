@@ -10,7 +10,10 @@ import com.mrdimka.hammercore.client.renderer.item.IItemRenderer;
 public interface IRenderHelper
 {
 	public void renderEndPortalEffect(double x, double y, double z, EnumFacing... renderSides);
+	
 	public void registerItemRender(Item item, IItemRenderer renderer);
+	
 	public IItemRenderer getRenderFor(ItemStack stack, EnumItemRender type);
+	
 	public IItemRenderer getRenderFor(Item item);
 }

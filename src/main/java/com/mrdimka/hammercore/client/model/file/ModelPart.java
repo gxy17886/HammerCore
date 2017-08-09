@@ -15,7 +15,8 @@ public class ModelPart implements Serializable
 	
 	public void addBox(float x1, float y1, float z1, int x2, int y2, int z2)
 	{
-		if(boxes == null) boxes = new HashSet<>();
+		if(boxes == null)
+			boxes = new HashSet<>();
 		ModelCube cube = new ModelCube();
 		cube.posX1 = x1;
 		cube.posY1 = y1;

@@ -5,4 +5,6 @@ import com.mrdimka.hammercore.api.handlers.IHandlerProvider;
 /**
  * {@link IHandlerProvider} for {@link MultipartSignature}
  */
-public interface IMultipartHandlerProvider extends IHandlerProvider {}
+public interface IMultipartHandlerProvider extends IHandlerProvider
+{
+}

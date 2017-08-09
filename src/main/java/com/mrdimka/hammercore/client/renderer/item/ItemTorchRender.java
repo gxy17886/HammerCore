@@ -45,24 +45,27 @@ public class ItemTorchRender implements IItemRenderer
 		for(RenderSmoke r : effects)
 		{
 			rand.setSeed(hashCode() + r.hashCode() + stack.hashCode());
-			if(useColored) GL11.glColor3d(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+			if(useColored)
+				GL11.glColor3d(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 			else
 			{
 				if(stack.getItem() == Item.getItemFromBlock(Blocks.TORCH))
 				{
 					double rgb = rand.nextDouble() / 3D;
 					GL11.glColor3d(rgb, rgb, rgb);
-				}
-				else if(stack.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH)) GL11.glColor3d(.25 + rand.nextDouble() / 1.25D, .1, .1);
+				} else if(stack.getItem() == Item.getItemFromBlock(Blocks.REDSTONE_TORCH))
+					GL11.glColor3d(.25 + rand.nextDouble() / 1.25D, .1, .1);
 			}
 			GL11.glPushMatrix();
 			GL11.glTranslated(x + 1 + rand.nextDouble() * 6, y + rand.nextDouble() * 4 - 1, z);
 			r.render();
 			GL11.glPopMatrix();
-			if(!r.shouldRender()) effects.set(effects.indexOf(r), null);
+			if(!r.shouldRender())
+				effects.set(effects.indexOf(r), null);
 			GL11.glColor3d(1, 1, 1);
 		}
 		
-		while(effects.contains(null)) effects.remove(null);
+		while(effects.contains(null))
+			effects.remove(null);
 	}
 }

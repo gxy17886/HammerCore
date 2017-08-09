@@ -21,7 +21,8 @@ public final class ItemCalculatron extends Item
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand handIn)
 	{
-		if(!worldIn.isRemote) FMLNetworkHandler.openGui(playerIn, HammerCore.instance, 1, worldIn, 0, 0, 0);
+		if(!worldIn.isRemote)
+			FMLNetworkHandler.openGui(playerIn, HammerCore.instance, 1, worldIn, 0, 0, 0);
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn, handIn);
 	}
 }

@@ -18,8 +18,8 @@ import com.mrdimka.hammercore.api.multipart.MultipartRenderingRegistry;
 import com.mrdimka.hammercore.api.multipart.MultipartSignature;
 import com.mrdimka.hammercore.common.blocks.multipart.BlockMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
-import com.mrdimka.hammercore.init.ModBlocks;
 import com.mrdimka.hammercore.vec.Cuboid6;
+import com.pengu.hammercore.init.BlocksHC;
 
 public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart>
 {
@@ -27,7 +27,8 @@ public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart
 	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
 		List<MultipartSignature> mps = te.signatures();
-		if(mps == null) return;
+		if(mps == null)
+			return;
 		
 		ResourceLocation destroy = null;
 		RayTraceResult over = Minecraft.getMinecraft().objectMouseOver;
@@ -38,11 +39,14 @@ public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart
 				Field f = PlayerControllerMP.class.getDeclaredFields()[4];
 				f.setAccessible(true);
 				float progress = f.getFloat(Minecraft.getMinecraft().playerController);
-				if(progress > 0F) destroy = DestroyStage.getByProgress(progress);
-			}catch(Throwable err) {}
+				if(progress > 0F)
+					destroy = DestroyStage.getByProgress(progress);
+			} catch(Throwable err)
+			{
+			}
 		}
 		
-		Cuboid6 cbd = ((BlockMultipart) ModBlocks.MULTIPART).getCuboidFromRTR(te.getWorld(), over);
+		Cuboid6 cbd = ((BlockMultipart) BlocksHC.MULTIPART).getCuboidFromRTR(te.getWorld(), over);
 		AxisAlignedBB aabb = cbd != null ? cbd.aabb() : null;
 		
 		ResourceLocation _destroy = destroy;
@@ -52,26 +56,15 @@ public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart
 		{
 			IMultipartRender render = MultipartRenderingRegistry.getRender(s);
 			GL11.glPushMatrix();
-			if(render != null) render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? _destroy : null);
+			if(render != null)
+				render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? _destroy : null);
 			GL11.glPopMatrix();
 		}
 	}
 	
 	public static class DestroyStage
 	{
-		private static final ResourceLocation[] DESTROY_STAGES = new ResourceLocation[]
-		{
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_0.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_1.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_2.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_3.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_4.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_5.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_6.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_7.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_8.png"),
-			new ResourceLocation("hammercore", "textures/models/destroy_stage_9.png")
-		};
+		private static final ResourceLocation[] DESTROY_STAGES = new ResourceLocation[] { new ResourceLocation("hammercore", "textures/models/destroy_stage_0.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_1.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_2.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_3.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_4.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_5.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_6.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_7.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_8.png"), new ResourceLocation("hammercore", "textures/models/destroy_stage_9.png") };
 		
 		public static ResourceLocation getByProgress(float progress)
 		{

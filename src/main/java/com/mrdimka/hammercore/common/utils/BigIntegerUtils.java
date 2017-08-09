@@ -12,14 +12,16 @@ public class BigIntegerUtils
 			Field f = BigInteger.class.getDeclaredField("mag");
 			f.setAccessible(true);
 			return (int[]) f.get(bint);
+		} catch(Throwable err)
+		{
 		}
-		catch(Throwable err) {}
 		return null;
 	}
 	
 	public static boolean isInt(BigInteger bint)
 	{
-		if(bint == null) return false;
+		if(bint == null)
+			return false;
 		int[] mag = getMagnitude(bint);
 		return (mag == null || mag.length <= 1) && bint.bitLength() <= 31;
 	}

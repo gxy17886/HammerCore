@@ -28,35 +28,44 @@ public class CasedModel
 		SimpleModel model = new SimpleModel();
 		model.textureWidth = textureWidth;
 		model.textureHeight = textureHeight;
-		for(ModelPart mr : PREDICATES.keySet()) try
-		{
-			if(conditionsMatch(generateConditions(PREDICATES.get(mr)), arguments))
-				model.addBox(SimpleModelLoader.toRenderer(model, mr));
-		}catch(Throwable err) {}
+		for(ModelPart mr : PREDICATES.keySet())
+			try
+			{
+				if(conditionsMatch(generateConditions(PREDICATES.get(mr)), arguments))
+					model.addBox(SimpleModelLoader.toRenderer(model, mr));
+			} catch(Throwable err)
+			{
+			}
 		return model;
 	}
 	
 	public static boolean conditionsMatch(String conditions[], List arguments_)
 	{
 		List<String> arguments = new ArrayList<>();
-		if(conditions == null || conditions.length == 0) return true;
-		for(Object o : arguments_) arguments.add((o + "").toLowerCase());
+		if(conditions == null || conditions.length == 0)
+			return true;
+		for(Object o : arguments_)
+			arguments.add((o + "").toLowerCase());
 		
 		if(conditions[0] == "o")
 		{
 			for(int i = 1; i < conditions.length; ++i)
 			{
 				String c = conditions[i];
-				if(c.startsWith("!") && !arguments.contains(c.substring(1))) return true;
-				else if(arguments.contains(c)) return true;
+				if(c.startsWith("!") && !arguments.contains(c.substring(1)))
+					return true;
+				else if(arguments.contains(c))
+					return true;
 			}
-		}else if(conditions[0] == "a" || conditions[0] == "s")
+		} else if(conditions[0] == "a" || conditions[0] == "s")
 		{
 			for(int i = 1; i < conditions.length; ++i)
 			{
 				String c = conditions[i];
-				if(c.startsWith("!") && arguments.contains(c.substring(1))) return false;
-				else if(!arguments.contains(c)) return false;
+				if(c.startsWith("!") && arguments.contains(c.substring(1)))
+					return false;
+				else if(!arguments.contains(c))
+					return false;
 			}
 			
 			return true;
@@ -67,7 +76,8 @@ public class CasedModel
 	
 	public static String[] generateConditions(String condition)
 	{
-		if(condition == null || condition.isEmpty()) return new String[0];
+		if(condition == null || condition.isEmpty())
+			return new String[0];
 		condition = condition.trim();
 		
 		String parsed = null;
@@ -76,18 +86,21 @@ public class CasedModel
 		{
 			parsed = "o;";
 			String[] conds = condition.split(" or ");
-			for(String c : conds) parsed += c + ";";
-		}else if(condition.contains(" and "))
+			for(String c : conds)
+				parsed += c + ";";
+		} else if(condition.contains(" and "))
 		{
 			parsed = "a;";
 			String[] conds = condition.split(" and ");
-			for(String c : conds) parsed += c + ";";
-		}else
+			for(String c : conds)
+				parsed += c + ";";
+		} else
 		{
 			parsed = "s;" + condition;
 		}
 		
-		if(parsed.endsWith(";")) parsed = parsed.substring(0, parsed.length() - 1);
+		if(parsed.endsWith(";"))
+			parsed = parsed.substring(0, parsed.length() - 1);
 		
 		return parsed.split(";");
 	}

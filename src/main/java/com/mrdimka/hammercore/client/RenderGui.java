@@ -9,6 +9,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -37,12 +38,14 @@ import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.common.utils.IOUtils;
 import com.mrdimka.hammercore.config.HCConfigs;
 import com.mrdimka.hammercore.gui.GuiMissingApis;
+import com.mrdimka.hammercore.gui.GuiShareToLanImproved;
 import com.mrdimka.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.mrdimka.hammercore.gui.smooth.GuiFurnaceSmooth;
 import com.mrdimka.hammercore.json.JSONArray;
 import com.mrdimka.hammercore.json.JSONObject;
 import com.mrdimka.hammercore.json.JSONTokener;
 import com.mrdimka.hammercore.math.ExpressionEvaluator;
+import com.pengu.hammercore.cfg.HammerCoreConfigs;
 
 @SideOnly(Side.CLIENT)
 public class RenderGui
@@ -68,8 +71,9 @@ public class RenderGui
 			{
 				guiLeft = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiLeft", "field_147003_i");
 				guiTop = ObfuscationReflectionHelper.getPrivateValue(GuiContainer.class, gc, "guiTop", "field_147009_r");
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 			
 			Container c = gc.inventorySlots;
 			for(int i = 0; i < c.inventorySlots.size(); ++i)
@@ -95,35 +99,37 @@ public class RenderGui
 				guiLeft = e.getMouseX();
 				guiTop = e.getMouseY();
 				IItemRenderer renderer = RenderHelperImpl.INSTANCE.getRenderFor(stack, EnumItemRender.GUI);
-				if(renderer != null) renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
+				if(renderer != null)
+					renderer.render(EnumItemRender.GUI, stack, guiLeft - 8, guiTop - 8, 0);
 			}
 		}
 		
-		//Apparently Minceraft is a thing 0_0
-//		
-//		if(gui instanceof GuiMainMenu)
-//		{
-//			int j = gui.width / 2 - 137;
-//			
-//			GL11.glPushMatrix();
-//			GL11.glTranslated(0, 100, 0);
-//			gui.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/title/minecraft.png"));
-//			boolean tr = true;
-//			if(tr)
-//	        {
-//	            gui.drawTexturedModalRect(j + 0, 30, 0, 0, 99, 44);
-//	            gui.drawTexturedModalRect(j + 99, 30, 129, 0, 27, 44);
-//	            gui.drawTexturedModalRect(j + 99 + 26, 30, 126, 0, 3, 44);
-//	            gui.drawTexturedModalRect(j + 99 + 26 + 3, 30, 99, 0, 26, 44);
-//	            gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
-//	        }
-//	        else
-//	        {
-//	        	gui.drawTexturedModalRect(j + 0, 30, 0, 0, 155, 44);
-//	            gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
-//	        }
-//			GL11.glPopMatrix();
-//		}
+		// Apparently Minceraft is a thing 0_0
+		//
+		// if(gui instanceof GuiMainMenu)
+		// {
+		// int j = gui.width / 2 - 137;
+		//
+		// GL11.glPushMatrix();
+		// GL11.glTranslated(0, 100, 0);
+		// gui.mc.getTextureManager().bindTexture(new
+		// ResourceLocation("textures/gui/title/minecraft.png"));
+		// boolean tr = true;
+		// if(tr)
+		// {
+		// gui.drawTexturedModalRect(j + 0, 30, 0, 0, 99, 44);
+		// gui.drawTexturedModalRect(j + 99, 30, 129, 0, 27, 44);
+		// gui.drawTexturedModalRect(j + 99 + 26, 30, 126, 0, 3, 44);
+		// gui.drawTexturedModalRect(j + 99 + 26 + 3, 30, 99, 0, 26, 44);
+		// gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
+		// }
+		// else
+		// {
+		// gui.drawTexturedModalRect(j + 0, 30, 0, 0, 155, 44);
+		// gui.drawTexturedModalRect(j + 155, 30, 0, 45, 155, 44);
+		// }
+		// GL11.glPopMatrix();
+		// }
 	}
 	
 	@SubscribeEvent
@@ -134,19 +140,33 @@ public class RenderGui
 		
 		if(gui instanceof GuiMainMenu)
 		{
-			new Thread(()->
+			new Thread(() ->
 			{
 				user.download();
 				user.reload(true);
 			}).start();
 		}
 		
-		if(gui instanceof GuiMainMenu && !RequiredDeps.allDepsResolved()) gui = new GuiMissingApis();
+		if(gui instanceof GuiMainMenu && !RequiredDeps.allDepsResolved())
+			gui = new GuiMissingApis();
+		
+		if(gui instanceof GuiShareToLan && HammerCoreConfigs.client_improvedLAN)
+		{
+			try
+			{
+				Field f = gui.getClass().getDeclaredFields()[0];
+				f.setAccessible(true);
+				gui = new GuiShareToLanImproved((GuiScreen) f.get(gui));
+			} catch(Throwable err)
+			{
+			}
+		}
 		
 		smooth:
 		{
-			if(!HCConfigs.vanilla_useSmoothGui) break smooth; //Added config
-			
+			if(!HCConfigs.vanilla_useSmoothGui)
+				break smooth; // Added config
+				
 			if(gui instanceof GuiFurnace)
 			{
 				try
@@ -163,8 +183,10 @@ public class RenderGui
 					IInventory furnaceInv = (IInventory) furn.get(gui);
 					
 					gui = new GuiFurnaceSmooth(playerInv, furnaceInv);
+				} catch(Throwable err)
+				{
+					err.printStackTrace();
 				}
-				catch(Throwable err) { err.printStackTrace(); }
 			}
 			
 			if(gui instanceof GuiBrewingStand)
@@ -183,14 +205,16 @@ public class RenderGui
 					IInventory tbsInv = (IInventory) bs.get(gui);
 					
 					gui = new GuiBrewingStandSmooth(playerInv, tbsInv);
+				} catch(Throwable err)
+				{
 				}
-				catch(Throwable err) {}
 			}
 			
 			break smooth;
 		}
 		
-		if(fgui != gui) evt.setGui(gui);
+		if(fgui != gui)
+			evt.setGui(gui);
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -223,20 +247,22 @@ public class RenderGui
 				
 				images.clear();
 				
-				if(arr != ar0) for(int i = 0; i < arr.length(); ++i)
-				{
-					JSONObject o = arr.getJSONObject(i);
-					IMG img = new IMG();
-					img.img = IOUtils.downloadPicture(o.getString("url"));
-					JSONObject signature = o.getJSONObject("signature");
-					img.x = signature.getString("x");
-					img.y = signature.getString("y");
-					img.width = signature.getString("width");
-					img.height = signature.getString("height");
-					images.add(img);
-				}
+				if(arr != ar0)
+					for(int i = 0; i < arr.length(); ++i)
+					{
+						JSONObject o = arr.getJSONObject(i);
+						IMG img = new IMG();
+						img.img = IOUtils.downloadPicture(o.getString("url"));
+						JSONObject signature = o.getJSONObject("signature");
+						img.x = signature.getString("x");
+						img.y = signature.getString("y");
+						img.width = signature.getString("width");
+						img.height = signature.getString("height");
+						images.add(img);
+					}
+			} catch(Throwable err)
+			{
 			}
-			catch(Throwable err) {}
 		}
 		
 		private boolean reload(boolean launchThread)
@@ -265,14 +291,15 @@ public class RenderGui
 				height = ExpressionEvaluator.evaluateDouble(sh);
 				
 				return true;
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
-				if(launchThread) new Thread(()->
-				{
-					int i = 0;
-					while(++i < 5 && !reload(false));
-				}).start();
+				if(launchThread)
+					new Thread(() ->
+					{
+						int i = 0;
+						while(++i < 5 && !reload(false))
+							;
+					}).start();
 			}
 			
 			return false;
@@ -280,7 +307,8 @@ public class RenderGui
 		
 		private String format(String s)
 		{
-			if(s == null) return "0";
+			if(s == null)
+				return "0";
 			Minecraft mc = Minecraft.getMinecraft();
 			ScaledResolution sr = new ScaledResolution(mc);
 			GuiScreen gs = mc.currentScreen;
@@ -288,17 +316,19 @@ public class RenderGui
 			double displacex = sr.getScaledWidth_double() / sr.getScaledWidth();
 			double displacey = sr.getScaledHeight_double() / sr.getScaledHeight();
 			
-//			s = s.replaceAll("mc-width", (mc.displayWidth * displacex) + "");
+			// s = s.replaceAll("mc-width", (mc.displayWidth * displacex) + "");
 			s = s.replaceAll("mc-width", (mc.displayWidth) + "");
 			s = s.replaceAll("mc-height", (mc.displayHeight) + "");
-//			s = s.replaceAll("mc-height", (mc.displayHeight * displacey) + "");
+			// s = s.replaceAll("mc-height", (mc.displayHeight * displacey) +
+			// "");
 			
 			return s;
 		}
 		
 		private void draw()
 		{
-			if(currImg == null || currImg.img == null) return;
+			if(currImg == null || currImg.img == null)
+				return;
 			
 			if(System.currentTimeMillis() - lastDownload > 10000L)
 			{

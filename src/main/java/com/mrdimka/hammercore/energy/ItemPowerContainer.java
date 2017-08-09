@@ -10,7 +10,9 @@ public class ItemPowerContainer extends Item implements IPowerContainerItem
 	protected int maxReceive;
 	protected int maxExtract;
 	
-	public ItemPowerContainer() {}
+	public ItemPowerContainer()
+	{
+	}
 	
 	public ItemPowerContainer(int capacity)
 	{
@@ -57,27 +59,38 @@ public class ItemPowerContainer extends Item implements IPowerContainerItem
 	@Override
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate)
 	{
-		if(!container.hasTagCompound()) container.setTagCompound(new NBTTagCompound());
+		if(!container.hasTagCompound())
+			container.setTagCompound(new NBTTagCompound());
 		int energy = container.getTagCompound().getInteger("Energy");
 		int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
-		if(!simulate) { energy += energyReceived; container.getTagCompound().setInteger("Energy", energy); }
+		if(!simulate)
+		{
+			energy += energyReceived;
+			container.getTagCompound().setInteger("Energy", energy);
+		}
 		return energyReceived;
 	}
 	
 	@Override
 	public int extractEnergy(ItemStack container, int maxExtract, boolean simulate)
 	{
-		if(container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) return 0;
+		if(container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
+			return 0;
 		int energy = container.getTagCompound().getInteger("Energy");
 		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-		if(!simulate) { energy -= energyExtracted; container.getTagCompound().setInteger("Energy", energy); }
+		if(!simulate)
+		{
+			energy -= energyExtracted;
+			container.getTagCompound().setInteger("Energy", energy);
+		}
 		return energyExtracted;
 	}
 	
 	@Override
 	public int getEnergyStored(ItemStack container)
 	{
-		if(container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy")) return 0;
+		if(container.getTagCompound() == null || !container.getTagCompound().hasKey("Energy"))
+			return 0;
 		return container.getTagCompound().getInteger("Energy");
 	}
 	

@@ -26,10 +26,11 @@ public class WrappedLog
 	public void bigWarn(String message, Object... params)
 	{
 		StackTraceElement[] trace = Thread.currentThread().getStackTrace();
-        warn("****************************************");
-        warn("* " + message, params);
-        for(int i = 2; i < 8 && i < trace.length; i++) warn("*  at %s%s", trace[i].toString(), i == 7 ? "..." : "");
-        warn("****************************************");
+		warn("****************************************");
+		warn("* " + message, params);
+		for(int i = 2; i < 8 && i < trace.length; i++)
+			warn("*  at %s%s", trace[i].toString(), i == 7 ? "..." : "");
+		warn("****************************************");
 	}
 	
 	public void error(String message, Object... params)

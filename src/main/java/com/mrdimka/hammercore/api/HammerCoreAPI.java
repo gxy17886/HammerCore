@@ -7,12 +7,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Allows any class to be defined as an instance for API between HammerCore and used class
+ * Allows any class to be defined as an instance for API between HammerCore and
+ * used class
  */
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface HammerCoreAPI
 {
 	String name();
+	
 	String version();
 }

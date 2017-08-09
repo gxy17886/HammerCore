@@ -28,8 +28,9 @@ import com.mrdimka.hammercore.client.renderer.item.ItemTorchRender;
 import com.mrdimka.hammercore.client.renderer.tile.TileRenderMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
-import com.mrdimka.hammercore.init.ModItems;
 import com.pengu.hammercore.client.render.Render3D;
+import com.pengu.hammercore.client.render.item.TileEntityItemStackRendererHC;
+import com.pengu.hammercore.init.ItemsHC;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common
@@ -52,8 +53,10 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public void init()
 	{
-		registerRenders(ModItems.items);
-		for(MultiVariantItem multi : ModItems.multiitems)
+		new TileEntityItemStackRendererHC();
+		
+		registerRenders(ItemsHC.items);
+		for(MultiVariantItem multi : ItemsHC.multiitems)
 		{
 			ResourceLocation[] variants = new ResourceLocation[multi.names.length];
 			for(int i = 0; i < multi.names.length; ++i)
@@ -86,15 +89,18 @@ public class RenderProxy_Client extends RenderProxy_Common
 	public void sendNoSpamMessages(ITextComponent[] messages)
 	{
 		GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
-		for(int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++) chat.deleteChatLine(i);
-		for(int i = 0; i < messages.length; i++) chat.printChatMessageWithOptionalDeletion(messages[i], DELETION_ID + i);
+		for(int i = DELETION_ID + messages.length - 1; i <= lastAdded; i++)
+			chat.deleteChatLine(i);
+		for(int i = 0; i < messages.length; i++)
+			chat.printChatMessageWithOptionalDeletion(messages[i], DELETION_ID + i);
 		lastAdded = DELETION_ID + messages.length - 1;
 	}
 	
 	public static void registerRenders(Iterable<Item> items)
 	{
 		Iterator<Item> iter = items.iterator();
-		while(iter.hasNext()) registerRender(iter.next());
+		while(iter.hasNext())
+			registerRender(iter.next());
 	}
 	
 	public static void registerRender(Item item)
@@ -112,20 +118,25 @@ public class RenderProxy_Client extends RenderProxy_Common
 	@Override
 	public World getWorld(MessageContext context)
 	{
-		if(context == null) return Minecraft.getMinecraft().theWorld;
-		if(context.side == Side.CLIENT) return Minecraft.getMinecraft().theWorld;
+		if(context == null)
+			return Minecraft.getMinecraft().theWorld;
+		if(context.side == Side.CLIENT)
+			return Minecraft.getMinecraft().theWorld;
 		return super.getWorld(context);
 	}
 	
 	@Override
 	public World getWorld(MessageContext context, int dim)
 	{
-		if(context == null) return Minecraft.getMinecraft().theWorld;
+		if(context == null)
+			return Minecraft.getMinecraft().theWorld;
 		if(context.side == Side.CLIENT)
 		{
 			World w = getWorld(context);
-			if(w == null) return null;
-			if(w.provider.getDimension() == dim) return w;
+			if(w == null)
+				return null;
+			if(w.provider.getDimension() == dim)
+				return w;
 		}
 		return super.getWorld(context, dim);
 	}

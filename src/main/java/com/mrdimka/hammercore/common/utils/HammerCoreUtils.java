@@ -44,16 +44,18 @@ public class HammerCoreUtils
 			{
 				List<ItemStack> items = new ArrayList<>();
 				displayAllRelevantItems(items);
-				if(items.size() == 0) return new ItemStack(Blocks.BARRIER);
+				if(items.size() == 0)
+					return new ItemStack(Blocks.BARRIER);
 				if(tick++ > delayTicks)
 				{
 					tick = 0;
 					index++;
 				}
-				if(index >= items.size()) index = 0;
+				if(index >= items.size())
+					index = 0;
 				return items.get(index);
 			}
-
+			
 			@Override
 			public Item getTabIconItem()
 			{

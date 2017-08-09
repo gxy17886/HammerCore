@@ -25,7 +25,10 @@ public class FluidDictionary
 	private static final Map<String, String> fnToId = Maps.newHashMapWithExpectedSize(96);
 	private static final Map<String, List<FluidStack>> fnToStack = Maps.newHashMapWithExpectedSize(96);
 	
-	static { initVanillaEntries(); }
+	static
+	{
+		initVanillaEntries();
+	}
 	
 	private static void initVanillaEntries()
 	{
@@ -37,8 +40,15 @@ public class FluidDictionary
 		}
 	}
 	
-	public static void registerFluid(Fluid fluid, String fname) { registerFluid(fluid, fname, null); }
-	public static void registerFluid(Fluid fluid, String fname, NBTTagCompound fluidTags) { registerFluid(new FluidStack(fluid, 1, fluidTags), fname); }
+	public static void registerFluid(Fluid fluid, String fname)
+	{
+		registerFluid(fluid, fname, null);
+	}
+	
+	public static void registerFluid(Fluid fluid, String fname, NBTTagCompound fluidTags)
+	{
+		registerFluid(new FluidStack(fluid, 1, fluidTags), fname);
+	}
 	
 	public static void registerFluid(FluidStack fluid, String fname)
 	{
@@ -60,20 +70,23 @@ public class FluidDictionary
 	public static List<String> getNamesByFluidId(String id)
 	{
 		List<String> l = idToFn.get(id);
-		if(l == null) idToFn.put(id, l = new ArrayList<String>());
+		if(l == null)
+			idToFn.put(id, l = new ArrayList<String>());
 		return l;
 	}
 	
 	public static List<FluidStack> getFluidsByName(String fname)
 	{
 		List<FluidStack> l = fnToStack.get(fname);
-		if(l == null) fnToStack.put(fname, l = new ArrayList<>());
+		if(l == null)
+			fnToStack.put(fname, l = new ArrayList<>());
 		return l;
 	}
 	
 	public static String getFluidId(FluidStack stack)
 	{
-		if(isEmpty(stack)) return "";
+		if(isEmpty(stack))
+			return "";
 		return FluidRegistry.getFluidName(stack) + "^" + stack.tag;
 	}
 	

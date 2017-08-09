@@ -19,7 +19,8 @@ public class StructureAPI
 				for(int z = Math.min(start.getZ(), end.getZ()); z <= Math.max(start.getZ(), end.getZ()); ++z)
 				{
 					BlockPos pos = new BlockPos(x, y, z);
-					if(world.isAirBlock(pos) && !includeAir) continue;
+					if(world.isAirBlock(pos) && !includeAir)
+						continue;
 					BlockPos absPos = new BlockPos(x - Math.min(start.getX(), end.getX()), y - Math.min(start.getY(), end.getY()), z - Math.min(start.getZ(), end.getZ()));
 					s.placeStateAt(absPos, world.getBlockState(pos));
 					

@@ -28,19 +28,24 @@ public class PacketNoSpamChat implements IPacket, IPacketListener<PacketNoSpamCh
 		HammerCore.renderProxy.sendNoSpamMessages(packet.chatLines);
 		return null;
 	}
-
+	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt)
 	{
 		nbt.setInteger("ChatLines", chatLines.length);
 		int p = 0;
-		for(ITextComponent c : chatLines) { nbt.setString("ChatLine" + p, ITextComponent.Serializer.componentToJson(c)); p++; }
+		for(ITextComponent c : chatLines)
+		{
+			nbt.setString("ChatLine" + p, ITextComponent.Serializer.componentToJson(c));
+			p++;
+		}
 	}
-
+	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
 		chatLines = new ITextComponent[nbt.getInteger("ChatLines")];
-		for(int i = 0; i < chatLines.length; i++) chatLines[i] = ITextComponent.Serializer.jsonToComponent(nbt.getString("ChatLine" + i));
+		for(int i = 0; i < chatLines.length; i++)
+			chatLines[i] = ITextComponent.Serializer.jsonToComponent(nbt.getString("ChatLine" + i));
 	}
 }

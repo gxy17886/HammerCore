@@ -32,7 +32,8 @@ public class FEEnergyStorage extends EnergyStorage
 	
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
-		if(energy < 0) energy = 0;
+		if(energy < 0)
+			energy = 0;
 		nbt.setInteger("Energy", energy);
 		return nbt;
 	}
@@ -40,7 +41,8 @@ public class FEEnergyStorage extends EnergyStorage
 	public FEEnergyStorage readFromNBT(NBTTagCompound nbt)
 	{
 		energy = nbt.getInteger("Energy");
-		if(energy > capacity) energy = capacity;
+		if(energy > capacity)
+			energy = capacity;
 		return this;
 	}
 }

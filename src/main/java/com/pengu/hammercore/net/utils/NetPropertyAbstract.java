@@ -29,9 +29,9 @@ public abstract class NetPropertyAbstract<T>
 	}
 	
 	public int getId()
-    {
-	    return id;
-    }
+	{
+		return id;
+	}
 	
 	public abstract NBTTagCompound writeToNBT(NBTTagCompound nbt);
 	

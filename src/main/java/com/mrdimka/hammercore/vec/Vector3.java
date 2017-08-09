@@ -28,7 +28,9 @@ public class Vector3 implements Copyable<Vector3>
 	public double y;
 	public double z;
 	
-	public Vector3() {}
+	public Vector3()
+	{
+	}
 	
 	public Vector3(double d, double d1, double d2)
 	{
@@ -138,26 +140,28 @@ public class Vector3 implements Copyable<Vector3>
 		case 0:
 		case 1:
 			y = v;
-			break;
+		break;
 		case 2:
 		case 3:
 			z = v;
-			break;
+		break;
 		case 4:
 		case 5:
 			x = v;
-			break;
+		break;
 		default:
 			throw new IndexOutOfBoundsException("Switch Falloff");
 		}
 		return this;
 	}
-
+	
 	public double dotProduct(Vector3 vec)
 	{
 		double d = vec.x * x + vec.y * y + vec.z * z;
-		if (d > 1 && d < 1.00001) d = 1;
-		else if (d < -1 && d > -1.00001) d = -1;
+		if(d > 1 && d < 1.00001)
+			d = 1;
+		else if(d < -1 && d > -1.00001)
+			d = -1;
 		return d;
 	}
 	
@@ -256,21 +260,21 @@ public class Vector3 implements Copyable<Vector3>
 	public Vector3 normalize()
 	{
 		double d = mag();
-		if(d != 0) multiply(1 / d);
+		if(d != 0)
+			multiply(1 / d);
 		return this;
 	}
 	
 	public String toString()
 	{
 		MathContext cont = new MathContext(4, RoundingMode.HALF_UP);
-		return "Vector3(" + new BigDecimal(x, cont) + ", "
-				+ new BigDecimal(y, cont) + ", " + new BigDecimal(z, cont)
-				+ ")";
+		return "Vector3(" + new BigDecimal(x, cont) + ", " + new BigDecimal(y, cont) + ", " + new BigDecimal(z, cont) + ")";
 	}
 	
 	public Vector3 perpendicular()
 	{
-		if(z == 0) return zCrossProduct();
+		if(z == 0)
+			return zCrossProduct();
 		return xCrossProduct();
 	}
 	
@@ -348,11 +352,14 @@ public class Vector3 implements Copyable<Vector3>
 		double dy = end.y - y;
 		double dz = end.z - z;
 		
-		if(dx == 0) return null;
+		if(dx == 0)
+			return null;
 		
 		double d = (px - x) / dx;
-		if(MathHelper.between(-1E-5, d, 1E-5)) return this;
-		if(!MathHelper.between(0, d, 1)) return null;
+		if(MathHelper.between(-1E-5, d, 1E-5))
+			return this;
+		if(!MathHelper.between(0, d, 1))
+			return null;
 		
 		x = px;
 		y += d * dy;
@@ -366,11 +373,14 @@ public class Vector3 implements Copyable<Vector3>
 		double dy = end.y - y;
 		double dz = end.z - z;
 		
-		if(dy == 0) return null;
+		if(dy == 0)
+			return null;
 		
 		double d = (py - y) / dy;
-		if(MathHelper.between(-1E-5, d, 1E-5)) return this;
-		if(!MathHelper.between(0, d, 1)) return null;
+		if(MathHelper.between(-1E-5, d, 1E-5))
+			return this;
+		if(!MathHelper.between(0, d, 1))
+			return null;
 		
 		x += d * dx;
 		y = py;
@@ -384,11 +394,14 @@ public class Vector3 implements Copyable<Vector3>
 		double dy = end.y - y;
 		double dz = end.z - z;
 		
-		if(dz == 0) return null;
+		if(dz == 0)
+			return null;
 		
 		double d = (pz - z) / dz;
-		if (MathHelper.between(-1E-5, d, 1E-5)) return this;
-		if(!MathHelper.between(0, d, 1)) return null;
+		if(MathHelper.between(-1E-5, d, 1E-5))
+			return this;
+		if(!MathHelper.between(0, d, 1))
+			return null;
 		
 		x += d * dx;
 		y += d * dy;
@@ -426,7 +439,8 @@ public class Vector3 implements Copyable<Vector3>
 	@Override
 	public boolean equals(Object o)
 	{
-		if(!(o instanceof Vector3)) return false;
+		if(!(o instanceof Vector3))
+			return false;
 		Vector3 v = (Vector3) o;
 		return x == v.x && y == v.y && z == v.z;
 	}

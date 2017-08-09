@@ -14,7 +14,8 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	@Override
 	public IParticle spawnZap(World w, Vec3d start, Vec3d end, Color rgb)
 	{
-		if(!w.isRemote) return super.spawnZap(w, start, end, rgb);
+		if(!w.isRemote)
+			return super.spawnZap(w, start, end, rgb);
 		ParticleZap zap = new ParticleZap(w, start.xCoord, start.yCoord, start.zCoord, end.xCoord, end.yCoord, end.zCoord, rgb.getRed() / (float) 0xFF, rgb.getGreen() / (float) 0xFF, rgb.getBlue() / (float) 0xFF);
 		zap.spawn();
 		return zap;

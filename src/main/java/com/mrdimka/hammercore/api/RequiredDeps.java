@@ -35,12 +35,15 @@ public class RequiredDeps
 			
 			if(version != null)
 			{
-				if(version.equals("~")) version = null;
-				else if(version.startsWith("=")) version = version.substring(1);
+				if(version.equals("~"))
+					version = null;
+				else if(version.startsWith("="))
+					version = version.substring(1);
 			}
 			
 			boolean resolved = version != null ? APILoader.isApiLoaded(api, version) : APILoader.isApiLoaded(api);
-			if(!resolved) return false;
+			if(!resolved)
+				return false;
 		}
 		
 		return true;
@@ -55,12 +58,15 @@ public class RequiredDeps
 			
 			if(version != null)
 			{
-				if(version.equals("~")) version = null;
-				else if(version.startsWith("=")) version = version.substring(1);
+				if(version.equals("~"))
+					version = null;
+				else if(version.startsWith("="))
+					version = version.substring(1);
 			}
 			
 			boolean resolved = version != null ? APILoader.isApiLoaded(api, version) : APILoader.isApiLoaded(api);
-			if(!resolved) MISSINGS.put(api, version);
+			if(!resolved)
+				MISSINGS.put(api, version);
 		}
 		return MISSINGS;
 	}

@@ -10,7 +10,8 @@ public class RegistryUtil
 	public static <K, V> int getMostRegistryId(RegistryNamespaced<K, V> reg)
 	{
 		int most = 0;
-		for(V v : reg) most = Math.max(reg.getIDForObject(v), most);
+		for(V v : reg)
+			most = Math.max(reg.getIDForObject(v), most);
 		return most;
 	}
 	

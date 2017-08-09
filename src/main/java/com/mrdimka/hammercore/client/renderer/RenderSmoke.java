@@ -30,7 +30,8 @@ public class RenderSmoke implements IRenderable
 	
 	public boolean shouldRender()
 	{
-		if(ageSpawn == 0L) ageSpawn = System.currentTimeMillis();
+		if(ageSpawn == 0L)
+			ageSpawn = System.currentTimeMillis();
 		long elapsed = System.currentTimeMillis() - ageSpawn;
 		return elapsed < ageMax;
 	}

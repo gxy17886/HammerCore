@@ -29,8 +29,8 @@ public class TeslaAPI
 	
 	/**
 	 * Checks if a subclass of Tesla|API exists
-	 * @return class
-	 * 				The Tesla|API subclass or null, if not present
+	 * 
+	 * @return class The Tesla|API subclass or null, if not present
 	 **/
 	public static Class teslaClassExists(String api)
 	{
@@ -41,7 +41,9 @@ public class TeslaAPI
 			Class c = Class.forName(cn);
 			classes.add(c);
 			return c;
-		} catch(Throwable err) {}
+		} catch(Throwable err)
+		{
+		}
 		return null;
 	}
 	
@@ -88,7 +90,10 @@ public class TeslaAPI
 			{
 				Method givePower = consumer.getClass().getMethod("givePower", long.class, boolean.class);
 				return ((Long) givePower.invoke(consumer, power, simulated)).longValue();
-			} catch(Throwable err) { err.printStackTrace(); }
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
+			}
 		}
 		return 0L;
 	}
@@ -106,7 +111,10 @@ public class TeslaAPI
 			{
 				Method givePower = holder.getClass().getMethod("getStoredPower");
 				return ((Long) givePower.invoke(holder)).longValue();
-			} catch(Throwable err) { err.printStackTrace(); }
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
+			}
 		}
 		return 0L;
 	}
@@ -124,7 +132,10 @@ public class TeslaAPI
 			{
 				Method givePower = holder.getClass().getMethod("getCapacity");
 				return ((Long) givePower.invoke(holder)).longValue();
-			} catch(Throwable err) { err.printStackTrace(); }
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
+			}
 		}
 		return 0L;
 	}
@@ -148,7 +159,10 @@ public class TeslaAPI
 			{
 				Method givePower = producer.getClass().getMethod("takePower", long.class, boolean.class);
 				return ((Long) givePower.invoke(producer, power, simulated)).longValue();
-			} catch(Throwable err) { err.printStackTrace(); }
+			} catch(Throwable err)
+			{
+				err.printStackTrace();
+			}
 		}
 		return 0L;
 	}

@@ -24,7 +24,10 @@ public enum HCModelRegistry
 {
 	INSTANCE;
 	
-	private HCModelRegistry() { MinecraftForge.EVENT_BUS.register(this); }
+	private HCModelRegistry()
+	{
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 	
 	public final Map<String, ModelBase> simpleModelCache = new HashMap<String, ModelBase>();
 	public final Map<String, CasedModel> casedModelCache = new HashMap<String, CasedModel>();
@@ -85,10 +88,13 @@ public enum HCModelRegistry
 		{
 			try
 			{
-				if(cycles++ >= 32) return;
+				if(cycles++ >= 32)
+					return;
 				cache = simpleModelCache.keySet().toArray(new String[0]);
 				break;
-			}catch(Throwable err) {}
+			} catch(Throwable err)
+			{
+			}
 		}
 		
 		for(String k : cache)
@@ -97,8 +103,7 @@ public enum HCModelRegistry
 			{
 				InputStream i = mgr.getResource(new ResourceLocation(k)).getInputStream();
 				simpleModelCache.put(k, SimpleModelLoader.convert(ModelFile.read(i)));
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
 				FMLLog.info("Model " + k + " could not be loaded:");
 				err.printStackTrace();
@@ -116,10 +121,13 @@ public enum HCModelRegistry
 		{
 			try
 			{
-				if(cycles++ >= 32) return;
+				if(cycles++ >= 32)
+					return;
 				cache = casedModelCache.keySet().toArray(new String[0]);
 				break;
-			}catch(Throwable err) {}
+			} catch(Throwable err)
+			{
+			}
 		}
 		
 		for(String k : cache)
@@ -131,11 +139,14 @@ public enum HCModelRegistry
 				
 				String lns = "";
 				String ln = br.readLine();
-				while(ln != null) { lns += ln + "\n"; ln = br.readLine(); }
+				while(ln != null)
+				{
+					lns += ln + "\n";
+					ln = br.readLine();
+				}
 				
 				casedModelCache.put(k, CasedModelLoader.convert(lns, false));
-			}
-			catch(Throwable err)
+			} catch(Throwable err)
 			{
 				FMLLog.info("CasedModel " + k + " could not be loaded:");
 				err.printStackTrace();

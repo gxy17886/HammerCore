@@ -8,7 +8,9 @@ import java.util.Map;
  */
 public final class MultipartRenderingRegistry
 {
-	private MultipartRenderingRegistry() {}
+	private MultipartRenderingRegistry()
+	{
+	}
 	
 	private static final IMultipartRender DEFAULT_RENDER = new BlockStateMultipartRender();
 	private static final Map<Class, IMultipartRender> renders = new HashMap<>();

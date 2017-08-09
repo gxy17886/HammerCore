@@ -82,18 +82,20 @@ public class PowerStorage implements IPowerStorage
 	}
 	
 	@Override
-    public int receiveEnergy(int maxReceive, boolean simulate)
+	public int receiveEnergy(int maxReceive, boolean simulate)
 	{
-        int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
-        if(!simulate) energy += energyReceived;
-        return energyReceived;
-    }
-        
+		int energyReceived = Math.min(capacity - energy, Math.min(this.maxReceive, maxReceive));
+		if(!simulate)
+			energy += energyReceived;
+		return energyReceived;
+	}
+	
 	@Override
 	public int extractEnergy(int maxExtract, boolean simulate)
 	{
 		int energyExtracted = Math.min(energy, Math.min(this.maxExtract, maxExtract));
-		if(!simulate) energy -= energyExtracted;
+		if(!simulate)
+			energy -= energyExtracted;
 		return energyExtracted;
 	}
 	

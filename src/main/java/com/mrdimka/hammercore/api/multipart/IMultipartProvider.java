@@ -14,6 +14,7 @@ import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 public interface IMultipartProvider
 {
 	MultipartSignature createSignature(int signatureIndex, ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ);
+	
 	default boolean canPlaceInto(TileMultipart multipart, ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		return true;

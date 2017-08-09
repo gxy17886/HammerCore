@@ -17,7 +17,9 @@ public class PacketPlayBlockBreakSound implements IPacket, IPacketListener<Packe
 	private IBlockState s;
 	private float x, y, z, volume, pitch;
 	
-	public PacketPlayBlockBreakSound() {}
+	public PacketPlayBlockBreakSound()
+	{
+	}
 	
 	public PacketPlayBlockBreakSound(IBlockState state, double x, double y, double z, double volume, double pitch)
 	{
@@ -46,7 +48,7 @@ public class PacketPlayBlockBreakSound implements IPacket, IPacketListener<Packe
 			HammerCore.renderProxy.playSoundAt(HammerCore.audioProxy.getClientPlayer().worldObj, p.s.getBlock().getSoundType().getBreakSound().getRegistryName().toString(), p.x, p.y, p.z, volume, pitch, SoundCategory.BLOCKS);
 		return null;
 	}
-
+	
 	@Override
 	public void writeToNBT(NBTTagCompound nbt)
 	{
@@ -60,12 +62,14 @@ public class PacketPlayBlockBreakSound implements IPacket, IPacketListener<Packe
 		nbt.setFloat("Vol", volume);
 		nbt.setFloat("Pitch", pitch);
 	}
-
+	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		if(nbt.getBoolean("HasState")) s = Block.getStateById(nbt.getInteger("StateID"));
-		if(nbt.getBoolean("HasSound")) soundName = nbt.getString("Sound");
+		if(nbt.getBoolean("HasState"))
+			s = Block.getStateById(nbt.getInteger("StateID"));
+		if(nbt.getBoolean("HasSound"))
+			soundName = nbt.getString("Sound");
 		x = nbt.getFloat("X");
 		y = nbt.getFloat("Y");
 		z = nbt.getFloat("Z");

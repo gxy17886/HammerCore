@@ -45,12 +45,22 @@ public class Recorder implements Runnable
 			try
 			{
 				MicrophoneSetup.captureMic(baos, packetMaxSize, false);
-				if(onReRecord1 != null) onReRecord1.call(baos.toByteArray());
-				if(onReRecord2 != null) onReRecord2.call(baos);
+				if(onReRecord1 != null)
+					onReRecord1.call(baos.toByteArray());
+				if(onReRecord2 != null)
+					onReRecord2.call(baos);
 				baos.reset();
+			} catch(Throwable err)
+			{
+				return false;
 			}
-			catch(Throwable err) { return false; }
-		}else try { Thread.sleep(5L); } catch(Exception e) {}
+		} else
+			try
+			{
+				Thread.sleep(5L);
+			} catch(Exception e)
+			{
+			}
 		return true;
 	}
 }

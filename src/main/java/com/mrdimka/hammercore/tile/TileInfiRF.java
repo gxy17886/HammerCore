@@ -20,26 +20,35 @@ public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, 
 		{
 			TileEntity t = worldObj.getTileEntity(pos.offset(f));
 			
-			if(t == null) continue;
+			if(t == null)
+				continue;
 			
-			if(TeslaAPI.isTeslaConsumer(t)) TeslaAPI.givePowerToConsumer(t, Long.MAX_VALUE, false);
+			if(TeslaAPI.isTeslaConsumer(t))
+				TeslaAPI.givePowerToConsumer(t, Long.MAX_VALUE, false);
 			
 			if(t.hasCapability(CapabilityEnergy.ENERGY, f.getOpposite()))
 			{
 				IEnergyStorage storage = t.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
-				if(storage != null && storage.canReceive()) storage.receiveEnergy(Integer.MAX_VALUE, false);
+				if(storage != null && storage.canReceive())
+					storage.receiveEnergy(Integer.MAX_VALUE, false);
 			}
 			
 			if(t.hasCapability(CapabilityEJ.ENERGY, f.getOpposite()))
 			{
 				IPowerStorage storage = t.getCapability(CapabilityEJ.ENERGY, f.getOpposite());
-				if(storage != null) storage.receiveEnergy(Integer.MAX_VALUE, false);
+				if(storage != null)
+					storage.receiveEnergy(Integer.MAX_VALUE, false);
 			}
 		}
 	}
 	
-	public void writeNBT(NBTTagCompound nbt) {};
-	public void readNBT(NBTTagCompound nbt) {}
+	public void writeNBT(NBTTagCompound nbt)
+	{
+	};
+	
+	public void readNBT(NBTTagCompound nbt)
+	{
+	}
 	
 	@Override
 	public int receiveEnergy(int maxReceive, boolean simulate)
@@ -80,14 +89,16 @@ public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
-		if(capability == CapabilityEJ.ENERGY || capability == CapabilityEnergy.ENERGY) return true;
+		if(capability == CapabilityEJ.ENERGY || capability == CapabilityEnergy.ENERGY)
+			return true;
 		return super.hasCapability(capability, facing);
 	}
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
-		if(capability == CapabilityEJ.ENERGY || capability == CapabilityEnergy.ENERGY) return (T) this;
+		if(capability == CapabilityEJ.ENERGY || capability == CapabilityEnergy.ENERGY)
+			return (T) this;
 		return super.getCapability(capability, facing);
 	}
 }

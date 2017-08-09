@@ -124,39 +124,46 @@ public class Cuboid6 implements Copyable<Cuboid6>
 	public String toString()
 	{
 		MathContext cont = new MathContext(4, RoundingMode.HALF_UP);
-		return "Cuboid: (" + new BigDecimal(min.x, cont) + ", "
-				+ new BigDecimal(min.y, cont) + ", "
-				+ new BigDecimal(min.z, cont) + ") -> ("
-				+ new BigDecimal(max.x, cont) + ", "
-				+ new BigDecimal(max.y, cont) + ", "
-				+ new BigDecimal(max.z, cont) + ")";
+		return "Cuboid: (" + new BigDecimal(min.x, cont) + ", " + new BigDecimal(min.y, cont) + ", " + new BigDecimal(min.z, cont) + ") -> (" + new BigDecimal(max.x, cont) + ", " + new BigDecimal(max.y, cont) + ", " + new BigDecimal(max.z, cont) + ")";
 	}
 	
 	public Cuboid6 enclose(Vector3 vec)
 	{
-		if(min.x > vec.x) min.x = vec.x;
-		if(min.y > vec.y) min.y = vec.y;
-		if(min.z > vec.z) min.z = vec.z;
-		if(max.x < vec.x) max.x = vec.x;
-		if(max.y < vec.y) max.y = vec.y;
-		if(max.z < vec.z) max.z = vec.z;
+		if(min.x > vec.x)
+			min.x = vec.x;
+		if(min.y > vec.y)
+			min.y = vec.y;
+		if(min.z > vec.z)
+			min.z = vec.z;
+		if(max.x < vec.x)
+			max.x = vec.x;
+		if(max.y < vec.y)
+			max.y = vec.y;
+		if(max.z < vec.z)
+			max.z = vec.z;
 		return this;
 	}
 	
 	public Cuboid6 enclose(Cuboid6 c)
 	{
-		if(min.x > c.min.x) min.x = c.min.x;
-		if(min.y > c.min.y) min.y = c.min.y;
-		if(min.z > c.min.z) min.z = c.min.z;
-		if(max.x < c.max.x) max.x = c.max.x;
-		if(max.y < c.max.y) max.y = c.max.y;
-		if(max.z < c.max.z) max.z = c.max.z;
+		if(min.x > c.min.x)
+			min.x = c.min.x;
+		if(min.y > c.min.y)
+			min.y = c.min.y;
+		if(min.z > c.min.z)
+			min.z = c.min.z;
+		if(max.x < c.max.x)
+			max.x = c.max.x;
+		if(max.y < c.max.y)
+			max.y = c.max.y;
+		if(max.z < c.max.z)
+			max.z = c.max.z;
 		return this;
 	}
 	
 	public double getSide(int s)
 	{
-		switch (s)
+		switch(s)
 		{
 		case 0:
 			return min.y;
@@ -177,26 +184,26 @@ public class Cuboid6 implements Copyable<Cuboid6>
 	
 	public Cuboid6 setSide(int s, double d)
 	{
-		switch (s)
+		switch(s)
 		{
 		case 0:
 			min.y = d;
-			break;
+		break;
 		case 1:
 			max.y = d;
-			break;
+		break;
 		case 2:
 			min.z = d;
-			break;
+		break;
 		case 3:
 			max.z = d;
-			break;
+		break;
 		case 4:
 			min.x = d;
-			break;
+		break;
 		case 5:
 			max.x = d;
-			break;
+		break;
 		default:
 			throw new IndexOutOfBoundsException("Switch Falloff");
 		}

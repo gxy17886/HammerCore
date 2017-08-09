@@ -20,13 +20,16 @@ public class NetPropertyUUID extends NetPropertyAbstract<UUID>
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt)
 	{
 		if(value != null)
-			nbt.setUniqueId("val", value);
+			nbt.setUniqueId("Val", value);
 		return nbt;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbt)
 	{
-		value = nbt.getUniqueId("val");
+		if(!nbt.hasKey("Val") && nbt.hasKey("val"))
+			value = nbt.getUniqueId("val");
+		else
+			value = nbt.getUniqueId("Val");
 	}
 }

@@ -25,10 +25,10 @@ public class ItemInsertionUtil
 		if(tileEntity == null)
 		{
 			return false;
-		}else if(!tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))
+		} else if(!tileEntity.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, facing.getOpposite()))
 		{
 			return false;
-		}else
+		} else
 		{
 			for(EnumFacing f : EnumFacing.VALUES)
 			{
@@ -55,16 +55,17 @@ public class ItemInsertionUtil
 			return true;
 		}
 	}
-
+	
 	public static boolean transferItemsOutFinal(TileEntity exportFromTE, IInventory exportFrom, EnumFacing facing)
 	{
 		if(insertVanilla(exportFromTE, exportFrom, facing))
 		{
 			return true;
-		}else
+		} else
 		{
 			IInventory iinventory = exportFromTE.getWorld().getTileEntity(exportFromTE.getPos().offset(facing)) instanceof IInventory ? ((IInventory) exportFromTE.getWorld().getTileEntity(exportFromTE.getPos().offset(facing))) : null;
-			if(iinventory == null) return false;
+			if(iinventory == null)
+				return false;
 			else
 			{
 				if(isInventoryFull(iinventory, facing))
@@ -89,13 +90,13 @@ public class ItemInsertionUtil
 							}
 						}
 					}
-
+					
 					return false;
 				}
 			}
 		}
 	}
-
+	
 	public static boolean isEmpty(IInventory inv)
 	{
 		for(int i$ = 0; i$ < inv.getSizeInventory(); ++i$)
@@ -107,19 +108,19 @@ public class ItemInsertionUtil
 		
 		return true;
 	}
-
+	
 	public static boolean isFull(IInventory inv)
 	{
 		for(int i$ = 0; i$ < inv.getSizeInventory(); ++i$)
 		{
 			ItemStack itemstack = inv.getStackInSlot(i$);
-			if (itemstack == null || InterItemStack.getStackSize(itemstack) != itemstack.getMaxStackSize())
+			if(itemstack == null || InterItemStack.getStackSize(itemstack) != itemstack.getMaxStackSize())
 				return false;
 		}
 		
 		return true;
 	}
-
+	
 	public static boolean isInventoryFull(IInventory inv, EnumFacing facing)
 	{
 		if(inv instanceof ISidedInventory)
@@ -132,7 +133,7 @@ public class ItemInsertionUtil
 				if(itemstack1 == null || InterItemStack.getStackSize(itemstack1) != itemstack1.getMaxStackSize())
 					return false;
 			}
-		}else
+		} else
 		{
 			int var7 = inv.getSizeInventory();
 			for(int var8 = 0; var8 < var7; ++var8)
@@ -145,7 +146,7 @@ public class ItemInsertionUtil
 		
 		return true;
 	}
-
+	
 	public static boolean isInventoryEmpty(IInventory inv, EnumFacing facing)
 	{
 		if(inv instanceof ISidedInventory)
@@ -155,7 +156,7 @@ public class ItemInsertionUtil
 			for(int i = 0; i < k.length; ++i)
 				if(j.getStackInSlot(k[i]) != null)
 					return false;
-		}else
+		} else
 		{
 			int var5 = inv.getSizeInventory();
 			for(int var6 = 0; var6 < var5; ++var6)
@@ -165,25 +166,28 @@ public class ItemInsertionUtil
 		
 		return true;
 	}
-
+	
 	public static ItemStack putStackInInventoryAllSlots(IInventory inv, ItemStack stack, @Nullable EnumFacing face)
 	{
 		if(inv instanceof ISidedInventory && face != null)
 		{
 			ISidedInventory var6 = (ISidedInventory) inv;
 			int[] var7 = var6.getSlotsForFace(face);
-			for(int k = 0; k < var7.length && stack != null && InterItemStack.getStackSize(stack) > 0; ++k) stack = insertStack(inv, stack, var7[k], face);
-		}else
+			for(int k = 0; k < var7.length && stack != null && InterItemStack.getStackSize(stack) > 0; ++k)
+				stack = insertStack(inv, stack, var7[k], face);
+		} else
 		{
 			int i = inv.getSizeInventory();
-			for(int j = 0; j < i && stack != null && InterItemStack.getStackSize(stack) > 0; ++j) stack = insertStack(inv, stack, j, face);
+			for(int j = 0; j < i && stack != null && InterItemStack.getStackSize(stack) > 0; ++j)
+				stack = insertStack(inv, stack, j, face);
 		}
 		
-		if(stack != null && InterItemStack.getStackSize(stack) == 0) stack = null;
+		if(stack != null && InterItemStack.getStackSize(stack) == 0)
+			stack = null;
 		
 		return stack;
 	}
-
+	
 	public static ItemStack insertStack(IInventory inv, ItemStack stack, int slot, EnumFacing face)
 	{
 		ItemStack itemstack = inv.getStackInSlot(slot);
@@ -198,10 +202,11 @@ public class ItemInsertionUtil
 				{
 					inv.setInventorySlotContents(slot, stack);
 					stack = null;
-				}else inv.setInventorySlotContents(slot, stack.splitStack(tileentityhopper));
+				} else
+					inv.setInventorySlotContents(slot, stack.splitStack(tileentityhopper));
 				
 				flag = true;
-			}else if(canCombine(itemstack, stack))
+			} else if(canCombine(itemstack, stack))
 			{
 				tileentityhopper = Math.min(stack.getMaxStackSize(), inv.getInventoryStackLimit());
 				if(tileentityhopper > InterItemStack.getStackSize(itemstack))
@@ -219,7 +224,8 @@ public class ItemInsertionUtil
 				if(inv instanceof TileEntityHopper)
 				{
 					TileEntityHopper tileentityhopper1 = (TileEntityHopper) inv;
-					if(tileentityhopper1.mayTransfer()) tileentityhopper1.setTransferCooldown(8);
+					if(tileentityhopper1.mayTransfer())
+						tileentityhopper1.setTransferCooldown(8);
 					inv.markDirty();
 				}
 				

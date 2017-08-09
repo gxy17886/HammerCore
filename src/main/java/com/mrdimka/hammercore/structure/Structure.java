@@ -40,10 +40,12 @@ public class Structure
 	{
 		for(Long l : stateMap.keySet().toArray(new Long[0]))
 		{
-			if(l == null) continue;
+			if(l == null)
+				continue;
 			BlockPos pos = BlockPos.fromLong(l);
 			BlockPos tpos = at.add(pos);
-			if(!world.isBlockLoaded(tpos)) continue;
+			if(!world.isBlockLoaded(tpos))
+				continue;
 			NBTTagCompound nbt = tileMap.get(l);
 			IBlockState state = getStateAt(pos);
 			world.setBlockState(tpos, state);
@@ -68,7 +70,8 @@ public class Structure
 			nbt0.setLong("Position", l);
 			nbt0.setString("Block", state.getBlock().getRegistryName().toString());
 			nbt0.setInteger("Metadata", state.getBlock().getMetaFromState(state));
-			if(tileData != null) nbt0.setTag("TileData", tileData);
+			if(tileData != null)
+				nbt0.setTag("TileData", tileData);
 			list.appendTag(nbt0);
 		}
 		nbt.setTag("Blocks", list);
@@ -92,8 +95,10 @@ public class Structure
 				
 				placeStateAt(pos, state);
 				placeTileNBTAt(pos, tile);
-			}
-			catch(Throwable err) {} //Should only happen when block is missing, or mod maker is silly with tile entity readFromNBT method.
+			} catch(Throwable err)
+			{
+			} // Should only happen when block is missing, or mod maker is silly
+			  // with tile entity readFromNBT method.
 		}
 	}
 }

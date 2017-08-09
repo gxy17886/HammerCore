@@ -2,10 +2,10 @@
 {
   "modid": "hammercore",
   "name": "Hammer Core",
-  "description": "Core used by most of MrDimka's Mods.",
+  "description": "Core used by most of Pengu's Mods.",
   "url": "",
   "updateUrl": "",
-  "authorList": ["MrDimkas_Studio"],
+  "authorList": ["APengu"],
   "credits": "",
   "logoFile": "assets/logo.png",
   "screenshots": [],
