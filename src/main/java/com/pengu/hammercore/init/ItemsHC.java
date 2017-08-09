@@ -6,7 +6,9 @@ import java.util.Set;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
+import com.mrdimka.hammercore.common.items.ItemBattery;
 import com.mrdimka.hammercore.common.items.ItemCalculatron;
+import com.mrdimka.hammercore.common.items.ItemWrench;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.common.items.debug.ItemRayTracer;
 import com.mrdimka.hammercore.common.items.debug.ItemZapper;
@@ -20,7 +22,10 @@ public class ItemsHC
 	public static final Item //
 	        ray_tracer, //
 	        zapper, //
-	        calculatron = new ItemCalculatron();
+	        calculatron = new ItemCalculatron(), //
+	        WRENCH = new ItemWrench(), //
+	        BATTERY = new ItemBattery(2_000_000, 25_000).setUnlocalizedName("battery"),
+	        IRON_GEAR = new Item().setMaxStackSize(16).setUnlocalizedName("iron_gear");
 	
 	static
 	{

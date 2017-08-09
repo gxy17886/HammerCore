@@ -59,6 +59,7 @@ import com.pengu.hammercore.cfg.HCModConfigurations;
 import com.pengu.hammercore.cfg.IConfigReloadListener;
 import com.pengu.hammercore.init.BlocksHC;
 import com.pengu.hammercore.init.ItemsHC;
+import com.pengu.hammercore.init.RecipesHC;
 import com.pengu.hammercore.init.SimpleRegistration;
 
 /**
@@ -215,6 +216,7 @@ public class HammerCore
 	{
 		renderProxy.init();
 		HCNetwork.clinit();
+		RecipesHC.load();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiManager());
 		

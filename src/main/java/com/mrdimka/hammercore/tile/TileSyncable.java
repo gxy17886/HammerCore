@@ -16,6 +16,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -230,6 +231,11 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	{
 		if(!world.isRemote)
 			FMLNetworkHandler.openGui(player, HammerCore.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+	}
+	
+	public void onPlacedBy(EntityPlayer player, EnumHand hand)
+	{
+		
 	}
 	
 	/** NEW GUI API */
