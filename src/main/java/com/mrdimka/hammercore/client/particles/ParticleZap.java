@@ -158,7 +158,6 @@ public class ParticleZap extends Particle implements IParticle
 		for(int c = 0; c < points.size(); c++)
 		{
 			float size = 0.15F * ((Float) pointsWidth.get(c)).floatValue();
-			
 			float f13 = c / length;
 			Vec3d vc = (Vec3d) points.get(c);
 			Vec3d vp = c == 0 ? (Vec3d) points.get(c) : (Vec3d) points.get(c - 1);
