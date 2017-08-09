@@ -46,12 +46,12 @@ public class HammerCoreTransformer implements IClassTransformer
 	
 	static
 	{
-		for(int i = 0; i < 2; ++i)
-		{
-			SaveThread e = new SaveThread();
-			e.start();
-			saves.add(e);
-		}
+		// for(int i = 0; i < 2; ++i)
+		// {
+		// SaveThread e = new SaveThread();
+		// e.start();
+		// saves.add(e);
+		// }
 	}
 	
 	@Override
@@ -111,11 +111,7 @@ public class HammerCoreTransformer implements IClassTransformer
 						}
 					}
 				
-				byte[] data = ObjectWebUtils.writeClassToByteArray(classNode);
-				
-				saves.next().addSaveFile("HttpUtil.class", data);
-				
-				return data;
+				return ObjectWebUtils.writeClassToByteArray(classNode);
 			}
 		}
 		
