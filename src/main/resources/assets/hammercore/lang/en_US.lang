@@ -10,19 +10,67 @@ item.hammercore:calculatron.name=Calculatron
 item.hammercore:calculatron.tooltip0=Scientific calculator in Minecraft!
 item.hammercore:calculatron.tooltip1=§oDo not use to make homework!§r
 
+item.hammercore:manual.name=Hammer Core Manual
+item.hammercore:manual.tooltip0=Contains all needed info
+item.hammercore:manual.tooltip1=for survival
+
+item.hammercore:battery.name=Accumulator
+item.hammercore:battery.tooltip0=Sneak-Click Accumulator to
+item.hammercore:battery.tooltip1=Change Sharing Mode.
+
+item.hammercore:wrench.name=Wrench
+item.hammercore:wrench.tooltip0=Powered by HammerCore WrenchAPI.
+
+item.hammercore:iron_gear.name=Iron Gear
+item.hammercore:iron_gear.tooltip0=Acts like a gear!
+
+item.hammercore:iwrench.name=iWrench
+item.hammercore:iwrench.tooltip0=Powered by HammerCore WrenchAPI.
+
 ###########
 
 ###BLOCKS###
 
+tile.hammercore:tesseract.name=[WIP] Tesseract
 tile.hammercore:infi_rf.name=Creative Energy Source
 tile.hammercore:infi_rf.tooltip0=Generates 2,147,483,647 En/t
 tile.hammercore:infi_rf.tooltip1=Supported "En" (Energy) types:
 tile.hammercore:infi_rf.tooltip2=RF, FE, TESLA
+tile.hammercore:chunk_loader.name=Chunk Loader
 
 ############
 
 ##GUI##
 
 gui.hammercore:calculatron=Calculatron vVERSION
+info.hammercore:energy_stored=RF Stored
+info.hammercore:changed_mode=Charging
+
+battery.hammercore:mode.noshare=Off
+battery.hammercore:mode.hotbar=Hotbar
+battery.hammercore:mode.armor=Armor
+battery.hammercore:mode.armor_hotbar=Armor & Hotbar
+battery.hammercore:mode.inventory=Inventory
+
+capability.fe.name=FE
+capability.ej.name=EJ
+capability.fluid.name=Fluid
+capability.items.name=Items
 
 #######
+
+##MANUAL##
+
+bookapi.hammercore:manual:items=Items
+bookapi.hammercore:manual:blocks=Blocks
+
+gui.hammercore:manual/items/calculatron.title=Calculatron
+gui.hammercore:manual/items/calculatron.desc=This powerful item is capable of calculating very complicated expressions. Try it!
+
+gui.hammercore:manual/items/battery.title=Accumulator
+gui.hammercore:manual/items/battery.desc=This item is capable of storing 2M RF/FE.
+
+gui.hammercore:manual/items/wrench.title=Wrench
+gui.hammercore:manual/items/wrench.desc=HammerCore adds WrenchAPI to make APengu's mods independent of Buildcraft API. This item is a simple wrench that applies on tiles that respond to this API.
+
+##########
