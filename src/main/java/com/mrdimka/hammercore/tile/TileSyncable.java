@@ -1,5 +1,8 @@
 package com.mrdimka.hammercore.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,9 +25,12 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import com.mrdimka.hammercore.HammerCore;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSyncSyncableTile;
+import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
+import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 
-public abstract class TileSyncable extends TileEntity
+public abstract class TileSyncable extends TileEntity implements IPropertyChangeHandler
 {
+	private final List<NetPropertyAbstract> properties = new ArrayList<>();
 	private NBTTagCompound lastSyncTag;
 	
 	/** Turn this to false to force this tile to sync even if it's old and new tags are equal */
@@ -160,5 +166,33 @@ public abstract class TileSyncable extends TileEntity
 	public Object getClientGuiElement(EntityPlayer player)
 	{
 		return null;
+	}
+	
+	/** NEW PROPERTY API */
+	
+	@Override
+	public int registerProperty(NetPropertyAbstract prop)
+	{
+		if(properties.contains(prop))
+			return properties.indexOf(prop);
+		properties.add(prop);
+		return properties.size() - 1;
+	}
+	
+	@Override
+	public void load(int id, NBTTagCompound nbt)
+	{
+		if(id >= 0 && id < properties.size())
+			properties.get(id).readFromNBT(nbt);
+	}
+	
+	public void notifyOfChange(NetPropertyAbstract prop)
+	{
+	}
+	
+	@Override
+	public void sendChangesToNearby()
+	{
+		sync();
 	}
 }

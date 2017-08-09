@@ -2,10 +2,8 @@ package com.mrdimka.hammercore.client.renderer;
 
 import net.minecraft.client.Minecraft;
 
-import com.mrdimka.hammercore.client.UV;
 import com.mrdimka.hammercore.client.renderer.item.ItemTorchRender;
 import com.mrdimka.hammercore.client.utils.RenderUtil;
-import com.mrdimka.hammercore.math.MathHelper;
 
 public class RenderSmoke implements IRenderable
 {

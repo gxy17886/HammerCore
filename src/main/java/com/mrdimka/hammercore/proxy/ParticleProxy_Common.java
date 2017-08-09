@@ -2,12 +2,12 @@ package com.mrdimka.hammercore.proxy;
 
 import java.awt.Color;
 
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+
 import com.mrdimka.hammercore.client.particles.IParticle;
 import com.mrdimka.hammercore.net.HCNetwork;
 import com.mrdimka.hammercore.net.pkt.PacketSpawnZap;
-
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
 
 public class ParticleProxy_Common
 {

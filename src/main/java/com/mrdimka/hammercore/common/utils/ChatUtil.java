@@ -1,7 +1,5 @@
 package com.mrdimka.hammercore.common.utils;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.ITextComponent;

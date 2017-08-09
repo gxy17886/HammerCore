@@ -1,9 +1,9 @@
 package com.mrdimka.hammercore.common.utils;
 
-import com.mrdimka.hammercore.common.InterItemStack;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+
+import com.mrdimka.hammercore.common.InterItemStack;
 
 /**
  * Utility class focused on parsing {@link String} to {@link ItemStack}

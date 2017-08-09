@@ -2,13 +2,6 @@ package com.mrdimka.hammercore.raytracer;
 
 import java.util.List;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.math.MathHelper;
-import com.mrdimka.hammercore.vec.Cuboid6;
-import com.mrdimka.hammercore.vec.Vector3;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +14,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.mrdimka.hammercore.HammerCore;
+import com.mrdimka.hammercore.math.MathHelper;
+import com.mrdimka.hammercore.vec.Cuboid6;
+import com.mrdimka.hammercore.vec.Vector3;
 
 public class RayTracer
 {

@@ -1,5 +1,9 @@
 package com.mrdimka.hammercore.vec;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -13,10 +17,6 @@ import org.lwjgl.util.vector.Vector4f;
 
 import com.mrdimka.hammercore.common.utils.Copyable;
 import com.mrdimka.hammercore.math.MathHelper;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 public class Vector3 implements Copyable<Vector3>
 {

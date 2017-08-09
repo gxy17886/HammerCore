@@ -29,6 +29,7 @@ import com.mrdimka.hammercore.client.renderer.tile.TileRenderMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
 import com.mrdimka.hammercore.init.ModItems;
+import com.pengu.hammercore.client.render.Render3D;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common
@@ -37,6 +38,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 	public void construct()
 	{
 		MinecraftForge.EVENT_BUS.register(new RenderGui());
+		MinecraftForge.EVENT_BUS.register(new Render3D());
 		
 		boolean RenderProxy_Client_construct_addCustomItemRenderers = false;
 		

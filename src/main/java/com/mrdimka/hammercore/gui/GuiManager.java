@@ -1,14 +1,14 @@
 package com.mrdimka.hammercore.gui;
 
-import com.mrdimka.hammercore.common.utils.WorldUtil;
-import com.mrdimka.hammercore.gui.container.ContainerEmpty;
-import com.mrdimka.hammercore.tile.TileSyncable;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+
+import com.mrdimka.hammercore.common.utils.WorldUtil;
+import com.mrdimka.hammercore.gui.container.ContainerEmpty;
+import com.mrdimka.hammercore.tile.TileSyncable;
 
 public class GuiManager implements IGuiHandler
 {

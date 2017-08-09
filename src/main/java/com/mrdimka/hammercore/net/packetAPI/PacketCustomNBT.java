@@ -1,11 +1,6 @@
 package com.mrdimka.hammercore.net.packetAPI;
 
 import io.netty.buffer.ByteBuf;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

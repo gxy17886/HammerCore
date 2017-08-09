@@ -1,9 +1,5 @@
 package com.mrdimka.hammercore.common.utils;
 
-import com.mrdimka.hammercore.json.JSONArray;
-import com.mrdimka.hammercore.json.JSONException;
-import com.mrdimka.hammercore.json.JSONObject;
-
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagByteArray;
@@ -16,6 +12,10 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.nbt.NBTTagShort;
 import net.minecraft.nbt.NBTTagString;
+
+import com.mrdimka.hammercore.json.JSONArray;
+import com.mrdimka.hammercore.json.JSONException;
+import com.mrdimka.hammercore.json.JSONObject;
 
 public class JSONObjectToNBT
 {

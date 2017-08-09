@@ -2,24 +2,20 @@ package com.mrdimka.hammercore.common.items.debug;
 
 import java.awt.Color;
 
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.raytracer.RayTracer;
-
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.HammerCore;
+import com.mrdimka.hammercore.raytracer.RayTracer;
 
 public final class ItemZapper extends Item
 {

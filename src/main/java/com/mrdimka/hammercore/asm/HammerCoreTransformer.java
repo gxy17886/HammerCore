@@ -1,16 +1,6 @@
 package com.mrdimka.hammercore.asm;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.util.Queue;
-
-import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.Type;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
-
 import net.minecraft.launchwrapper.IClassTransformer;
-import static com.mrdimka.hammercore.asm.HammerCoreCore.*;
 
 /**
  * Transforms classes

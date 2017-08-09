@@ -16,7 +16,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants.NBT;
 
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.utils.WorldUtil;

@@ -11,10 +11,6 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Set;
-import java.util.zip.Deflater;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
 
 import com.mrdimka.hammercore.common.utils.IOUtils;
 

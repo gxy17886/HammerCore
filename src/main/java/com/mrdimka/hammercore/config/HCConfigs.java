@@ -2,11 +2,11 @@ package com.mrdimka.hammercore.config;
 
 import java.io.File;
 
-import com.mrdimka.hammercore.annotations.MCFBus;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+
+import com.mrdimka.hammercore.annotations.MCFBus;
 
 @MCFBus
 public class HCConfigs

@@ -10,7 +10,6 @@ import com.mrdimka.hammercore.api.mhb.BlockTraceable;
 import com.mrdimka.hammercore.api.mhb.ICubeManager;
 import com.mrdimka.hammercore.api.mhb.IRayCubeGetter;
 import com.mrdimka.hammercore.api.mhb.IRayCubeRegistry;
-import com.mrdimka.hammercore.api.mhb.IRayCubeGetter.Instance;
 import com.mrdimka.hammercore.vec.Cuboid6;
 
 final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter

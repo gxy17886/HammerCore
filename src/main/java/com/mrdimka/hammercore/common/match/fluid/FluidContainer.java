@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import com.mrdimka.hammercore.fluiddict.FluidDictionary;
 

@@ -1,12 +1,12 @@
 package com.mrdimka.hammercore.common.blocks;
 
-import com.mrdimka.hammercore.tile.TileInfiRF;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.tile.TileInfiRF;
 
 public class BlockInfiRF extends Block implements ITileEntityProvider
 {

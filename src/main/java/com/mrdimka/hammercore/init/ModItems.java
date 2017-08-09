@@ -6,7 +6,6 @@ import java.util.Set;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import com.mrdimka.hammercore.HammerCore;

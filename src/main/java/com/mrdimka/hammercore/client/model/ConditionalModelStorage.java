@@ -6,8 +6,6 @@ import java.util.List;
 
 import net.minecraft.client.model.ModelBase;
 
-import com.mrdimka.hammercore.client.model.CasedModel;
-
 public class ConditionalModelStorage
 {
 	public final CasedModel source;

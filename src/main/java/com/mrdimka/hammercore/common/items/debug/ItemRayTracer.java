@@ -1,10 +1,5 @@
 package com.mrdimka.hammercore.common.items.debug;
 
-import com.mrdimka.hammercore.HammerCore;
-import com.mrdimka.hammercore.common.utils.ChatUtil;
-import com.mrdimka.hammercore.raytracer.RayTracer;
-
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,6 +8,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.raytracer.RayTracer;
 
 public final class ItemRayTracer extends Item
 {

@@ -1,8 +1,8 @@
 package com.mrdimka.hammercore.api;
 
-import com.mrdimka.hammercore.HammerCore;
-
 import net.minecraftforge.fml.common.versioning.ComparableVersion;
+
+import com.mrdimka.hammercore.HammerCore;
 
 /**
  * Allows modder to check for external APIs

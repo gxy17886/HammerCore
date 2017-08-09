@@ -1,11 +1,14 @@
 package com.mrdimka.hammercore.client.utils;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import com.pengu.hammercore.color.Color;
 
 @SideOnly(Side.CLIENT)
 public class RenderUtil
@@ -48,5 +51,10 @@ public class RenderUtil
         vertexbuffer.pos(xCoord + widthIn, yCoord, 0).tex((double)textureSprite.getMaxU(), (double)textureSprite.getMinV()).endVertex();
         vertexbuffer.pos(xCoord, yCoord, 0).tex((double)textureSprite.getMinU(), (double)textureSprite.getMinV()).endVertex();
         tessellator.draw();
+    }
+	
+	public static void drawTextRGBA(FontRenderer font, String s, int x, int y, int r, int g, int b, int a)
+    {
+		font.drawString(s, x, y, Color.packARGB(r, g, b, a));
     }
 }

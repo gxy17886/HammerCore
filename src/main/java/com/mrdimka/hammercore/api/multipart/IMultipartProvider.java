@@ -1,12 +1,12 @@
 package com.mrdimka.hammercore.api.multipart;
 
-import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 
 /**
  * Provides {@link MultipartSignature}. Used for blocks.

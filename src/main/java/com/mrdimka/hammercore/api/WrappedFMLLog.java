@@ -1,8 +1,8 @@
 package com.mrdimka.hammercore.api;
 
-import org.apache.logging.log4j.Level;
-
 import net.minecraftforge.fml.common.FMLLog;
+
+import org.apache.logging.log4j.Level;
 
 /**
  * Implementation for {@link ILog}. Used in {@link IHammerCoreAPI#init(ILog, String)}
