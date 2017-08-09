@@ -72,9 +72,9 @@ public class HammerCoreTransformer implements IClassTransformer
 		}
 		
 		{
-			String CL_OBF = "oh", CL_DEOBF = "net.minecraft.util.HttpUtil", FN_OBF = "a", FN_DEOBF = "getSuitableLanPort";
+			String CL_OBF = "rb", CL_DEOBF = "net.minecraft.util.HttpUtil", FN_OBF = "a", FN_DEOBF = "getSuitableLanPort";
 			
-			if(name.equals(CL_OBF) || name.equals(CL_DEOBF))
+			if(name.equals(CL_OBF) || name.equals(CL_DEOBF) || transformedName.equals(CL_DEOBF))
 			{
 				boolean obf = name.equals(CL_OBF);
 				HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.util.HttpUtil (" + name + ")...");
