@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
@@ -37,7 +36,6 @@ import com.mrdimka.hammercore.client.utils.RenderUtil;
 import com.mrdimka.hammercore.math.MathHelper;
 import com.pengu.hammercore.client.render.world.PositionRenderer;
 import com.pengu.hammercore.color.Color;
-import com.pengu.hammercore.color.ColorARGB;
 
 public class Render3D
 {
@@ -212,22 +210,5 @@ public class Render3D
 		playerTextures.put(MinecraftProfileTexture.Type.SKIN, texture);
 		if(texture == null)
 			ObfuscationReflectionHelper.setPrivateValue(NetworkPlayerInfo.class, playerInfo, false, 4);
-	}
-	
-	public static void drawLine(Vec3d start, Vec3d end, int color, float size)
-	{
-		GlStateManager.enableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.disableTexture2D();
-		ColorARGB.glColourRGBA(color);
-		GL11.glPushMatrix();
-		GL11.glLineWidth(size);
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glVertex3d(start.xCoord, start.yCoord, start.zCoord);
-		GL11.glVertex3d(end.xCoord, end.yCoord, end.zCoord);
-		GL11.glEnd();
-		GL11.glPopMatrix();
-		GlStateManager.enableTexture2D();
-		ColorARGB.glColourRGBA(0xFFFFFFFF);
 	}
 }
