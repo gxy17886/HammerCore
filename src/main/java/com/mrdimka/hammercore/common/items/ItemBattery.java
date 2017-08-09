@@ -88,6 +88,9 @@ public class ItemBattery extends ItemFEBase
 	
 	protected void chargeItem(ItemStack batteryStack, ItemStack targetStack)
 	{
+		if(targetStack == null)
+			return;
+		
 		// don't charge other active batteries
 		if(targetStack.getItem() instanceof ItemBattery && getMode(targetStack) != EnumBatteryShareMode.NOT_SHARE)
 			return;
