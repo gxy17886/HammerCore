@@ -142,4 +142,14 @@ public class IndexedMap<K, V> implements Map<K, V>, Serializable
 			set.add(new ArrayEntry<K, V>(key, values.get(keys.indexOf(key))));
 		return set;
 	}
+	
+	public List<K> getKeys()
+    {
+	    return keys;
+    }
+	
+	public List<V> getValues()
+    {
+	    return values;
+    }
 }

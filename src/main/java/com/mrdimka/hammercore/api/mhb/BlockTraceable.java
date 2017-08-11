@@ -194,21 +194,6 @@ public abstract class BlockTraceable extends Block
 				cuboids.clear();
 				cuboids.add(cbd);
 			}
-			
-			// double crr0 = cbd.min.toVec3d().squareDistanceTo(start);
-			// double crr1 = cbd.max.toVec3d().squareDistanceTo(start);
-			// if(crr0 < min)
-			// {
-			// min = crr0;
-			// cuboids.clear();
-			// cuboids.add(cbd);
-			// }
-			// if(crr1 < min)
-			// {
-			// min = crr1;
-			// cuboids.clear();
-			// cuboids.add(cbd);
-			// }
 		}
 		
 		ExtendedRayTraceResult rtl = RayTracer.rayTraceCuboids(new Vector3(start), new Vector3(end), cuboids, p);
@@ -239,6 +224,9 @@ public abstract class BlockTraceable extends Block
 	
 	public Cuboid6 getCuboidFromRTR(World world, RayTraceResult hit)
 	{
+		if(hit == null)
+			return null;
+		
 		BlockPos pos = hit.getBlockPos();
 		if(pos == null)
 			return null;

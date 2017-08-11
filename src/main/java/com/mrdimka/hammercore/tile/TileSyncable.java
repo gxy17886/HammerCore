@@ -98,11 +98,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	@Override
 	public NBTTagCompound getUpdateTag()
 	{
-		NBTTagCompound nbt = new NBTTagCompound();
-		writeNBT(nbt);
-		if(this instanceof TileSyncableTickable)
-			nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
-		return nbt;
+		return writeToNBT(new NBTTagCompound());
 	}
 	
 	@Override
@@ -114,17 +110,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{
-		readNBT(pkt.getNbtCompound());
-		if(this instanceof TileSyncableTickable)
-			((TileSyncableTickable) this).ticksExisted = pkt.getNbtCompound().getInteger("ticksExisted");
-	}
-	
-	@Override
-	public void handleUpdateTag(NBTTagCompound tag)
-	{
-		readNBT(tag);
-		if(this instanceof TileSyncableTickable)
-			((TileSyncableTickable) this).ticksExisted = tag.getInteger("ticksExisted");
+		readFromNBT(pkt.getNbtCompound());
 	}
 	
 	public TargetPoint getSyncPoint(int range)
@@ -142,7 +128,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 		nbt = super.writeToNBT(nbt);
 		NBTTagCompound tag = new NBTTagCompound();
 		writeNBT(tag);
-		nbt.setTag("tags", tag);
+		nbt.setTag("Tags", tag);
 		if(this instanceof TileSyncableTickable)
 			nbt.setInteger("ticksExisted", ((TileSyncableTickable) this).ticksExisted);
 		return nbt;
@@ -155,7 +141,7 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 			readNBT_world = worldObj;
 		
 		super.readFromNBT(nbt);
-		readNBT(nbt.getCompoundTag("tags"));
+		readNBT(nbt.getCompoundTag("Tags"));
 		if(this instanceof TileSyncableTickable)
 			((TileSyncableTickable) this).ticksExisted = nbt.getInteger("ticksExisted");
 		

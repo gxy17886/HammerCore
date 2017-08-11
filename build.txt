@@ -1,5 +1,5 @@
 forge_version=1.10.2-12.18.3.2422
-mod_version=1.9.4.1
+mod_version=1.9.4.2
 project_id=247401
 use_recommended=false
 release_type=release

@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -24,7 +23,6 @@ import org.apache.logging.log4j.Level;
 import com.mrdimka.hammercore.client.RenderGui;
 import com.mrdimka.hammercore.client.renderer.IRenderHelper;
 import com.mrdimka.hammercore.client.renderer.RenderHelperImpl;
-import com.mrdimka.hammercore.client.renderer.item.ItemTorchRender;
 import com.mrdimka.hammercore.client.renderer.tile.TileRenderMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.common.items.MultiVariantItem;
@@ -40,14 +38,6 @@ public class RenderProxy_Client extends RenderProxy_Common
 	{
 		MinecraftForge.EVENT_BUS.register(new RenderGui());
 		MinecraftForge.EVENT_BUS.register(new Render3D());
-		
-		boolean RenderProxy_Client_construct_addCustomItemRenderers = false;
-		
-		if(RenderProxy_Client_construct_addCustomItemRenderers)
-		{
-			getRenderHelper().registerItemRender(Item.getItemFromBlock(Blocks.TORCH), new ItemTorchRender());
-			getRenderHelper().registerItemRender(Item.getItemFromBlock(Blocks.REDSTONE_TORCH), new ItemTorchRender());
-		}
 	}
 	
 	@Override

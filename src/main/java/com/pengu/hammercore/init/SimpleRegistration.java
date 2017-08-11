@@ -119,9 +119,6 @@ public class SimpleRegistration
 		if(block instanceof ITileBlock)
 		{
 			Class c = ((ITileBlock) block).getTileClass();
-			
-			// Better registration of tiles. Maybe this will fix tile
-			// disappearing?
 			GameRegistry.registerTileEntity(c, modid + ":" + c.getName().substring(c.getName().lastIndexOf(".") + 1).toLowerCase());
 		} else if(block instanceof ITileEntityProvider)
 		{
@@ -136,13 +133,12 @@ public class SimpleRegistration
 		
 		if(!(block instanceof INoItemBlock))
 		{
-			Item i = Item.getItemFromBlock(block);
-			if(i instanceof IRegisterListener)
-				((IRegisterListener) i).onRegistered();
-			if(i instanceof MultiVariantItem)
-				ItemsHC.multiitems.add((MultiVariantItem) i);
-			else if(i != null)
-				ItemsHC.items.add(i);
+			if(ib instanceof IRegisterListener)
+				((IRegisterListener) ib).onRegistered();
+			if(ib instanceof MultiVariantItem)
+				ItemsHC.multiitems.add((MultiVariantItem) ib);
+			else if(ib != null)
+				ItemsHC.items.add(ib);
 		}
 	}
 }

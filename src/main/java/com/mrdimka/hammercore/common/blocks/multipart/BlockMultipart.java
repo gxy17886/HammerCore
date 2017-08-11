@@ -176,7 +176,7 @@ public class BlockMultipart extends BlockTraceable implements ITileEntityProvide
 		if(!activated)
 		{
 			ItemStack stack = playerIn.getHeldItem(hand);
-			if(stack.getItem() instanceof ItemBlockMultipartProvider)
+			if(stack != null && stack.getItem() instanceof ItemBlockMultipartProvider)
 			{
 				EnumActionResult r = stack.getItem().onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX + 1, hitY, hitZ);
 				if(r == EnumActionResult.SUCCESS)

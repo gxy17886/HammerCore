@@ -19,12 +19,13 @@ import com.mrdimka.hammercore.api.multipart.MultipartSignature;
 import com.mrdimka.hammercore.common.blocks.multipart.BlockMultipart;
 import com.mrdimka.hammercore.common.blocks.multipart.TileMultipart;
 import com.mrdimka.hammercore.vec.Cuboid6;
+import com.pengu.hammercore.client.render.tesr.TESR;
 import com.pengu.hammercore.init.BlocksHC;
 
-public class TileRenderMultipart extends TileEntitySpecialRenderer<TileMultipart>
+public class TileRenderMultipart extends TESR<TileMultipart>
 {
 	@Override
-	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, int destroyStage)
+	public void renderTileEntityAt(TileMultipart te, double x, double y, double z, float partialTicks, ResourceLocation destroyStage)
 	{
 		List<MultipartSignature> mps = te.signatures();
 		if(mps == null)
