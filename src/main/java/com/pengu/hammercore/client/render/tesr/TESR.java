@@ -27,17 +27,21 @@ public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRender
 	@Override
 	public final void renderTileEntityAt(T te, double x, double y, double z, float partialTicks, int destroyStage)
 	{
-		ResourceLocation destroy = null;
-		RayTraceResult over = mc.objectMouseOver;
-		destroyProgress = 0;
-		if(over != null && over.typeOfHit == Type.BLOCK && over.getBlockPos().equals(te.getPos()))
+		try
 		{
-			float progress = destroyProgress = Minecraft.getMinecraft().playerController.curBlockDamageMP;
-			if(progress > 0F)
-				destroy = DestroyStageTexture.getByProgress(progress);
+			ResourceLocation destroy = null;
+			RayTraceResult over = mc.objectMouseOver;
+			destroyProgress = 0;
+			if(over != null && over.typeOfHit == Type.BLOCK && over.getBlockPos().equals(te.getPos()))
+			{
+				float progress = destroyProgress = Minecraft.getMinecraft().playerController.curBlockDamageMP;
+				if(progress > 0F)
+					destroy = DestroyStageTexture.getByProgress(progress);
+			}
+			
+			renderTileEntityAt(te, x, y, z, partialTicks, destroy);
 		}
-		
-		renderTileEntityAt(te, x, y, z, partialTicks, destroy);
+		catch(Throwable err) {}
 	}
 	
 	@Override

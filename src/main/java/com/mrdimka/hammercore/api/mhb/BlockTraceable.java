@@ -224,7 +224,7 @@ public abstract class BlockTraceable extends Block
 	
 	public Cuboid6 getCuboidFromRTR(World world, RayTraceResult hit)
 	{
-		if(hit == null)
+		if(hit == null || registry == null)
 			return null;
 		
 		BlockPos pos = hit.getBlockPos();
