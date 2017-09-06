@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
@@ -18,6 +19,9 @@ import org.objectweb.asm.tree.VarInsnNode;
 import org.objectweb.asm.util.Printer;
 import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
+
+import com.pengu.hammercore.utils.RoundRobinList;
+import com.pengu.hammercore.utils.SaveThread;
 
 /**
  * Transforms classes
@@ -38,24 +42,22 @@ public class HammerCoreTransformer implements IClassTransformer
 	 * Lnet/minecraft/util/BlockPos;)I */
 	private String goalInvokeDesc = "(Latl;Laju;Lco;)I";
 	
-	// private static final RoundRobinList<SaveThread> saves = new
-	// RoundRobinList<>();
-	//
-	// static
-	// {
-	// for(int i = 0; i < 2; ++i)
-	// {
-	// SaveThread e = new SaveThread();
-	// e.start();
-	// saves.add(e);
-	// }
-	// }
+	private static final RoundRobinList<SaveThread> saves = new RoundRobinList<>();
+	
+	static
+	{
+		// for(int i = 0; i < 2; ++i)
+		// {
+		// SaveThread e = new SaveThread();
+		// e.start();
+		// saves.add(e);
+		// }
+	}
 	
 	@Override
 	public byte[] transform(String name, String transformedName, byte[] basicClass)
 	{
-		byte[] cl = handleTransform(name, transformedName, basicClass);
-		return cl;
+		return handleTransform(name, transformedName, basicClass);
 	}
 	
 	private byte[] handleTransform(String name, String transformedName, byte[] basicClass)
@@ -69,40 +71,86 @@ public class HammerCoreTransformer implements IClassTransformer
 			return handleWorldTransform(basicClass, false);
 		}
 		
-		if(name.equals("net.minecraft.block.BlockSnow") || name.equals("aqs"))
 		{
-			HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.block.BlockSnow (" + name + ")...");
-			ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
-			boolean obf = name.equals("aqs");
-			HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") + "obfuscated minecraft.");
+			String CL_OBF = "rb", CL_DEOBF = "net.minecraft.util.HttpUtil", FN_OBF = "a", FN_DEOBF = "getSuitableLanPort";
 			
-			String desc = "(Lajs;Lco;Latl;Ljava/util/Random;)V";
-			if(!obf)
-				desc = "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
-			
-			for(MethodNode m : classNode.methods)
+			if(name.equals(CL_OBF) || name.equals(CL_DEOBF) || transformedName.equals(CL_DEOBF))
 			{
-				// if(m.desc.equals(desc) && (m.name.equals("b") ||
-				// m.name.equals("func_180650_b") ||
-				// m.name.equals("updateTick")))
-				// {
-				// InsnList updateTick = new InsnList();
-				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
-				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
-				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
-				// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
-				// updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
-				// "com/pengu/hammercore/asm/SnowfallHooks", "updateTick",
-				// m.desc));
-				// updateTick.add(new InsnNode(Opcodes.RETURN));
-				//
-				// m.instructions = updateTick;
-				// HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
-				// }
+				boolean obf = name.equals(CL_OBF);
+				HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.util.HttpUtil (" + name + ")...");
+				
+				ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
+				
+				String targetMethod;
+				if(obf)
+					targetMethod = FN_OBF;
+				else
+					targetMethod = FN_DEOBF;
+				
+				for(MethodNode m : classNode.methods)
+					if(m.name.equals(targetMethod) && m.desc.equals("()I"))
+					{
+						int index = -1;
+						AbstractInsnNode instruction = null;
+						
+						ListIterator<AbstractInsnNode> instructions = m.instructions.iterator();
+						while(instructions.hasNext())
+						{
+							index++;
+							instruction = instructions.next();
+							if(instruction.getOpcode() == 3)
+							{
+								AbstractInsnNode toRemove = m.instructions.get(index);
+								m.instructions.remove(toRemove);
+								
+								InsnList toInject = new InsnList();
+								toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "com/pengu/hammercore/net/LanUtil", "getSuitableLanPort", "()I"));
+								m.instructions.insertBefore(m.instructions.get(index), toInject);
+								HammerCoreCore.ASM_LOG.info("-Sending instructions to HttpUtil for function getSuitableLanPort");
+							}
+						}
+					}
+				
+				return ObjectWebUtils.writeClassToByteArray(classNode);
 			}
-			
-			return ObjectWebUtils.writeClassToByteArray(classNode);
 		}
+		
+		// if(name.equals("net.minecraft.block.BlockSnow") ||
+		// name.equals("aqs"))
+		// {
+		// HammerCoreCore.ASM_LOG.info("Transforming net.minecraft.block.BlockSnow ("
+		// + name + ")...");
+		// ClassNode classNode = ObjectWebUtils.loadClass(basicClass);
+		// boolean obf = name.equals("aqs");
+		// HammerCoreCore.ASM_LOG.info("-We are in " + (obf ? "" : "de") +
+		// "obfuscated minecraft.");
+		//
+		// String desc = "(Lajs;Lco;Latl;Ljava/util/Random;)V";
+		// if(!obf)
+		// desc =
+		// "(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/state/IBlockState;Ljava/util/Random;)V";
+		//
+		// for(MethodNode m : classNode.methods)
+		// {
+		// if(m.desc.equals(desc) && (m.name.equals("b") ||
+		// m.name.equals("func_180650_b") || m.name.equals("updateTick")))
+		// {
+		// InsnList updateTick = new InsnList();
+		// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 1));
+		// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 2));
+		// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 3));
+		// updateTick.add(new VarInsnNode(Opcodes.ALOAD, 4));
+		// updateTick.add(new MethodInsnNode(Opcodes.INVOKESTATIC,
+		// "com/pengu/hammercore/asm/SnowfallHooks", "updateTick", m.desc));
+		// updateTick.add(new InsnNode(Opcodes.RETURN));
+		//
+		// m.instructions = updateTick;
+		// HammerCoreCore.ASM_LOG.info("-Sending instructions to BlockSnow for function updateTick");
+		// }
+		// }
+		//
+		// return ObjectWebUtils.writeClassToByteArray(classNode);
+		// }
 		
 		return basicClass;
 	}

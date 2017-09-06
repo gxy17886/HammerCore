@@ -18,8 +18,7 @@ public class ItemCapabilityProvider implements ICapabilityProvider
 	
 	public void clearCaps(EnumFacing... facings)
 	{
-		for(EnumFacing facing : facings)
-			CAPS.remove(facing);
+		CAPS.clear();
 	}
 	
 	@Override

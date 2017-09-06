@@ -36,12 +36,6 @@ public class GuiModBrowser extends GuiScreen
 	}
 	
 	@Override
-	public void initGui()
-	{
-		super.initGui();
-	}
-	
-	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		drawDefaultBackground();

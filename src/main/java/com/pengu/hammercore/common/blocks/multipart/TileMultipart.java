@@ -228,7 +228,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		if(signature instanceof IRandomDisplayTick)
 		{
 			Set<IRandomDisplayTick> ticks = new HashSet<>(displayTickable);
-			ticks.remove(signature);
+			ticks.remove((IRandomDisplayTick) signature);
 			displayTickable = ticks;
 		}
 		lastBaked = null;

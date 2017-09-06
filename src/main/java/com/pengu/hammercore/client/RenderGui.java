@@ -1,6 +1,7 @@
 package com.pengu.hammercore.client;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Field;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiShareToLan;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiBrewingStand;
 import net.minecraft.client.gui.inventory.GuiFurnace;
@@ -33,11 +35,13 @@ import org.lwjgl.opengl.GL11;
 
 import com.pengu.hammercore.api.RequiredDeps;
 import com.pengu.hammercore.cfg.HammerCoreConfigs;
+import com.pengu.hammercore.cfg.gui.HCConfigGui;
 import com.pengu.hammercore.client.utils.GLImageManager;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.common.utils.IOUtils;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.gui.GuiMissingApis;
+import com.pengu.hammercore.gui.GuiShareToLanImproved;
 import com.pengu.hammercore.gui.modbrowser.GuiModBrowserLoading;
 import com.pengu.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.pengu.hammercore.gui.smooth.GuiFurnaceSmooth;
@@ -212,6 +216,18 @@ public class RenderGui
 		if(gui instanceof GuiMainMenu && !RequiredDeps.allDepsResolved())
 			gui = new GuiMissingApis();
 		
+		if(gui instanceof GuiShareToLan && HammerCoreConfigs.client_improvedLAN)
+		{
+			try
+			{
+				Field f = gui.getClass().getDeclaredFields()[0];
+				f.setAccessible(true);
+				gui = new GuiShareToLanImproved((GuiScreen) f.get(gui));
+			} catch(Throwable err)
+			{
+			}
+		}
+		
 		smooth:
 		{
 			// @since 1.5.1
@@ -252,7 +268,7 @@ public class RenderGui
 		{
 			try
 			{
-				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("http://pastebin.com/raw/JKDpcHL1"))).nextValue();
+				JSONArray arr = (JSONArray) new JSONTokener(new String(IOUtils.downloadData("http://pastebin.com/raw/ZQaapJ54"))).nextValue();
 				
 				for(int i = 0; i < arr.length(); ++i)
 				{

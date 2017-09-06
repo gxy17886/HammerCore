@@ -220,7 +220,6 @@ public abstract class TileSyncable extends TileEntity implements IPropertyChange
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	@Nullable
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
