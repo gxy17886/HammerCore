@@ -25,9 +25,9 @@ import com.pengu.hammercore.common.utils.WorldUtil;
  */
 public class ItemBlockMultipartProvider extends Item
 {
-	public final IMultipartProvider provider;
+	public final iMultipartProvider provider;
 	
-	public ItemBlockMultipartProvider(IMultipartProvider provider)
+	public ItemBlockMultipartProvider(iMultipartProvider provider)
 	{
 		this.provider = provider;
 	}
@@ -37,7 +37,7 @@ public class ItemBlockMultipartProvider extends Item
 	 */
 	public ItemBlockMultipartProvider()
 	{
-		this.provider = (IMultipartProvider) this;
+		this.provider = (iMultipartProvider) this;
 	}
 	
 	@Override

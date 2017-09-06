@@ -11,10 +11,10 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import com.pengu.hammercore.common.capabilities.CapabilityEJ;
-import com.pengu.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.energy.iPowerStorage;
 import com.pengu.hammercore.ext.TeslaAPI;
 
-public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, IPowerStorage
+public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, iPowerStorage
 {
 	@Override
 	public void tick()
@@ -38,7 +38,7 @@ public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, 
 			
 			if(t.hasCapability(CapabilityEJ.ENERGY, f.getOpposite()))
 			{
-				IPowerStorage storage = t.getCapability(CapabilityEJ.ENERGY, f.getOpposite());
+				iPowerStorage storage = t.getCapability(CapabilityEJ.ENERGY, f.getOpposite());
 				if(storage != null)
 					storage.receiveEnergy(Integer.MAX_VALUE, false);
 			}

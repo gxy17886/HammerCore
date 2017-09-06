@@ -5,12 +5,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 public class NetPropertyAABB extends NetPropertyAbstract<AxisAlignedBB>
 {
-	public NetPropertyAABB(IPropertyChangeHandler handler)
+	public NetPropertyAABB(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyAABB(IPropertyChangeHandler handler, AxisAlignedBB initialValue)
+	public NetPropertyAABB(iPropertyChangeHandler handler, AxisAlignedBB initialValue)
 	{
 		super(handler, initialValue);
 	}

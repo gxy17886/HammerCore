@@ -13,8 +13,8 @@ public class PacketManager
 {
 	private static final Map<String, PacketManager> managers = new HashMap<String, PacketManager>();
 	
-	final Map<Class<? extends IPacket>, IPacketListener<?, ?>> registry = new HashMap<Class<? extends IPacket>, IPacketListener<?, ?>>();
-	final Map<String, IPacketListener<?, ?>> stringClassRegistry = new HashMap<String, IPacketListener<?, ?>>();
+	final Map<Class<? extends iPacket>, iPacketListener<?, ?>> registry = new HashMap<Class<? extends iPacket>, iPacketListener<?, ?>>();
+	final Map<String, iPacketListener<?, ?>> stringClassRegistry = new HashMap<String, iPacketListener<?, ?>>();
 	private final SimpleNetworkWrapper wrapper;
 	final String channel;
 	
@@ -69,31 +69,31 @@ public class PacketManager
 	 * @param listener
 	 *            The listener instance that will listen for packet events
 	 */
-	public <PKT extends IPacket, REPLY extends IPacket> void registerPacket(Class<PKT> packet, IPacketListener<PKT, REPLY> listener)
+	public <PKT extends iPacket, REPLY extends iPacket> void registerPacket(Class<PKT> packet, iPacketListener<PKT, REPLY> listener)
 	{
 		registry.put(packet, listener);
 		stringClassRegistry.put(packet.getName(), listener);
 	}
 	
-	public <PKT extends IPacket> IPacketListener<PKT, ?> getListener(Class<PKT> packet)
+	public <PKT extends iPacket> iPacketListener<PKT, ?> getListener(Class<PKT> packet)
 	{
-		return (IPacketListener<PKT, ?>) stringClassRegistry.get(packet.getName());
+		return (iPacketListener<PKT, ?>) stringClassRegistry.get(packet.getName());
 	}
 	
 	/**
-	 * Send this packet to everyone. The {@link IPacketListener} for this packet
+	 * Send this packet to everyone. The {@link iPacketListener} for this packet
 	 * type should be on the CLIENT side.
 	 *
 	 * @param packet
 	 *            The packet to send
 	 */
-	public void sendToAll(IPacket packet)
+	public void sendToAll(iPacket packet)
 	{
 		wrapper.sendToAll(new PacketCustomNBT(packet, channel));
 	}
 	
 	/**
-	 * Send this packet to the specified player. The {@link IPacketListener} for
+	 * Send this packet to the specified player. The {@link iPacketListener} for
 	 * this packet type should be on the CLIENT side.
 	 *
 	 * @param packet
@@ -101,14 +101,14 @@ public class PacketManager
 	 * @param player
 	 *            The player to send it to
 	 */
-	public void sendTo(IPacket packet, EntityPlayerMP player)
+	public void sendTo(iPacket packet, EntityPlayerMP player)
 	{
 		wrapper.sendTo(new PacketCustomNBT(packet, channel), player);
 	}
 	
 	/**
 	 * Send this packet to everyone within a certain range of a point. The
-	 * {@link IPacketListener} for this packet type should be on the CLIENT
+	 * {@link iPacketListener} for this packet type should be on the CLIENT
 	 * side.
 	 *
 	 * @param packet
@@ -116,14 +116,14 @@ public class PacketManager
 	 * @param point
 	 *            The {@link TargetPoint} around which to send
 	 */
-	public void sendToAllAround(IPacket packet, TargetPoint point)
+	public void sendToAllAround(iPacket packet, TargetPoint point)
 	{
 		wrapper.sendToAllAround(new PacketCustomNBT(packet, channel), point);
 	}
 	
 	/**
 	 * Send this packet to everyone within the supplied dimension. The
-	 * {@link IPacketListener} for this packet type should be on the CLIENT
+	 * {@link iPacketListener} for this packet type should be on the CLIENT
 	 * side.
 	 *
 	 * @param packet
@@ -131,19 +131,19 @@ public class PacketManager
 	 * @param dimensionId
 	 *            The dimension id to target
 	 */
-	public void sendToDimension(IPacket packet, int dimensionId)
+	public void sendToDimension(iPacket packet, int dimensionId)
 	{
 		wrapper.sendToDimension(new PacketCustomNBT(packet, channel), dimensionId);
 	}
 	
 	/**
-	 * Send this packet to the server. The {@link IPacketListener} for this
+	 * Send this packet to the server. The {@link iPacketListener} for this
 	 * packet type should be on the SERVER side.
 	 *
 	 * @param packet
 	 *            The packet to send
 	 */
-	public void sendToServer(IPacket packet)
+	public void sendToServer(iPacket packet)
 	{
 		wrapper.sendToServer(new PacketCustomNBT(packet, channel));
 	}

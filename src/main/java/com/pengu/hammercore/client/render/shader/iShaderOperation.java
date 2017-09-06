@@ -1,6 +1,6 @@
 package com.pengu.hammercore.client.render.shader;
 
-public interface IShaderOperation
+public interface iShaderOperation
 {
 	boolean load(ShaderProgram program);
 	

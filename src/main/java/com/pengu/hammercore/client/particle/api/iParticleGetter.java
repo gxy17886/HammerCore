@@ -4,7 +4,7 @@ import java.util.Set;
 
 import net.minecraft.client.particle.Particle;
 
-public interface IParticleGetter
+public interface iParticleGetter
 {
 	void addParticles(Set<Particle> particles);
 }

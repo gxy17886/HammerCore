@@ -22,11 +22,11 @@ import com.pengu.hammercore.common.utils.WorldUtil;
  */
 public class InventoryDummy implements IInventory
 {
-	public IInventoryListener listener;
+	public iInventoryListener listener;
 	public NonNullList<ItemStack> inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 	private final int[] allSlots;
 	public int inventoryStackLimit = 64;
-	public ISlotPredicate validSlots = (i, stack) -> true;
+	public iSlotPredicate validSlots = (i, stack) -> true;
 	public NBTTagCompound boundCompound = new NBTTagCompound();
 	
 	public InventoryDummy(int inventorySize, NBTTagCompound boundNBT)

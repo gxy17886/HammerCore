@@ -6,7 +6,7 @@ import java.util.Map;
 import com.pengu.hammercore.event.GetAllRequiredApisEvent;
 
 /**
- * Gather all required {@link IHammerCoreAPI}s
+ * Gather all required {@link iHammerCoreAPI}s
  */
 public class RequiredDeps
 {

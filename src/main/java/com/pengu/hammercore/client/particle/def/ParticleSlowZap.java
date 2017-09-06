@@ -15,12 +15,12 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.hammercore.client.particle.api.SimpleParticle;
-import com.pengu.hammercore.client.particle.old.IOldParticle;
+import com.pengu.hammercore.client.particle.old.iOldParticle;
 import com.pengu.hammercore.client.particle.old.ParticleParam;
 import com.pengu.hammercore.math.MathHelper;
 import com.pengu.hammercore.vec.Vector3;
 
-public class ParticleSlowZap extends SimpleParticle implements IOldParticle
+public class ParticleSlowZap extends SimpleParticle implements iOldParticle
 {
 	float ampl;
 	BlockPos pos;

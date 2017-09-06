@@ -8,9 +8,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import com.pengu.hammercore.common.match.item.ItemListContainerHelper;
 import com.pengu.hammercore.common.match.item.ItemMatchParams;
 import com.pengu.hammercore.recipeAPI.BrewingRecipe;
-import com.pengu.hammercore.recipeAPI.IRecipeType;
+import com.pengu.hammercore.recipeAPI.iRecipeType;
 
-public class BrewingRecipeType implements IRecipeType<BrewingRecipeHC>
+public class BrewingRecipeType implements iRecipeType<BrewingRecipeHC>
 {
 	@Override
 	public boolean isJeiSupported(BrewingRecipeHC recipe)

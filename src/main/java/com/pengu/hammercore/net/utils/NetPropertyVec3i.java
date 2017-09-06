@@ -8,12 +8,12 @@ import com.pengu.hammercore.HammerCore;
 
 public class NetPropertyVec3i<T extends Vec3i> extends NetPropertyAbstract<T>
 {
-	public NetPropertyVec3i(IPropertyChangeHandler handler)
+	public NetPropertyVec3i(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyVec3i(IPropertyChangeHandler handler, T initialValue)
+	public NetPropertyVec3i(iPropertyChangeHandler handler, T initialValue)
 	{
 		super(handler, initialValue);
 	}

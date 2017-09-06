@@ -7,14 +7,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketUpdateDirtyVariables implements IPacket, IPacketListener<PacketUpdateDirtyVariables, IPacket>
+public class PacketUpdateDirtyVariables implements iPacket, iPacketListener<PacketUpdateDirtyVariables, iPacket>
 {
 	public NBTTagList nbt;
 	
-	public PacketUpdateDirtyVariables(Map<String, IVariable> vars)
+	public PacketUpdateDirtyVariables(Map<String, iVariable> vars)
 	{
 		nbt = new NBTTagList();
 		for(String key : vars.keySet())
@@ -31,13 +31,13 @@ public class PacketUpdateDirtyVariables implements IPacket, IPacketListener<Pack
 	}
 	
 	@Override
-	public IPacket onArrived(PacketUpdateDirtyVariables packet, MessageContext context)
+	public iPacket onArrived(PacketUpdateDirtyVariables packet, MessageContext context)
 	{
 		NBTTagList list = packet.nbt;
 		for(int i = 0; i < list.tagCount(); ++i)
 		{
 			NBTTagCompound nbt = list.getCompoundTagAt(i);
-			IVariable var = VariableManager.getVariable(nbt.getString("Id"));
+			iVariable var = VariableManager.getVariable(nbt.getString("Id"));
 			if(var != null)
 				var.readFromNBT(nbt.getCompoundTag("Data"));
 		}

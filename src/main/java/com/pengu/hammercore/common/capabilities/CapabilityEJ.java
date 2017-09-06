@@ -10,35 +10,35 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
-import com.pengu.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.energy.iPowerStorage;
 import com.pengu.hammercore.energy.PowerStorage;
 
 public class CapabilityEJ
 {
-	@CapabilityInject(IPowerStorage.class)
-	public static Capability<IPowerStorage> ENERGY = null;
+	@CapabilityInject(iPowerStorage.class)
+	public static Capability<iPowerStorage> ENERGY = null;
 	
 	public static void register()
 	{
-		CapabilityManager.INSTANCE.register(IPowerStorage.class, new IStorage<IPowerStorage>()
+		CapabilityManager.INSTANCE.register(iPowerStorage.class, new IStorage<iPowerStorage>()
 		{
 			@Override
-			public NBTBase writeNBT(Capability<IPowerStorage> capability, IPowerStorage instance, EnumFacing side)
+			public NBTBase writeNBT(Capability<iPowerStorage> capability, iPowerStorage instance, EnumFacing side)
 			{
 				return new NBTTagInt(instance.getEnergyStored());
 			}
 			
 			@Override
-			public void readNBT(Capability<IPowerStorage> capability, IPowerStorage instance, EnumFacing side, NBTBase nbt)
+			public void readNBT(Capability<iPowerStorage> capability, iPowerStorage instance, EnumFacing side, NBTBase nbt)
 			{
 				if(!(instance instanceof PowerStorage))
 					throw new IllegalArgumentException("Can not deserialize to an instance that isn't the default implementation");
 				((PowerStorage) instance).energy = ((NBTTagInt) nbt).getInt();
 			}
-		}, new Callable<IPowerStorage>()
+		}, new Callable<iPowerStorage>()
 		{
 			@Override
-			public IPowerStorage call() throws Exception
+			public iPowerStorage call() throws Exception
 			{
 				return new PowerStorage(1000);
 			}

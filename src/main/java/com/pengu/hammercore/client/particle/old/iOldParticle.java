@@ -1,6 +1,6 @@
 package com.pengu.hammercore.client.particle.old;
 
-public interface IOldParticle
+public interface iOldParticle
 {
 	void setVel(double x, double y, double z);
 	

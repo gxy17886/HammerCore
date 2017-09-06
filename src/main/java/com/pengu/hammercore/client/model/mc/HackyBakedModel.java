@@ -39,20 +39,20 @@ import com.google.common.collect.ImmutableList;
 public class HackyBakedModel implements IBakedModel
 {
 	public static final List<BakedQuad> QUADS = Collections.emptyList();
-	public final ISimplifiedModel model;
+	public final iSimplifiedModel model;
 	private final Pair<IBakedModel, Matrix4f> selfPair;
 	private ItemCameraTransforms.TransformType currentPerspective;
 	private ItemStack lastStack;
 	private EntityLivingBase lastEntity;
 	VertexFormat defaultVertexFormat = DefaultVertexFormats.ITEM;
 	
-	public HackyBakedModel(ISimplifiedModel model)
+	public HackyBakedModel(iSimplifiedModel model)
 	{
 		this.model = model;
 		selfPair = Pair.of(this, null);
 	}
 	
-	public HackyBakedModel(@Nonnull ISimplifiedModel renderer, @Nonnull VertexFormat defVertexFormat)
+	public HackyBakedModel(@Nonnull iSimplifiedModel renderer, @Nonnull VertexFormat defVertexFormat)
 	{
 		this(renderer);
 		defaultVertexFormat = defVertexFormat;

@@ -11,7 +11,7 @@ import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 /**
  * Provides {@link MultipartSignature}. Used for blocks.
  */
-public interface IMultipartProvider
+public interface iMultipartProvider
 {
 	MultipartSignature createSignature(int signatureIndex, ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ);
 	

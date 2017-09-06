@@ -3,7 +3,7 @@ package com.pengu.hammercore.client.particle;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public interface IRenderHelper
+public interface iRenderHelper
 {
 	ResourceLocation END_PORTAL_TEXTURE = new ResourceLocation("textures/entity/end_portal.png");
 	

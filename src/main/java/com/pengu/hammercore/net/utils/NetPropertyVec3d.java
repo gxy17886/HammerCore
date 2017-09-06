@@ -5,12 +5,12 @@ import net.minecraft.util.math.Vec3d;
 
 public class NetPropertyVec3d extends NetPropertyAbstract<Vec3d>
 {
-	public NetPropertyVec3d(IPropertyChangeHandler handler)
+	public NetPropertyVec3d(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyVec3d(IPropertyChangeHandler handler, Vec3d initialValue)
+	public NetPropertyVec3d(iPropertyChangeHandler handler, Vec3d initialValue)
 	{
 		super(handler, initialValue);
 	}

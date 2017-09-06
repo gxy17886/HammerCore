@@ -6,10 +6,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
-import com.pengu.hammercore.api.ITileBlock;
+import com.pengu.hammercore.api.iTileBlock;
 import com.pengu.hammercore.tile.TileInfiRF;
 
-public class BlockInfiRF extends Block implements ITileEntityProvider, ITileBlock<TileInfiRF>
+public class BlockInfiRF extends Block implements ITileEntityProvider, iTileBlock<TileInfiRF>
 {
 	public BlockInfiRF()
 	{

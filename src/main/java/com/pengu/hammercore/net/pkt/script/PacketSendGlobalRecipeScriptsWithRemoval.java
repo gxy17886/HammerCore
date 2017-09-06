@@ -6,10 +6,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.pengu.hammercore.HammerCore.GRCProvider;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketSendGlobalRecipeScriptsWithRemoval implements IPacket, IPacketListener<PacketSendGlobalRecipeScriptsWithRemoval, IPacket>
+public class PacketSendGlobalRecipeScriptsWithRemoval implements iPacket, iPacketListener<PacketSendGlobalRecipeScriptsWithRemoval, iPacket>
 {
 	public int countRecipe, id;
 	public NBTTagList data;
@@ -26,7 +26,7 @@ public class PacketSendGlobalRecipeScriptsWithRemoval implements IPacket, IPacke
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSendGlobalRecipeScriptsWithRemoval packet, MessageContext context)
+	public iPacket onArrived(PacketSendGlobalRecipeScriptsWithRemoval packet, MessageContext context)
 	{
 		if(context.side == Side.CLIENT)
 		{

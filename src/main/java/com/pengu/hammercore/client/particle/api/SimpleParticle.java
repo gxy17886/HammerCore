@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
-public abstract class SimpleParticle extends Particle implements IRenderedParticle
+public abstract class SimpleParticle extends Particle implements iRenderedParticle
 {
 	public SimpleParticle(World worldIn, double posXIn, double posYIn, double posZIn)
 	{

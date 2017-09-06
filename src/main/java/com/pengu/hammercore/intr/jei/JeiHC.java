@@ -14,7 +14,7 @@ import com.pengu.hammercore.gui.smooth.GuiBrewingStandSmooth;
 import com.pengu.hammercore.gui.smooth.GuiFurnaceSmooth;
 
 @JEIPlugin
-public class JeiHC implements IModPlugin, IJeiRecipeModifier
+public class JeiHC implements IModPlugin, iJeiRecipeModifier
 {
 	IRecipeRegistry registry;
 	

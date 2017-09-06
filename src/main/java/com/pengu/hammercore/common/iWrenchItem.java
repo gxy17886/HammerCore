@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
-public interface IWrenchItem
+public interface iWrenchItem
 {
 	public boolean canWrench(ItemStack stack);
 	

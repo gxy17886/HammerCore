@@ -9,11 +9,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.intr.jei.IJeiRecipeModifier;
+import com.pengu.hammercore.intr.jei.iJeiRecipeModifier;
 
-public class SimpleRecipeScript implements IRecipeScript
+public class SimpleRecipeScript implements iRecipeScript
 {
-	public final Map<Object, IRecipeType> types = new HashMap<>();
+	public final Map<Object, iRecipeType> types = new HashMap<>();
 	public final Set<Object> swaps = new HashSet<>();
 	public NBTTagList makeTag;
 	private final Set<Object> JEIRecipesAdded = new HashSet<>();
@@ -24,15 +24,15 @@ public class SimpleRecipeScript implements IRecipeScript
 	{
 		for(Object o : types.keySet())
 		{
-			IRecipeType type = types.get(o);
+			iRecipeType type = types.get(o);
 			if(swaps.contains(o) && type.swapAddRemoveSupported(o))
 			{
 				type.removeOnLoad(o);
-				if(type.isJeiSupported(o) && IJeiRecipeModifier.Instance.JEIModifier != null)
+				if(type.isJeiSupported(o) && iJeiRecipeModifier.Instance.JEIModifier != null)
 				{
 					Object recipe = type.getJeiRecipeFor(o, true);
 					JEIRecipesRemoved.add(recipe);
-					IJeiRecipeModifier.Instance.JEIModifier.removeJEI(recipe);
+					iJeiRecipeModifier.Instance.JEIModifier.removeJEI(recipe);
 				}
 			} else
 			{
@@ -40,11 +40,11 @@ public class SimpleRecipeScript implements IRecipeScript
 					HammerCore.LOG.warn("Found recipe to remove but it doesn't support remove reverse operation!");
 				
 				type.addRecipe(o);
-				if(type.isJeiSupported(o) && IJeiRecipeModifier.Instance.JEIModifier != null)
+				if(type.isJeiSupported(o) && iJeiRecipeModifier.Instance.JEIModifier != null)
 				{
 					Object recipe = type.getJeiRecipeFor(o, false);
 					JEIRecipesAdded.add(recipe);
-					IJeiRecipeModifier.Instance.JEIModifier.addJEI(recipe);
+					iJeiRecipeModifier.Instance.JEIModifier.addJEI(recipe);
 				}
 			}
 		}
@@ -52,17 +52,17 @@ public class SimpleRecipeScript implements IRecipeScript
 	
 	public void remove()
 	{
-		if(IJeiRecipeModifier.Instance.JEIModifier != null)
+		if(iJeiRecipeModifier.Instance.JEIModifier != null)
 		{
 			for(Object recipe : JEIRecipesAdded)
-				IJeiRecipeModifier.Instance.JEIModifier.removeJEI(recipe);
+				iJeiRecipeModifier.Instance.JEIModifier.removeJEI(recipe);
 			for(Object recipe : JEIRecipesRemoved)
-				IJeiRecipeModifier.Instance.JEIModifier.addJEI(recipe);
+				iJeiRecipeModifier.Instance.JEIModifier.addJEI(recipe);
 		}
 		
 		for(Object o : types.keySet())
 		{
-			IRecipeType type = types.get(o);
+			iRecipeType type = types.get(o);
 			if(type.swapAddRemoveSupported(o))
 				type.addOnUnload(o);
 			else

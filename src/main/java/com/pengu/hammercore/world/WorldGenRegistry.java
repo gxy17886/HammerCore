@@ -3,7 +3,7 @@ package com.pengu.hammercore.world;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.pengu.hammercore.world.gen.IWorldGenFeature;
+import com.pengu.hammercore.world.gen.iWorldGenFeature;
 import com.pengu.hammercore.world.gen.WorldRetroGen;
 
 /**
@@ -12,16 +12,16 @@ import com.pengu.hammercore.world.gen.WorldRetroGen;
  */
 public class WorldGenRegistry
 {
-	private static final Set<IWorldGenFeature> features = new HashSet<>();
+	private static final Set<iWorldGenFeature> features = new HashSet<>();
 	
 	@Deprecated
-	public static void registerFeature(IWorldGenFeature feature)
+	public static void registerFeature(iWorldGenFeature feature)
 	{
 		if(feature != null)
 			features.add(feature);
 	}
 	
-	public static Set<IWorldGenFeature> listFeatures()
+	public static Set<iWorldGenFeature> listFeatures()
 	{
 		return features;
 	}

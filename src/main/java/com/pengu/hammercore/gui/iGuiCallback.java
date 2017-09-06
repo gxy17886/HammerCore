@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 
 import com.pengu.hammercore.utils.IndexedMap;
 
-public interface IGuiCallback
+public interface iGuiCallback
 {
 	default void setGuiID(int id)
 	{
@@ -25,6 +25,6 @@ public interface IGuiCallback
 	
 	static class Vars
 	{
-		private static final IndexedMap<Integer, IGuiCallback> ids = new IndexedMap<>();
+		private static final IndexedMap<Integer, iGuiCallback> ids = new IndexedMap<>();
 	}
 }

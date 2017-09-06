@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import net.minecraft.world.World;
 
-import com.pengu.hammercore.api.IUpdatable;
+import com.pengu.hammercore.api.iProcess;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.IChunkLoader;
 import com.pengu.hammercore.common.chunk.ChunkPredicate.LoadableChunk;
 
-public enum ChunkLoaderHC implements IChunkLoader, IUpdatable
+public enum ChunkLoaderHC implements IChunkLoader, iProcess
 {
 	INSTANCE;
 	

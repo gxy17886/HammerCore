@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-public interface ISimplifiedModel
+public interface iSimplifiedModel
 {
 	@Nonnull
 	ResourceLocation getTexture();

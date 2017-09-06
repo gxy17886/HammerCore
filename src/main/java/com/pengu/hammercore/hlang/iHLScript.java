@@ -2,11 +2,11 @@ package com.pengu.hammercore.hlang;
 
 import java.util.Map;
 
-public interface IHLScript
+public interface iHLScript
 {
 	Map<String, Class> getVariables();
 	
 	Map<String, Object> getVariableValues();
 	
-	IHLFunction getFunction();
+	iHLFunction getFunction();
 }

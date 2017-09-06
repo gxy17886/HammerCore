@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
  * Used to make {@link TileEntity} malfunction for some time. Used by Lost
  * Thaumaturgy, atm.
  */
-public interface IMalfunctionable
+public interface iMalfunctionable
 {
 	void causeGeneralMalfunction();
 	

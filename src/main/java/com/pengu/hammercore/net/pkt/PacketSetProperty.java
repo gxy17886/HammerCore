@@ -10,12 +10,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.net.HCNetwork;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 import com.pengu.hammercore.tile.TileSyncable;
 
-public class PacketSetProperty implements IPacket, IPacketListener<PacketSetProperty, IPacket>
+public class PacketSetProperty implements iPacket, iPacketListener<PacketSetProperty, iPacket>
 {
 	protected NBTTagCompound nbt;
 	
@@ -39,7 +39,7 @@ public class PacketSetProperty implements IPacket, IPacketListener<PacketSetProp
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSetProperty packet, MessageContext context)
+	public iPacket onArrived(PacketSetProperty packet, MessageContext context)
 	{
 		if(context.side == Side.SERVER)
 		{

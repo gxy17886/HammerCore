@@ -119,7 +119,7 @@ public class DynamicLightGetter
 		}
 	}
 	
-	public static void addLightSource(IDynlightSrc lightToAdd)
+	public static void addLightSource(iDynlightSrc lightToAdd)
 	{
 		if(lightToAdd.getSrcInfo() != null)
 		{
@@ -149,7 +149,7 @@ public class DynamicLightGetter
 		// }
 	}
 	
-	public static void removeLightSource(IDynlightSrc lightToRemove)
+	public static void removeLightSource(iDynlightSrc lightToRemove)
 	{
 		if(lightToRemove != null && lightToRemove.getSrcInfo() != null)
 		{

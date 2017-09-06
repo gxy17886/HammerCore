@@ -5,17 +5,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketSpawnSlowZap implements IPacket, IPacketListener<PacketSpawnSlowZap, IPacket>
+public class PacketSpawnSlowZap implements iPacket, iPacketListener<PacketSpawnSlowZap, iPacket>
 {
 	public int world, color, maxTicks;
 	public float ampl;
 	public Vec3d start, end;
 	
 	@Override
-	public IPacket onArrived(PacketSpawnSlowZap packet, MessageContext context)
+	public iPacket onArrived(PacketSpawnSlowZap packet, MessageContext context)
 	{
 		HammerCore.particleProxy.spawnSlowZap(packet.world, packet.start, packet.end, packet.color, packet.maxTicks, packet.ampl);
 		return null;

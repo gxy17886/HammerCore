@@ -4,12 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyEnum<T extends Enum> extends NetPropertyAbstract<T>
 {
-	public NetPropertyEnum(IPropertyChangeHandler handler)
+	public NetPropertyEnum(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyEnum(IPropertyChangeHandler handler, T initialValue)
+	public NetPropertyEnum(iPropertyChangeHandler handler, T initialValue)
 	{
 		super(handler, initialValue);
 	}

@@ -1,6 +1,6 @@
 package com.pengu.hammercore.hlang;
 
-public interface IHLDefiner
+public interface iHLDefiner
 {
 	/** Alternative to imports. */
 	void defineAccessibleClass(Class cl, String hlName);

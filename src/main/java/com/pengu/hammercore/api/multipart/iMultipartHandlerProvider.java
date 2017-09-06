@@ -1,10 +1,10 @@
 package com.pengu.hammercore.api.multipart;
 
-import com.pengu.hammercore.api.handlers.IHandlerProvider;
+import com.pengu.hammercore.api.handlers.iHandlerProvider;
 
 /**
- * {@link IHandlerProvider} for {@link MultipartSignature}
+ * {@link iHandlerProvider} for {@link MultipartSignature}
  */
-public interface IMultipartHandlerProvider extends IHandlerProvider
+public interface iMultipartHandlerProvider extends iHandlerProvider
 {
 }

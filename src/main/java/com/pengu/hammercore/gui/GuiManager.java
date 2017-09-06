@@ -18,7 +18,7 @@ import com.pengu.hammercore.utils.WorldLocation;
 
 public class GuiManager implements IGuiHandler
 {
-	private static final List<IGuiCallback> callbacks = new ArrayList<>(64);
+	private static final List<iGuiCallback> callbacks = new ArrayList<>(64);
 	private static final int lastUsedBuiltintId = 2;
 	
 	@Override
@@ -38,7 +38,7 @@ public class GuiManager implements IGuiHandler
 		
 		if(callbacks.size() + lastUsedBuiltintId > ID)
 		{
-			IGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
+			iGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
 			if(c != null)
 				return c.getServerGuiElement(player, world, new BlockPos(x, y, z));
 		}
@@ -63,7 +63,7 @@ public class GuiManager implements IGuiHandler
 		
 		if(callbacks.size() + lastUsedBuiltintId > ID)
 		{
-			IGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
+			iGuiCallback c = callbacks.get(ID - lastUsedBuiltintId);
 			if(c != null)
 				return c.getClientGuiElement(player, world, new BlockPos(x, y, z));
 		}
@@ -77,7 +77,7 @@ public class GuiManager implements IGuiHandler
 			FMLNetworkHandler.openGui(player, HammerCore.instance, 0, player.world, tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ());
 	}
 	
-	public static void registerGuiCallback(IGuiCallback callback)
+	public static void registerGuiCallback(iGuiCallback callback)
 	{
 		callback.setGuiID(callbacks.size());
 		callbacks.add(callback);
@@ -89,7 +89,7 @@ public class GuiManager implements IGuiHandler
 			FMLNetworkHandler.openGui(player, HammerCore.instance, 2 + callbackID, world, pos.getX(), pos.getY(), pos.getZ());
 	}
 	
-	public static void openGuiCallback(IGuiCallback callbackID, EntityPlayer player, World world, BlockPos pos)
+	public static void openGuiCallback(iGuiCallback callbackID, EntityPlayer player, World world, BlockPos pos)
 	{
 		openGuiCallback(callbackID.getGuiID(), player, world, pos);
 	}
@@ -99,7 +99,7 @@ public class GuiManager implements IGuiHandler
 		openGuiCallback(callbackID, player, loc.getWorld(), loc.getPos());
 	}
 	
-	public static void openGuiCallback(IGuiCallback callbackID, EntityPlayer player, WorldLocation loc)
+	public static void openGuiCallback(iGuiCallback callbackID, EntityPlayer player, WorldLocation loc)
 	{
 		openGuiCallback(callbackID.getGuiID(), player, loc.getWorld(), loc.getPos());
 	}

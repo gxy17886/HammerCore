@@ -1,6 +1,6 @@
 package com.pengu.hammercore.intent;
 
-public interface IIntentHandler<T>
+public interface iIntentHandler<T>
 {
 	Object execute(String mod, T data);
 }

@@ -14,7 +14,7 @@ import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 /**
  * Renders a block state in the place of {@link TileMultipart}
  */
-public class BlockStateMultipartRender implements IMultipartRender<MultipartSignature>
+public class BlockStateMultipartRender implements iMultipartRender<MultipartSignature>
 {
 	@Override
 	public void renderMultipartAt(MultipartSignature signature, double x, double y, double z, float partialTicks, ResourceLocation destroyStage)

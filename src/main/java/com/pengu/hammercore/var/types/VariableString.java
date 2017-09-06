@@ -4,9 +4,9 @@ import java.util.Objects;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.pengu.hammercore.var.IVariable;
+import com.pengu.hammercore.var.iVariable;
 
-public class VariableString implements IVariable<String>
+public class VariableString implements iVariable<String>
 {
 	final String id;
 	String var, prevVar;

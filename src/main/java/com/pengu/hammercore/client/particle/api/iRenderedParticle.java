@@ -1,6 +1,6 @@
 package com.pengu.hammercore.client.particle.api;
 
-public interface IRenderedParticle
+public interface iRenderedParticle
 {
 	default void doRenderParticle(double x, double y, double z, float partialTicks)
 	{

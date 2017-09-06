@@ -14,12 +14,12 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.hammercore.client.particle.api.SimpleParticle;
-import com.pengu.hammercore.client.particle.old.IOldParticle;
+import com.pengu.hammercore.client.particle.old.iOldParticle;
 import com.pengu.hammercore.client.particle.old.ParticleParam;
 import com.pengu.hammercore.math.MathHelper;
 import com.pengu.hammercore.vec.Vector3;
 
-public class ParticleZap extends SimpleParticle implements IOldParticle
+public class ParticleZap extends SimpleParticle implements iOldParticle
 {
 	public ParticleZap(World par1World, double x, double y, double z, double tx, double ty, double tz, float red, float green, float blue)
 	{

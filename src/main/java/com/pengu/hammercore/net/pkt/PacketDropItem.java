@@ -7,13 +7,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
 /**
  * If sent to server, creates an {@link EntityItem} at sender's position
  */
-public class PacketDropItem implements IPacket, IPacketListener<PacketDropItem, IPacket>
+public class PacketDropItem implements iPacket, iPacketListener<PacketDropItem, iPacket>
 {
 	ItemStack stack;
 	NBTTagCompound ei;
@@ -46,7 +46,7 @@ public class PacketDropItem implements IPacket, IPacketListener<PacketDropItem, 
 	}
 	
 	@Override
-	public IPacket onArrived(PacketDropItem packet, MessageContext context)
+	public iPacket onArrived(PacketDropItem packet, MessageContext context)
 	{
 		if(context.side == Side.SERVER)
 		{

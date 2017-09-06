@@ -13,9 +13,9 @@ public enum ItemRenderingHandler
 {
 	INSTANCE;
 	
-	private final Map<Item, IItemRender> renders = new HashMap<>();
+	private final Map<Item, iItemRender> renders = new HashMap<>();
 	
-	public void bindItemRender(Item item, IItemRender render)
+	public void bindItemRender(Item item, iItemRender render)
 	{
 		renders.put(item, render);
 		Minecraft.getMinecraft().getRenderItem().registerItem(item, 0, "chest");
@@ -26,7 +26,7 @@ public enum ItemRenderingHandler
 		return getRender(item) != null;
 	}
 	
-	public IItemRender getRender(Item item)
+	public iItemRender getRender(Item item)
 	{
 		return renders.get(item);
 	}

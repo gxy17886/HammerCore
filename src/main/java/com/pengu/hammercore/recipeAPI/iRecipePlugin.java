@@ -1,6 +1,6 @@
 package com.pengu.hammercore.recipeAPI;
 
-public interface IRecipePlugin
+public interface iRecipePlugin
 {
-	void registerTypes(IRecipeTypeRegistry reg);
+	void registerTypes(iRecipeTypeRegistry reg);
 }

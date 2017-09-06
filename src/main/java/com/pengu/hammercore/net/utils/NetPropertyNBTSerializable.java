@@ -12,7 +12,7 @@ import com.pengu.hammercore.utils.NPEUtils;
 
 public class NetPropertyNBTSerializable<T extends NBTBase, N extends INBTSerializable<T>> extends NetPropertyAbstract<N>
 {
-	public NetPropertyNBTSerializable(IPropertyChangeHandler handler, @Nonnull N initialValue)
+	public NetPropertyNBTSerializable(iPropertyChangeHandler handler, @Nonnull N initialValue)
 	{
 		super(handler, initialValue);
 		

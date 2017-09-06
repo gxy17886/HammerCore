@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Dynamic java code that loads on mod construct
  */
-public interface IJavaCode
+public interface iJavaCode
 {
 	public void preInit();
 	
@@ -17,7 +17,7 @@ public interface IJavaCode
 	{
 	};
 	
-	public static class IJavaCode_IMPL implements IJavaCode
+	public static class IJavaCode_IMPL implements iJavaCode
 	{
 		private final Object c;
 		

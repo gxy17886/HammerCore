@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketParticle implements IPacket, IPacketListener<PacketParticle, IPacket>
+public class PacketParticle implements iPacket, iPacketListener<PacketParticle, iPacket>
 {
 	public int world;
 	public Vec3d pos, motion;
@@ -57,7 +57,7 @@ public class PacketParticle implements IPacket, IPacketListener<PacketParticle, 
 	}
 	
 	@Override
-	public IPacket onArrived(PacketParticle packet, MessageContext context)
+	public iPacket onArrived(PacketParticle packet, MessageContext context)
 	{
 		if(context.side == Side.CLIENT)
 			packet.client();

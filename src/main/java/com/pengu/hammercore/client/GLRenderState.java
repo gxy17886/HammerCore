@@ -2,35 +2,61 @@ package com.pengu.hammercore.client;
 
 import org.lwjgl.opengl.GL11;
 
-public class GLRenderState
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+
+public enum GLRenderState
 {
-	public static final GLRenderState BLEND = new GLRenderState(GL11.GL_BLEND), NORMALIZE = new GLRenderState(GL11.GL_NORMALIZE);
+	BLEND, //
+	STANDART_ITEM_LIGHTING, //
+	STANDART_GUI_LIGHTING;
 	
-	private final int opcode;
-	public boolean isEnabled = false;
+	private boolean isEnabled = false;
 	
-	public GLRenderState(int opcode)
+	private boolean isOn()
 	{
-		this.opcode = opcode;
-	}
-	
-	{
-		captureState();
+		switch(this)
+		{
+		case BLEND:
+			return GL11.glIsEnabled(GL11.GL_BLEND);
+		case STANDART_ITEM_LIGHTING:
+			return true;
+		case STANDART_GUI_LIGHTING:
+			return false;
+		}
+		
+		return false;
 	}
 	
 	public boolean captureState()
 	{
-		return isEnabled = GL11.glIsEnabled(opcode);
+		return isEnabled = isOn();
 	}
 	
 	public void on()
 	{
-		GL11.glEnable(opcode);
+		switch(this)
+		{
+		case BLEND:
+			GlStateManager.enableBlend();
+		case STANDART_ITEM_LIGHTING:
+			RenderHelper.enableStandardItemLighting();
+		case STANDART_GUI_LIGHTING:
+			RenderHelper.enableGUIStandardItemLighting();
+		}
 	}
 	
 	public void off()
 	{
-		GL11.glEnable(opcode);
+		switch(this)
+		{
+		case BLEND:
+			GlStateManager.disableBlend();
+		case STANDART_ITEM_LIGHTING:
+			RenderHelper.disableStandardItemLighting();
+		case STANDART_GUI_LIGHTING:
+			RenderHelper.disableStandardItemLighting();
+		}
 	}
 	
 	public void reset()

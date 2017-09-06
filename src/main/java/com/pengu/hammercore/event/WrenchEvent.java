@@ -8,10 +8,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-import com.pengu.hammercore.common.IWrenchItem;
+import com.pengu.hammercore.common.iWrenchItem;
 
 /**
- * Called when player clicks with {@link IWrenchItem} on block
+ * Called when player clicks with {@link iWrenchItem} on block
  */
 public class WrenchEvent extends Event
 {

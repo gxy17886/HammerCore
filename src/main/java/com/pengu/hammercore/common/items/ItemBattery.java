@@ -18,8 +18,8 @@ import net.minecraftforge.energy.IEnergyStorage;
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.common.capabilities.CapabilityEJ;
 import com.pengu.hammercore.common.utils.ChatUtil;
-import com.pengu.hammercore.energy.IPowerContainerItem;
-import com.pengu.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.energy.iPowerContainerItem;
+import com.pengu.hammercore.energy.iPowerStorage;
 
 public class ItemBattery extends ItemFEBase
 {
@@ -99,12 +99,12 @@ public class ItemBattery extends ItemFEBase
 				extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
 		} else if(targetStack.hasCapability(CapabilityEJ.ENERGY, null))
 		{
-			IPowerStorage storage = targetStack.getCapability(CapabilityEJ.ENERGY, null);
+			iPowerStorage storage = targetStack.getCapability(CapabilityEJ.ENERGY, null);
 			if(storage != null)
 				extractEnergy(batteryStack, storage.receiveEnergy(Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
-		} else if(targetStack.getItem() instanceof IPowerContainerItem)
+		} else if(targetStack.getItem() instanceof iPowerContainerItem)
 		{
-			IPowerContainerItem pci = (IPowerContainerItem) targetStack.getItem();
+			iPowerContainerItem pci = (iPowerContainerItem) targetStack.getItem();
 			extractEnergy(batteryStack, pci.receiveEnergy(targetStack, Math.min(getEnergyStored(batteryStack), maxExtract), false), false);
 		}
 	}

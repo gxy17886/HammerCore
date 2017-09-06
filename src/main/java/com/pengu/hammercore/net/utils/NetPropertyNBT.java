@@ -5,12 +5,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyNBT<T extends NBTBase> extends NetPropertyAbstract<T>
 {
-	public NetPropertyNBT(IPropertyChangeHandler handler, T initialValue)
+	public NetPropertyNBT(iPropertyChangeHandler handler, T initialValue)
 	{
 		super(handler, initialValue);
 	}
 	
-	public NetPropertyNBT(IPropertyChangeHandler handler)
+	public NetPropertyNBT(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}

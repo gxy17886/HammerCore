@@ -25,7 +25,7 @@ public class APILoader
 	
 	public static String getApiVersion(String api)
 	{
-		for(IHammerCoreAPI iapi : HammerCore.APIS.keySet())
+		for(iHammerCoreAPI iapi : HammerCore.APIS.keySet())
 			if(HammerCore.APIS.get(iapi).name().equals(api))
 				return HammerCore.APIS.get(iapi).version();
 		return null;

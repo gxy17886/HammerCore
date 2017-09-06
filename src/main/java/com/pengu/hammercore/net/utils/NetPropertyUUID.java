@@ -6,12 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyUUID extends NetPropertyAbstract<UUID>
 {
-	public NetPropertyUUID(IPropertyChangeHandler handler)
+	public NetPropertyUUID(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyUUID(IPropertyChangeHandler handler, UUID initialValue)
+	public NetPropertyUUID(iPropertyChangeHandler handler, UUID initialValue)
 	{
 		super(handler, initialValue);
 	}

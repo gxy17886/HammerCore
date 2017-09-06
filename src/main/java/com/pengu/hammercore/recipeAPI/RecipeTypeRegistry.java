@@ -15,22 +15,22 @@ import com.pengu.hammercore.json.JSONArray;
 import com.pengu.hammercore.json.JSONException;
 import com.pengu.hammercore.json.JSONTokener;
 
-public class RecipeTypeRegistry implements IRecipeTypeRegistry
+public class RecipeTypeRegistry implements iRecipeTypeRegistry
 {
-	private final Set<IRecipeType> types = new HashSet<>();
+	private final Set<iRecipeType> types = new HashSet<>();
 	
 	@Override
-	public void register(IRecipeType type)
+	public void register(iRecipeType type)
 	{
 		types.add(type);
 	}
 	
-	public void forEach(Consumer<IRecipeType> cycle)
+	public void forEach(Consumer<iRecipeType> cycle)
 	{
 		types.stream().forEach(cycle);
 	}
 	
-	public IRecipeScript parseAll(String[] jsons) throws JSONException
+	public iRecipeScript parseAll(String[] jsons) throws JSONException
 	{
 		List<SimpleRecipeScript> scripts = new ArrayList<>();
 		for(String json : jsons)

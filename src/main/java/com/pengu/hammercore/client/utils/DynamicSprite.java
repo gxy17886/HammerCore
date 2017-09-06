@@ -19,7 +19,7 @@ public class DynamicSprite
 		GLImageManager.loadTexture(image, glId, isMirrored);
 	}
 	
-	public void upload(IPixelGetter image)
+	public void upload(iPixelGetter image)
 	{
 		GLImageManager.loadTexture(image, glId, isMirrored);
 	}

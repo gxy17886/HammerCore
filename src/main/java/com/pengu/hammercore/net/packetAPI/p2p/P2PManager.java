@@ -17,19 +17,19 @@ public class P2PManager
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void sendTo(ITask packet, String... usernames)
+	public void sendTo(iTask packet, String... usernames)
 	{
 		mgr.sendToServer(new PacketSendTaskNamed(packet, usernames));
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void sendTo(ITask packet, UUID... playerUids)
+	public void sendTo(iTask packet, UUID... playerUids)
 	{
 		mgr.sendToServer(new PacketSendTaskUUID(packet, playerUids));
 	}
 	
 	@SideOnly(Side.CLIENT)
-	public void sendToDimension(ITask packet, int... dims)
+	public void sendToDimension(iTask packet, int... dims)
 	{
 		mgr.sendToServer(new PacketSendTaskDim(packet, dims));
 	}

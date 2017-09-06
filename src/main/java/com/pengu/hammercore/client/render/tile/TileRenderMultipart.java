@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.api.multipart.IMultipartRender;
+import com.pengu.hammercore.api.multipart.iMultipartRender;
 import com.pengu.hammercore.api.multipart.MultipartRenderingRegistry;
 import com.pengu.hammercore.api.multipart.MultipartSignature;
 import com.pengu.hammercore.client.DestroyStageTexture;
@@ -42,7 +42,7 @@ public class TileRenderMultipart extends TESR<TileMultipart>
 			/* Moved to good ol' for loops; The fastest way :D */
 			for(MultipartSignature s : mps)
 			{
-				IMultipartRender render = MultipartRenderingRegistry.getRender(s);
+				iMultipartRender render = MultipartRenderingRegistry.getRender(s);
 				GL11.glPushMatrix();
 				if(render != null)
 					render.renderMultipartAt(s, x, y, z, partialTicks, aabb != null && s.getBoundingBox() != null && aabb.equals(s.getBoundingBox()) ? destroyStage : null);

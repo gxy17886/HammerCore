@@ -1,8 +1,8 @@
 package com.pengu.hammercore.api.dynlight;
 
-public interface IDynlightSrc
+public interface iDynlightSrc
 {
-	IMovable getSrcInfo();
+	iMovable getSrcInfo();
 	
 	int getLightLevel();
 }

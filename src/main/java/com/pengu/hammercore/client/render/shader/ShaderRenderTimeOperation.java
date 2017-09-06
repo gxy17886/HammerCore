@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 
 import org.lwjgl.opengl.ARBShaderObjects;
 
-public class ShaderRenderTimeOperation implements IShaderOperation
+public class ShaderRenderTimeOperation implements iShaderOperation
 {
 	public static final int operationID = HCShaderPipeline.registerOperation();
 	private final HashMap<ShaderProgram, Float> shaderRenderTimeCache = new HashMap<>();

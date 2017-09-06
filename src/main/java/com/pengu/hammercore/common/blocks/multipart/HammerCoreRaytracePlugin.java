@@ -1,15 +1,15 @@
 package com.pengu.hammercore.common.blocks.multipart;
 
-import com.pengu.hammercore.api.mhb.IRayCubeRegistry;
-import com.pengu.hammercore.api.mhb.IRayRegistry;
+import com.pengu.hammercore.api.mhb.iRayCubeRegistry;
+import com.pengu.hammercore.api.mhb.iRayRegistry;
 import com.pengu.hammercore.api.mhb.RaytracePlugin;
 import com.pengu.hammercore.init.BlocksHC;
 
 @RaytracePlugin
-public class HammerCoreRaytracePlugin implements IRayRegistry
+public class HammerCoreRaytracePlugin implements iRayRegistry
 {
 	@Override
-	public void registerCubes(IRayCubeRegistry cube)
+	public void registerCubes(iRayCubeRegistry cube)
 	{
 		BlockMultipart multipart = (BlockMultipart) BlocksHC.MULTIPART;
 		cube.bindBlockCubeManager(multipart, multipart);

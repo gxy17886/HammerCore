@@ -4,19 +4,19 @@ import com.pengu.hammercore.utils.IndexedMap;
 
 public class HammerLanguage
 {
-	public static IHLDefiner createDefiner()
+	public static iHLDefiner createDefiner()
 	{
 		return new HLDefinerImpl();
 	}
 	
-	public static IHLScript parse(IHLDefiner definer, String script)
+	public static iHLScript parse(iHLDefiner definer, String script)
 	{
 		HLDefinerImpl impl = (HLDefinerImpl) definer;
 		
 		return null;
 	}
 	
-	private static final class HLDefinerImpl implements IHLDefiner
+	private static final class HLDefinerImpl implements iHLDefiner
 	{
 		private final IndexedMap<Class, String> imports = new IndexedMap<>();
 		private final IndexedMap<String, Object> vars = new IndexedMap<>();

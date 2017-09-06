@@ -5,10 +5,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketNoSpamChat implements IPacket, IPacketListener<PacketNoSpamChat, IPacket>
+public class PacketNoSpamChat implements iPacket, iPacketListener<PacketNoSpamChat, iPacket>
 {
 	private ITextComponent[] chatLines;
 	
@@ -23,7 +23,7 @@ public class PacketNoSpamChat implements IPacket, IPacketListener<PacketNoSpamCh
 	}
 	
 	@Override
-	public IPacket onArrived(PacketNoSpamChat packet, MessageContext context)
+	public iPacket onArrived(PacketNoSpamChat packet, MessageContext context)
 	{
 		HammerCore.renderProxy.sendNoSpamMessages(packet.chatLines);
 		return null;

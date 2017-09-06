@@ -1,6 +1,6 @@
 package com.pengu.hammercore.utils;
 
-public interface IGetter<T>
+public interface iGetter<T>
 {
 	T get();
 }

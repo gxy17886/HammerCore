@@ -25,7 +25,7 @@ public class WorldRetroGen
 	private static final Map<Integer, HashMap<String, HashMap<Long, Boolean>>> retrogenerations = new HashMap<>();
 	private static final List<String> mods = new ArrayList<>();
 	private static final Map<String, List<IWorldGenerator>> generators = new HashMap<>();
-	private static final Map<String, List<IWorldGenFeature>> features = new HashMap<>();
+	private static final Map<String, List<iWorldGenFeature>> features = new HashMap<>();
 	private static final Set<String> populating = new HashSet<>();
 	
 	public static void addWorldGenerator(IWorldGenerator gen)
@@ -39,12 +39,12 @@ public class WorldRetroGen
 		gens.add(gen);
 	}
 	
-	public static void addWorldFeature(IWorldGenFeature gen)
+	public static void addWorldFeature(iWorldGenFeature gen)
 	{
 		String mod = Loader.instance().activeModContainer().getModId();
 		if(!mods.contains(mod))
 			mods.add(mod);
-		List<IWorldGenFeature> gens = features.get(mod);
+		List<iWorldGenFeature> gens = features.get(mod);
 		if(gens == null)
 			features.put(mod, gens = new ArrayList<>());
 		gens.add(gen);
@@ -92,7 +92,7 @@ public class WorldRetroGen
 		for(String mod : mods)
 		{
 			List<IWorldGenerator> gens = WorldRetroGen.generators.get(mod);
-			List<IWorldGenFeature> features = WorldRetroGen.features.get(mod);
+			List<iWorldGenFeature> features = WorldRetroGen.features.get(mod);
 			
 			HashMap<Long, Boolean> generated = map.get(mod);
 			if(generated == null)
@@ -114,7 +114,7 @@ public class WorldRetroGen
 				
 				random.setSeed(chunkSeed);
 				if(features != null)
-					for(IWorldGenFeature feat : features)
+					for(iWorldGenFeature feat : features)
 					{
 						ChunkPos cp = new ChunkPos(c.x, c.z);
 						for(int i = 0; i < random.nextInt(feat.getMaxChances(c.getWorld(), cp, random)); ++i)

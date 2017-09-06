@@ -12,10 +12,10 @@ import com.pengu.hammercore.cfg.fields.ModConfigPropertyStringList;
 
 public class ConfigHolder
 {
-	public final IConfigReloadListener listener;
+	public final iConfigReloadListener listener;
 	public final Configuration configs;
 	
-	public ConfigHolder(IConfigReloadListener listener, Configuration configs)
+	public ConfigHolder(iConfigReloadListener listener, Configuration configs)
 	{
 		this.listener = listener;
 		this.configs = configs;

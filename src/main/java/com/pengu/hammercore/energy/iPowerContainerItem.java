@@ -2,7 +2,7 @@ package com.pengu.hammercore.energy;
 
 import net.minecraft.item.ItemStack;
 
-public interface IPowerContainerItem
+public interface iPowerContainerItem
 {
 	public int receiveEnergy(ItemStack container, int maxReceive, boolean simulate);
 	

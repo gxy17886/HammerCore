@@ -14,7 +14,7 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 
 import com.google.common.base.Predicates;
 
-public class WorldGenFeatureOre implements IWorldGenFeature
+public class WorldGenFeatureOre implements iWorldGenFeature
 {
 	public int minY = 0, maxY = 64, maxClusters = 6, maxCusterSize = 8;
 	public boolean enableBiomeWhitelist = false, enableDimensionWhitelist = false;

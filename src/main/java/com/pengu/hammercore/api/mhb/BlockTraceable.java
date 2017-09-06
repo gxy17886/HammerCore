@@ -35,7 +35,7 @@ public abstract class BlockTraceable extends Block
 	
 	protected float minX, minY, minZ, maxX, maxY, maxZ;
 	protected final RayTracer RayTracer = new RayTracer();
-	protected IRayCubeGetter registry;
+	protected iRayCubeGetter registry;
 	private boolean exited = true;
 	
 	public BlockTraceable(Material material)
@@ -76,7 +76,7 @@ public abstract class BlockTraceable extends Block
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		registry = IRayCubeGetter.Instance.getter;
+		registry = iRayCubeGetter.Instance.getter;
 		RayTraceResult hit = RayTracer.retraceBlock(worldIn, playerIn, pos);
 		return onBoxActivated(hit != null ? Math.max(0, hit.subHit) : 0, registry.getBoundCubes6(this) != null && registry.getBoundCubes6(this).length > 0 ? registry.getBoundCubes6(this)[hit != null ? Math.max(0, hit.subHit) : 0] : null, worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
@@ -84,7 +84,7 @@ public abstract class BlockTraceable extends Block
 	@Override
 	public final AxisAlignedBB getSelectedBoundingBox(IBlockState s, World w, BlockPos p)
 	{
-		registry = IRayCubeGetter.Instance.getter;
+		registry = iRayCubeGetter.Instance.getter;
 		if(FMLCommonHandler.instance().getSide() == Side.CLIENT)
 			return selectAxis(s, w, p, registry.func_0x834823_a());
 		return FULL_BLOCK_AABB;
@@ -92,7 +92,7 @@ public abstract class BlockTraceable extends Block
 	
 	protected final AxisAlignedBB selectAxis(IBlockState s, World w, BlockPos p, EntityPlayer player)
 	{
-		registry = IRayCubeGetter.Instance.getter;
+		registry = iRayCubeGetter.Instance.getter;
 		if(player == null)
 			return getFullBoundingBox(w, p, s);
 		RayTraceResult hit = RayTracer.retraceBlock(w, player, p);
@@ -123,7 +123,7 @@ public abstract class BlockTraceable extends Block
 	@Override
 	public void addCollisionBoxToList(IBlockState s, World w, BlockPos p, AxisAlignedBB aabb, List<AxisAlignedBB> l, Entity ent, boolean wut)
 	{
-		registry = IRayCubeGetter.Instance.getter;
+		registry = iRayCubeGetter.Instance.getter;
 		if(!includeAllHitboxes(w, p, s))
 		{
 			super.addCollisionBoxToList(s, w, p, aabb, l, ent, wut);
@@ -153,7 +153,7 @@ public abstract class BlockTraceable extends Block
 	
 	public final RayTraceResult collisionRayTrace(IBlockState s, World world, BlockPos p, Vec3d start, Vec3d end)
 	{
-		registry = IRayCubeGetter.Instance.getter;
+		registry = iRayCubeGetter.Instance.getter;
 		
 		if(registry == null)
 			return super.collisionRayTrace(s, world, p, start, end);

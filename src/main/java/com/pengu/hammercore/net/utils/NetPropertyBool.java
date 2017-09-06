@@ -6,12 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyBool extends NetPropertyAbstract<Boolean>
 {
-	public NetPropertyBool(IPropertyChangeHandler handler)
+	public NetPropertyBool(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyBool(IPropertyChangeHandler handler, boolean initialValue)
+	public NetPropertyBool(iPropertyChangeHandler handler, boolean initialValue)
 	{
 		super(handler, initialValue);
 	}

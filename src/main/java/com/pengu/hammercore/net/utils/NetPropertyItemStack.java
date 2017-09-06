@@ -5,12 +5,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyItemStack extends NetPropertyAbstract<ItemStack>
 {
-	public NetPropertyItemStack(IPropertyChangeHandler handler)
+	public NetPropertyItemStack(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyItemStack(IPropertyChangeHandler handler, ItemStack initialValue)
+	public NetPropertyItemStack(iPropertyChangeHandler handler, ItemStack initialValue)
 	{
 		super(handler, initialValue);
 	}

@@ -2,7 +2,7 @@ package com.pengu.hammercore.var;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IVariable<T>
+public interface iVariable<T>
 {
 	T get();
 	

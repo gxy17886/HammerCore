@@ -2,7 +2,7 @@ package com.pengu.hammercore.energy;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public class PowerStorage implements IPowerStorage
+public class PowerStorage implements iPowerStorage
 {
 	public int energy, capacity, maxReceive, maxExtract;
 	

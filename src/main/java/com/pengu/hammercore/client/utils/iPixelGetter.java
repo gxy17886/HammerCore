@@ -1,6 +1,6 @@
 package com.pengu.hammercore.client.utils;
 
-public interface IPixelGetter
+public interface iPixelGetter
 {
 	public int getWidth();
 	

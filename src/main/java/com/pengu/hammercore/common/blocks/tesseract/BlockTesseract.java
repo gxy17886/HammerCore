@@ -26,14 +26,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.pengu.hammercore.api.ITileBlock;
-import com.pengu.hammercore.common.IWrenchable;
+import com.pengu.hammercore.api.iTileBlock;
+import com.pengu.hammercore.common.iWrenchable;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.gui.GuiManager;
 import com.pengu.hammercore.tile.TileSyncable;
 import com.pengu.hammercore.utils.WorldLocation;
 
-public class BlockTesseract extends Block implements ITileEntityProvider, ITileBlock<TileTesseract>, IWrenchable
+public class BlockTesseract extends Block implements ITileEntityProvider, iTileBlock<TileTesseract>, iWrenchable
 {
 	public static final PropertyBool active = PropertyBool.create("active");
 	

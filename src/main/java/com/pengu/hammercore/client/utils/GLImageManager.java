@@ -51,7 +51,7 @@ public class GLImageManager
 		// }
 	}
 	
-	public static void loadTexture(IPixelGetter image, int id, boolean mirrorEffect)
+	public static void loadTexture(iPixelGetter image, int id, boolean mirrorEffect)
 	{
 		if(image == null)
 			return;

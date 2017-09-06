@@ -33,7 +33,7 @@ public class ShaderProgram
 	
 	private int programID;
 	public HCShaderPipeline pipeline = new HCShaderPipeline(this);
-	private ArrayList<IShaderOperation> ops = new ArrayList<>();
+	private ArrayList<iShaderOperation> ops = new ArrayList<>();
 	
 	public ShaderProgram()
 	{
@@ -44,7 +44,7 @@ public class ShaderProgram
 		}
 	}
 	
-	public void attachShaderOperation(IShaderOperation operation)
+	public void attachShaderOperation(iShaderOperation operation)
 	{
 		ops.add(operation);
 	}

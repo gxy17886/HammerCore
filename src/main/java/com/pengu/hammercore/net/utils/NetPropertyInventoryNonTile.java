@@ -3,17 +3,17 @@ package com.pengu.hammercore.net.utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.pengu.hammercore.common.inventory.IInventoryListener;
+import com.pengu.hammercore.common.inventory.iInventoryListener;
 import com.pengu.hammercore.common.inventory.InventoryNonTile;
 
-public class NetPropertyInventoryNonTile extends NetPropertyAbstract<InventoryNonTile> implements IInventoryListener
+public class NetPropertyInventoryNonTile extends NetPropertyAbstract<InventoryNonTile> implements iInventoryListener
 {
-	public NetPropertyInventoryNonTile(IPropertyChangeHandler handler)
+	public NetPropertyInventoryNonTile(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyInventoryNonTile(IPropertyChangeHandler handler, InventoryNonTile initialValue)
+	public NetPropertyInventoryNonTile(iPropertyChangeHandler handler, InventoryNonTile initialValue)
 	{
 		super(handler, initialValue);
 		if(value != null)

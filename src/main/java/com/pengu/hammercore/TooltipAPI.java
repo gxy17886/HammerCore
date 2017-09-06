@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pengu.hammercore.common.items.ITooltipInjector;
+import com.pengu.hammercore.common.items.iTooltipInjector;
 import com.pengu.hammercore.math.ExpressionEvaluator;
 
 import net.minecraft.client.resources.I18n;
@@ -35,8 +35,8 @@ public class TooltipAPI
 			currentVars.put("damage", "" + evt.getItemStack().getItemDamage());
 			currentVars.put("nbt", "" + evt.getItemStack().getTagCompound());
 			
-			if(evt.getItemStack().getItem() instanceof ITooltipInjector)
-				((ITooltipInjector) evt.getItemStack().getItem()).injectVariables(evt.getItemStack(), currentVars);
+			if(evt.getItemStack().getItem() instanceof iTooltipInjector)
+				((iTooltipInjector) evt.getItemStack().getItem()).injectVariables(evt.getItemStack(), currentVars);
 			
 			int i = 0;
 			while(true)

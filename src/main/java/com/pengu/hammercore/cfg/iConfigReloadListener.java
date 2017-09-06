@@ -4,7 +4,7 @@ import java.io.File;
 
 import net.minecraftforge.common.config.Configuration;
 
-public interface IConfigReloadListener
+public interface iConfigReloadListener
 {
 	default void reloadCustom(Configuration cfgs)
 	{

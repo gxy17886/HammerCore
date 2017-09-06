@@ -27,18 +27,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.api.handlers.IHandlerProvider;
+import com.pengu.hammercore.api.handlers.iHandlerProvider;
 import com.pengu.hammercore.client.particle.ParticleDiggingState;
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 import com.pengu.hammercore.common.utils.WorldUtil;
-import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
+import com.pengu.hammercore.net.utils.iPropertyChangeHandler;
 import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 import com.pengu.hammercore.proxy.ParticleProxy_Client;
 
 /**
  * The main part of {@link MultipartAPI}
  */
-public abstract class MultipartSignature implements IPropertyChangeHandler
+public abstract class MultipartSignature implements iPropertyChangeHandler
 {
 	protected static final SecureRandom RANDOM = new SecureRandom();
 	
@@ -119,11 +119,11 @@ public abstract class MultipartSignature implements IPropertyChangeHandler
 			return player.getDigSpeed(getState(), pos) / hardness / 30F;
 	}
 	
-	public IHandlerProvider getProvider(EnumFacing toFace)
+	public iHandlerProvider getProvider(EnumFacing toFace)
 	{
-		IHandlerProvider provider = owner;
+		iHandlerProvider provider = owner;
 		if(world != null && world.isBlockLoaded(pos.offset(toFace)))
-			provider = WorldUtil.cast(world, IHandlerProvider.class);
+			provider = WorldUtil.cast(world, iHandlerProvider.class);
 		return provider != null ? provider : owner;
 	}
 	

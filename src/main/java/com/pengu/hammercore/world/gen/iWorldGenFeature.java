@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
-public interface IWorldGenFeature
+public interface iWorldGenFeature
 {
 	int getMaxChances(World world, ChunkPos chunk, Random rand);
 	

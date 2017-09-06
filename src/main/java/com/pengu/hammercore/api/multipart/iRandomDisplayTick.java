@@ -2,7 +2,7 @@ package com.pengu.hammercore.api.multipart;
 
 import java.util.Random;
 
-public interface IRandomDisplayTick
+public interface iRandomDisplayTick
 {
 	void randomDisplayTick(Random rand);
 }

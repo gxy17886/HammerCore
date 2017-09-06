@@ -10,9 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.api.IUpdatable;
+import com.pengu.hammercore.api.iProcess;
 
-public class CustomExplosion implements IUpdatable
+public class CustomExplosion implements iProcess
 {
 	private World worldObj;
 	private int xCoord;
@@ -115,7 +115,7 @@ public class CustomExplosion implements IUpdatable
 		return !isDead;
 	}
 	
-	public class CustomExplosionTrace implements IUpdatable
+	public class CustomExplosionTrace implements iProcess
 	{
 		private World worldObj;
 		private int xCoord;

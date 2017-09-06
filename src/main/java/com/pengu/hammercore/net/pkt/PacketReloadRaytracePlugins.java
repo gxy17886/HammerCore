@@ -4,14 +4,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketReloadRaytracePlugins implements IPacket, IPacketListener<PacketReloadRaytracePlugins, IPacket>
+public class PacketReloadRaytracePlugins implements iPacket, iPacketListener<PacketReloadRaytracePlugins, iPacket>
 {
 	
 	@Override
-	public IPacket onArrived(PacketReloadRaytracePlugins packet, MessageContext context)
+	public iPacket onArrived(PacketReloadRaytracePlugins packet, MessageContext context)
 	{
 		HammerCore.instance.reloadRaytracePlugins();
 		return null;

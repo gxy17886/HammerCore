@@ -7,10 +7,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketSwingArm implements IPacket, IPacketListener<PacketSwingArm, IPacket>
+public class PacketSwingArm implements iPacket, iPacketListener<PacketSwingArm, iPacket>
 {
 	public EnumHand hand;
 	
@@ -24,7 +24,7 @@ public class PacketSwingArm implements IPacket, IPacketListener<PacketSwingArm, 
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSwingArm packet, MessageContext context)
+	public iPacket onArrived(PacketSwingArm packet, MessageContext context)
 	{
 		if(context.side == Side.CLIENT)
 			packet.run();

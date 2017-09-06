@@ -20,12 +20,12 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import org.lwjgl.opengl.GL11;
 
 import com.pengu.hammercore.client.DestroyStageTexture;
-import com.pengu.hammercore.client.render.item.IItemRender;
+import com.pengu.hammercore.client.render.item.iItemRender;
 import com.pengu.hammercore.client.render.item.ItemRenderingHandler;
 import com.pengu.hammercore.client.utils.RenderBlocks;
 import com.pengu.hammercore.tile.TileSyncable;
 
-public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> implements IItemRender
+public abstract class TESR<T extends TileEntity> extends TileEntitySpecialRenderer<T> implements iItemRender
 {
 	/** This is safe to use while rendering */
 	protected float destroyProgress;

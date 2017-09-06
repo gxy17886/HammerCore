@@ -23,13 +23,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import com.google.common.collect.Maps;
-import com.pengu.hammercore.api.INoItemBlock;
-import com.pengu.hammercore.api.ITileBlock;
+import com.pengu.hammercore.api.iNoItemBlock;
+import com.pengu.hammercore.api.iTileBlock;
 import com.pengu.hammercore.api.multipart.BlockMultipartProvider;
-import com.pengu.hammercore.common.blocks.IItemBlock;
+import com.pengu.hammercore.common.blocks.iItemBlock;
 import com.pengu.hammercore.common.items.MultiVariantItem;
-import com.pengu.hammercore.utils.IGetter;
-import com.pengu.hammercore.utils.IRegisterListener;
+import com.pengu.hammercore.utils.iGetter;
+import com.pengu.hammercore.utils.iRegisterListener;
 import com.pengu.hammercore.utils.SoundObject;
 
 public class SimpleRegistration
@@ -79,8 +79,8 @@ public class SimpleRegistration
 				itemstack.add(((ItemStack) recipeComponents[i + 1]).copy());
 			else if(recipeComponents[i + 1] instanceof String)
 				itemstack.addAll(OreDictionary.getOres(recipeComponents[i + 1] + ""));
-			else if(recipeComponents[i + 1] instanceof IGetter)
-				itemstack.add(((IGetter<ItemStack>) recipeComponents[i + 1]).get());
+			else if(recipeComponents[i + 1] instanceof iGetter)
+				itemstack.add(((iGetter<ItemStack>) recipeComponents[i + 1]).get());
 			
 			map.put(character, itemstack.toArray(new ItemStack[0]));
 		}
@@ -123,8 +123,8 @@ public class SimpleRegistration
 				list.add(Ingredient.fromStacks(new ItemStack((Item) object)));
 			else if(object instanceof String)
 				list.add(Ingredient.fromStacks(OreDictionary.getOres(object + "").toArray(new ItemStack[0])));
-			else if(object instanceof IGetter)
-				list.add(Ingredient.fromStacks(((IGetter<ItemStack>) object).get()));
+			else if(object instanceof iGetter)
+				list.add(Ingredient.fromStacks(((iGetter<ItemStack>) object).get()));
 			else
 			{
 				if(!(object instanceof Block))
@@ -197,8 +197,8 @@ public class SimpleRegistration
 		if(tab != null)
 			item.setCreativeTab(tab);
 		GameRegistry.findRegistry(Item.class).register(item);
-		if(item instanceof IRegisterListener)
-			((IRegisterListener) item).onRegistered();
+		if(item instanceof iRegisterListener)
+			((iRegisterListener) item).onRegistered();
 		if(item instanceof MultiVariantItem)
 			ItemsHC.multiitems.add((MultiVariantItem) item);
 		else
@@ -218,22 +218,22 @@ public class SimpleRegistration
 		
 		if(block instanceof BlockMultipartProvider)
 			ib = ((BlockMultipartProvider) block).createItem();
-		else if(block instanceof IItemBlock)
-			ib = ((IItemBlock) block).getItemBlock();
+		else if(block instanceof iItemBlock)
+			ib = ((iItemBlock) block).getItemBlock();
 		else
 			ib = new ItemBlock(block);
 		
 		block.setRegistryName(modid, name);
 		GameRegistry.findRegistry(Block.class).register(block);
-		if(!(block instanceof INoItemBlock))
+		if(!(block instanceof iNoItemBlock))
 			GameRegistry.findRegistry(Item.class).register(ib.setRegistryName(block.getRegistryName()));
 		
-		if(block instanceof IRegisterListener)
-			((IRegisterListener) block).onRegistered();
+		if(block instanceof iRegisterListener)
+			((iRegisterListener) block).onRegistered();
 		
-		if(block instanceof ITileBlock)
+		if(block instanceof iTileBlock)
 		{
-			Class c = ((ITileBlock) block).getTileClass();
+			Class c = ((iTileBlock) block).getTileClass();
 			
 			// Better registration of tiles. Maybe this will fix tile
 			// disappearing?
@@ -249,11 +249,11 @@ public class SimpleRegistration
 			}
 		}
 		
-		if(!(block instanceof INoItemBlock))
+		if(!(block instanceof iNoItemBlock))
 		{
 			Item i = Item.getItemFromBlock(block);
-			if(i instanceof IRegisterListener)
-				((IRegisterListener) i).onRegistered();
+			if(i instanceof iRegisterListener)
+				((iRegisterListener) i).onRegistered();
 			if(i instanceof MultiVariantItem)
 				ItemsHC.multiitems.add((MultiVariantItem) i);
 			else if(i != null)

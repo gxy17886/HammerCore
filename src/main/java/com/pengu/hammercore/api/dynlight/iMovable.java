@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public interface IMovable
+public interface iMovable
 {
 	int getX();
 	
@@ -16,7 +16,7 @@ public interface IMovable
 	
 	boolean isAlive();
 	
-	public static class BlockMovable implements IMovable
+	public static class BlockMovable implements iMovable
 	{
 		public BlockPos pos;
 		public World world;
@@ -68,7 +68,7 @@ public interface IMovable
 		}
 	}
 	
-	public static class EntityMovable implements IMovable
+	public static class EntityMovable implements iMovable
 	{
 		private Entity entity;
 		

@@ -2,7 +2,7 @@ package com.pengu.hammercore.recipeAPI;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IRecipeScript
+public interface iRecipeScript
 {
 	void add();
 	

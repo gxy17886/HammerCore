@@ -4,24 +4,24 @@ import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * If you want to make your own version, please make constructor with argument
- * {@link IPropertyChangeHandler}!
+ * {@link iPropertyChangeHandler}!
  */
 public abstract class NetPropertyAbstract<T>
 {
-	protected final IPropertyChangeHandler handler;
+	protected final iPropertyChangeHandler handler;
 	protected final int id;
 	protected T value;
 	
 	/** Determines if this property should get synced when it is changed */
 	public boolean syncOnChange = true;
 	
-	public NetPropertyAbstract(IPropertyChangeHandler handler)
+	public NetPropertyAbstract(iPropertyChangeHandler handler)
 	{
 		this.handler = handler;
 		this.id = handler.registerProperty(this);
 	}
 	
-	public NetPropertyAbstract(IPropertyChangeHandler handler, T initialValue)
+	public NetPropertyAbstract(iPropertyChangeHandler handler, T initialValue)
 	{
 		this.handler = handler;
 		this.id = handler.registerProperty(this);

@@ -20,7 +20,7 @@ import com.pengu.hammercore.client.OpnodeLoader;
 import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.particle.def.ParticleSlowZap;
 import com.pengu.hammercore.client.particle.def.ParticleZap;
-import com.pengu.hammercore.client.particle.old.IOldParticle;
+import com.pengu.hammercore.client.particle.old.iOldParticle;
 import com.pengu.hammercore.client.render.Render3D;
 
 public class ParticleProxy_Client extends ParticleProxy_Common
@@ -39,7 +39,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	}
 	
 	@Override
-	public IOldParticle spawnZap(World w, Vec3d start, Vec3d end, int rgb)
+	public iOldParticle spawnZap(World w, Vec3d start, Vec3d end, int rgb)
 	{
 		if(!w.isRemote)
 			return super.spawnZap(w, start, end, rgb);
@@ -49,7 +49,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	}
 	
 	@Override
-	public IOldParticle spawnZap(int w, Vec3d start, Vec3d end, int rgb)
+	public iOldParticle spawnZap(int w, Vec3d start, Vec3d end, int rgb)
 	{
 		ParticleZap zap = null;
 		if(Minecraft.getMinecraft().world.provider.getDimension() == w)
@@ -61,7 +61,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	}
 	
 	@Override
-	public IOldParticle spawnSlowZap(World w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
+	public iOldParticle spawnSlowZap(World w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
 	{
 		if(!w.isRemote)
 			return super.spawnSlowZap(w, start, end, rgb, maxTicks, ampl);
@@ -71,7 +71,7 @@ public class ParticleProxy_Client extends ParticleProxy_Common
 	}
 	
 	@Override
-	public IOldParticle spawnSlowZap(int w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
+	public iOldParticle spawnSlowZap(int w, Vec3d start, Vec3d end, int rgb, int maxTicks, float ampl)
 	{
 		ParticleSlowZap zap = null;
 		if(Minecraft.getMinecraft().world.provider.getDimension() == w)

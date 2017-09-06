@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemPowerContainer extends Item implements IPowerContainerItem
+public class ItemPowerContainer extends Item implements iPowerContainerItem
 {
 	protected int capacity;
 	protected int maxReceive;

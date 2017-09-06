@@ -13,7 +13,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.pengu.hammercore.common.utils.StringToItemStack;
 
-public interface IRecipeType<T>
+public interface iRecipeType<T>
 {
 	/**
 	 * Indicates if HC should add/remove created instance of recipe to JEI.
@@ -57,16 +57,16 @@ public interface IRecipeType<T>
 	};
 	
 	/**
-	 * Called instead of {@link IRecipeType#addRecipe(T)} if
-	 * {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
+	 * Called instead of {@link iRecipeType#addRecipe(T)} if
+	 * {@link iRecipeType#swapAddRemoveSupported(Object)} returns true.
 	 */
 	default void removeOnLoad(T recipe)
 	{
 	};
 	
 	/**
-	 * Called instead of {@link IRecipeType#addRecipe(T)} if
-	 * {@link IRecipeType#swapAddRemoveSupported(Object)} returns true.
+	 * Called instead of {@link iRecipeType#addRecipe(T)} if
+	 * {@link iRecipeType#swapAddRemoveSupported(Object)} returns true.
 	 */
 	default void addOnUnload(T recipe)
 	{

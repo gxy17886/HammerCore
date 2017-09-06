@@ -22,7 +22,7 @@ import com.pengu.hammercore.common.utils.WorldUtil;
  */
 public class InventoryNonTile implements IInventory
 {
-	public IInventoryListener listener;
+	public iInventoryListener listener;
 	public NonNullList<ItemStack> inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 	private final int[] allSlots;
 	public int inventoryStackLimit = 64;

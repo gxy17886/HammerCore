@@ -22,7 +22,7 @@ import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.TooltipAPI;
 import com.pengu.hammercore.client.RenderGui;
 import com.pengu.hammercore.client.model.HasNoModel;
-import com.pengu.hammercore.client.particle.IRenderHelper;
+import com.pengu.hammercore.client.particle.iRenderHelper;
 import com.pengu.hammercore.client.particle.RenderHelperImpl;
 import com.pengu.hammercore.client.render.item.TileEntityItemStackRendererHC;
 import com.pengu.hammercore.client.render.tile.TileRenderMultipart;
@@ -87,7 +87,7 @@ public class RenderProxy_Client extends RenderProxy_Common
 	}
 	
 	@Override
-	public IRenderHelper getRenderHelper()
+	public iRenderHelper getRenderHelper()
 	{
 		return RenderHelperImpl.INSTANCE;
 	}

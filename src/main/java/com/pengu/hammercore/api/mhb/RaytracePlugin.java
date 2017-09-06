@@ -7,7 +7,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Annotate any {@link IRayRegistry} plugin to make it public to Hammer Core
+ * Annotate any {@link iRayRegistry} plugin to make it public to Hammer Core
  */
 @Retention(RUNTIME)
 @Target(TYPE)

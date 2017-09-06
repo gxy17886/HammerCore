@@ -18,10 +18,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.command.CommandTimeToTicks;
 import com.pengu.hammercore.common.capabilities.ItemCapabilityProvider;
-import com.pengu.hammercore.energy.IPowerContainerItem;
-import com.pengu.hammercore.energy.IPowerStorage;
+import com.pengu.hammercore.energy.iPowerContainerItem;
+import com.pengu.hammercore.energy.iPowerStorage;
 
-public class ItemFEBase extends Item implements IPowerContainerItem
+public class ItemFEBase extends Item implements iPowerContainerItem
 {
 	protected int maxFE, maxExtract, maxReceive;
 	
@@ -144,7 +144,7 @@ public class ItemFEBase extends Item implements IPowerContainerItem
 		return maxFE;
 	}
 	
-	public class ItemEnergyHolder implements IEnergyStorage, IPowerStorage
+	public class ItemEnergyHolder implements IEnergyStorage, iPowerStorage
 	{
 		public final ItemStack stack;
 		

@@ -5,7 +5,7 @@ import net.minecraft.item.ItemBlock;
 /**
  * Used for registering blocks to add a custom ItemBlock
  */
-public interface IItemBlock
+public interface iItemBlock
 {
 	public ItemBlock getItemBlock();
 }

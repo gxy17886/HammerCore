@@ -34,16 +34,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.api.INoItemBlock;
-import com.pengu.hammercore.api.ITileBlock;
+import com.pengu.hammercore.api.iNoItemBlock;
+import com.pengu.hammercore.api.iTileBlock;
 import com.pengu.hammercore.api.mhb.BlockTraceable;
-import com.pengu.hammercore.api.mhb.ICubeManager;
+import com.pengu.hammercore.api.mhb.iCubeManager;
 import com.pengu.hammercore.api.multipart.ItemBlockMultipartProvider;
 import com.pengu.hammercore.api.multipart.MultipartSignature;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.vec.Cuboid6;
 
-public class BlockMultipart extends BlockTraceable implements ITileEntityProvider, ICubeManager, INoItemBlock, ITileBlock<TileMultipart>
+public class BlockMultipart extends BlockTraceable implements ITileEntityProvider, iCubeManager, iNoItemBlock, iTileBlock<TileMultipart>
 {
 	private static final Cuboid6[] EMPTY_CUBOID_ARRAY = new Cuboid6[0];
 	

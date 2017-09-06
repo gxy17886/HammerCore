@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 
-import com.pengu.hammercore.common.IWrenchItem;
+import com.pengu.hammercore.common.iWrenchItem;
 
-public class ItemWrench extends Item implements IWrenchItem
+public class ItemWrench extends Item implements iWrenchItem
 {
 	public ItemWrench()
 	{

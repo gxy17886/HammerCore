@@ -33,11 +33,11 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.net.HCNetwork;
 import com.pengu.hammercore.net.pkt.PacketSyncSyncableTile;
-import com.pengu.hammercore.net.utils.IPropertyChangeHandler;
+import com.pengu.hammercore.net.utils.iPropertyChangeHandler;
 import com.pengu.hammercore.net.utils.NetPropertyAbstract;
 import com.pengu.hammercore.utils.WorldLocation;
 
-public abstract class TileSyncable extends TileEntity implements IPropertyChangeHandler
+public abstract class TileSyncable extends TileEntity implements iPropertyChangeHandler
 {
 	protected World readNBT_world;
 	private final List<NetPropertyAbstract> properties = new ArrayList<>();

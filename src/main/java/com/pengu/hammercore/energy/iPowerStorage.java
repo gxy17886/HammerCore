@@ -1,6 +1,6 @@
 package com.pengu.hammercore.energy;
 
-public interface IPowerStorage
+public interface iPowerStorage
 {
 	public int receiveEnergy(int maxReceive, boolean simulate);
 	

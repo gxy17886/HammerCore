@@ -5,10 +5,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.pengu.hammercore.HammerCore.GRCProvider;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketRequestRecipeScript implements IPacket, IPacketListener<PacketRequestRecipeScript, IPacket>
+public class PacketRequestRecipeScript implements iPacket, iPacketListener<PacketRequestRecipeScript, iPacket>
 {
 	public int id;
 	
@@ -22,7 +22,7 @@ public class PacketRequestRecipeScript implements IPacket, IPacketListener<Packe
 	}
 	
 	@Override
-	public IPacket onArrived(PacketRequestRecipeScript packet, MessageContext context)
+	public iPacket onArrived(PacketRequestRecipeScript packet, MessageContext context)
 	{
 		if(context.side == Side.SERVER && GRCProvider.getScriptCount() > packet.id)
 			return new PacketSendGlobalRecipeScripts(packet.id, GRCProvider.getScript(packet.id));

@@ -3,7 +3,7 @@ package com.pengu.hammercore.api;
 /**
  * Simple loging interface
  */
-public interface ILog
+public interface iLog
 {
 	public void info(String message, Object... params);
 	

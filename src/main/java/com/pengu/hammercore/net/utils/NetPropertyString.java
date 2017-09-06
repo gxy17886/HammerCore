@@ -4,12 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyString extends NetPropertyAbstract<String>
 {
-	public NetPropertyString(IPropertyChangeHandler handler)
+	public NetPropertyString(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyString(IPropertyChangeHandler handler, String initialValue)
+	public NetPropertyString(iPropertyChangeHandler handler, String initialValue)
 	{
 		super(handler, initialValue);
 	}

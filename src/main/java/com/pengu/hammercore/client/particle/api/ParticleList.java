@@ -20,19 +20,19 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 public class ParticleList
 {
-	private static final Set<IParticleGetter> getters = new HashSet<>();
+	private static final Set<iParticleGetter> getters = new HashSet<>();
 	
 	private static final Set<Particle> vanillaParticleSet = new HashSet<>();
 	private static final List<Particle> vanillaParticleList = new ArrayList<>();
 	
-	private static final List<IRenderedParticle> renderedParticleList = new ArrayList<>();
+	private static final List<iRenderedParticle> renderedParticleList = new ArrayList<>();
 	
 	static
 	{
 		addGetter(new DefaultParticleGetter());
 	}
 	
-	public static void addGetter(IParticleGetter getter)
+	public static void addGetter(iParticleGetter getter)
 	{
 		getters.add(getter);
 	}
@@ -60,15 +60,15 @@ public class ParticleList
 		if(Minecraft.getMinecraft().player == null || Minecraft.getMinecraft().world == null)
 			return;
 		
-		for(IParticleGetter getter : getters)
+		for(iParticleGetter getter : getters)
 			getter.addParticles(vanillaParticleSet);
 		
 		vanillaParticleList.addAll(vanillaParticleSet);
 		for(int i = 0; i < vanillaParticleList.size(); ++i)
 		{
 			Particle p = vanillaParticleList.get(i);
-			if(p instanceof IRenderedParticle)
-				renderedParticleList.add((IRenderedParticle) p);
+			if(p instanceof iRenderedParticle)
+				renderedParticleList.add((iRenderedParticle) p);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class ParticleList
 		for(int i = 0; i < renderedParticleList.size(); ++i)
 		{
 			Particle p = (Particle) renderedParticleList.get(i);
-			IRenderedParticle rp = renderedParticleList.get(i);
+			iRenderedParticle rp = renderedParticleList.get(i);
 			
 			if(rp != null && rp.isRendered())
 			{
@@ -117,12 +117,12 @@ public class ParticleList
 		return vanillaParticleList;
 	}
 	
-	public static List<IRenderedParticle> getRenderedParticleList()
+	public static List<iRenderedParticle> getRenderedParticleList()
 	{
 		return renderedParticleList;
 	}
 	
-	private static class DefaultParticleGetter implements IParticleGetter
+	private static class DefaultParticleGetter implements iParticleGetter
 	{
 		@Override
 		public void addParticles(Set<Particle> particlesSet)

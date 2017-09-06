@@ -39,6 +39,7 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -47,17 +48,17 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import com.pengu.hammercore.annotations.MCFBus;
 import com.pengu.hammercore.api.HammerCoreAPI;
-import com.pengu.hammercore.api.IHammerCoreAPI;
-import com.pengu.hammercore.api.IJavaCode;
-import com.pengu.hammercore.api.IUpdatable;
+import com.pengu.hammercore.api.iHammerCoreAPI;
+import com.pengu.hammercore.api.iJavaCode;
+import com.pengu.hammercore.api.iProcess;
 import com.pengu.hammercore.api.RequiredDeps;
 import com.pengu.hammercore.api.WrappedFMLLog;
-import com.pengu.hammercore.api.mhb.IRayRegistry;
+import com.pengu.hammercore.api.mhb.iRayRegistry;
 import com.pengu.hammercore.api.mhb.RaytracePlugin;
 import com.pengu.hammercore.asm.CSVFile;
 import com.pengu.hammercore.cfg.ConfigHolder;
 import com.pengu.hammercore.cfg.HCModConfigurations;
-import com.pengu.hammercore.cfg.IConfigReloadListener;
+import com.pengu.hammercore.cfg.iConfigReloadListener;
 import com.pengu.hammercore.command.CommandBuildStructure;
 import com.pengu.hammercore.command.CommandLoadChunk;
 import com.pengu.hammercore.command.CommandPosToLong;
@@ -87,7 +88,7 @@ import com.pengu.hammercore.proxy.PipelineProxy_Common;
 import com.pengu.hammercore.proxy.RenderProxy_Common;
 import com.pengu.hammercore.recipeAPI.BrewingRecipe;
 import com.pengu.hammercore.recipeAPI.GlobalRecipeScript;
-import com.pengu.hammercore.recipeAPI.IRecipePlugin;
+import com.pengu.hammercore.recipeAPI.iRecipePlugin;
 import com.pengu.hammercore.recipeAPI.RecipePlugin;
 import com.pengu.hammercore.recipeAPI.RecipeTypeRegistry;
 import com.pengu.hammercore.recipeAPI.SimpleRecipeScript;
@@ -149,16 +150,16 @@ public class HammerCore
 	/** Creative tab of HammerCore */
 	public static final CreativeTabs tab = HammerCoreUtils.createDynamicCreativeTab("hammercore", 60);
 	
-	public static final Map<IHammerCoreAPI, HammerCoreAPI> APIS = new HashMap<>();
+	public static final Map<iHammerCoreAPI, HammerCoreAPI> APIS = new HashMap<>();
 	
-	public static final Set<IJavaCode> COMPILED_CODES = new HashSet<>();
+	public static final Set<iJavaCode> COMPILED_CODES = new HashSet<>();
 	
 	public static final WrappedLog LOG = new WrappedLog("Hammer Core");
 	
 	public static final CSVFile FIELD_CSV, METHODS_CSV;
 	
-	private List<IRayRegistry> raytracePlugins;
-	private List<IRecipePlugin> recipePlugins;
+	private List<iRayRegistry> raytracePlugins;
+	private List<iRecipePlugin> recipePlugins;
 	private List<ConfigHolder> configListeners;
 	
 	static
@@ -228,13 +229,13 @@ public class HammerCore
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e)
 	{
-		List<IHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, IHammerCoreAPI.class);
+		List<iHammerCoreAPI> apis = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HammerCoreAPI.class, iHammerCoreAPI.class);
 		List<Object> toRegister = AnnotatedInstanceUtil.getInstances(e.getAsmData(), MCFBus.class, Object.class);
-		List<IConfigReloadListener> listeners = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HCModConfigurations.class, IConfigReloadListener.class);
+		List<iConfigReloadListener> listeners = AnnotatedInstanceUtil.getInstances(e.getAsmData(), HCModConfigurations.class, iConfigReloadListener.class);
 		
 		toRegister.add(this);
 		
-		for(IJavaCode code : COMPILED_CODES)
+		for(iJavaCode code : COMPILED_CODES)
 			// Add compiled codes
 			code.addMCFObjects(toRegister);
 		
@@ -245,7 +246,7 @@ public class HammerCore
 		
 		configListeners = new ArrayList<>();
 		int i = 0;
-		for(IConfigReloadListener listener : listeners)
+		for(iConfigReloadListener listener : listeners)
 		{
 			i++;
 			bar.step("Registering Custom Configs (" + i + "/" + listeners.size() + ")");
@@ -255,8 +256,8 @@ public class HammerCore
 			LOG.info("Added \"" + h.getClass().getName() + "\" to Hammer Core Simple Configs.");
 		}
 		
-		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, IRayRegistry.class);
-		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, IRecipePlugin.class);
+		raytracePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RaytracePlugin.class, iRayRegistry.class);
+		recipePlugins = AnnotatedInstanceUtil.getInstances(e.getAsmData(), RecipePlugin.class, iRecipePlugin.class);
 		
 		i = 0;
 		for(Object o : toRegister)
@@ -276,7 +277,7 @@ public class HammerCore
 		}
 		
 		i = 0;
-		for(IHammerCoreAPI api : apis)
+		for(iHammerCoreAPI api : apis)
 		{
 			i++;
 			bar.step("Registering external libraries (" + i + "/" + apis.size() + ")");
@@ -302,7 +303,7 @@ public class HammerCore
 		meta.version = "@VERSION@";
 		meta.authorList = Arrays.asList("APengu");
 		
-		for(IJavaCode code : COMPILED_CODES)
+		for(iJavaCode code : COMPILED_CODES)
 			code.preInit();
 		
 		ProgressManager.pop(bar);
@@ -342,7 +343,7 @@ public class HammerCore
 		bookProxy.init();
 		HCNetwork.clinit();
 		
-		for(IJavaCode code : COMPILED_CODES)
+		for(iJavaCode code : COMPILED_CODES)
 			code.init();
 		
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiManager());
@@ -360,9 +361,9 @@ public class HammerCore
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e)
 	{
-		for(IJavaCode code : COMPILED_CODES)
+		for(iJavaCode code : COMPILED_CODES)
 			code.postInit();
-		for(IRecipePlugin plugin : recipePlugins)
+		for(iRecipePlugin plugin : recipePlugins)
 		{
 			LOG.info("Registering recipe plugin: " + plugin.getClass().getName() + " ...");
 			long start = System.currentTimeMillis();
@@ -371,7 +372,7 @@ public class HammerCore
 		}
 	}
 	
-	public static final List<IUpdatable> updatables = new ArrayList<>(4);
+	public static final List<iProcess> updatables = new ArrayList<>(4);
 	
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent e)
@@ -405,14 +406,17 @@ public class HammerCore
 		if(evt.side == Side.SERVER)
 		{
 			ChunkLoaderHC.INSTANCE.update();
-			for(int i = 0; i < updatables.size(); ++i)
+			for(int i = 0; evt.phase == Phase.START && i < updatables.size(); ++i)
 			{
 				try
 				{
-					IUpdatable upd = updatables.get(i);
+					iProcess upd = updatables.get(i);
 					upd.update();
 					if(!upd.isAlive())
+					{
+						upd.onKill();
 						updatables.remove(i);
+					}
 				} catch(Throwable err)
 				{
 				}
@@ -442,7 +446,7 @@ public class HammerCore
 		RayCubeRegistry.instance.cubes.clear();
 		RayCubeRegistry.instance.mgrs.clear();
 		
-		for(IRayRegistry reg : raytracePlugins)
+		for(iRayRegistry reg : raytracePlugins)
 		{
 			LOG.info("Registering raytrace plugin: " + reg.getClass().getName() + " ...");
 			long start = System.currentTimeMillis();
@@ -486,7 +490,7 @@ public class HammerCore
 					jsons.add(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(json)))));
 				} catch(Throwable err)
 				{
-					LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
+					LOG.warn("Failed to parse HammerCoreRecipeJson File:");
 					err.printStackTrace();
 				}
 			}
@@ -499,7 +503,7 @@ public class HammerCore
 				return new GlobalRecipeScript(registry.parse(new String(IOUtils.pipeOut(new FileInputStream(path)))));
 			} catch(Throwable err)
 			{
-				LOG.bigWarn("Failed to parse HammerCoreRecipeJson File:");
+				LOG.warn("Failed to parse HammerCoreRecipeJson File:");
 				err.printStackTrace();
 			}
 		}

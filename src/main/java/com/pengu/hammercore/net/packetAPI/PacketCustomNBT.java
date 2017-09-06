@@ -14,7 +14,7 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 {
 	public NBTTagCompound nbt = new NBTTagCompound();
 	
-	PacketCustomNBT(IPacket packet, String channel)
+	PacketCustomNBT(iPacket packet, String channel)
 	{
 		NBTTagCompound nbt = new NBTTagCompound();
 		packet.writeToNBT(nbt);
@@ -34,14 +34,14 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 		{
 			NBTTagCompound nbt = message.nbt;
 			PacketManager mgr = PacketManager.getManagerByChannel(message.nbt.getString("Channel"));
-			Class<IPacket> packetClass = (Class<IPacket>) Class.forName(nbt.getString("PacketClass"));
-			Constructor<IPacket> contr = packetClass.getConstructor();
+			Class<iPacket> packetClass = (Class<iPacket>) Class.forName(nbt.getString("PacketClass"));
+			Constructor<iPacket> contr = packetClass.getConstructor();
 			contr.setAccessible(true);
-			IPacket packet = contr.newInstance();
-			IPacketListener listener = null;
+			iPacket packet = contr.newInstance();
+			iPacketListener listener = null;
 			
-			if(packet instanceof IPacketListener)
-				listener = (IPacketListener) packet; // New: handle packets if
+			if(packet instanceof iPacketListener)
+				listener = (iPacketListener) packet; // New: handle packets if
 				                                     // they are their own
 				                                     // listeners. No packet
 				                                     // registration will be
@@ -59,7 +59,7 @@ public class PacketCustomNBT implements IMessage, IMessageHandler<PacketCustomNB
 				                                                    // required.
 				
 			packet.readFromNBT(nbt.getCompoundTag("PacketData"));
-			IPacket pkt = listener.onArrived(packet, ctx);
+			iPacket pkt = listener.onArrived(packet, ctx);
 			if(pkt != null)
 				return new PacketCustomNBT(pkt, nbt.getString("Channel"));
 		} catch(Throwable err)

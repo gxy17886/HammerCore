@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import com.pengu.hammercore.common.utils.StrPos;
 import com.pengu.hammercore.common.utils.WorldUtil;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 import com.pengu.hammercore.tile.TileSyncable;
 
-public class PacketSyncSyncableTile implements IPacket, IPacketListener<PacketSyncSyncableTile, IPacket>
+public class PacketSyncSyncableTile implements iPacket, iPacketListener<PacketSyncSyncableTile, iPacket>
 {
 	private String pos;
 	private int world;
@@ -48,7 +48,7 @@ public class PacketSyncSyncableTile implements IPacket, IPacketListener<PacketSy
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSyncSyncableTile packet, MessageContext context)
+	public iPacket onArrived(PacketSyncSyncableTile packet, MessageContext context)
 	{
 		World world = WorldUtil.getWorld(context, packet.world);
 		BlockPos pos = StrPos.fromStr(packet.pos);

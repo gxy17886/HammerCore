@@ -1,6 +1,6 @@
 package com.pengu.hammercore.client.particle;
 
-public interface IRenderable
+public interface iRenderable
 {
 	void render();
 }

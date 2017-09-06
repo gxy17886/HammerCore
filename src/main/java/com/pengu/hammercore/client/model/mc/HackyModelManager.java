@@ -11,9 +11,9 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class HackyModelManager
 {
-	private static List<Pair<ModelResourceLocation, ISimplifiedModel>> models = new ArrayList<>();
+	private static List<Pair<ModelResourceLocation, iSimplifiedModel>> models = new ArrayList<>();
 	
-	public static void bind(ModelResourceLocation model, ISimplifiedModel imodel)
+	public static void bind(ModelResourceLocation model, iSimplifiedModel imodel)
 	{
 		models.add(Pair.of(model, imodel));
 	}
@@ -21,7 +21,7 @@ public class HackyModelManager
 	@SubscribeEvent
 	public void modelEvt(ModelBakeEvent evt)
 	{
-		for(Pair<ModelResourceLocation, ISimplifiedModel> mo : models)
+		for(Pair<ModelResourceLocation, iSimplifiedModel> mo : models)
 			evt.getModelRegistry().putObject(mo.getKey(), new HackyBakedModel(mo.getValue()));
 	}
 }

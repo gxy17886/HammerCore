@@ -9,7 +9,7 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-import com.pengu.hammercore.world.gen.IWorldGenFeature;
+import com.pengu.hammercore.world.gen.iWorldGenFeature;
 
 public class WorldGenHammerCore implements IWorldGenerator
 {
@@ -17,7 +17,7 @@ public class WorldGenHammerCore implements IWorldGenerator
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider)
 	{
 		ChunkPos cp = new ChunkPos(chunkX, chunkZ);
-		for(IWorldGenFeature feature : WorldGenRegistry.listFeatures())
+		for(iWorldGenFeature feature : WorldGenRegistry.listFeatures())
 		{
 			for(int i = 0; i < random.nextInt(feature.getMaxChances(world, cp, random)); ++i)
 			{

@@ -1,6 +1,6 @@
 package com.pengu.hammercore.utils;
 
-public interface IRegisterListener
+public interface iRegisterListener
 {
 	void onRegistered();
 }

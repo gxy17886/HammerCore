@@ -4,12 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyIntArray extends NetPropertyAbstract<int[]>
 {
-	public NetPropertyIntArray(IPropertyChangeHandler handler)
+	public NetPropertyIntArray(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyIntArray(IPropertyChangeHandler handler, int[] initialValue)
+	public NetPropertyIntArray(iPropertyChangeHandler handler, int[] initialValue)
 	{
 		super(handler, initialValue);
 	}

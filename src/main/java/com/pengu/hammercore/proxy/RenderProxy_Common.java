@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.pengu.hammercore.client.particle.IRenderHelper;
+import com.pengu.hammercore.client.particle.iRenderHelper;
 
 public class RenderProxy_Common
 {
@@ -22,7 +22,7 @@ public class RenderProxy_Common
 		
 	}
 	
-	public IRenderHelper getRenderHelper()
+	public iRenderHelper getRenderHelper()
 	{
 		return null;
 	}

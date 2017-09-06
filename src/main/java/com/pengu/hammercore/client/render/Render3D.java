@@ -48,7 +48,7 @@ import com.pengu.hammercore.client.particle.api.ParticleList;
 import com.pengu.hammercore.client.render.world.PositionRenderer;
 import com.pengu.hammercore.client.utils.RenderUtil;
 import com.pengu.hammercore.color.Color;
-import com.pengu.hammercore.common.IWrenchable;
+import com.pengu.hammercore.common.iWrenchable;
 import com.pengu.hammercore.common.items.ItemIWrench;
 import com.pengu.hammercore.utils.ColorHelper;
 import com.pengu.hammercore.vec.Cuboid6;
@@ -102,7 +102,7 @@ public class Render3D
 				
 				TileEntity tile = w.getTileEntity(p);
 				
-				boolean wrenchable = tile instanceof IWrenchable || b instanceof IWrenchable;
+				boolean wrenchable = tile instanceof iWrenchable || b instanceof iWrenchable;
 				
 				int col = wrenchable ? 0x3322FF22 : 0x33FF2222;
 				

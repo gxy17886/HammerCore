@@ -35,11 +35,11 @@ import com.pengu.hammercore.net.utils.NetPropertyBool;
 import com.pengu.hammercore.net.utils.NetPropertyNumber;
 import com.pengu.hammercore.net.utils.NetPropertyString;
 import com.pengu.hammercore.net.utils.NetPropertyUUID;
-import com.pengu.hammercore.tile.IMalfunctionable;
-import com.pengu.hammercore.tile.ITileDroppable;
+import com.pengu.hammercore.tile.iMalfunctionable;
+import com.pengu.hammercore.tile.iTileDroppable;
 import com.pengu.hammercore.tile.TileSyncableTickable;
 
-public class TileTesseract extends TileSyncableTickable implements ITileDroppable, IMalfunctionable
+public class TileTesseract extends TileSyncableTickable implements iTileDroppable, iMalfunctionable
 {
 	public static final Map<String, List<TileTesseract>> TESSERACTS = new HashMap<>();
 	

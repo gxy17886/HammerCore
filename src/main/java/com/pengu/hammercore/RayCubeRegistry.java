@@ -7,16 +7,16 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.pengu.hammercore.api.mhb.BlockTraceable;
-import com.pengu.hammercore.api.mhb.ICubeManager;
-import com.pengu.hammercore.api.mhb.IRayCubeGetter;
-import com.pengu.hammercore.api.mhb.IRayCubeRegistry;
+import com.pengu.hammercore.api.mhb.iCubeManager;
+import com.pengu.hammercore.api.mhb.iRayCubeGetter;
+import com.pengu.hammercore.api.mhb.iRayCubeRegistry;
 import com.pengu.hammercore.vec.Cuboid6;
 
-final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
+final class RayCubeRegistry implements iRayCubeRegistry, iRayCubeGetter
 {
 	static final RayCubeRegistry instance = new RayCubeRegistry();
 	final Map<Block, Cuboid6[]> cubes = new HashMap<Block, Cuboid6[]>();
-	final Map<Block, ICubeManager> mgrs = new HashMap<Block, ICubeManager>();
+	final Map<Block, iCubeManager> mgrs = new HashMap<Block, iCubeManager>();
 	
 	private RayCubeRegistry()
 	{
@@ -36,13 +36,13 @@ final class RayCubeRegistry implements IRayCubeRegistry, IRayCubeGetter
 	}
 	
 	@Override
-	public void bindBlockCubeManager(BlockTraceable target, ICubeManager manager)
+	public void bindBlockCubeManager(BlockTraceable target, iCubeManager manager)
 	{
 		mgrs.put(target, manager);
 	}
 	
 	@Override
-	public ICubeManager getBoundCubeManager(BlockTraceable target)
+	public iCubeManager getBoundCubeManager(BlockTraceable target)
 	{
 		return mgrs.get(target);
 	}

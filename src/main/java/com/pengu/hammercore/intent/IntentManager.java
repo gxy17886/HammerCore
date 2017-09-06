@@ -13,27 +13,27 @@ import com.pengu.hammercore.utils.NPEUtils;
 
 public class IntentManager
 {
-	private static final IIntentHandler DEF_INTENT = (modid, data) -> null;
-	private static final IndexedMap<String, IndexedMap<Class, IIntentHandler>> intents = new IndexedMap<>();
+	private static final iIntentHandler DEF_INTENT = (modid, data) -> null;
+	private static final IndexedMap<String, IndexedMap<Class, iIntentHandler>> intents = new IndexedMap<>();
 	
 	/**
-	 * Registers an {@link IIntentHandler}. Should be called during mod
+	 * Registers an {@link iIntentHandler}. Should be called during mod
 	 * construction.
 	 */
-	public static <T> void registerIntentHandler(String name, Class<T> data, IIntentHandler<T> intent)
+	public static <T> void registerIntentHandler(String name, Class<T> data, iIntentHandler<T> intent)
 	{
-		IndexedMap<Class, IIntentHandler> ints = intents.get(name);
+		IndexedMap<Class, iIntentHandler> ints = intents.get(name);
 		if(ints == null)
 			intents.put(name, ints = new IndexedMap<>());
 		ints.put(data, intent);
 	}
 	
 	/**
-	 * Gets an {@link IIntentHandler} that was ALREADY registered.
+	 * Gets an {@link iIntentHandler} that was ALREADY registered.
 	 */
-	public static <T> IIntentHandler<T> getIntentHandler(String name, Class<T> data)
+	public static <T> iIntentHandler<T> getIntentHandler(String name, Class<T> data)
 	{
-		IndexedMap<Class, IIntentHandler> ints = intents.get(name);
+		IndexedMap<Class, iIntentHandler> ints = intents.get(name);
 		if(ints != null)
 		{
 			Stream<Class> str = ints.getKeys().stream().filter(c -> c.isAssignableFrom(data));
@@ -48,7 +48,7 @@ public class IntentManager
 	{
 		NPEUtils.checkNotNull(data, "data can not be null!");
 		NPEUtils.checkNotNull(name, "name can not be null!");
-		IIntentHandler intent = getIntentHandler(name, data.getClass());
+		iIntentHandler intent = getIntentHandler(name, data.getClass());
 		ModContainer mc = Loader.instance().activeModContainer();
 		if(intent != null)
 			return intent.execute(mc != null ? mc.getModId() : "hammercore", data);

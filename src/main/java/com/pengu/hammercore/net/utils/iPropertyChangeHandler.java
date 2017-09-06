@@ -2,7 +2,7 @@ package com.pengu.hammercore.net.utils;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IPropertyChangeHandler
+public interface iPropertyChangeHandler
 {
 	int registerProperty(NetPropertyAbstract prop);
 	

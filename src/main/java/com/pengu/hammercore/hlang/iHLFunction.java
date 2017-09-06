@@ -1,6 +1,6 @@
 package com.pengu.hammercore.hlang;
 
-public interface IHLFunction
+public interface iHLFunction
 {
 	Class[] getArgs();
 	

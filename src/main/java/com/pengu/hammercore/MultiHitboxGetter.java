@@ -4,7 +4,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import com.pengu.hammercore.api.mhb.BlockTraceable;
-import com.pengu.hammercore.api.mhb.ICubeManager;
+import com.pengu.hammercore.api.mhb.iCubeManager;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.vec.Cuboid6;
 
@@ -15,7 +15,7 @@ public class MultiHitboxGetter
 		BlockTraceable bt = WorldUtil.cast(world.getBlockState(pos).getBlock(), BlockTraceable.class);
 		if(bt != null)
 		{
-			ICubeManager mgr = RayCubeRegistry.instance.getBoundCubeManager(bt);
+			iCubeManager mgr = RayCubeRegistry.instance.getBoundCubeManager(bt);
 			if(mgr != null)
 				return mgr.getCuboids(world, pos, world.getBlockState(pos));
 			Cuboid6[] cbs = RayCubeRegistry.instance.getBoundCubes6(bt);

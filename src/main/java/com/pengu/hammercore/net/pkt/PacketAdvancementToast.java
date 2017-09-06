@@ -9,10 +9,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketAdvancementToast implements IPacket, IPacketListener<PacketAdvancementToast, IPacket>
+public class PacketAdvancementToast implements iPacket, iPacketListener<PacketAdvancementToast, iPacket>
 {
 	private ResourceLocation advancement;
 	
@@ -38,7 +38,7 @@ public class PacketAdvancementToast implements IPacket, IPacketListener<PacketAd
 	}
 	
 	@Override
-	public IPacket onArrived(PacketAdvancementToast packet, MessageContext context)
+	public iPacket onArrived(PacketAdvancementToast packet, MessageContext context)
 	{
 		if(context.side == Side.CLIENT)
 			packet.client();

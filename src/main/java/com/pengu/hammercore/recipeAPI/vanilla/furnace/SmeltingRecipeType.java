@@ -7,9 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.pengu.hammercore.recipeAPI.IRecipeType;
+import com.pengu.hammercore.recipeAPI.iRecipeType;
 
-public class SmeltingRecipeType implements IRecipeType<SmeltingRecipeHC>
+public class SmeltingRecipeType implements iRecipeType<SmeltingRecipeHC>
 {
 	@Override
 	public boolean isJeiSupported(SmeltingRecipeHC recipe)

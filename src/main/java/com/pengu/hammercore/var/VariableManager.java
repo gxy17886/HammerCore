@@ -19,9 +19,9 @@ public class VariableManager
 		throw new AssertionError("No " + getClass().getName() + " instances for you!");
 	}
 	
-	static final List<IVariable> VARIABLES = new ArrayList<>();
+	static final List<iVariable> VARIABLES = new ArrayList<>();
 	
-	public static <T> IVariable<T> getVariable(String id)
+	public static <T> iVariable<T> getVariable(String id)
 	{
 		for(int i = 0; i < VARIABLES.size(); ++i)
 			if(VARIABLES.get(i).getId().equals(id))
@@ -29,7 +29,7 @@ public class VariableManager
 		return null;
 	}
 	
-	public static void registerVariable(IVariable var)
+	public static void registerVariable(iVariable var)
 	{
 		if(VARIABLES.contains(var) || getVariable(var.getId()) != null)
 			return;
@@ -38,11 +38,11 @@ public class VariableManager
 	
 	static void updateManager()
 	{
-		Map<String, IVariable> dirty = null;
+		Map<String, iVariable> dirty = null;
 		
 		for(int i = 0; i < VARIABLES.size(); ++i)
 		{
-			IVariable var = VARIABLES.get(i);
+			iVariable var = VARIABLES.get(i);
 			if(var.hasChanged())
 			{
 				if(dirty == null)
@@ -58,11 +58,11 @@ public class VariableManager
 	
 	public static void sendVarsTo(EntityPlayerMP mp)
 	{
-		Map<String, IVariable> dirty = null;
+		Map<String, iVariable> dirty = null;
 		
 		for(int i = 0; i < VARIABLES.size(); ++i)
 		{
-			IVariable var = VARIABLES.get(i);
+			iVariable var = VARIABLES.get(i);
 			if(dirty == null)
 				dirty = new HashMap<>();
 			dirty.put(var.getId(), var);

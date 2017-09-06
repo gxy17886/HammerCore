@@ -2,7 +2,7 @@ package com.pengu.hammercore.net.packetAPI;
 
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IPacket
+public interface iPacket
 {
 	public void writeToNBT(NBTTagCompound nbt);
 	

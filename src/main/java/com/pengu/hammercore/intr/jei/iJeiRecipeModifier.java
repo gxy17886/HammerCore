@@ -1,6 +1,6 @@
 package com.pengu.hammercore.intr.jei;
 
-public interface IJeiRecipeModifier
+public interface iJeiRecipeModifier
 {
 	void addJEI(Object recipe);
 	
@@ -8,6 +8,6 @@ public interface IJeiRecipeModifier
 	
 	public static class Instance
 	{
-		public static IJeiRecipeModifier JEIModifier;
+		public static iJeiRecipeModifier JEIModifier;
 	}
 }

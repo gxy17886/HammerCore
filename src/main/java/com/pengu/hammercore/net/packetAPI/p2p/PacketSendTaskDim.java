@@ -5,16 +5,16 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.pengu.hammercore.net.HCNetwork;
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketSendTaskDim implements IPacket, IPacketListener<PacketSendTaskDim, IPacket>
+public class PacketSendTaskDim implements iPacket, iPacketListener<PacketSendTaskDim, iPacket>
 {
 	private NBTTagCompound task;
 	private String sender;
 	private int[] receivers;
 	
-	public PacketSendTaskDim(ITask task, int... receivers)
+	public PacketSendTaskDim(iTask task, int... receivers)
 	{
 		this.task = new NBTTagCompound();
 		NBTTagCompound tag = new NBTTagCompound();
@@ -31,7 +31,7 @@ public class PacketSendTaskDim implements IPacket, IPacketListener<PacketSendTas
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSendTaskDim packet, MessageContext context)
+	public iPacket onArrived(PacketSendTaskDim packet, MessageContext context)
 	{
 		if(context.side == Side.SERVER)
 		{
@@ -43,7 +43,7 @@ public class PacketSendTaskDim implements IPacket, IPacketListener<PacketSendTas
 		{
 			try
 			{
-				ITask task = (ITask) Class.forName(this.task.getString("Class")).newInstance();
+				iTask task = (iTask) Class.forName(this.task.getString("Class")).newInstance();
 				task.readFromNBT(this.task.getCompoundTag("Data"));
 				task.execute(context);
 			} catch(Throwable err)

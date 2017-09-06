@@ -6,12 +6,12 @@ import com.pengu.hammercore.utils.NBTUtils;
 
 public class NetPropertyNumber<T extends Number> extends NetPropertyAbstract<T>
 {
-	public NetPropertyNumber(IPropertyChangeHandler handler)
+	public NetPropertyNumber(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyNumber(IPropertyChangeHandler handler, T initialValue)
+	public NetPropertyNumber(iPropertyChangeHandler handler, T initialValue)
 	{
 		super(handler, initialValue);
 	}

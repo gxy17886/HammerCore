@@ -4,12 +4,12 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class NetPropertyByteArray extends NetPropertyAbstract<byte[]>
 {
-	public NetPropertyByteArray(IPropertyChangeHandler handler)
+	public NetPropertyByteArray(iPropertyChangeHandler handler)
 	{
 		super(handler);
 	}
 	
-	public NetPropertyByteArray(IPropertyChangeHandler handler, byte[] initialValue)
+	public NetPropertyByteArray(iPropertyChangeHandler handler, byte[] initialValue)
 	{
 		super(handler, initialValue);
 	}

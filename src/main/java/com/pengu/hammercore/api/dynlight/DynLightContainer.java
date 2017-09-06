@@ -5,10 +5,10 @@ import net.minecraft.world.EnumSkyBlock;
 
 public class DynLightContainer
 {
-	private final IDynlightSrc src;
+	private final iDynlightSrc src;
 	private int x, y, z, prevX, prevY, prevZ;
 	
-	public DynLightContainer(IDynlightSrc src)
+	public DynLightContainer(iDynlightSrc src)
 	{
 		this.src = src;
 	}
@@ -28,14 +28,14 @@ public class DynLightContainer
 		return z;
 	}
 	
-	public IDynlightSrc getLightSource()
+	public iDynlightSrc getLightSource()
 	{
 		return src;
 	}
 	
 	public boolean update()
 	{
-		IMovable mov = src.getSrcInfo();
+		iMovable mov = src.getSrcInfo();
 		
 		if(mov == null || !mov.isAlive())
 			return false;
@@ -49,7 +49,7 @@ public class DynLightContainer
 		return true;
 	}
 	
-	private boolean hasSrcMoved(IMovable mov)
+	private boolean hasSrcMoved(iMovable mov)
 	{
 		int nx = mov.getX();
 		int ny = mov.getY();

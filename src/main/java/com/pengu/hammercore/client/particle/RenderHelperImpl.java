@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public enum RenderHelperImpl implements IRenderHelper
+public enum RenderHelperImpl implements iRenderHelper
 {
 	INSTANCE;
 	

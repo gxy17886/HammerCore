@@ -25,7 +25,7 @@ public class TileEntityItemStackRendererHC extends TileEntityItemStackRenderer
 		
 		if(ItemRenderingHandler.INSTANCE.canRender(item))
 		{
-			IItemRender render = ItemRenderingHandler.INSTANCE.getRender(item);
+			iItemRender render = ItemRenderingHandler.INSTANCE.getRender(item);
 			render.renderItem(itemStackIn);
 		} else
 			parent.renderByItem(itemStackIn);

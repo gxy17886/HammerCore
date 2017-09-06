@@ -3,10 +3,10 @@ package com.pengu.hammercore.net.pkt;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import com.pengu.hammercore.net.packetAPI.IPacket;
-import com.pengu.hammercore.net.packetAPI.IPacketListener;
+import com.pengu.hammercore.net.packetAPI.iPacket;
+import com.pengu.hammercore.net.packetAPI.iPacketListener;
 
-public class PacketSetBiome implements IPacket, IPacketListener<PacketSetBiome, IPacket>
+public class PacketSetBiome implements iPacket, iPacketListener<PacketSetBiome, iPacket>
 {
 	int x, z, id;
 	byte biome;
@@ -40,7 +40,7 @@ public class PacketSetBiome implements IPacket, IPacketListener<PacketSetBiome, 
 	}
 	
 	@Override
-	public IPacket onArrived(PacketSetBiome packet, MessageContext context)
+	public iPacket onArrived(PacketSetBiome packet, MessageContext context)
 	{
 		return null;
 	}

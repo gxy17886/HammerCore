@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.pengu.hammercore.HammerCore;
 import com.pengu.hammercore.annotations.MCFBus;
-import com.pengu.hammercore.api.IUpdatable;
+import com.pengu.hammercore.api.iProcess;
 import com.pengu.hammercore.cfg.HammerCoreConfigs;
 import com.pengu.hammercore.common.HolidayTrigger;
 import com.pengu.hammercore.common.utils.WorldUtil;
@@ -44,7 +44,7 @@ public class SpawnEnderDragonEggHandler
 			
 			MinecraftServer server = dragon.world.getMinecraftServer();
 			
-			IUpdatable SetEgg = new IUpdatable()
+			iProcess SetEgg = new iProcess()
 			{
 				public int ticks = 0;
 				

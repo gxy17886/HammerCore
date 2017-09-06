@@ -20,15 +20,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants.NBT;
 
-import com.pengu.hammercore.api.handlers.IHandlerProvider;
-import com.pengu.hammercore.api.handlers.ITileHandler;
-import com.pengu.hammercore.api.multipart.IRandomDisplayTick;
+import com.pengu.hammercore.api.handlers.iHandlerProvider;
+import com.pengu.hammercore.api.handlers.iTileHandler;
+import com.pengu.hammercore.api.multipart.iRandomDisplayTick;
 import com.pengu.hammercore.api.multipart.MultipartSignature;
 import com.pengu.hammercore.common.utils.WorldUtil;
 import com.pengu.hammercore.tile.TileSyncableTickable;
 import com.pengu.hammercore.vec.Cuboid6;
 
-public class TileMultipart extends TileSyncableTickable implements IHandlerProvider
+public class TileMultipart extends TileSyncableTickable implements iHandlerProvider
 {
 	private Set<MultipartSignature> signatures = new HashSet<>();
 	private Cuboid6[] lastBaked = null;
@@ -36,7 +36,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	private boolean hasSyncedOnce = false;
 	
 	private List<MultipartSignature> renderSignatures = new ArrayList<>();
-	private Set<IRandomDisplayTick> displayTickable = new HashSet<>();
+	private Set<iRandomDisplayTick> displayTickable = new HashSet<>();
 	
 	private int lastPlayerCount = 0;
 	private int ticksEmpty = 0;
@@ -131,7 +131,7 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	
 	public void randomDisplayTick(Random rand)
 	{
-		for(IRandomDisplayTick rdt : displayTickable)
+		for(iRandomDisplayTick rdt : displayTickable)
 			rdt.randomDisplayTick(rand);
 	}
 	
@@ -201,10 +201,10 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		signs_new.add(signature);
 		signatures = signs_new;
 		
-		if(signature instanceof IRandomDisplayTick)
+		if(signature instanceof iRandomDisplayTick)
 		{
-			Set<IRandomDisplayTick> ticks = new HashSet<>(displayTickable);
-			ticks.add((IRandomDisplayTick) signature);
+			Set<iRandomDisplayTick> ticks = new HashSet<>(displayTickable);
+			ticks.add((iRandomDisplayTick) signature);
 			displayTickable = ticks;
 		}
 		renderSignatures = new ArrayList<>(signs_new);
@@ -225,10 +225,10 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 		
 		renderSignatures = new ArrayList<>(signatures);
 		signature.setOwner(null);
-		if(signature instanceof IRandomDisplayTick)
+		if(signature instanceof iRandomDisplayTick)
 		{
-			Set<IRandomDisplayTick> ticks = new HashSet<>(displayTickable);
-			ticks.remove((IRandomDisplayTick) signature);
+			Set<iRandomDisplayTick> ticks = new HashSet<>(displayTickable);
+			ticks.remove((iRandomDisplayTick) signature);
 			displayTickable = ticks;
 		}
 		lastBaked = null;
@@ -262,11 +262,11 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	}
 	
 	@Override
-	public <T extends ITileHandler> T getHandler(EnumFacing facing, Class<T> handler, Object... params)
+	public <T extends iTileHandler> T getHandler(EnumFacing facing, Class<T> handler, Object... params)
 	{
 		for(MultipartSignature signature : signatures())
 		{
-			IHandlerProvider provider = WorldUtil.cast(signature, IHandlerProvider.class);
+			iHandlerProvider provider = WorldUtil.cast(signature, iHandlerProvider.class);
 			if(provider != null)
 			{
 				T h = provider.getHandler(facing, handler, params);
@@ -279,11 +279,11 @@ public class TileMultipart extends TileSyncableTickable implements IHandlerProvi
 	}
 	
 	@Override
-	public <T extends ITileHandler> boolean hasHandler(EnumFacing facing, Class<T> handler, Object... params)
+	public <T extends iTileHandler> boolean hasHandler(EnumFacing facing, Class<T> handler, Object... params)
 	{
 		for(MultipartSignature signature : signatures())
 		{
-			IHandlerProvider provider = WorldUtil.cast(signature, IHandlerProvider.class);
+			iHandlerProvider provider = WorldUtil.cast(signature, iHandlerProvider.class);
 			if(provider != null && provider.hasHandler(facing, handler, params))
 				return true;
 		}

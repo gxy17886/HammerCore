@@ -20,13 +20,13 @@ public class HCShaderPipeline
 	
 	public class PipelineBuilder
 	{
-		public PipelineBuilder add(IShaderOperation op)
+		public PipelineBuilder add(iShaderOperation op)
 		{
 			ops.add(op);
 			return this;
 		}
 		
-		public PipelineBuilder add(IShaderOperation... ops)
+		public PipelineBuilder add(iShaderOperation... ops)
 		{
 			Collections.addAll(HCShaderPipeline.this.ops, ops);
 			return this;
@@ -41,7 +41,7 @@ public class HCShaderPipeline
 	private class PipelineNode
 	{
 		public ArrayList<PipelineNode> deps = new ArrayList<>();
-		public IShaderOperation op;
+		public iShaderOperation op;
 		
 		public void add()
 		{
@@ -59,9 +59,9 @@ public class HCShaderPipeline
 	
 	private ShaderProgram program;
 	
-	private ArrayList<IShaderOperation> ops = new ArrayList<>();
+	private ArrayList<iShaderOperation> ops = new ArrayList<>();
 	private ArrayList<PipelineNode> nodes = new ArrayList<>();
-	private ArrayList<IShaderOperation> sorted = new ArrayList<>();
+	private ArrayList<iShaderOperation> sorted = new ArrayList<>();
 	private PipelineNode loading;
 	private PipelineBuilder builder = new HCShaderPipeline.PipelineBuilder();
 	
@@ -70,14 +70,14 @@ public class HCShaderPipeline
 		this.program = program;
 	}
 	
-	public void setPipeline(IShaderOperation... ops)
+	public void setPipeline(iShaderOperation... ops)
 	{
 		this.ops.clear();
 		Collections.addAll(this.ops, ops);
 		rebuild();
 	}
 	
-	public void setPipeline(List<IShaderOperation> ops)
+	public void setPipeline(List<iShaderOperation> ops)
 	{
 		this.ops.clear();
 		this.ops.addAll(ops);
@@ -103,7 +103,7 @@ public class HCShaderPipeline
 			nodes.add(new PipelineNode());
 		unbuild();
 		
-		for(IShaderOperation op : ops)
+		for(iShaderOperation op : ops)
 		{
 			loading = nodes.get(op.operationID());
 			boolean loaded = op.load(program);
@@ -122,7 +122,7 @@ public class HCShaderPipeline
 	
 	public void operate()
 	{
-		for(IShaderOperation op : sorted)
+		for(iShaderOperation op : sorted)
 			op.operate(program);
 	}
 	
