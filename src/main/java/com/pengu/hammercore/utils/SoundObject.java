@@ -5,7 +5,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 
 import com.pengu.hammercore.HammerCore;
-import com.pengu.hammercore.init.SimpleRegistration;
+import com.pengu.hammercore.common.SimpleRegistration;
 
 /**
  * Constructed to register sound via

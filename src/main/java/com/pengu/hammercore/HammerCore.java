@@ -11,6 +11,57 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.pengu.hammercore.annotations.MCFBus;
+import com.pengu.hammercore.api.HammerCoreAPI;
+import com.pengu.hammercore.api.RequiredDeps;
+import com.pengu.hammercore.api.WrappedFMLLog;
+import com.pengu.hammercore.api.iHammerCoreAPI;
+import com.pengu.hammercore.api.iJavaCode;
+import com.pengu.hammercore.api.iProcess;
+import com.pengu.hammercore.api.mhb.RaytracePlugin;
+import com.pengu.hammercore.api.mhb.iRayRegistry;
+import com.pengu.hammercore.asm.CSVFile;
+import com.pengu.hammercore.cfg.ConfigHolder;
+import com.pengu.hammercore.cfg.HCModConfigurations;
+import com.pengu.hammercore.cfg.iConfigReloadListener;
+import com.pengu.hammercore.command.CommandBuildStructure;
+import com.pengu.hammercore.command.CommandLoadChunk;
+import com.pengu.hammercore.command.CommandPosToLong;
+import com.pengu.hammercore.command.CommandTPX;
+import com.pengu.hammercore.command.CommandTimeToTicks;
+import com.pengu.hammercore.common.SimpleRegistration;
+import com.pengu.hammercore.common.capabilities.CapabilityEJ;
+import com.pengu.hammercore.common.chunk.ChunkLoaderHC;
+import com.pengu.hammercore.common.structure.StructureAPI;
+import com.pengu.hammercore.common.utils.AnnotatedInstanceUtil;
+import com.pengu.hammercore.common.utils.HammerCoreUtils;
+import com.pengu.hammercore.common.utils.IOUtils;
+import com.pengu.hammercore.common.utils.WrappedLog;
+import com.pengu.hammercore.core.ext.TeslaAPI;
+import com.pengu.hammercore.core.gui.GuiManager;
+import com.pengu.hammercore.core.init.BlocksHC;
+import com.pengu.hammercore.core.init.ItemsHC;
+import com.pengu.hammercore.event.GetAllRequiredApisEvent;
+import com.pengu.hammercore.fluiddict.FluidDictionary;
+import com.pengu.hammercore.net.HCNetwork;
+import com.pengu.hammercore.net.pkt.PacketReloadRaytracePlugins;
+import com.pengu.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRemoval;
+import com.pengu.hammercore.proxy.AudioProxy_Common;
+import com.pengu.hammercore.proxy.BookProxy_Common;
+import com.pengu.hammercore.proxy.LightProxy_Common;
+import com.pengu.hammercore.proxy.ParticleProxy_Common;
+import com.pengu.hammercore.proxy.PipelineProxy_Common;
+import com.pengu.hammercore.proxy.RenderProxy_Common;
+import com.pengu.hammercore.recipeAPI.BrewingRecipe;
+import com.pengu.hammercore.recipeAPI.GlobalRecipeScript;
+import com.pengu.hammercore.recipeAPI.RecipePlugin;
+import com.pengu.hammercore.recipeAPI.RecipeTypeRegistry;
+import com.pengu.hammercore.recipeAPI.SimpleRecipeScript;
+import com.pengu.hammercore.recipeAPI.iRecipePlugin;
+import com.pengu.hammercore.world.WorldGenHammerCore;
+import com.pengu.hammercore.world.WorldGenHelper;
+import com.pengu.hammercore.world.gen.WorldRetroGen;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -46,61 +97,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.pengu.hammercore.annotations.MCFBus;
-import com.pengu.hammercore.api.HammerCoreAPI;
-import com.pengu.hammercore.api.iHammerCoreAPI;
-import com.pengu.hammercore.api.iJavaCode;
-import com.pengu.hammercore.api.iProcess;
-import com.pengu.hammercore.api.RequiredDeps;
-import com.pengu.hammercore.api.WrappedFMLLog;
-import com.pengu.hammercore.api.mhb.iRayRegistry;
-import com.pengu.hammercore.api.mhb.RaytracePlugin;
-import com.pengu.hammercore.asm.CSVFile;
-import com.pengu.hammercore.cfg.ConfigHolder;
-import com.pengu.hammercore.cfg.HCModConfigurations;
-import com.pengu.hammercore.cfg.iConfigReloadListener;
-import com.pengu.hammercore.command.CommandBuildStructure;
-import com.pengu.hammercore.command.CommandLoadChunk;
-import com.pengu.hammercore.command.CommandPosToLong;
-import com.pengu.hammercore.command.CommandTPX;
-import com.pengu.hammercore.command.CommandTimeToTicks;
-import com.pengu.hammercore.common.capabilities.CapabilityEJ;
-import com.pengu.hammercore.common.chunk.ChunkLoaderHC;
-import com.pengu.hammercore.common.utils.AnnotatedInstanceUtil;
-import com.pengu.hammercore.common.utils.HammerCoreUtils;
-import com.pengu.hammercore.common.utils.IOUtils;
-import com.pengu.hammercore.common.utils.WrappedLog;
-import com.pengu.hammercore.event.GetAllRequiredApisEvent;
-import com.pengu.hammercore.ext.TeslaAPI;
-import com.pengu.hammercore.fluiddict.FluidDictionary;
-import com.pengu.hammercore.gui.GuiManager;
-import com.pengu.hammercore.init.BlocksHC;
-import com.pengu.hammercore.init.ItemsHC;
-import com.pengu.hammercore.init.SimpleRegistration;
-import com.pengu.hammercore.net.HCNetwork;
-import com.pengu.hammercore.net.pkt.PacketReloadRaytracePlugins;
-import com.pengu.hammercore.net.pkt.script.PacketSendGlobalRecipeScriptsWithRemoval;
-import com.pengu.hammercore.proxy.AudioProxy_Common;
-import com.pengu.hammercore.proxy.BookProxy_Common;
-import com.pengu.hammercore.proxy.LightProxy_Common;
-import com.pengu.hammercore.proxy.ParticleProxy_Common;
-import com.pengu.hammercore.proxy.PipelineProxy_Common;
-import com.pengu.hammercore.proxy.RenderProxy_Common;
-import com.pengu.hammercore.recipeAPI.BrewingRecipe;
-import com.pengu.hammercore.recipeAPI.GlobalRecipeScript;
-import com.pengu.hammercore.recipeAPI.iRecipePlugin;
-import com.pengu.hammercore.recipeAPI.RecipePlugin;
-import com.pengu.hammercore.recipeAPI.RecipeTypeRegistry;
-import com.pengu.hammercore.recipeAPI.SimpleRecipeScript;
-import com.pengu.hammercore.structure.StructureAPI;
-import com.pengu.hammercore.world.WorldGenHammerCore;
-import com.pengu.hammercore.world.WorldGenHelper;
-import com.pengu.hammercore.world.gen.WorldRetroGen;
-
 /**
  * The core of Hammer Core. <br>
- * <span style="text-decoration: underline;">
- * <em>This really sounds weird :/</em></span>
+ * <span style="text-decoration: underline;"> <em>This really sounds weird
+ * :/</em></span>
  **/
 @Mod(modid = "hammercore", version = "@VERSION@", name = "Hammer Core", guiFactory = "com.pengu.hammercore.cfg.gui.GuiConfigFactory")
 public class HammerCore

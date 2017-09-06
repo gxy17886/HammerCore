@@ -6,7 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 
 import com.pengu.hammercore.api.iNoItemBlock;
-import com.pengu.hammercore.init.BlocksHC;
+import com.pengu.hammercore.core.init.BlocksHC;
 
 /**
  * Baseline block that supports multipart. Use

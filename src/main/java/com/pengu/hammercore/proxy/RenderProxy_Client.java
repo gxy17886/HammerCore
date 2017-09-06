@@ -31,7 +31,7 @@ import com.pengu.hammercore.client.texture.TextureFXManager;
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 import com.pengu.hammercore.common.blocks.tesseract.TileTesseract;
 import com.pengu.hammercore.common.items.MultiVariantItem;
-import com.pengu.hammercore.init.ItemsHC;
+import com.pengu.hammercore.core.init.ItemsHC;
 
 @SideOnly(Side.CLIENT)
 public class RenderProxy_Client extends RenderProxy_Common

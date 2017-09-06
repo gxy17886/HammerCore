@@ -18,7 +18,7 @@ import com.pengu.hammercore.client.render.tesr.TESR;
 import com.pengu.hammercore.client.utils.RenderBlocks;
 import com.pengu.hammercore.common.blocks.tesseract.BlockTesseract;
 import com.pengu.hammercore.common.blocks.tesseract.TileTesseract;
-import com.pengu.hammercore.init.BlocksHC;
+import com.pengu.hammercore.core.init.BlocksHC;
 
 public class TileRenderTesseract extends TESR<TileTesseract>
 {

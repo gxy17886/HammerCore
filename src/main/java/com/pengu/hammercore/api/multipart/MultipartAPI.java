@@ -5,7 +5,7 @@ import net.minecraft.world.World;
 
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
 import com.pengu.hammercore.common.utils.WorldUtil;
-import com.pengu.hammercore.init.BlocksHC;
+import com.pengu.hammercore.core.init.BlocksHC;
 
 /**
  * Some useful utilities for Mutlipart API

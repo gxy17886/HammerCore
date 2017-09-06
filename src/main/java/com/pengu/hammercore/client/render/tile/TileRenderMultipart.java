@@ -18,7 +18,7 @@ import com.pengu.hammercore.client.DestroyStageTexture;
 import com.pengu.hammercore.client.render.tesr.TESR;
 import com.pengu.hammercore.common.blocks.multipart.BlockMultipart;
 import com.pengu.hammercore.common.blocks.multipart.TileMultipart;
-import com.pengu.hammercore.init.BlocksHC;
+import com.pengu.hammercore.core.init.BlocksHC;
 import com.pengu.hammercore.raytracer.RayTracer;
 import com.pengu.hammercore.vec.Cuboid6;
 

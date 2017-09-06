@@ -11,8 +11,8 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
 import com.pengu.hammercore.common.capabilities.CapabilityEJ;
+import com.pengu.hammercore.core.ext.TeslaAPI;
 import com.pengu.hammercore.energy.iPowerStorage;
-import com.pengu.hammercore.ext.TeslaAPI;
 
 public class TileInfiRF extends TileSyncableTickable implements IEnergyStorage, iPowerStorage
 {

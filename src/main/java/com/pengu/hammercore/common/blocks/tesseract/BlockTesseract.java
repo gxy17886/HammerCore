@@ -29,7 +29,7 @@ import net.minecraftforge.common.util.Constants.NBT;
 import com.pengu.hammercore.api.iTileBlock;
 import com.pengu.hammercore.common.iWrenchable;
 import com.pengu.hammercore.common.utils.WorldUtil;
-import com.pengu.hammercore.gui.GuiManager;
+import com.pengu.hammercore.core.gui.GuiManager;
 import com.pengu.hammercore.tile.TileSyncable;
 import com.pengu.hammercore.utils.WorldLocation;
 

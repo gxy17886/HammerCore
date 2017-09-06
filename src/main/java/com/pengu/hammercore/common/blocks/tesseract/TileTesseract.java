@@ -27,10 +27,10 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import com.pengu.hammercore.common.capabilities.CapabilityEJ;
-import com.pengu.hammercore.gui.GuiTesseract;
-import com.pengu.hammercore.gui.container.ContainerEmpty;
-import com.pengu.hammercore.init.BlocksHC;
-import com.pengu.hammercore.init.ItemsHC;
+import com.pengu.hammercore.core.gui.GuiTesseract;
+import com.pengu.hammercore.core.gui.container.ContainerEmpty;
+import com.pengu.hammercore.core.init.BlocksHC;
+import com.pengu.hammercore.core.init.ItemsHC;
 import com.pengu.hammercore.net.utils.NetPropertyBool;
 import com.pengu.hammercore.net.utils.NetPropertyNumber;
 import com.pengu.hammercore.net.utils.NetPropertyString;

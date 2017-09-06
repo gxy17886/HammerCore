@@ -14,9 +14,9 @@ import com.pengu.hammercore.bookAPI.Book;
 import com.pengu.hammercore.bookAPI.BookCategory;
 import com.pengu.hammercore.bookAPI.BookEntry;
 import com.pengu.hammercore.bookAPI.pages.BookPageTextPlain;
+import com.pengu.hammercore.core.gui.book.GuiBook;
+import com.pengu.hammercore.core.init.ItemsHC;
 import com.pengu.hammercore.event.RegisterBookEvent;
-import com.pengu.hammercore.gui.book.GuiBook;
-import com.pengu.hammercore.init.ItemsHC;
 
 public class BookProxy_Client extends BookProxy_Common
 {

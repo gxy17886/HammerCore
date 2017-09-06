@@ -2,6 +2,9 @@ package com.pengu.hammercore.intr.jei;
 
 import java.util.function.Consumer;
 
+import com.pengu.hammercore.core.gui.smooth.GuiBrewingStandSmooth;
+import com.pengu.hammercore.core.gui.smooth.GuiFurnaceSmooth;
+
 import mezz.jei.api.IJeiRuntime;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -9,9 +12,6 @@ import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.ingredients.IModIngredientRegistration;
-
-import com.pengu.hammercore.gui.smooth.GuiBrewingStandSmooth;
-import com.pengu.hammercore.gui.smooth.GuiFurnaceSmooth;
 
 @JEIPlugin
 public class JeiHC implements IModPlugin, iJeiRecipeModifier

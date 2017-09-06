@@ -1,6 +1,6 @@
 package com.pengu.hammercore.api;
 
-import com.pengu.hammercore.init.BlocksHC;
+import com.pengu.hammercore.core.init.BlocksHC;
 
 /**
  * Disables item for block (only applied to Hammer Core's multipart block. You
